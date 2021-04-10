@@ -1,5 +1,5 @@
 import { DomainStore } from '../../../stores/domainStore/domainStore';
-import { DomainModel } from '../../../stores/domainStore/domainStore.types';
+import { Domain } from '../../../stores/domainStore/domainStore.types';
 import {
     makeAsyncRequest,
     makeAsyncThrow,
@@ -9,7 +9,7 @@ import { SaveCountSuccessFlow } from '../flows/feature.flows';
 import { IncreaseValueAndSaveOptimistic } from './increase-value-and-save-optimistic.usecase';
 
 describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
-    let store: DomainModel;
+    let store: Domain;
     const increaseAmount = 4;
     beforeEach(() => {
         store = new DomainStore({ $count: 3 });

@@ -1,11 +1,11 @@
 import { flow } from 'mobx';
 import { CancellablePromise } from 'mobx/dist/api/flow';
 import { CountService } from '../../../api/count.service';
-import { PersistenceModel } from '../../../stores/persistenceStore/persistenceStore.types';
+import { Persistence } from '../../../stores/persistenceStore/persistenceStore.types';
 
 export class SaveCountSuccessFlow {
     static flow: CancellablePromise<number>;
-    static make(persistence: PersistenceModel): SaveCountSuccessFlow {
+    static make(persistence: Persistence): SaveCountSuccessFlow {
         return new SaveCountSuccessFlow(persistence.countService);
     }
 

@@ -1,13 +1,13 @@
 import { computed, makeObservable } from 'mobx';
-import { DomainModel } from '../../stores/domainStore/domainStore.types';
+import { Domain } from '../../stores/domainStore/domainStore.types';
 import { StoreQuery } from '../../stores/appStore/appStore.types';
 import { MultiplySelector } from './selectors/multiply.selector';
 
 export class FeaturePresenter {
-    static make(store: StoreQuery<DomainModel>): FeaturePresenter {
+    static make(store: StoreQuery<Domain>): FeaturePresenter {
         return new FeaturePresenter(store);
     }
-    constructor(private store: StoreQuery<DomainModel>) {
+    constructor(private store: StoreQuery<Domain>) {
         makeObservable(this, {
             selectMultiplyOn_10: computed
         });

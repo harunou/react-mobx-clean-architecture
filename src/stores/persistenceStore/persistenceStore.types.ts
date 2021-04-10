@@ -1,5 +1,5 @@
 import { CountService } from '../../api/count.service';
 
-export interface PersistenceModel {
+export interface Persistence {
     countService: CountService;
 }

@@ -6,4 +6,4 @@ export interface DomainLogic {
     setCount(v: number): void;
 }
 
-export type DomainModel = DomainState & DomainLogic;
+export type Domain = DomainState & DomainLogic;

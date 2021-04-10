@@ -1,22 +1,22 @@
-import { DomainModel } from '../domainStore/domainStore.types';
+import { Domain } from '../domainStore/domainStore.types';
 import {
     Selector,
     SelectorBuilder,
     UseCase,
     UseCaseBuilder
 } from '../helpers/stores.types';
-import { PersistenceModel } from '../persistenceStore/persistenceStore.types';
+import { Persistence } from '../persistenceStore/persistenceStore.types';
 import { AppStore } from './appStore';
 import { StoreFacade } from './appStore.types';
 
 describe(`${AppStore.name}`, () => {
-    let model: DomainModel;
-    let persistence: PersistenceModel;
-    let store: StoreFacade<DomainModel, PersistenceModel>;
+    let model: Domain;
+    let persistence: Persistence;
+    let store: StoreFacade<Domain, Persistence>;
 
     beforeEach(() => {
-        model = {} as DomainModel;
-        persistence = {} as PersistenceModel;
+        model = {} as Domain;
+        persistence = {} as Persistence;
         store = new AppStore(model, persistence);
     });
 
@@ -24,10 +24,7 @@ describe(`${AppStore.name}`, () => {
         const useCaseMock: UseCase = {
             execute: jest.fn()
         };
-        const useCaseBuilderMock: UseCaseBuilder<
-            DomainModel,
-            PersistenceModel
-        > = {
+        const useCaseBuilderMock: UseCaseBuilder<Domain, Persistence> = {
             build: jest.fn().mockReturnValue(useCaseMock)
         };
         store.execute(useCaseBuilderMock);
@@ -40,7 +37,7 @@ describe(`${AppStore.name}`, () => {
         const selectMock: Selector = {
             result: queryResult
         };
-        const selectBuilderMock: SelectorBuilder<DomainModel> = {
+        const selectBuilderMock: SelectorBuilder<Domain> = {
             build: jest.fn().mockReturnValue(selectMock)
         };
         const query = store.query(selectBuilderMock);

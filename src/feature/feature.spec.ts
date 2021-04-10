@@ -2,15 +2,15 @@ import { autorun } from 'mobx';
 import { CountService } from '../api/count.service';
 import { AppStore } from '../stores/appStore/appStore';
 import { StoreFacade } from '../stores/appStore/appStore.types';
-import { DomainModel } from '../stores/domainStore/domainStore.types';
-import { PersistenceModel } from '../stores/persistenceStore/persistenceStore.types';
+import { Domain } from '../stores/domainStore/domainStore.types';
+import { Persistence } from '../stores/persistenceStore/persistenceStore.types';
 import { sleep } from '../testing-tools';
 import { FeatureController } from './store/feature.controller';
 import { FeaturePresenter } from './store/feature.presenter';
 import { Multiply } from './store/selectors/multiply.selector';
 
 describe(`Feature functional react component`, () => {
-    let store: StoreFacade<DomainModel, PersistenceModel>;
+    let store: StoreFacade<Domain, Persistence>;
 
     beforeEach(() => {
         store = AppStore.make({ $count: 0 });

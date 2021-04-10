@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
-import { DomainModel, DomainState } from './domainStore.types';
+import { Domain, DomainState } from './domainStore.types';
 
-export class DomainStore implements DomainModel {
+export class DomainStore implements Domain {
     static make(initial: DomainState): DomainStore {
         return new DomainStore(initial);
     }

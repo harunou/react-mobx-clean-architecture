@@ -1,14 +1,14 @@
 import { action, makeObservable } from 'mobx';
-import { DomainModel } from '../../../stores/domainStore/domainStore.types';
+import { Domain } from '../../../stores/domainStore/domainStore.types';
 import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { UseCase } from '../../../stores/helpers/stores.types';
-import { PersistenceModel } from '../../../stores/persistenceStore/persistenceStore.types';
+import { Persistence } from '../../../stores/persistenceStore/persistenceStore.types';
 import { SaveCountSuccessFlow } from '../flows/feature.flows';
 
 export class IncreaseValueAndSaveOptimistic implements UseCase {
     static make(
-        store: DomainModel,
-        persistence: PersistenceModel,
+        store: Domain,
+        persistence: Persistence,
         params: number
     ): IncreaseValueAndSaveOptimistic {
         const flow = SaveCountSuccessFlow.make(persistence);
@@ -16,7 +16,7 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
     }
 
     constructor(
-        private store: DomainModel,
+        private store: Domain,
         private flow: SaveCountSuccessFlow,
         private params: number
     ) {

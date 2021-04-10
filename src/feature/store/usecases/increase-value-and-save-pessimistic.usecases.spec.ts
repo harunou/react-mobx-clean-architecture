@@ -1,11 +1,11 @@
 import { DomainStore } from '../../../stores/domainStore/domainStore';
-import { DomainModel } from '../../../stores/domainStore/domainStore.types';
+import { Domain } from '../../../stores/domainStore/domainStore.types';
 import { makeAsyncRequest, sleep } from '../../../testing-tools';
 import { SaveCountSuccessFlow } from '../flows/feature.flows';
 import { IncreaseValueAndSavePessimistic } from './increase-value-and-save-pessimistic.usecases';
 
 describe(`${IncreaseValueAndSavePessimistic.name}`, () => {
-    let store: DomainModel;
+    let store: Domain;
     const increaseAmount = 4;
     beforeEach(() => {
         store = new DomainStore({ $count: 3 });

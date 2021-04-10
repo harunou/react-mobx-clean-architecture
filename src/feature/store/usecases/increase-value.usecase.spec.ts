@@ -1,9 +1,9 @@
-import { DomainModel } from '../../../stores/domainStore/domainStore.types';
+import { Domain } from '../../../stores/domainStore/domainStore.types';
 import { IncreaseValue } from './increase-value.usecase';
 
 describe(`${IncreaseValue.name}`, () => {
     it('increases model value on predefined amount', () => {
-        const model: DomainModel = {
+        const model: Domain = {
             $count: 3,
             setCount: jest.fn()
         };
