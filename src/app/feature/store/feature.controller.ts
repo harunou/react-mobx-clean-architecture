@@ -1,7 +1,7 @@
 import { action, makeObservable } from 'mobx';
 import { DomainModel } from '../../stores/domainStore/domainStore.types';
 import { StoreExecuter } from '../../stores/rootStore/rootStore.types';
-import { IncreaseValueUseCase } from '../usecases/feature.usecases';
+import { IncreaseValueUseCase } from './usecases/feature.usecases';
 
 export class FeatureController {
     static make(store: StoreExecuter<DomainModel>): FeatureController {

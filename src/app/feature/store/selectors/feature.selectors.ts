@@ -1,6 +1,6 @@
-import { DomainState } from '../../stores/domainStore/domainStore.types';
-import { InteractionBuilder } from '../../stores/helpers/stores.helpers';
-import { Selector } from '../../stores/helpers/stores.types';
+import { DomainState } from '../../../stores/domainStore/domainStore.types';
+import { InteractionBuilder } from '../../../stores/helpers/stores.helpers';
+import { Selector } from '../../../stores/helpers/stores.types';
 
 let selectorRuns = 0;
 

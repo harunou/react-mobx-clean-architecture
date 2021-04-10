@@ -1,8 +1,8 @@
 import { autorun } from 'mobx';
 import { RootStore } from '../stores/rootStore/rootStore';
-import { FeatureController } from './controller/feature.controller';
-import { FeaturePresenter } from './presenter/feature.presenter';
-import { Multiply } from './selectors/feature.selectors';
+import { FeatureController } from './store/feature.controller';
+import { FeaturePresenter } from './store/feature.presenter';
+import { Multiply } from './store/selectors/feature.selectors';
 
 describe(`Feature functional react component`, () => {
     let store: RootStore;
