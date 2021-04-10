@@ -146,11 +146,15 @@ describe(`Feature functional react component`, () => {
         expect(renders).toEqual(2);
 
         add_1_and_save_pessimistic_ButtonPushed();
+        expect(value).toEqual(0);
+        expect(renders).toEqual(2);
         await sleep(0);
         expect(value).toEqual(10);
         expect(renders).toEqual(4);
 
         add_1_and_save_pessimistic_ButtonPushed();
+        expect(value).toEqual(10);
+        expect(renders).toEqual(4);
         await sleep(0);
         expect(value).toEqual(20);
         expect(renders).toEqual(6);
