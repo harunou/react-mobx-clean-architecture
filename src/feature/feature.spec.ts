@@ -49,7 +49,7 @@ describe(`Feature functional react component`, () => {
         expect(Multiply.runs).toEqual(3);
     });
 
-    it('calculates selector once even rendering two components on a page at a time', () => {
+    it('calculates selector once, even rendering two components on a page at a time', () => {
         const controller = FeatureController.make(store);
         const presenter = FeaturePresenter.make(store);
 
@@ -83,13 +83,11 @@ describe(`Feature functional react component`, () => {
         expect(Multiply.runs).toEqual(3);
     });
 
-    it.only('uses optimistic save', async () => {
+    it('renders before BE response when uses optimistic save', async () => {
         const controller = FeatureController.make(store);
         const presenter = FeaturePresenter.make(store);
 
-        const {
-            add_1_and_save_optimistic_ButtonPushed: add_1_and_save_ButtonPushed
-        } = controller;
+        const { add_1_and_save_optimistic_ButtonPushed } = controller;
 
         CountService.successResponses = 0;
         let renders = 0;
@@ -109,15 +107,53 @@ describe(`Feature functional react component`, () => {
         expect(value).toEqual(0);
         expect(renders).toEqual(2);
 
-        add_1_and_save_ButtonPushed();
+        add_1_and_save_optimistic_ButtonPushed();
         expect(value).toEqual(10);
         expect(renders).toEqual(4);
         await sleep(0);
 
-        add_1_and_save_ButtonPushed();
+        add_1_and_save_optimistic_ButtonPushed();
         expect(value).toEqual(20);
         expect(renders).toEqual(6);
         await sleep(0);
+
+        expect(Multiply.runs).toEqual(3);
+        expect(CountService.successResponses).toEqual(2);
+    });
+
+    it('renders after BE response when uses pessimistic save', async () => {
+        const controller = FeatureController.make(store);
+        const presenter = FeaturePresenter.make(store);
+
+        const { add_1_and_save_pessimistic_ButtonPushed } = controller;
+
+        CountService.successResponses = 0;
+        let renders = 0;
+        let value = 0;
+
+        autorun(function render() {
+            const { multiplyOn_10 } = presenter;
+            renders += 1;
+            value = multiplyOn_10;
+        });
+        autorun(function render() {
+            const { multiplyOn_10 } = presenter;
+            renders += 1;
+            value = multiplyOn_10;
+        });
+
+        expect(value).toEqual(0);
+        expect(renders).toEqual(2);
+
+        add_1_and_save_pessimistic_ButtonPushed();
+        await sleep(0);
+        expect(value).toEqual(10);
+        expect(renders).toEqual(4);
+
+        add_1_and_save_pessimistic_ButtonPushed();
+        await sleep(0);
+        expect(value).toEqual(20);
+        expect(renders).toEqual(6);
 
         expect(Multiply.runs).toEqual(3);
         expect(CountService.successResponses).toEqual(2);
