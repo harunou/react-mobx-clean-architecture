@@ -1,7 +1,10 @@
 import { action, makeObservable } from 'mobx';
 import { DomainModel } from '../../stores/domainStore/domainStore.types';
 import { StoreExecuter } from '../../stores/appStore/appStore.types';
-import { IncreaseValueUseCase } from './usecases/feature.usecases';
+import {
+    IncreaseValueAndSaveOptimisticUseCase,
+    IncreaseValueUseCase
+} from './usecases/feature.usecases';
 import { PersistenceModel } from '../../stores/persistenceStore/persistenceStore.types';
 
 export class FeatureController {
@@ -17,5 +20,8 @@ export class FeatureController {
     }
     add_1_ButtonPushed(): void {
         this.store.execute(IncreaseValueUseCase.withParams(1));
+    }
+    add_1_and_save_ButtonPushed(): void {
+        this.store.execute(IncreaseValueAndSaveOptimisticUseCase.withParams(1));
     }
 }
