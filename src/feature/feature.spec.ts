@@ -1,14 +1,17 @@
 import { autorun } from 'mobx';
-import { RootStore } from '../stores/appStore/appStore';
+import { AppStore } from '../stores/appStore/appStore';
+import { StoreFacade } from '../stores/appStore/appStore.types';
+import { DomainModel } from '../stores/domainStore/domainStore.types';
+import { PersistenceModel } from '../stores/persistenceStore/persistenceStore.types';
 import { FeatureController } from './store/feature.controller';
 import { FeaturePresenter } from './store/feature.presenter';
 import { Multiply } from './store/selectors/feature.selectors';
 
 describe(`Feature functional react component`, () => {
-    let store: RootStore;
+    let store: StoreFacade<DomainModel, PersistenceModel>;
 
     beforeEach(() => {
-        store = RootStore.make({ $count: 0 });
+        store = AppStore.make({ $count: 0 });
         Multiply.runs = 0;
     });
 

@@ -1,15 +1,16 @@
-import { Builder, Selector, UseCase } from '../helpers/stores.types';
+import {
+    Selector,
+    SelectorBuilder,
+    UseCase,
+    UseCaseBuilder
+} from '../helpers/stores.types';
 
-export interface StoreQuery<T> {
-    query(builder: Builder<T, Selector>): QueryResponse;
+export interface StoreQuery<S> {
+    query(builder: SelectorBuilder<S>): Selector;
 }
 
-export interface StoreExecuter<T> {
-    execute(builder: Builder<T, UseCase>): void;
+export interface StoreExecuter<S, P> {
+    execute(builder: UseCaseBuilder<S, P>): void;
 }
 
-export type StoreFacade<T> = StoreQuery<T> & StoreExecuter<T>;
-
-export interface QueryResponse {
-    result: number;
-}
+export type StoreFacade<S, P> = StoreQuery<S> & StoreExecuter<S, P>;

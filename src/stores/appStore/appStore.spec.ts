@@ -1,30 +1,46 @@
 import { DomainModel, DomainState } from '../domainStore/domainStore.types';
-import { Builder, Selector, UseCase } from '../helpers/stores.types';
-import { RootStore } from './appStore';
+import {
+    Selector,
+    SelectorBuilder,
+    UseCase,
+    UseCaseBuilder
+} from '../helpers/stores.types';
+import { PersistenceModel } from '../persistenceStore/persistenceStore.types';
+import { AppStore } from './appStore';
+import { StoreFacade } from './appStore.types';
 
-describe(`${RootStore.name}`, () => {
+describe(`${AppStore.name}`, () => {
+    let model: DomainModel;
+    let persistence: PersistenceModel;
+    let store: StoreFacade<DomainModel, PersistenceModel>;
+
+    beforeEach(() => {
+        model = {} as DomainModel;
+        persistence = {} as PersistenceModel;
+        store = new AppStore(model, persistence);
+    });
+
     it('has use case executer', () => {
-        const model = {} as DomainModel;
-        const store = new RootStore(model);
         const useCaseMock: UseCase = {
             execute: jest.fn()
         };
-        const useCaseBuilderMock: Builder<DomainModel, UseCase> = {
+        const useCaseBuilderMock: UseCaseBuilder<
+            DomainModel,
+            PersistenceModel
+        > = {
             build: jest.fn().mockReturnValue(useCaseMock)
         };
         store.execute(useCaseBuilderMock);
         expect(useCaseBuilderMock.build).toBeCalledTimes(1);
-        expect(useCaseBuilderMock.build).toBeCalledWith(model);
+        expect(useCaseBuilderMock.build).toBeCalledWith(model, persistence);
         expect(useCaseMock.execute).toBeCalledTimes(1);
     });
     it('has use query executer', () => {
-        const model = {} as DomainModel;
-        const store = new RootStore(model);
         const queryResult = 0;
         const selectMock: Selector = {
             result: queryResult
         };
-        const selectBuilderMock: Builder<DomainModel, Selector> = {
+        const selectBuilderMock: SelectorBuilder<DomainModel> = {
             build: jest.fn().mockReturnValue(selectMock)
         };
         const query = store.query(selectBuilderMock);

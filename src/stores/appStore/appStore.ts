@@ -1,9 +1,15 @@
 import { configure } from 'mobx';
 import { DomainStore } from '../domainStore/domainStore';
 import { DomainModel, DomainState } from '../domainStore/domainStore.types';
-import { Builder, Selector, UseCase } from '../helpers/stores.types';
+import {
+    Selector,
+    SelectorBuilder,
+    UseCase,
+    UseCaseBuilder
+} from '../helpers/stores.types';
 import { PersistenceStore } from '../persistenceStore/persistenceStore';
-import { QueryResponse, StoreFacade } from './appStore.types';
+import { PersistenceModel } from '../persistenceStore/persistenceStore.types';
+import { StoreFacade } from './appStore.types';
 
 configure({
     enforceActions: 'always',
@@ -13,12 +19,12 @@ configure({
     disableErrorBoundaries: false
 });
 
-export class RootStore implements StoreFacade<DomainModel> {
-    static make(init: DomainState): RootStore {
+export class AppStore implements StoreFacade<DomainModel, PersistenceModel> {
+    static make(init: DomainState): AppStore {
         const domain = DomainStore.make(init);
         const persistence = PersistenceStore.make();
 
-        return new RootStore(domain, persistence);
+        return new AppStore(domain, persistence);
     }
 
     constructor(
@@ -26,11 +32,11 @@ export class RootStore implements StoreFacade<DomainModel> {
         private persistence: PersistenceStore
     ) {}
 
-    query(selector: Builder<DomainState, Selector>): QueryResponse {
+    query(selector: SelectorBuilder<DomainState>): Selector {
         return selector.build(this.domain);
     }
 
-    execute(useCase: Builder<DomainModel, UseCase>): void {
-        useCase.build(this.domain).execute();
+    execute(useCase: UseCaseBuilder<DomainModel, PersistenceModel>): void {
+        useCase.build(this.domain, this.persistence).execute();
     }
 }

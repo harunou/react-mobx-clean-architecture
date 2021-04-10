@@ -1,5 +1,5 @@
 import { DomainState } from '../../../stores/domainStore/domainStore.types';
-import { InteractionBuilder } from '../../../stores/helpers/stores.helpers';
+import { SelectorInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { Selector } from '../../../stores/helpers/stores.types';
 
 let selectorRuns = 0;
@@ -24,4 +24,4 @@ export class Multiply implements Selector {
     }
 }
 
-export const MultiplySelector = InteractionBuilder.make(Multiply);
+export const MultiplySelector = SelectorInteractionBuilder.make(Multiply);

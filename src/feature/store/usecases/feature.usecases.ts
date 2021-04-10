@@ -1,11 +1,15 @@
 import { DomainModel } from '../../../stores/domainStore/domainStore.types';
-import { InteractionBuilder } from '../../../stores/helpers/stores.helpers';
+import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { UseCase } from '../../../stores/helpers/stores.types';
 import { PersistenceModel } from '../../../stores/persistenceStore/persistenceStore.types';
 import { SaveCountSuccessFlow } from '../flows/feature.flows';
 
 export class IncreaseValue implements UseCase {
-    static make(store: DomainModel, params: number): IncreaseValue {
+    static make(
+        store: DomainModel,
+        _: PersistenceModel,
+        params: number
+    ): IncreaseValue {
         return new IncreaseValue(store, params);
     }
 
@@ -15,7 +19,9 @@ export class IncreaseValue implements UseCase {
         this.store.setCount(this.store.$count + this.params);
     }
 }
-export const IncreaseValueUseCase = InteractionBuilder.make(IncreaseValue);
+export const IncreaseValueUseCase = UseCaseInteractionBuilder.make(
+    IncreaseValue
+);
 
 export class IncreaseValueAndSaveOptimistic implements UseCase {
     static make(
@@ -38,3 +44,6 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
         await this.flow.save(this.store.$count);
     }
 }
+export const IncreaseValueAndSaveOptimisticUseCase = UseCaseInteractionBuilder.make(
+    IncreaseValueAndSaveOptimistic
+);
