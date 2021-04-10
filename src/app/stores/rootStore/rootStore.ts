@@ -1,5 +1,5 @@
-import { DomainStore } from '../domain/domain.store';
-import { DomainModel, DomainState } from '../domain/domain.types';
+import { DomainStore } from '../domainStore/domainStore';
+import { DomainModel, DomainState } from '../domainStore/domainStore.types';
 import {
     Builder,
     QueryResponse,

@@ -1,6 +1,6 @@
-import { DomainModel, DomainState } from '../domain/domain.types';
+import { DomainModel, DomainState } from '../domainStore/domainStore.types';
 import { Builder, Selector, UseCase } from '../stores.types';
-import { RootStore } from './root.store';
+import { RootStore } from './rootStore';
 
 describe(`${RootStore.name}`, () => {
     it('has use case executer', () => {

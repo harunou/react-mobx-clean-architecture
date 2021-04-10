@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from 'mobx';
-import { DomainModel, DomainState } from './domain.types';
+import { DomainModel, DomainState } from './domainStore.types';
 
 export class DomainStore implements DomainModel {
     static make(initial: DomainState): DomainStore {

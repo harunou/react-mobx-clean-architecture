@@ -1,4 +1,4 @@
-import { DomainStore } from './domain.store';
+import { DomainStore } from './domainStore';
 
 describe(`${DomainStore.name}`, () => {
     it('initializing with a value', () => {
