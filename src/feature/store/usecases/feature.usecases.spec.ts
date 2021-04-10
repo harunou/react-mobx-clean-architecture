@@ -8,7 +8,8 @@ import {
 import { SaveCountSuccessFlow } from '../flows/feature.flows';
 import {
     IncreaseValue,
-    IncreaseValueAndSaveOptimistic
+    IncreaseValueAndSaveOptimistic,
+    IncreaseValueAndSavePessimistic
 } from './feature.usecases';
 
 describe(`${IncreaseValue.name}`, () => {
@@ -48,7 +49,7 @@ describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
         expect(setCountSpy).toBeCalledWith(7);
         expect(flow.save).toBeCalledWith(7);
     });
-    it.only('decreases model value on predefined amount and if save to the BE failed', async () => {
+    it('decreases model value on predefined amount and if save to the BE failed', async () => {
         const setCountSpy = jest.spyOn(store, 'setCount');
         const flow = ({
             save: jest
@@ -68,5 +69,31 @@ describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
         expect(flow.save).toBeCalledWith(7);
         await sleep(0);
         expect(setCountSpy).toBeCalledWith(3);
+    });
+});
+
+describe(`${IncreaseValueAndSavePessimistic.name}`, () => {
+    let store: DomainModel;
+    const increaseAmount = 4;
+    beforeEach(() => {
+        store = new DomainStore({ $count: 3 });
+    });
+    it('pessimistically save count to the BE and on success set store', async () => {
+        const setCountSpy = jest.spyOn(store, 'setCount');
+        const flow = ({
+            save: jest
+                .fn()
+                .mockImplementationOnce((v: number) => makeAsyncRequest(0, v))
+        } as unknown) as SaveCountSuccessFlow;
+        const useCase = new IncreaseValueAndSaveOptimistic(
+            store,
+            flow,
+            increaseAmount
+        );
+        useCase.execute();
+        expect(flow.save).toBeCalledWith(7);
+        sleep(0);
+        expect(setCountSpy).toBeCalledTimes(1);
+        expect(setCountSpy).toBeCalledWith(7);
     });
 });
