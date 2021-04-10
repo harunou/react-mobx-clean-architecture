@@ -1,7 +1,7 @@
 import { computed, makeObservable } from 'mobx';
 import { DomainModel } from '../../stores/domainStore/domainStore.types';
 import { StoreQuery } from '../../stores/appStore/appStore.types';
-import { MultiplySelector } from './selectors/feature.selectors';
+import { MultiplySelector } from './selectors/multiply.selector';
 
 export class FeaturePresenter {
     static make(store: StoreQuery<DomainModel>): FeaturePresenter {

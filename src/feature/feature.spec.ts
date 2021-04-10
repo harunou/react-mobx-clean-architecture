@@ -7,7 +7,7 @@ import { PersistenceModel } from '../stores/persistenceStore/persistenceStore.ty
 import { sleep } from '../testing-tools';
 import { FeatureController } from './store/feature.controller';
 import { FeaturePresenter } from './store/feature.presenter';
-import { Multiply } from './store/selectors/feature.selectors';
+import { Multiply } from './store/selectors/multiply.selector';
 
 describe(`Feature functional react component`, () => {
     let store: StoreFacade<DomainModel, PersistenceModel>;

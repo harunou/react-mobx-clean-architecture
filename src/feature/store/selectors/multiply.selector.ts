@@ -2,24 +2,18 @@ import { DomainState } from '../../../stores/domainStore/domainStore.types';
 import { SelectorInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { Selector } from '../../../stores/helpers/stores.types';
 
-let selectorRuns = 0;
-
 export class Multiply implements Selector {
+    // NOTE(harunou): for testing purposes
+    static runs = 0;
+
     static make(store: DomainState, params: number): Multiply {
         return new Multiply(store, params);
-    }
-    // NOTE(harunou): for testing purposes
-    static get runs(): number {
-        return selectorRuns;
-    }
-    static set runs(v: number) {
-        selectorRuns = v;
     }
 
     constructor(private store: DomainState, private params: number) {}
 
     get result(): number {
-        selectorRuns += 1;
+        Multiply.runs += 1;
         return this.store.$count * this.params;
     }
 }

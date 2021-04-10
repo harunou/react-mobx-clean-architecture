@@ -1,5 +1,5 @@
 import { DomainState } from '../../../stores/domainStore/domainStore.types';
-import { Multiply } from './feature.selectors';
+import { Multiply } from './multiply.selector';
 
 describe(`${Multiply.name}`, () => {
     it('selects $count value from domain store and multiply on predefined value', () => {
