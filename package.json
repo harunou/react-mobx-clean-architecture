@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "npm run jest:all",
+    "jest:base": "npx jest",
+    "jest:watch": "npm run jest:base -- --watchAll=true",
+    "jest:all": "npm run jest:base -- --watchAll=false"
   },
   "repository": {
     "type": "git",
