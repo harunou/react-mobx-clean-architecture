@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run jest:all",
+    "test": "npm run tsc:type-check && npm run jest:all",
     "jest:base": "npx jest",
     "jest:watch": "npm run jest:base -- --watchAll=true",
-    "jest:all": "npm run jest:base -- --watchAll=false"
+    "jest:all": "npm run jest:base -- --watchAll=false",
+    "tsc:type-check": "tsc --noEmit --project ./tsconfig.json"
   },
   "repository": {
     "type": "git",
