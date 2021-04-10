@@ -2,7 +2,7 @@ import { configure } from 'mobx';
 import { DomainStore } from '../domainStore/domainStore';
 import { DomainModel, DomainState } from '../domainStore/domainStore.types';
 import { Builder, Selector, UseCase } from '../helpers/stores.types';
-import { QueryResponse, StoreFacade } from './rootStore.types';
+import { QueryResponse, StoreFacade } from './appStore.types';
 
 configure({
     enforceActions: 'always',

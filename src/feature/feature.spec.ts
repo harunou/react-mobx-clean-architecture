@@ -1,5 +1,5 @@
 import { autorun } from 'mobx';
-import { RootStore } from '../stores/rootStore/rootStore';
+import { RootStore } from '../stores/appStore/appStore';
 import { FeatureController } from './store/feature.controller';
 import { FeaturePresenter } from './store/feature.presenter';
 import { Multiply } from './store/selectors/feature.selectors';
