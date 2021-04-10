@@ -19,3 +19,10 @@ export const makeAsyncThrow = <T>(
         }, timeoutMs);
     });
 };
+
+export const sleep = (ms: number = 0) =>
+    new Promise((resolve) =>
+        setTimeout(() => {
+            resolve(undefined);
+        }, ms)
+    );

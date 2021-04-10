@@ -15,13 +15,14 @@ export class FeatureController {
     }
     constructor(private store: StoreExecuter<DomainModel, PersistenceModel>) {
         makeObservable(this, {
-            add_1_ButtonPushed: action.bound
+            add_1_ButtonPushed: action.bound,
+            add_1_and_save_optimistic_ButtonPushed: action.bound
         });
     }
     add_1_ButtonPushed(): void {
         this.store.execute(IncreaseValueUseCase.withParams(1));
     }
-    add_1_and_save_ButtonPushed(): void {
+    add_1_and_save_optimistic_ButtonPushed(): void {
         this.store.execute(IncreaseValueAndSaveOptimisticUseCase.withParams(1));
     }
 }
