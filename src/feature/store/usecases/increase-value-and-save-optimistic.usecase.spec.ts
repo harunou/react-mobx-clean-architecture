@@ -6,25 +6,7 @@ import {
     sleep
 } from '../../../testing-tools';
 import { SaveCountSuccessFlow } from '../flows/feature.flows';
-import {
-    IncreaseValue,
-    IncreaseValueAndSaveOptimistic,
-    IncreaseValueAndSavePessimistic
-} from './feature.usecases';
-
-describe(`${IncreaseValue.name}`, () => {
-    it('increases model value on predefined amount', () => {
-        const model: DomainModel = {
-            $count: 3,
-            setCount: jest.fn()
-        };
-        const increaseAmount = 4;
-        const useCase = new IncreaseValue(model, increaseAmount);
-        useCase.execute();
-        expect(model.setCount).toBeCalledTimes(1);
-        expect(model.setCount).toBeCalledWith(7);
-    });
-});
+import { IncreaseValueAndSaveOptimistic } from './increase-value-and-save-optimistic.usecase';
 
 describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
     let store: DomainModel;
@@ -69,31 +51,5 @@ describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
         expect(flow.save).toBeCalledWith(7);
         await sleep(0);
         expect(setCountSpy).toBeCalledWith(3);
-    });
-});
-
-describe(`${IncreaseValueAndSavePessimistic.name}`, () => {
-    let store: DomainModel;
-    const increaseAmount = 4;
-    beforeEach(() => {
-        store = new DomainStore({ $count: 3 });
-    });
-    it('pessimistically save count to the BE and on success set store', async () => {
-        const setCountSpy = jest.spyOn(store, 'setCount');
-        const flow = ({
-            save: jest
-                .fn()
-                .mockImplementationOnce((v: number) => makeAsyncRequest(0, v))
-        } as unknown) as SaveCountSuccessFlow;
-        const useCase = new IncreaseValueAndSaveOptimistic(
-            store,
-            flow,
-            increaseAmount
-        );
-        useCase.execute();
-        expect(flow.save).toBeCalledWith(7);
-        sleep(0);
-        expect(setCountSpy).toBeCalledTimes(1);
-        expect(setCountSpy).toBeCalledWith(7);
     });
 });

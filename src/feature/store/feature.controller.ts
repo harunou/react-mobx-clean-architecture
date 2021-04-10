@@ -1,12 +1,10 @@
 import { action, makeObservable } from 'mobx';
 import { DomainModel } from '../../stores/domainStore/domainStore.types';
 import { StoreExecuter } from '../../stores/appStore/appStore.types';
-import {
-    IncreaseValueAndSaveOptimisticUseCase,
-    IncreaseValueAndSavePessimisticUseCase,
-    IncreaseValueUseCase
-} from './usecases/feature.usecases';
 import { PersistenceModel } from '../../stores/persistenceStore/persistenceStore.types';
+import { IncreaseValueUseCase } from './usecases/increase-value.usecase';
+import { IncreaseValueAndSaveOptimisticUseCase } from './usecases/increase-value-and-save-optimistic.usecase';
+import { IncreaseValueAndSavePessimisticUseCase } from './usecases/increase-value-and-save-pessimistic.usecases';
 
 export class FeatureController {
     static make(
