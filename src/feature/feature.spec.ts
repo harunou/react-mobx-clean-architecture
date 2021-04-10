@@ -15,6 +15,7 @@ describe(`Feature functional react component`, () => {
     beforeEach(() => {
         store = AppStore.make({ $count: 0 });
         Multiply.runs = 0;
+        CountService.successResponses = 0;
     });
 
     // NOTE(harunou): mobx streams are behavior subjects, subscription takes
@@ -89,7 +90,6 @@ describe(`Feature functional react component`, () => {
 
         const { add_1_and_save_optimistic_ButtonPushed } = controller;
 
-        CountService.successResponses = 0;
         let renders = 0;
         let value = 0;
 
@@ -127,7 +127,6 @@ describe(`Feature functional react component`, () => {
 
         const { add_1_and_save_pessimistic_ButtonPushed } = controller;
 
-        CountService.successResponses = 0;
         let renders = 0;
         let value = 0;
 
