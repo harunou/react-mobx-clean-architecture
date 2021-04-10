@@ -1,5 +1,5 @@
 import { DomainModel, DomainState } from '../domainStore/domainStore.types';
-import { Builder, Selector, UseCase } from '../stores.types';
+import { Builder, Selector, UseCase } from '../helpers/stores.types';
 import { RootStore } from './rootStore';
 
 describe(`${RootStore.name}`, () => {

@@ -1,12 +1,7 @@
 import { DomainStore } from '../domainStore/domainStore';
 import { DomainModel, DomainState } from '../domainStore/domainStore.types';
-import {
-    Builder,
-    QueryResponse,
-    Selector,
-    StoreFacade,
-    UseCase
-} from '../stores.types';
+import { Builder, Selector, UseCase } from '../helpers/stores.types';
+import { QueryResponse, StoreFacade } from './rootStore.types';
 
 export class RootStore implements StoreFacade<DomainModel> {
     static make(init: DomainState): RootStore {
