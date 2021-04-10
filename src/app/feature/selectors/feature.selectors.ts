@@ -8,8 +8,12 @@ export class Multiply implements Selector {
     static make(store: DomainState, params: number): Multiply {
         return new Multiply(store, params);
     }
+    // NOTE(harunou): for testing purposes
     static get runs(): number {
         return selectorRuns;
+    }
+    static set runs(v: number) {
+        selectorRuns = v;
     }
 
     constructor(private store: DomainState, private params: number) {}

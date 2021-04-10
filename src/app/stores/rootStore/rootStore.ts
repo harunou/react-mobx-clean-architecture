@@ -1,7 +1,16 @@
+import { configure } from 'mobx';
 import { DomainStore } from '../domainStore/domainStore';
 import { DomainModel, DomainState } from '../domainStore/domainStore.types';
 import { Builder, Selector, UseCase } from '../helpers/stores.types';
 import { QueryResponse, StoreFacade } from './rootStore.types';
+
+configure({
+    enforceActions: 'always',
+    computedRequiresReaction: true,
+    reactionRequiresObservable: true,
+    observableRequiresReaction: true,
+    disableErrorBoundaries: false
+});
 
 export class RootStore implements StoreFacade<DomainModel> {
     static make(init: DomainState): RootStore {

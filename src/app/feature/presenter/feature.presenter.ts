@@ -4,7 +4,7 @@ import { StoreQuery } from '../../stores/rootStore/rootStore.types';
 import { MultiplySelector } from '../selectors/feature.selectors';
 
 export class FeaturePresenter {
-    make(store: StoreQuery<DomainModel>): FeaturePresenter {
+    static make(store: StoreQuery<DomainModel>): FeaturePresenter {
         return new FeaturePresenter(store);
     }
     constructor(private store: StoreQuery<DomainModel>) {
