@@ -1,4 +1,4 @@
-import { DomainModel, DomainState } from '../domainStore/domainStore.types';
+import { DomainModel } from '../domainStore/domainStore.types';
 import {
     Selector,
     SelectorBuilder,

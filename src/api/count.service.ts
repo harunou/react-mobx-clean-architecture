@@ -1,6 +1,7 @@
 import { makeAsyncRequest, makeAsyncThrow } from '../testing-tools';
 
 export class CountService {
+    // NOTE(harunou): for testing purposes
     static successResponses = 0;
 
     static make(): CountService {

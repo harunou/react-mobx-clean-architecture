@@ -1,7 +1,6 @@
 import {
     Selector,
     SelectorBuilder,
-    UseCase,
     UseCaseBuilder
 } from '../helpers/stores.types';
 

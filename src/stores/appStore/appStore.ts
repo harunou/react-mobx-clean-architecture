@@ -4,7 +4,6 @@ import { DomainModel, DomainState } from '../domainStore/domainStore.types';
 import {
     Selector,
     SelectorBuilder,
-    UseCase,
     UseCaseBuilder
 } from '../helpers/stores.types';
 import { PersistenceStore } from '../persistenceStore/persistenceStore';
