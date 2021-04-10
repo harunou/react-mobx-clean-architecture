@@ -30,9 +30,9 @@ describe(`Feature functional react component`, () => {
         let value = 0;
 
         autorun(function render() {
-            const { multiplyOn_10 } = presenter;
+            const { selectMultiplyOn_10 } = presenter;
             renders += 1;
-            value = multiplyOn_10;
+            value = selectMultiplyOn_10;
         });
 
         expect(value).toEqual(0);
@@ -59,14 +59,14 @@ describe(`Feature functional react component`, () => {
         let value = 0;
 
         autorun(function render() {
-            const { multiplyOn_10 } = presenter;
+            const { selectMultiplyOn_10 } = presenter;
             renders += 1;
-            value = multiplyOn_10;
+            value = selectMultiplyOn_10;
         });
         autorun(function render() {
-            const { multiplyOn_10 } = presenter;
+            const { selectMultiplyOn_10 } = presenter;
             renders += 1;
-            value = multiplyOn_10;
+            value = selectMultiplyOn_10;
         });
 
         expect(value).toEqual(0);
@@ -94,14 +94,14 @@ describe(`Feature functional react component`, () => {
         let value = 0;
 
         autorun(function render() {
-            const { multiplyOn_10 } = presenter;
+            const { selectMultiplyOn_10 } = presenter;
             renders += 1;
-            value = multiplyOn_10;
+            value = selectMultiplyOn_10;
         });
         autorun(function render() {
-            const { multiplyOn_10 } = presenter;
+            const { selectMultiplyOn_10 } = presenter;
             renders += 1;
-            value = multiplyOn_10;
+            value = selectMultiplyOn_10;
         });
 
         expect(value).toEqual(0);
@@ -132,14 +132,14 @@ describe(`Feature functional react component`, () => {
         let value = 0;
 
         autorun(function render() {
-            const { multiplyOn_10 } = presenter;
+            const { selectMultiplyOn_10 } = presenter;
             renders += 1;
-            value = multiplyOn_10;
+            value = selectMultiplyOn_10;
         });
         autorun(function render() {
-            const { multiplyOn_10 } = presenter;
+            const { selectMultiplyOn_10 } = presenter;
             renders += 1;
-            value = multiplyOn_10;
+            value = selectMultiplyOn_10;
         });
 
         expect(value).toEqual(0);

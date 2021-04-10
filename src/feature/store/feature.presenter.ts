@@ -9,10 +9,10 @@ export class FeaturePresenter {
     }
     constructor(private store: StoreQuery<DomainModel>) {
         makeObservable(this, {
-            multiplyOn_10: computed
+            selectMultiplyOn_10: computed
         });
     }
-    get multiplyOn_10(): number {
+    get selectMultiplyOn_10(): number {
         return this.store.query(MultiplySelector.withParams(10)).result;
     }
 }
