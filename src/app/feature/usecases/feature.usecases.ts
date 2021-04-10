@@ -1,6 +1,6 @@
-import { DomainModel } from '../stores/domainStore/domainStore.types';
-import { InteractionBuilder } from '../stores/helpers/stores.helpers';
-import { UseCase } from '../stores/helpers/stores.types';
+import { DomainModel } from '../../stores/domainStore/domainStore.types';
+import { InteractionBuilder } from '../../stores/helpers/stores.helpers';
+import { UseCase } from '../../stores/helpers/stores.types';
 
 export class IncreaseValue implements UseCase {
     static make(store: DomainModel, params: number): IncreaseValue {

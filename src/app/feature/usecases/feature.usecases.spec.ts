@@ -1,4 +1,4 @@
-import { DomainModel } from '../stores/domainStore/domainStore.types';
+import { DomainModel } from '../../stores/domainStore/domainStore.types';
 import { IncreaseValue } from './feature.usecases';
 
 describe(`${IncreaseValue.name}`, () => {
