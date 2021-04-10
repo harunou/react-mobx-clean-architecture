@@ -28,7 +28,7 @@ export class AppStore implements StoreFacade<DomainModel, PersistenceModel> {
 
     constructor(
         private domain: DomainModel,
-        private persistence: PersistenceStore
+        private persistence: PersistenceModel
     ) {}
 
     query(selector: SelectorBuilder<DomainState>): Selector {
