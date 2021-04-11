@@ -1,13 +1,13 @@
 import { CounterState } from '../../../stores/counter/counter.types';
 import { SelectorInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { Selector } from '../../../stores/helpers/stores.types';
-import { RootSelectorParams } from '../../../stores/root/root.types';
+import { AppSelectorParams } from '../../../stores/app/app.types';
 
 export class MultiplyCount implements Selector<number> {
     // NOTE(harunou): for testing purposes
     static runs = 0;
 
-    static make({ store, props }: RootSelectorParams<number>): MultiplyCount {
+    static make({ store, props }: AppSelectorParams<number>): MultiplyCount {
         return new MultiplyCount(store.counter, props);
     }
 

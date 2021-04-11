@@ -57,7 +57,7 @@ export class UseCaseInteractionBuilder<Store, Per, Props>
     }
 }
 
-export abstract class AppStore<S, P> {
+export abstract class RootStore<S, P> {
     constructor(private domain: S, private persistence: P) {}
 
     query<R>(selector: SelectorBuilder<S, R>): Selector<R> {

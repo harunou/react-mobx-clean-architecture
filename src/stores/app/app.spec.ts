@@ -6,17 +6,17 @@ import {
     UseCaseBuilder
 } from '../helpers/stores.types';
 import { PersistenceModel } from '../persistence/persistence.types';
-import { RootStore } from './root.store';
+import { AppStore } from './app.store';
 
-describe(`${RootStore.name}`, () => {
+describe(`${AppStore.name}`, () => {
     let model: DomainModel;
     let persistence: PersistenceModel;
-    let store: RootStore;
+    let store: AppStore;
 
     beforeEach(() => {
         model = {} as DomainModel;
         persistence = {} as PersistenceModel;
-        store = new RootStore(model, persistence);
+        store = new AppStore(model, persistence);
     });
 
     it('has use case executer', () => {
