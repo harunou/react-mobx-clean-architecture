@@ -1,7 +1,7 @@
 import { computed, makeObservable } from 'mobx';
 import { Domain } from '../../stores/domain/domain.types';
 import { StoreQuery } from '../../stores/root/root.types';
-import { MultiplySelector } from './selectors/multiply.selector';
+import { MultiplyCountSelector } from './selectors/multiply-count.selector';
 
 export class FeaturePresenter {
     static make(store: StoreQuery<Domain>): FeaturePresenter {
@@ -9,10 +9,10 @@ export class FeaturePresenter {
     }
     constructor(private store: StoreQuery<Domain>) {
         makeObservable(this, {
-            selectMultiplyOn_10: computed
+            selectMultiplyCountOn_10: computed
         });
     }
-    get selectMultiplyOn_10(): number {
-        return this.store.query(MultiplySelector.withParams(10)).result;
+    get selectMultiplyCountOn_10(): number {
+        return this.store.query(MultiplyCountSelector.withParams(10)).result;
     }
 }
