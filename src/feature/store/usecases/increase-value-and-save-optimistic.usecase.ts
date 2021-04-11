@@ -9,20 +9,16 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
     static make({
         store,
         persistence,
-        params
+        props
     }: RootUseCaseParams): IncreaseValueAndSaveOptimistic {
         const effect = SaveCountSuccessEffect.make(persistence);
-        return new IncreaseValueAndSaveOptimistic(
-            store.counter,
-            effect,
-            params
-        );
+        return new IncreaseValueAndSaveOptimistic(store.counter, effect, props);
     }
 
     constructor(
         private store: CounterModel,
         private effect: SaveCountSuccessEffect,
-        private params: number = 0
+        private props: number = 0
     ) {
         makeObservable(this, {
             execute: action.bound,
@@ -31,13 +27,13 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
     }
 
     execute(): void {
-        const count = this.store.$count + this.params;
+        const count = this.store.$count + this.props;
         this.store.setCount(count);
         this.effect.save(count).catch(this.saveFailure);
     }
 
     saveFailure(): void {
-        this.store.setCount(this.store.$count - this.params);
+        this.store.setCount(this.store.$count - this.props);
     }
 }
 export const IncreaseValueAndSaveOptimisticUseCase = UseCaseInteractionBuilder.make(

@@ -7,15 +7,15 @@ export class MultiplyCount implements Selector {
     // NOTE(harunou): for testing purposes
     static runs = 0;
 
-    static make({ store, params }: RootSelectorParams): MultiplyCount {
-        return new MultiplyCount(store.counter, params);
+    static make({ store, props }: RootSelectorParams): MultiplyCount {
+        return new MultiplyCount(store.counter, props);
     }
 
-    constructor(private store: CounterState, private params: number = 1) {}
+    constructor(private store: CounterState, private props: number = 1) {}
 
     get result(): number {
         MultiplyCount.runs += 1;
-        return this.store.$count * this.params;
+        return this.store.$count * this.props;
     }
 }
 

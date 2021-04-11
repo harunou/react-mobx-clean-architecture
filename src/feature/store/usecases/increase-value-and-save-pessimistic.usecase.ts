@@ -11,20 +11,20 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
     static make({
         store,
         persistence,
-        params
+        props
     }: RootUseCaseParams): IncreaseValueAndSavePessimistic {
         const effect = SaveCountSuccessEffect.make(persistence);
         return new IncreaseValueAndSavePessimistic(
             store.counter,
             effect,
-            params
+            props
         );
     }
 
     constructor(
         private store: CounterModel,
         private flow: SaveCountSuccessEffect,
-        private params: number = 0
+        private props: number = 0
     ) {
         makeObservable(this, {
             saveSuccess: action.bound
@@ -32,7 +32,7 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
     }
 
     execute(): void {
-        this.flow.save(this.store.$count + this.params).then(this.saveSuccess);
+        this.flow.save(this.store.$count + this.props).then(this.saveSuccess);
     }
 
     saveSuccess(count: number): void {

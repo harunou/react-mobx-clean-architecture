@@ -14,16 +14,16 @@ export class SelectorInteractionBuilder<S> implements SelectorBuilder<S> {
         return new SelectorInteractionBuilder(selectorConstructor);
     }
 
-    private params: number | undefined = undefined;
+    private props: number | undefined = undefined;
 
     constructor(private selectorConstructor: SelectorConstructor<S>) {}
 
-    withParams(params: number): this {
-        this.params = params;
+    withProps(props: number): this {
+        this.props = props;
         return this;
     }
     build(store: S): Selector {
-        return this.selectorConstructor.make({ store, params: this.params });
+        return this.selectorConstructor.make({ store, props: this.props });
     }
 }
 
@@ -34,19 +34,19 @@ export class UseCaseInteractionBuilder<S, P> implements UseCaseBuilder<S, P> {
         return new UseCaseInteractionBuilder(useCaseConstructor);
     }
 
-    private params: number | undefined = undefined;
+    private props: number | undefined = undefined;
 
     constructor(private useCaseConstructor: UseCaseConstructor<S, P>) {}
 
-    withParams(params: number): this {
-        this.params = params;
+    withProps(props: number): this {
+        this.props = props;
         return this;
     }
     build(store: S, persistence: P): UseCase {
         return this.useCaseConstructor.make({
             store,
             persistence,
-            params: this.params
+            props: this.props
         });
     }
 }

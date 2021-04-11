@@ -16,14 +16,12 @@ export class FeatureController {
         });
     }
     add_1_ButtonPushed(): void {
-        this.store.execute(IncreaseValueUseCase.withParams(1));
+        this.store.execute(IncreaseValueUseCase.withProps(1));
     }
     add_1_and_save_optimistic_ButtonPushed(): void {
-        this.store.execute(IncreaseValueAndSaveOptimisticUseCase.withParams(1));
+        this.store.execute(IncreaseValueAndSaveOptimisticUseCase.withProps(1));
     }
     add_1_and_save_pessimistic_ButtonPushed(): void {
-        this.store.execute(
-            IncreaseValueAndSavePessimisticUseCase.withParams(1)
-        );
+        this.store.execute(IncreaseValueAndSavePessimisticUseCase.withProps(1));
     }
 }

@@ -5,18 +5,18 @@ import { UseCase } from '../../../stores/helpers/stores.types';
 import { RootUseCaseParams } from '../../../stores/root/root.types';
 
 export class IncreaseValue implements UseCase {
-    static make({ store, params }: RootUseCaseParams): IncreaseValue {
-        return new IncreaseValue(store.counter, params);
+    static make({ store, props }: RootUseCaseParams): IncreaseValue {
+        return new IncreaseValue(store.counter, props);
     }
 
-    constructor(private store: CounterModel, private params: number = 0) {
+    constructor(private store: CounterModel, private props: number = 0) {
         makeObservable(this, {
             execute: action.bound
         });
     }
 
     execute(): void {
-        this.store.setCount(this.store.$count + this.params);
+        this.store.setCount(this.store.$count + this.props);
     }
 }
 export const IncreaseValueUseCase = UseCaseInteractionBuilder.make(

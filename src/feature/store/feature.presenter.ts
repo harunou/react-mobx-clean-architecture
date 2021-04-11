@@ -12,6 +12,6 @@ export class FeaturePresenter {
         });
     }
     get selectMultiplyCountOn_10(): number {
-        return this.store.query(MultiplyCountSelector.withParams(10)).result;
+        return this.store.query(MultiplyCountSelector.withProps(10)).result;
     }
 }

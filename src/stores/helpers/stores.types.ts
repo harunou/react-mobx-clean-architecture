@@ -8,7 +8,7 @@ export interface SelectorConstructor<S> {
 
 export interface SelectorMakeParams<S> {
     store: S;
-    params?: number;
+    props?: number;
 }
 
 export interface SelectorBuilder<S> {
@@ -30,7 +30,7 @@ export interface UseCaseConstructor<S, P> {
 export interface UseCaseMakeParams<S, P> {
     store: S;
     persistence: P;
-    params?: number;
+    props?: number;
 }
 
 export interface UseCaseBuilder<S, P> {
