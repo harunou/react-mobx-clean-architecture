@@ -7,18 +7,18 @@ import {
     UseCaseConstructor
 } from './stores.types';
 
-export class SelectorInteractionBuilder<S> implements SelectorBuilder<S> {
-    static make<T>(
-        selectorConstructor: SelectorConstructor<T>
-    ): SelectorInteractionBuilder<T> {
+export class SelectorInteractionBuilder<S, P> implements SelectorBuilder<S> {
+    static make<T, R>(
+        selectorConstructor: SelectorConstructor<T, R>
+    ): SelectorInteractionBuilder<T, R> {
         return new SelectorInteractionBuilder(selectorConstructor);
     }
 
-    private props: number | undefined = undefined;
+    private props: P | undefined = undefined;
 
-    constructor(private selectorConstructor: SelectorConstructor<S>) {}
+    constructor(private selectorConstructor: SelectorConstructor<S, P>) {}
 
-    withProps(props: number): this {
+    withProps(props: P): this {
         this.props = props;
         return this;
     }

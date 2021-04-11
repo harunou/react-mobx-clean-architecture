@@ -2,13 +2,13 @@ export interface Selector {
     result: number;
 }
 
-export interface SelectorConstructor<S> {
-    make(params: SelectorMakeParams<S>): Selector;
+export interface SelectorConstructor<S, P> {
+    make(params: SelectorMakeParams<S, P>): Selector;
 }
 
-export interface SelectorMakeParams<S> {
+export interface SelectorMakeParams<S, P> {
     store: S;
-    props?: number;
+    props: P | undefined;
 }
 
 export interface SelectorBuilder<S> {

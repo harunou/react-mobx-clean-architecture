@@ -13,4 +13,4 @@ export type RootUseCaseParams = UseCaseMakeParams<
     DomainModel,
     PersistenceModel
 >;
-export type RootSelectorParams = SelectorMakeParams<DomainState>;
+export type RootSelectorParams<P> = SelectorMakeParams<DomainState, P>;

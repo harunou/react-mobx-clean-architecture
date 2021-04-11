@@ -6,8 +6,8 @@ describe(`${MultiplyCount.name}`, () => {
         const state: CounterState = {
             $count: 3
         };
-        const multiplyAmount = 4;
-        const select = new MultiplyCount(state, multiplyAmount);
+        const factor = 4;
+        const select = new MultiplyCount(state, factor);
         expect(select.result).toEqual(12);
     });
 });
