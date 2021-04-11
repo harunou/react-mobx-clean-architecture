@@ -1,5 +1,5 @@
-import { DomainStore } from '../../../stores/domainStore/domainStore';
-import { Domain } from '../../../stores/domainStore/domainStore.types';
+import { DomainStore } from '../../../stores/domain/domain.store';
+import { Domain } from '../../../stores/domain/domain.types';
 import {
     makeAsyncRequest,
     makeAsyncThrow,

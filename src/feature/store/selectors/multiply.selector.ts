@@ -1,4 +1,4 @@
-import { DomainState } from '../../../stores/domainStore/domainStore.types';
+import { DomainState } from '../../../stores/domain/domain.types';
 import { SelectorInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { Selector } from '../../../stores/helpers/stores.types';
 

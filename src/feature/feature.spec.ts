@@ -2,7 +2,7 @@ import { autorun } from 'mobx';
 import { CountService } from '../api/count.service';
 import { AppStore } from '../stores/appStore/appStore';
 import { StoreFacade } from '../stores/appStore/appStore.types';
-import { Domain } from '../stores/domainStore/domainStore.types';
+import { Domain } from '../stores/domain/domain.types';
 import { Persistence } from '../stores/persistenceStore/persistenceStore.types';
 import { sleep } from '../testing-tools';
 import { FeatureController } from './store/feature.controller';

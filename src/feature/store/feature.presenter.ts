@@ -1,5 +1,5 @@
 import { computed, makeObservable } from 'mobx';
-import { Domain } from '../../stores/domainStore/domainStore.types';
+import { Domain } from '../../stores/domain/domain.types';
 import { StoreQuery } from '../../stores/appStore/appStore.types';
 import { MultiplySelector } from './selectors/multiply.selector';
 

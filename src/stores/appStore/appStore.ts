@@ -1,6 +1,6 @@
 import { configure } from 'mobx';
-import { DomainStore } from '../domainStore/domainStore';
-import { Domain, DomainState } from '../domainStore/domainStore.types';
+import { DomainStore } from '../domain/domain.store';
+import { Domain, DomainState } from '../domain/domain.types';
 import {
     Selector,
     SelectorBuilder,

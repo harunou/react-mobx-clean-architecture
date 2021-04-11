@@ -1,5 +1,5 @@
 import { action, makeObservable } from 'mobx';
-import { Domain } from '../../../stores/domainStore/domainStore.types';
+import { Domain } from '../../../stores/domain/domain.types';
 import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { UseCase } from '../../../stores/helpers/stores.types';
 import { Persistence } from '../../../stores/persistenceStore/persistenceStore.types';

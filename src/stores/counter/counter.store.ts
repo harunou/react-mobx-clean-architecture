@@ -2,23 +2,23 @@ import { action, makeObservable, observable } from 'mobx';
 import { CounterModel, CounterState } from './counter.types';
 
 export class CounterStore implements CounterModel {
-    static make(initialState: CounterState): CounterStore {
-        return new CounterStore(initialState);
+    static make(state: CounterState): CounterStore {
+        return new CounterStore(state);
     }
 
     $count = 0;
 
-    constructor(initialState: CounterState) {
+    constructor(state: CounterState) {
         makeObservable(this, {
             $count: observable,
             init: action,
             setCount: action
         });
-        this.init(initialState);
+        this.init(state);
     }
 
-    init(initialState: CounterState) {
-        Object.assign(this, initialState);
+    init(state: CounterState) {
+        Object.assign(this, state);
     }
 
     setCount(value: number): void {

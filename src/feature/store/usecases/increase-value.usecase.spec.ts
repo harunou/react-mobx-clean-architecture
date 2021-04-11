@@ -1,4 +1,4 @@
-import { Domain } from '../../../stores/domainStore/domainStore.types';
+import { Domain } from '../../../stores/domain/domain.types';
 import { IncreaseValue } from './increase-value.usecase';
 
 describe(`${IncreaseValue.name}`, () => {

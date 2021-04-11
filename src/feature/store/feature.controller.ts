@@ -1,5 +1,5 @@
 import { action, makeObservable } from 'mobx';
-import { Domain } from '../../stores/domainStore/domainStore.types';
+import { Domain } from '../../stores/domain/domain.types';
 import { StoreExecuter } from '../../stores/appStore/appStore.types';
 import { Persistence } from '../../stores/persistenceStore/persistenceStore.types';
 import { IncreaseValueUseCase } from './usecases/increase-value.usecase';

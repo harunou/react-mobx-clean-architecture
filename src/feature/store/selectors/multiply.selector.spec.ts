@@ -1,4 +1,4 @@
-import { DomainState } from '../../../stores/domainStore/domainStore.types';
+import { DomainState } from '../../../stores/domain/domain.types';
 import { Multiply } from './multiply.selector';
 
 describe(`${Multiply.name}`, () => {

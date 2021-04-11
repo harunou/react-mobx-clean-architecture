@@ -1,4 +1,4 @@
-import { Domain } from '../domainStore/domainStore.types';
+import { Domain } from '../domain/domain.types';
 import {
     Selector,
     SelectorBuilder,
