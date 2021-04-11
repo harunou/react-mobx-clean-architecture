@@ -7,25 +7,25 @@ import {
     UseCaseConstructor
 } from './stores.types';
 
-export class SelectorInteractionBuilder<Store, Props>
-    implements SelectorBuilder<Store> {
-    static make<CStore, CProps>(
-        selectorConstructor: SelectorConstructor<CStore, CProps>
-    ): SelectorInteractionBuilder<CStore, CProps> {
+export class SelectorInteractionBuilder<Store, Props, Resp>
+    implements SelectorBuilder<Store, Resp> {
+    static make<CStore, CProps, CResp>(
+        selectorConstructor: SelectorConstructor<CStore, CProps, CResp>
+    ): SelectorInteractionBuilder<CStore, CProps, CResp> {
         return new SelectorInteractionBuilder(selectorConstructor);
     }
 
     private props: Props | undefined = undefined;
 
     constructor(
-        private selectorConstructor: SelectorConstructor<Store, Props>
+        private selectorConstructor: SelectorConstructor<Store, Props, Resp>
     ) {}
 
     withProps(props: Props): this {
         this.props = props;
         return this;
     }
-    build(store: Store): Selector {
+    build(store: Store): Selector<Resp> {
         return this.selectorConstructor.make({ store, props: this.props });
     }
 }
@@ -60,7 +60,7 @@ export class UseCaseInteractionBuilder<Store, Per, Props>
 export abstract class AppStore<S, P> {
     constructor(private domain: S, private persistence: P) {}
 
-    query(selector: SelectorBuilder<S>): Selector {
+    query<R>(selector: SelectorBuilder<S, R>): Selector<R> {
         return selector.build(this.domain);
     }
 

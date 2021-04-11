@@ -1,9 +1,9 @@
-export interface Selector {
-    result: number;
+export interface Selector<R> {
+    result: R;
 }
 
-export interface SelectorConstructor<S, P> {
-    make(params: SelectorMakeParams<S, P>): Selector;
+export interface SelectorConstructor<S, P, R> {
+    make(params: SelectorMakeParams<S, P>): Selector<R>;
 }
 
 export interface SelectorMakeParams<S, P> {
@@ -11,12 +11,14 @@ export interface SelectorMakeParams<S, P> {
     props: P | undefined;
 }
 
-export interface SelectorBuilder<S> {
-    build(state: S): Selector;
+export interface SelectorBuilder<S, R> {
+    build(state: S): Selector<R>;
 }
 
 export interface StoreQuery<S> {
-    query(builder: SelectorBuilder<S>): Selector;
+    query<R>(
+        builder: SelectorBuilder<S, R>
+    ): ReturnType<SelectorBuilder<S, R>['build']>;
 }
 
 export interface UseCase {

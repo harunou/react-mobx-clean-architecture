@@ -36,10 +36,10 @@ describe(`${RootStore.name}`, () => {
     });
     it('has use query executer', () => {
         const queryResult = 0;
-        const selectMock: Selector = {
+        const selectMock: Selector<number> = {
             result: queryResult
         };
-        const selectBuilderMock: SelectorBuilder<DomainModel> = {
+        const selectBuilderMock: SelectorBuilder<DomainModel, number> = {
             build: jest.fn().mockReturnValue(selectMock)
         };
         const query = store.query(selectBuilderMock);
