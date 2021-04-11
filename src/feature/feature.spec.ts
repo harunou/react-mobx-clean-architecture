@@ -1,7 +1,7 @@
 import { autorun } from 'mobx';
 import { CountService } from '../api/count.service';
-import { AppStore } from '../stores/appStore/appStore';
-import { StoreFacade } from '../stores/appStore/appStore.types';
+import { RootStore } from '../stores/root/root.store';
+import { StoreFacade } from '../stores/root/root.types';
 import { Domain } from '../stores/domain/domain.types';
 import { Persistence } from '../stores/persistenceStore/persistenceStore.types';
 import { sleep } from '../testing-tools';
@@ -13,7 +13,7 @@ describe(`Feature functional react component`, () => {
     let store: StoreFacade<Domain, Persistence>;
 
     beforeEach(() => {
-        store = AppStore.make({ $count: 0 });
+        store = RootStore.make({ $count: 0 });
         Multiply.runs = 0;
         CountService.successResponses = 0;
     });
