@@ -3,7 +3,7 @@ import { Domain } from '../../../stores/domain/domain.types';
 import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { UseCase } from '../../../stores/helpers/stores.types';
 import { PersistenceModel } from '../../../stores/persistence/persistence.types';
-import { SaveCountSuccessFlow } from '../flows/feature.flows';
+import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';
 
 export class IncreaseValueAndSaveOptimistic implements UseCase {
     static make(
@@ -11,13 +11,13 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
         persistence: PersistenceModel,
         params: number
     ): IncreaseValueAndSaveOptimistic {
-        const flow = SaveCountSuccessFlow.make(persistence);
+        const flow = SaveCountSuccessEffect.make(persistence);
         return new IncreaseValueAndSaveOptimistic(store, flow, params);
     }
 
     constructor(
         private store: Domain,
-        private flow: SaveCountSuccessFlow,
+        private flow: SaveCountSuccessEffect,
         private params: number
     ) {
         makeObservable(this, {

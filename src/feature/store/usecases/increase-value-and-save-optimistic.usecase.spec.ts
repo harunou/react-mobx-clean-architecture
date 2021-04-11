@@ -5,7 +5,7 @@ import {
     makeAsyncThrow,
     sleep
 } from '../../../testing-tools';
-import { SaveCountSuccessFlow } from '../flows/feature.flows';
+import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';
 import { IncreaseValueAndSaveOptimistic } from './increase-value-and-save-optimistic.usecase';
 
 describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
@@ -20,7 +20,7 @@ describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
             save: jest
                 .fn()
                 .mockImplementationOnce((v: number) => makeAsyncRequest(0, v))
-        } as unknown) as SaveCountSuccessFlow;
+        } as unknown) as SaveCountSuccessEffect;
         const useCase = new IncreaseValueAndSaveOptimistic(
             store,
             flow,
@@ -39,7 +39,7 @@ describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
                 .mockImplementationOnce((v: number) =>
                     makeAsyncThrow(0, 'Error')
                 )
-        } as unknown) as SaveCountSuccessFlow;
+        } as unknown) as SaveCountSuccessEffect;
         const useCase = new IncreaseValueAndSaveOptimistic(
             store,
             flow,

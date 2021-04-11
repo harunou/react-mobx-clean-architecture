@@ -3,20 +3,22 @@ import { CancellablePromise } from 'mobx/dist/api/flow';
 import { CounterService } from '../../../api/counter.service';
 import { PersistenceModel } from '../../../stores/persistence/persistence.types';
 
-export class SaveCountSuccessFlow {
+export class SaveCountSuccessEffect {
     static flow: CancellablePromise<number>;
-    static make(persistence: PersistenceModel): SaveCountSuccessFlow {
-        return new SaveCountSuccessFlow(persistence.countService);
+    static make(persistence: PersistenceModel): SaveCountSuccessEffect {
+        return new SaveCountSuccessEffect(persistence.countService);
     }
 
     constructor(private countService: CounterService) {}
 
     save(count: number): CancellablePromise<number> {
-        if (SaveCountSuccessFlow.flow) {
-            SaveCountSuccessFlow.flow.cancel();
+        if (SaveCountSuccessEffect.flow) {
+            SaveCountSuccessEffect.flow.cancel();
         }
-        SaveCountSuccessFlow.flow = flow(this.saveGenerator.bind(this))(count);
-        return SaveCountSuccessFlow.flow;
+        SaveCountSuccessEffect.flow = flow(this.saveGenerator.bind(this))(
+            count
+        );
+        return SaveCountSuccessEffect.flow;
     }
 
     private *saveGenerator(

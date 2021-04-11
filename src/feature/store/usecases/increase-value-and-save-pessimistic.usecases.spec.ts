@@ -1,7 +1,7 @@
 import { DomainStore } from '../../../stores/domain/domain.store';
 import { Domain } from '../../../stores/domain/domain.types';
 import { makeAsyncRequest, sleep } from '../../../testing-tools';
-import { SaveCountSuccessFlow } from '../flows/feature.flows';
+import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';
 import { IncreaseValueAndSavePessimistic } from './increase-value-and-save-pessimistic.usecases';
 
 describe(`${IncreaseValueAndSavePessimistic.name}`, () => {
@@ -16,7 +16,7 @@ describe(`${IncreaseValueAndSavePessimistic.name}`, () => {
             save: jest
                 .fn()
                 .mockImplementationOnce((v: number) => makeAsyncRequest(0, v))
-        } as unknown) as SaveCountSuccessFlow;
+        } as unknown) as SaveCountSuccessEffect;
         const useCase = new IncreaseValueAndSavePessimistic(
             store,
             flow,
