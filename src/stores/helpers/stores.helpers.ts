@@ -5,7 +5,7 @@ import {
     UseCase,
     UseCaseBuilder,
     UseCaseConstructor
-} from './stores.types';
+} from '../stores.types';
 
 export class SelectorInteractionBuilder<Store, Props, Resp>
     implements SelectorBuilder<Store, Resp> {

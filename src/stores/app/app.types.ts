@@ -4,7 +4,7 @@ import {
     StoreExecuter,
     StoreQuery,
     UseCaseMakeParams
-} from '../helpers/stores.types';
+} from '../stores.types';
 import { PersistenceModel } from '../persistence/persistence.types';
 
 export type AppStoreQuery = StoreQuery<DomainState>;

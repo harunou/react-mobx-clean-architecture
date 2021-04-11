@@ -1,6 +1,6 @@
 import { CounterState } from '../../../stores/counter/counter.types';
 import { SelectorInteractionBuilder } from '../../../stores/helpers/stores.helpers';
-import { Selector } from '../../../stores/helpers/stores.types';
+import { Selector } from '../../../stores/stores.types';
 import { AppSelectorParams } from '../../../stores/app/app.types';
 
 export class MultiplyCount implements Selector<number> {

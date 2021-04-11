@@ -2,7 +2,7 @@ import { action, makeObservable } from 'mobx';
 import { CounterModel } from '../../../stores/counter/counter.types';
 import { DomainModel } from '../../../stores/domain/domain.types';
 import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
-import { UseCase } from '../../../stores/helpers/stores.types';
+import { UseCase } from '../../../stores/stores.types';
 import { PersistenceModel } from '../../../stores/persistence/persistence.types';
 import { AppUseCaseParams } from '../../../stores/app/app.types';
 import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';

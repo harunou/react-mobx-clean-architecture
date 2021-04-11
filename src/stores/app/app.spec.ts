@@ -4,7 +4,7 @@ import {
     SelectorBuilder,
     UseCase,
     UseCaseBuilder
-} from '../helpers/stores.types';
+} from '../stores.types';
 import { PersistenceModel } from '../persistence/persistence.types';
 import { AppStore } from './app.store';
 
