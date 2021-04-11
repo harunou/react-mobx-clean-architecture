@@ -1,5 +1,6 @@
 import { action, makeObservable } from 'mobx';
-import { Domain } from '../../../stores/domain/domain.types';
+import { CounterModel } from '../../../stores/counter/counter.types';
+import { DomainModel } from '../../../stores/domain/domain.types';
 import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { UseCase } from '../../../stores/helpers/stores.types';
 import { PersistenceModel } from '../../../stores/persistence/persistence.types';
@@ -7,16 +8,20 @@ import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';
 
 export class IncreaseValueAndSavePessimistic implements UseCase {
     static make(
-        store: Domain,
+        store: DomainModel,
         persistence: PersistenceModel,
         params: number
     ): IncreaseValueAndSavePessimistic {
-        const flow = SaveCountSuccessEffect.make(persistence);
-        return new IncreaseValueAndSavePessimistic(store, flow, params);
+        const effect = SaveCountSuccessEffect.make(persistence);
+        return new IncreaseValueAndSavePessimistic(
+            store.counter,
+            effect,
+            params
+        );
     }
 
     constructor(
-        private store: Domain,
+        private store: CounterModel,
         private flow: SaveCountSuccessEffect,
         private params: number
     ) {

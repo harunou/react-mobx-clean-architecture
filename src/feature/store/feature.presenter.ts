@@ -1,13 +1,13 @@
 import { computed, makeObservable } from 'mobx';
-import { Domain } from '../../stores/domain/domain.types';
+import { DomainState } from '../../stores/domain/domain.types';
 import { StoreQuery } from '../../stores/root/root.types';
 import { MultiplyCountSelector } from './selectors/multiply-count.selector';
 
 export class FeaturePresenter {
-    static make(store: StoreQuery<Domain>): FeaturePresenter {
+    static make(store: StoreQuery<DomainState>): FeaturePresenter {
         return new FeaturePresenter(store);
     }
-    constructor(private store: StoreQuery<Domain>) {
+    constructor(private store: StoreQuery<DomainState>) {
         makeObservable(this, {
             selectMultiplyCountOn_10: computed
         });

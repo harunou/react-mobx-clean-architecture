@@ -1,4 +1,4 @@
-import { Domain } from '../domain/domain.types';
+import { DomainModel } from '../domain/domain.types';
 import {
     Selector,
     SelectorBuilder,
@@ -10,12 +10,12 @@ import { RootStore } from './root.store';
 import { StoreFacade } from './root.types';
 
 describe(`${RootStore.name}`, () => {
-    let model: Domain;
+    let model: DomainModel;
     let persistence: PersistenceModel;
-    let store: StoreFacade<Domain, PersistenceModel>;
+    let store: StoreFacade<DomainModel, PersistenceModel>;
 
     beforeEach(() => {
-        model = {} as Domain;
+        model = {} as DomainModel;
         persistence = {} as PersistenceModel;
         store = new RootStore(model, persistence);
     });
@@ -24,7 +24,10 @@ describe(`${RootStore.name}`, () => {
         const useCaseMock: UseCase = {
             execute: jest.fn()
         };
-        const useCaseBuilderMock: UseCaseBuilder<Domain, PersistenceModel> = {
+        const useCaseBuilderMock: UseCaseBuilder<
+            DomainModel,
+            PersistenceModel
+        > = {
             build: jest.fn().mockReturnValue(useCaseMock)
         };
         store.execute(useCaseBuilderMock);
@@ -37,7 +40,7 @@ describe(`${RootStore.name}`, () => {
         const selectMock: Selector = {
             result: queryResult
         };
-        const selectBuilderMock: SelectorBuilder<Domain> = {
+        const selectBuilderMock: SelectorBuilder<DomainModel> = {
             build: jest.fn().mockReturnValue(selectMock)
         };
         const query = store.query(selectBuilderMock);

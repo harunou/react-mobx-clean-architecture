@@ -1,6 +1,7 @@
 import { makeAsyncRequest, makeAsyncThrow } from '../testing-tools';
+import { CounterDataSource as CounterDataSource } from './counter.types';
 
-export class CounterService {
+export class CounterService implements CounterDataSource {
     // NOTE(harunou): for testing purposes
     static successResponses = 0;
 

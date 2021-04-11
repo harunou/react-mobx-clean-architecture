@@ -1,54 +1,42 @@
-import { DomainStore } from '../../../stores/domain/domain.store';
-import { Domain } from '../../../stores/domain/domain.types';
-import {
-    makeAsyncRequest,
-    makeAsyncThrow,
-    sleep
-} from '../../../testing-tools';
+import { counterServiceMock } from '../../../api/counter.mocks';
+import { CounterStore } from '../../../stores/counter/counter.store';
+import { CounterModel } from '../../../stores/counter/counter.types';
+import { sleep } from '../../../testing-tools';
 import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';
 import { IncreaseValueAndSaveOptimistic } from './increase-value-and-save-optimistic.usecase';
 
 describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
-    let store: Domain;
+    let store: CounterModel;
+    let effect: SaveCountSuccessEffect;
     const increaseAmount = 4;
     beforeEach(() => {
-        store = new DomainStore({ $count: 3 });
+        store = new CounterStore({ $count: 3 });
+        effect = new SaveCountSuccessEffect(counterServiceMock);
+        jest.spyOn(effect, 'save');
     });
     it('increases model value on predefined amount and optimistically save to the BE', () => {
         const setCountSpy = jest.spyOn(store, 'setCount');
-        const flow = ({
-            save: jest
-                .fn()
-                .mockImplementationOnce((v: number) => makeAsyncRequest(0, v))
-        } as unknown) as SaveCountSuccessEffect;
         const useCase = new IncreaseValueAndSaveOptimistic(
             store,
-            flow,
+            effect,
             increaseAmount
         );
         useCase.execute();
         expect(setCountSpy).toBeCalledTimes(1);
         expect(setCountSpy).toBeCalledWith(7);
-        expect(flow.save).toBeCalledWith(7);
+        expect(effect.save).toBeCalledWith(7);
     });
     it('decreases model value on predefined amount and if save to the BE failed', async () => {
         const setCountSpy = jest.spyOn(store, 'setCount');
-        const flow = ({
-            save: jest
-                .fn()
-                .mockImplementationOnce((v: number) =>
-                    makeAsyncThrow(0, 'Error')
-                )
-        } as unknown) as SaveCountSuccessEffect;
         const useCase = new IncreaseValueAndSaveOptimistic(
             store,
-            flow,
+            effect,
             increaseAmount
         );
         useCase.execute();
         expect(setCountSpy).toBeCalledTimes(1);
         expect(setCountSpy).toBeCalledWith(7);
-        expect(flow.save).toBeCalledWith(7);
+        expect(effect.save).toBeCalledWith(7);
         await sleep(0);
         expect(setCountSpy).toBeCalledWith(3);
     });
