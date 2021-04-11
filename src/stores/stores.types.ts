@@ -16,9 +16,7 @@ export interface SelectorBuilder<S, R> {
 }
 
 export interface StoreQuery<S> {
-    query<R>(
-        builder: SelectorBuilder<S, R>
-    ): ReturnType<SelectorBuilder<S, R>['build']>;
+    query<R>(builder: SelectorBuilder<S, R>): Selector<R>;
 }
 
 export interface UseCase {
