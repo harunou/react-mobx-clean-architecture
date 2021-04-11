@@ -1,4 +1,4 @@
-export interface Selector<R> {
+export interface Selector<R = any> {
     result: R;
 }
 

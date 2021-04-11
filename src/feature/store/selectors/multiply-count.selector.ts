@@ -3,7 +3,7 @@ import { SelectorInteractionBuilder } from '../../../stores/helpers/stores.helpe
 import { Selector } from '../../../stores/stores.types';
 import { AppSelectorParams } from '../../../stores/app/app.types';
 
-export class MultiplyCount implements Selector<number> {
+export class MultiplyCount implements Selector {
     // NOTE(harunou): for testing purposes
     static runs = 0;
 
