@@ -2,34 +2,41 @@ export interface Selector {
     result: number;
 }
 
+export interface SelectorConstructor<S> {
+    make(params: SelectorMakeParams<S>): Selector;
+}
+
+export interface SelectorMakeParams<S> {
+    store: S;
+    params?: number;
+}
+
 export interface SelectorBuilder<S> {
     build(state: S): Selector;
-}
-
-export interface UseCase {
-    execute(): void;
-}
-
-export interface UseCaseBuilder<S, P> {
-    build(state: S, persistence: P): UseCase;
 }
 
 export interface StoreQuery<S> {
     query(builder: SelectorBuilder<S>): Selector;
 }
 
-export interface StoreExecuter<S, P> {
-    execute(builder: UseCaseBuilder<S, P>): void;
+export interface UseCase {
+    execute(): void;
 }
 
-export abstract class AppStore<S, P> {
-    constructor(private domain: S, private persistence: P) {}
+export interface UseCaseConstructor<S, P> {
+    make(params: UseCaseMakeParams<S, P>): UseCase;
+}
 
-    query(selector: SelectorBuilder<S>): Selector {
-        return selector.build(this.domain);
-    }
+export interface UseCaseMakeParams<S, P> {
+    store: S;
+    persistence: P;
+    params?: number;
+}
 
-    execute(useCase: UseCaseBuilder<S, P>): void {
-        useCase.build(this.domain, this.persistence).execute();
-    }
+export interface UseCaseBuilder<S, P> {
+    build(state: S, persistence: P): UseCase;
+}
+
+export interface StoreExecuter<S, P> {
+    execute(builder: UseCaseBuilder<S, P>): void;
 }

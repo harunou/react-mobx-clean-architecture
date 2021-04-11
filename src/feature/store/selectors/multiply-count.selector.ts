@@ -1,17 +1,17 @@
 import { CounterState } from '../../../stores/counter/counter.types';
-import { DomainState } from '../../../stores/domain/domain.types';
 import { SelectorInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { Selector } from '../../../stores/helpers/stores.types';
+import { RootSelectorParams } from '../../../stores/root/root.types';
 
 export class MultiplyCount implements Selector {
     // NOTE(harunou): for testing purposes
     static runs = 0;
 
-    static make(store: DomainState, params: number): MultiplyCount {
+    static make({ store, params }: RootSelectorParams): MultiplyCount {
         return new MultiplyCount(store.counter, params);
     }
 
-    constructor(private store: CounterState, private params: number) {}
+    constructor(private store: CounterState, private params: number = 1) {}
 
     get result(): number {
         MultiplyCount.runs += 1;

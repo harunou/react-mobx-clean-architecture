@@ -4,14 +4,15 @@ import { DomainModel } from '../../../stores/domain/domain.types';
 import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { UseCase } from '../../../stores/helpers/stores.types';
 import { PersistenceModel } from '../../../stores/persistence/persistence.types';
+import { RootUseCaseParams } from '../../../stores/root/root.types';
 import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';
 
 export class IncreaseValueAndSavePessimistic implements UseCase {
-    static make(
-        store: DomainModel,
-        persistence: PersistenceModel,
-        params: number
-    ): IncreaseValueAndSavePessimistic {
+    static make({
+        store,
+        persistence,
+        params
+    }: RootUseCaseParams): IncreaseValueAndSavePessimistic {
         const effect = SaveCountSuccessEffect.make(persistence);
         return new IncreaseValueAndSavePessimistic(
             store.counter,
@@ -23,7 +24,7 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
     constructor(
         private store: CounterModel,
         private flow: SaveCountSuccessEffect,
-        private params: number
+        private params: number = 0
     ) {
         makeObservable(this, {
             saveSuccess: action.bound

@@ -1,7 +1,7 @@
 import { configure } from 'mobx';
 import { DomainStore } from '../domain/domain.store';
 import { DomainModel, DomainState } from '../domain/domain.types';
-import { AppStore } from '../helpers/stores.types';
+import { AppStore } from '../helpers/stores.helpers';
 import { PersistenceStore } from '../persistence/persistence.store';
 import { PersistenceModel } from '../persistence/persistence.types';
 

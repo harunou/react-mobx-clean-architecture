@@ -1,20 +1,15 @@
 import { action, makeObservable } from 'mobx';
 import { CounterModel } from '../../../stores/counter/counter.types';
-import { DomainModel } from '../../../stores/domain/domain.types';
 import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { UseCase } from '../../../stores/helpers/stores.types';
-import { PersistenceModel } from '../../../stores/persistence/persistence.types';
+import { RootUseCaseParams } from '../../../stores/root/root.types';
 
 export class IncreaseValue implements UseCase {
-    static make(
-        store: DomainModel,
-        _: PersistenceModel,
-        params: number
-    ): IncreaseValue {
+    static make({ store, params }: RootUseCaseParams): IncreaseValue {
         return new IncreaseValue(store.counter, params);
     }
 
-    constructor(private store: CounterModel, private params: number) {
+    constructor(private store: CounterModel, private params: number = 0) {
         makeObservable(this, {
             execute: action.bound
         });
