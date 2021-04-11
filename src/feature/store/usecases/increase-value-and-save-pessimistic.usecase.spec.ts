@@ -3,7 +3,7 @@ import { CounterStore } from '../../../stores/counter/counter.store';
 import { CounterModel } from '../../../stores/counter/counter.types';
 import { sleep } from '../../../testing-tools';
 import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';
-import { IncreaseValueAndSavePessimistic } from './increase-value-and-save-pessimistic.usecases';
+import { IncreaseValueAndSavePessimistic } from './increase-value-and-save-pessimistic.usecase';
 
 describe(`${IncreaseValueAndSavePessimistic.name}`, () => {
     let store: CounterModel;

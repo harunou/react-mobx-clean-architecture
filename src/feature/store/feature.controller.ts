@@ -1,7 +1,7 @@
 import { action, makeObservable } from 'mobx';
 import { IncreaseValueUseCase } from './usecases/increase-value.usecase';
 import { IncreaseValueAndSaveOptimisticUseCase } from './usecases/increase-value-and-save-optimistic.usecase';
-import { IncreaseValueAndSavePessimisticUseCase } from './usecases/increase-value-and-save-pessimistic.usecases';
+import { IncreaseValueAndSavePessimisticUseCase } from './usecases/increase-value-and-save-pessimistic.usecase';
 import { RootStoreExecutor } from '../../stores/root/root.types';
 
 export class FeatureController {
