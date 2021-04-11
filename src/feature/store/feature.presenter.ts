@@ -1,6 +1,6 @@
 import { computed, makeObservable } from 'mobx';
 import { DomainState } from '../../stores/domain/domain.types';
-import { StoreQuery } from '../../stores/root/root.types';
+import { StoreQuery } from '../../stores/helpers/stores.types';
 import { MultiplyCountSelector } from './selectors/multiply-count.selector';
 
 export class FeaturePresenter {

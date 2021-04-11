@@ -7,12 +7,11 @@ import {
 } from '../helpers/stores.types';
 import { PersistenceModel } from '../persistence/persistence.types';
 import { RootStore } from './root.store';
-import { StoreFacade } from './root.types';
 
 describe(`${RootStore.name}`, () => {
     let model: DomainModel;
     let persistence: PersistenceModel;
-    let store: StoreFacade<DomainModel, PersistenceModel>;
+    let store: RootStore;
 
     beforeEach(() => {
         model = {} as DomainModel;
