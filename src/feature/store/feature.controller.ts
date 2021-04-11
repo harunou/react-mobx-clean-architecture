@@ -1,18 +1,14 @@
 import { action, makeObservable } from 'mobx';
-import { PersistenceModel } from '../../stores/persistence/persistence.types';
 import { IncreaseValueUseCase } from './usecases/increase-value.usecase';
 import { IncreaseValueAndSaveOptimisticUseCase } from './usecases/increase-value-and-save-optimistic.usecase';
 import { IncreaseValueAndSavePessimisticUseCase } from './usecases/increase-value-and-save-pessimistic.usecases';
-import { DomainModel } from '../../stores/domain/domain.types';
-import { StoreExecuter } from '../../stores/helpers/stores.types';
+import { RootStoreExecutor } from '../../stores/root/root.types';
 
 export class FeatureController {
-    static make(
-        store: StoreExecuter<DomainModel, PersistenceModel>
-    ): FeatureController {
+    static make(store: RootStoreExecutor): FeatureController {
         return new FeatureController(store);
     }
-    constructor(private store: StoreExecuter<DomainModel, PersistenceModel>) {
+    constructor(private store: RootStoreExecutor) {
         makeObservable(this, {
             add_1_ButtonPushed: action.bound,
             add_1_and_save_optimistic_ButtonPushed: action.bound,
