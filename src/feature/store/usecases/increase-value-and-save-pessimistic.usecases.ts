@@ -2,13 +2,13 @@ import { action, makeObservable } from 'mobx';
 import { Domain } from '../../../stores/domain/domain.types';
 import { UseCaseInteractionBuilder } from '../../../stores/helpers/stores.helpers';
 import { UseCase } from '../../../stores/helpers/stores.types';
-import { Persistence } from '../../../stores/persistenceStore/persistenceStore.types';
+import { PersistenceModel } from '../../../stores/persistence/persistence.types';
 import { SaveCountSuccessFlow } from '../flows/feature.flows';
 
 export class IncreaseValueAndSavePessimistic implements UseCase {
     static make(
         store: Domain,
-        persistence: Persistence,
+        persistence: PersistenceModel,
         params: number
     ): IncreaseValueAndSavePessimistic {
         const flow = SaveCountSuccessFlow.make(persistence);

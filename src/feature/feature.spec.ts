@@ -1,21 +1,21 @@
 import { autorun } from 'mobx';
-import { CountService } from '../api/count.service';
+import { CounterService } from '../api/counter.service';
 import { RootStore } from '../stores/root/root.store';
 import { StoreFacade } from '../stores/root/root.types';
 import { Domain } from '../stores/domain/domain.types';
-import { Persistence } from '../stores/persistenceStore/persistenceStore.types';
+import { PersistenceModel } from '../stores/persistence/persistence.types';
 import { sleep } from '../testing-tools';
 import { FeatureController } from './store/feature.controller';
 import { FeaturePresenter } from './store/feature.presenter';
 import { Multiply } from './store/selectors/multiply.selector';
 
 describe(`Feature functional react component`, () => {
-    let store: StoreFacade<Domain, Persistence>;
+    let store: StoreFacade<Domain, PersistenceModel>;
 
     beforeEach(() => {
         store = RootStore.make({ $count: 0 });
         Multiply.runs = 0;
-        CountService.successResponses = 0;
+        CounterService.successResponses = 0;
     });
 
     // NOTE(harunou): mobx streams are behavior subjects, subscription takes
@@ -118,7 +118,7 @@ describe(`Feature functional react component`, () => {
         await sleep(0);
 
         expect(Multiply.runs).toEqual(3);
-        expect(CountService.successResponses).toEqual(2);
+        expect(CounterService.successResponses).toEqual(2);
     });
 
     it('renders after BE response when uses pessimistic save', async () => {
@@ -159,6 +159,6 @@ describe(`Feature functional react component`, () => {
         expect(renders).toEqual(6);
 
         expect(Multiply.runs).toEqual(3);
-        expect(CountService.successResponses).toEqual(2);
+        expect(CounterService.successResponses).toEqual(2);
     });
 });

@@ -1,15 +1,15 @@
 import { makeAsyncRequest, makeAsyncThrow } from '../testing-tools';
 
-export class CountService {
+export class CounterService {
     // NOTE(harunou): for testing purposes
     static successResponses = 0;
 
-    static make(): CountService {
-        return new CountService();
+    static make(): CounterService {
+        return new CounterService();
     }
     saveSuccess(value: number): Promise<number> {
         return makeAsyncRequest(0, value).then((v) => {
-            CountService.successResponses += 1;
+            CounterService.successResponses += 1;
             return v;
         });
     }

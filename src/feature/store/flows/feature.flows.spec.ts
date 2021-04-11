@@ -1,10 +1,10 @@
-import { CountService } from '../../../api/count.service';
+import { CounterService } from '../../../api/counter.service';
 import { SaveCountSuccessFlow } from './feature.flows';
 
 describe(`${SaveCountSuccessFlow.name}`, () => {
     it('saves data to the BE', async () => {
         const value = 5;
-        const service: CountService = {
+        const service: CounterService = {
             saveSuccess: jest.fn().mockResolvedValueOnce(value),
             saveFailure: jest.fn().mockRejectedValueOnce('Error')
         };

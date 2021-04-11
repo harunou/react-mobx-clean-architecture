@@ -1,15 +1,15 @@
 import { flow } from 'mobx';
 import { CancellablePromise } from 'mobx/dist/api/flow';
-import { CountService } from '../../../api/count.service';
-import { Persistence } from '../../../stores/persistenceStore/persistenceStore.types';
+import { CounterService } from '../../../api/counter.service';
+import { PersistenceModel } from '../../../stores/persistence/persistence.types';
 
 export class SaveCountSuccessFlow {
     static flow: CancellablePromise<number>;
-    static make(persistence: Persistence): SaveCountSuccessFlow {
+    static make(persistence: PersistenceModel): SaveCountSuccessFlow {
         return new SaveCountSuccessFlow(persistence.countService);
     }
 
-    constructor(private countService: CountService) {}
+    constructor(private countService: CounterService) {}
 
     save(count: number): CancellablePromise<number> {
         if (SaveCountSuccessFlow.flow) {

@@ -5,18 +5,18 @@ import {
     UseCase,
     UseCaseBuilder
 } from '../helpers/stores.types';
-import { Persistence } from '../persistenceStore/persistenceStore.types';
+import { PersistenceModel } from '../persistence/persistence.types';
 import { RootStore } from './root.store';
 import { StoreFacade } from './root.types';
 
 describe(`${RootStore.name}`, () => {
     let model: Domain;
-    let persistence: Persistence;
-    let store: StoreFacade<Domain, Persistence>;
+    let persistence: PersistenceModel;
+    let store: StoreFacade<Domain, PersistenceModel>;
 
     beforeEach(() => {
         model = {} as Domain;
-        persistence = {} as Persistence;
+        persistence = {} as PersistenceModel;
         store = new RootStore(model, persistence);
     });
 
@@ -24,7 +24,7 @@ describe(`${RootStore.name}`, () => {
         const useCaseMock: UseCase = {
             execute: jest.fn()
         };
-        const useCaseBuilderMock: UseCaseBuilder<Domain, Persistence> = {
+        const useCaseBuilderMock: UseCaseBuilder<Domain, PersistenceModel> = {
             build: jest.fn().mockReturnValue(useCaseMock)
         };
         store.execute(useCaseBuilderMock);

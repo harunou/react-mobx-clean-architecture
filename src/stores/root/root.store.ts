@@ -6,8 +6,8 @@ import {
     SelectorBuilder,
     UseCaseBuilder
 } from '../helpers/stores.types';
-import { PersistenceStore } from '../persistenceStore/persistenceStore';
-import { Persistence } from '../persistenceStore/persistenceStore.types';
+import { PersistenceStore } from '../persistence/persistence.store';
+import { PersistenceModel } from '../persistence/persistence.types';
 import { StoreFacade } from './root.types';
 
 configure({
@@ -18,7 +18,7 @@ configure({
     disableErrorBoundaries: false
 });
 
-export class RootStore implements StoreFacade<DomainModel, Persistence> {
+export class RootStore implements StoreFacade<DomainModel, PersistenceModel> {
     static make(initial: DomainState): RootStore {
         const domain = DomainStore.make(initial);
         const persistence = PersistenceStore.make();
@@ -28,14 +28,14 @@ export class RootStore implements StoreFacade<DomainModel, Persistence> {
 
     constructor(
         private domain: DomainModel,
-        private persistence: Persistence
+        private persistence: PersistenceModel
     ) {}
 
     query(selector: SelectorBuilder<DomainState>): Selector {
         return selector.build(this.domain);
     }
 
-    execute(useCase: UseCaseBuilder<DomainModel, Persistence>): void {
+    execute(useCase: UseCaseBuilder<DomainModel, PersistenceModel>): void {
         useCase.build(this.domain, this.persistence).execute();
     }
 }
