@@ -5,7 +5,7 @@ import { UseCase } from '../../../stores/helpers/stores.types';
 import { RootUseCaseParams } from '../../../stores/root/root.types';
 
 export class IncreaseValue implements UseCase {
-    static make({ store, props }: RootUseCaseParams): IncreaseValue {
+    static make({ store, props }: RootUseCaseParams<number>): IncreaseValue {
         return new IncreaseValue(store.counter, props);
     }
 

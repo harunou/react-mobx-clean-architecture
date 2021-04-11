@@ -10,7 +10,7 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
         store,
         persistence,
         props
-    }: RootUseCaseParams): IncreaseValueAndSaveOptimistic {
+    }: RootUseCaseParams<number>): IncreaseValueAndSaveOptimistic {
         const effect = SaveCountSuccessEffect.make(persistence);
         return new IncreaseValueAndSaveOptimistic(store.counter, effect, props);
     }

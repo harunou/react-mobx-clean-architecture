@@ -9,8 +9,9 @@ import { PersistenceModel } from '../persistence/persistence.types';
 
 export type RootStoreQuery = StoreQuery<DomainState>;
 export type RootStoreExecutor = StoreExecuter<DomainModel, PersistenceModel>;
-export type RootUseCaseParams = UseCaseMakeParams<
+export type RootUseCaseParams<P = undefined> = UseCaseMakeParams<
     DomainModel,
-    PersistenceModel
+    PersistenceModel,
+    P
 >;
 export type RootSelectorParams<P> = SelectorMakeParams<DomainState, P>;

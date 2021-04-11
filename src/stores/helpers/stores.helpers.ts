@@ -7,42 +7,48 @@ import {
     UseCaseConstructor
 } from './stores.types';
 
-export class SelectorInteractionBuilder<S, P> implements SelectorBuilder<S> {
-    static make<T, R>(
-        selectorConstructor: SelectorConstructor<T, R>
-    ): SelectorInteractionBuilder<T, R> {
+export class SelectorInteractionBuilder<Store, Props>
+    implements SelectorBuilder<Store> {
+    static make<CStore, CProps>(
+        selectorConstructor: SelectorConstructor<CStore, CProps>
+    ): SelectorInteractionBuilder<CStore, CProps> {
         return new SelectorInteractionBuilder(selectorConstructor);
     }
 
-    private props: P | undefined = undefined;
+    private props: Props | undefined = undefined;
 
-    constructor(private selectorConstructor: SelectorConstructor<S, P>) {}
+    constructor(
+        private selectorConstructor: SelectorConstructor<Store, Props>
+    ) {}
 
-    withProps(props: P): this {
+    withProps(props: Props): this {
         this.props = props;
         return this;
     }
-    build(store: S): Selector {
+    build(store: Store): Selector {
         return this.selectorConstructor.make({ store, props: this.props });
     }
 }
 
-export class UseCaseInteractionBuilder<S, P> implements UseCaseBuilder<S, P> {
-    static make<T, R>(
-        useCaseConstructor: UseCaseConstructor<T, R>
-    ): UseCaseInteractionBuilder<T, R> {
+export class UseCaseInteractionBuilder<Store, Per, Props>
+    implements UseCaseBuilder<Store, Per> {
+    static make<CStore, CPer, CProps>(
+        useCaseConstructor: UseCaseConstructor<CStore, CPer, CProps>
+    ): UseCaseInteractionBuilder<CStore, CPer, CProps> {
         return new UseCaseInteractionBuilder(useCaseConstructor);
     }
 
-    private props: number | undefined = undefined;
+    private props: Props | undefined = undefined;
 
-    constructor(private useCaseConstructor: UseCaseConstructor<S, P>) {}
+    constructor(
+        private useCaseConstructor: UseCaseConstructor<Store, Per, Props>
+    ) {}
 
-    withProps(props: number): this {
+    withProps(props: Props): this {
         this.props = props;
         return this;
     }
-    build(store: S, persistence: P): UseCase {
+    build(store: Store, persistence: Per): UseCase {
         return this.useCaseConstructor.make({
             store,
             persistence,

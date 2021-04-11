@@ -23,14 +23,14 @@ export interface UseCase {
     execute(): void;
 }
 
-export interface UseCaseConstructor<S, P> {
-    make(params: UseCaseMakeParams<S, P>): UseCase;
+export interface UseCaseConstructor<S, R, P> {
+    make(params: UseCaseMakeParams<S, R, P>): UseCase;
 }
 
-export interface UseCaseMakeParams<S, P> {
+export interface UseCaseMakeParams<S, R, P> {
     store: S;
-    persistence: P;
-    props?: number;
+    persistence: R;
+    props: P | undefined;
 }
 
 export interface UseCaseBuilder<S, P> {

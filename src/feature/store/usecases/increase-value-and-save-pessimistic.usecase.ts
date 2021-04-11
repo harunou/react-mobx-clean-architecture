@@ -12,7 +12,7 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
         store,
         persistence,
         props
-    }: RootUseCaseParams): IncreaseValueAndSavePessimistic {
+    }: RootUseCaseParams<number>): IncreaseValueAndSavePessimistic {
         const effect = SaveCountSuccessEffect.make(persistence);
         return new IncreaseValueAndSavePessimistic(
             store.counter,
