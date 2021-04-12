@@ -2,13 +2,13 @@ export interface Selector<R = unknown> {
     result: R;
 }
 
-export interface SelectorConstructor<S, P, R> {
-    make(params: SelectorMakeParams<S, P>): Selector<R>;
-}
-
-export interface SelectorMakeParams<S, P = unknown> {
+export interface SelectorParams<S, P = unknown> {
     store: S;
     props: P | undefined;
+}
+
+export interface SelectorConstructor<S, P, R> {
+    make(params: SelectorParams<S, P>): Selector<R>;
 }
 
 export interface SelectorInteractionBuilder<S, R> {

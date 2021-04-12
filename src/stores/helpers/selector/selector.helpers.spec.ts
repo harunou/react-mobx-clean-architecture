@@ -2,14 +2,14 @@ import { SelectorBuilder } from './selector.helpers';
 import {
     Selector,
     SelectorConstructor,
-    SelectorMakeParams
+    SelectorParams
 } from './selector.types';
 
 interface MockAccountState {
     balance: number;
 }
 type MockGetBalanceProps = number;
-type MockSelectorParams<P> = SelectorMakeParams<MockAccountState, P>;
+type MockSelectorParams<P> = SelectorParams<MockAccountState, P>;
 type MockSelectorConstructor = SelectorConstructor<
     MockAccountState,
     MockGetBalanceProps,
