@@ -1,12 +1,12 @@
 import { configure } from 'mobx';
 import { DomainStore } from '../domain/domain.store';
 import { DomainModel, DomainState } from '../domain/domain.types';
-import { RootStore } from '../helpers/stores.helpers';
+import { Store } from '../helpers/stores.helpers';
 import { PersistenceStore } from '../persistence/persistence.store';
 import { PersistenceModel } from '../persistence/persistence.types';
 
-export class AppStore extends RootStore<DomainModel, PersistenceModel> {
-    static make(initial: DomainState): AppStore {
+export class RootStore extends Store<DomainModel, PersistenceModel> {
+    static make(initial: DomainState): RootStore {
         configure({
             enforceActions: 'always',
             computedRequiresReaction: true,
@@ -15,9 +15,9 @@ export class AppStore extends RootStore<DomainModel, PersistenceModel> {
             disableErrorBoundaries: false
         });
 
-        const domain = DomainStore.make(initial);
-        const persistence = PersistenceStore.make();
+        const domainStore = DomainStore.make(initial);
+        const persistenceStore = PersistenceStore.make();
 
-        return new AppStore(domain, persistence);
+        return new RootStore(domainStore, persistenceStore);
     }
 }

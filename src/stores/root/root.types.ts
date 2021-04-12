@@ -7,11 +7,11 @@ import {
 } from '../stores.types';
 import { PersistenceModel } from '../persistence/persistence.types';
 
-export type AppStoreQuery = StoreQuery<DomainState>;
-export type AppStoreExecutor = StoreExecuter<DomainModel, PersistenceModel>;
-export type AppUseCaseParams<P = undefined> = UseCaseMakeParams<
+export type RootStoreQuery = StoreQuery<DomainState>;
+export type RootStoreExecutor = StoreExecuter<DomainModel, PersistenceModel>;
+export type RootUseCaseParams<P = undefined> = UseCaseMakeParams<
     DomainModel,
     PersistenceModel,
     P
 >;
-export type AppSelectorParams<P> = SelectorMakeParams<DomainState, P>;
+export type RootSelectorParams<P> = SelectorMakeParams<DomainState, P>;

@@ -1,12 +1,12 @@
 import { computed, makeObservable } from 'mobx';
-import { AppStoreQuery } from '../../stores/app/app.types';
+import { RootStoreQuery } from '../../stores/root/root.types';
 import { MultiplyCountSelector } from './selectors/multiply-count.selector';
 
 export class FeaturePresenter {
-    static make(store: AppStoreQuery): FeaturePresenter {
+    static make(store: RootStoreQuery): FeaturePresenter {
         return new FeaturePresenter(store);
     }
-    constructor(private store: AppStoreQuery) {
+    constructor(private store: RootStoreQuery) {
         makeObservable(this, {
             selectMultiplyCountOn_10: computed
         });

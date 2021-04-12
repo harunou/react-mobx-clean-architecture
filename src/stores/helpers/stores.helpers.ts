@@ -7,48 +7,46 @@ import {
     UseCaseConstructor
 } from '../stores.types';
 
-export class SelectorInteractionBuilder<Store, Props, Resp>
-    implements SelectorBuilder<Store, Resp> {
-    static make<CStore, CProps, CResp>(
-        selectorConstructor: SelectorConstructor<CStore, CProps, CResp>
-    ): SelectorInteractionBuilder<CStore, CProps, CResp> {
+export class SelectorInteractionBuilder<S, Props, R>
+    implements SelectorBuilder<S, R> {
+    static make<CS, CProps, CR>(
+        selectorConstructor: SelectorConstructor<CS, CProps, CR>
+    ): SelectorInteractionBuilder<CS, CProps, CR> {
         return new SelectorInteractionBuilder(selectorConstructor);
     }
 
     private props: Props | undefined = undefined;
 
     constructor(
-        private selectorConstructor: SelectorConstructor<Store, Props, Resp>
+        private selectorConstructor: SelectorConstructor<S, Props, R>
     ) {}
 
     withProps(props: Props): this {
         this.props = props;
         return this;
     }
-    build(store: Store): Selector<Resp> {
+    build(store: S): Selector<R> {
         return this.selectorConstructor.make({ store, props: this.props });
     }
 }
 
-export class UseCaseInteractionBuilder<Store, Per, Props>
-    implements UseCaseBuilder<Store, Per> {
-    static make<CStore, CPer, CProps>(
-        useCaseConstructor: UseCaseConstructor<CStore, CPer, CProps>
-    ): UseCaseInteractionBuilder<CStore, CPer, CProps> {
+export class UseCaseInteractionBuilder<S, P, Props>
+    implements UseCaseBuilder<S, P> {
+    static make<CS, CP, CProps>(
+        useCaseConstructor: UseCaseConstructor<CS, CP, CProps>
+    ): UseCaseInteractionBuilder<CS, CP, CProps> {
         return new UseCaseInteractionBuilder(useCaseConstructor);
     }
 
     private props: Props | undefined = undefined;
 
-    constructor(
-        private useCaseConstructor: UseCaseConstructor<Store, Per, Props>
-    ) {}
+    constructor(private useCaseConstructor: UseCaseConstructor<S, P, Props>) {}
 
     withProps(props: Props): this {
         this.props = props;
         return this;
     }
-    build(store: Store, persistence: Per): UseCase {
+    build(store: S, persistence: P): UseCase {
         return this.useCaseConstructor.make({
             store,
             persistence,
@@ -57,14 +55,14 @@ export class UseCaseInteractionBuilder<Store, Per, Props>
     }
 }
 
-export abstract class RootStore<S, P> {
-    constructor(private domain: S, private persistence: P) {}
+export abstract class Store<S, P> {
+    constructor(private appStore: S, private persistenceStore: P) {}
 
     query<R>(selector: SelectorBuilder<S, R>): Selector<R> {
-        return selector.build(this.domain);
+        return selector.build(this.appStore);
     }
 
     execute(useCase: UseCaseBuilder<S, P>): void {
-        useCase.build(this.domain, this.persistence).execute();
+        useCase.build(this.appStore, this.persistenceStore).execute();
     }
 }

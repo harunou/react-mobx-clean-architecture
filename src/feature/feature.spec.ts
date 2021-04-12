@@ -1,6 +1,6 @@
 import { autorun } from 'mobx';
 import { CounterService } from '../api/counter.service';
-import { AppStore } from '../stores/app/app.store';
+import { RootStore } from '../stores/root/root.store';
 import { DomainModel, DomainState } from '../stores/domain/domain.types';
 import { PersistenceModel } from '../stores/persistence/persistence.types';
 import { sleep } from '../testing-tools';
@@ -9,7 +9,7 @@ import { FeaturePresenter } from './store/feature.presenter';
 import { MultiplyCount } from './store/selectors/multiply-count.selector';
 
 describe(`Feature functional react component`, () => {
-    let store: AppStore;
+    let store: RootStore;
 
     beforeEach(() => {
         const initial: DomainState = {
@@ -17,7 +17,7 @@ describe(`Feature functional react component`, () => {
                 $count: 0
             }
         };
-        store = AppStore.make(initial);
+        store = RootStore.make(initial);
 
         MultiplyCount.runs = 0;
         CounterService.successResponses = 0;
