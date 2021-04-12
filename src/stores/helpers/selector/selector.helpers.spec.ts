@@ -1,67 +1,69 @@
-import { computed, makeObservable } from 'mobx';
 import { SelectorInteractionBuilder } from './selector.helpers';
-import { Selector, SelectorMakeParams } from './selector.types';
+import {
+    Selector,
+    SelectorConstructor,
+    SelectorMakeParams
+} from './selector.types';
 
 interface MockAccountState {
     balance: number;
 }
-type MockGetBalanceProp = number;
+type MockGetBalanceProps = number;
 type MockSelectorParams<P> = SelectorMakeParams<MockAccountState, P>;
-
-class MockGetBalance implements Selector {
-    static make({
-        store,
-        props
-    }: MockSelectorParams<MockGetBalanceProp>): MockGetBalance {
-        return new MockGetBalance(store, props);
-    }
-
-    constructor(
-        private readonly store: MockAccountState,
-        private readonly factor: MockGetBalanceProp = 1
-    ) {
-        makeObservable(this, {
-            result: computed
-        });
-    }
-
-    get result(): number {
-        return this.store.balance * this.factor;
-    }
-}
+type MockSelectorConstructor = SelectorConstructor<
+    MockAccountState,
+    MockGetBalanceProps,
+    MockSelectorParams<MockGetBalanceProps>
+>;
 
 describe(`${SelectorInteractionBuilder.name}`, () => {
-    it('builds selector', () => {
-        const mockGetBalanceSelector = SelectorInteractionBuilder.make(
-            MockGetBalance
+    let GetBalanceClass: MockSelectorConstructor;
+    let getBalanceSelectorMock: Selector;
+
+    beforeEach(() => {
+        getBalanceSelectorMock = {
+            result: 3
+        };
+        GetBalanceClass = {
+            make: jest.fn().mockReturnValueOnce(getBalanceSelectorMock)
+        };
+    });
+    it('calls make static method to build selector', () => {
+        const getBalanceSelectorBuilder = SelectorInteractionBuilder.make(
+            GetBalanceClass
         );
         const store: MockAccountState = {
             balance: 5
         };
-        const selectorBuilt = mockGetBalanceSelector.build(store);
-        expect(selectorBuilt).toBeInstanceOf(MockGetBalance);
+        const selector = getBalanceSelectorBuilder.build(store);
+        expect(GetBalanceClass.make).toBeCalledTimes(1);
+        expect(selector).toEqual(getBalanceSelectorMock);
     });
     it('builds selector with store', () => {
-        const mockGetBalanceSelector = SelectorInteractionBuilder.make(
-            MockGetBalance
+        const getBalanceSelectorBuilder = SelectorInteractionBuilder.make(
+            GetBalanceClass
         );
         const store: MockAccountState = {
             balance: 5
         };
-        const selectorConstructed = new MockGetBalance(store);
-        const selectorBuilt = mockGetBalanceSelector.build(store);
-        expect(selectorBuilt.result).toEqual(selectorConstructed.result);
+        getBalanceSelectorBuilder.build(store);
+        expect(GetBalanceClass.make).toBeCalledWith({
+            store,
+            props: undefined
+        });
     });
-    it('builds selector with store and props', () => {
-        const mockGetBalanceSelector = SelectorInteractionBuilder.make(
-            MockGetBalance
+    it('builds selector with props and store', () => {
+        const getBalanceSelectorBuilder = SelectorInteractionBuilder.make(
+            GetBalanceClass
         );
         const store: MockAccountState = {
             balance: 5
         };
-        const props: MockGetBalanceProp = 3;
-        const selectorConstructed = new MockGetBalance(store);
-        const selectorBuilt = mockGetBalanceSelector.build(store);
-        expect(selectorBuilt.result).toEqual(selectorConstructed.result);
+        const props: MockGetBalanceProps = 3;
+        getBalanceSelectorBuilder.withProps(props).build(store);
+        expect(GetBalanceClass.make).toBeCalledWith({
+            store,
+            props
+        });
     });
 });
