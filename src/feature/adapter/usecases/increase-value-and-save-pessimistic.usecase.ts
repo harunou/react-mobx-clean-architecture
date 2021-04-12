@@ -1,5 +1,5 @@
 import { CounterModel } from '@stores/counter/counter.types';
-import { UseCaseInteractionBuilder } from '@stores/helpers/usecase/usecase.helper';
+import { UseCaseInteractionBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { UseCase } from '@stores/helpers/usecase/usecase.types';
 import { RootUseCaseParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
