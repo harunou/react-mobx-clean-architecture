@@ -1,5 +1,5 @@
-import { counterServiceMock } from '../../../api/counter.mocks';
-import { CounterDataSource } from '../../../api/counter.types';
+import { counterServiceMock } from '@api/counter.mocks';
+import { CounterDataSource } from '@api/counter.types';
 import { SaveCountSuccessEffect } from './save-count-success.effect';
 
 describe(`${SaveCountSuccessEffect.name}`, () => {

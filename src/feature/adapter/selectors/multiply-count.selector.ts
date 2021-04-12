@@ -1,7 +1,7 @@
-import { CounterState } from '../../../stores/counter/counter.types';
-import { SelectorInteractionBuilder } from '../../../stores/helpers/stores.helpers';
-import { Selector } from '../../../stores/stores.types';
-import { RootSelectorParams } from '../../../stores/root/root.types';
+import { CounterState } from '@stores/counter/counter.types';
+import { SelectorInteractionBuilder } from '@stores/helpers/selector/selector.helpers';
+import { Selector } from '@stores/helpers/selector/selector.types';
+import { RootSelectorParams } from '@stores/root/root.types';
 
 export class MultiplyCount implements Selector {
     // NOTE(harunou): for testing purposes

@@ -1,5 +1,5 @@
+import { RootStoreQuery } from '@stores/root/root.types';
 import { computed, makeObservable } from 'mobx';
-import { RootStoreQuery } from '../../stores/root/root.types';
 import { MultiplyCountSelector } from './selectors/multiply-count.selector';
 
 export class FeaturePresenter {

@@ -2,7 +2,12 @@
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
       "useDefineForClassFields": true,
-      "experimentalDecorators": true
+      "experimentalDecorators": true,
+      "paths": {
+        "@stores/*": ["./src/stores/*"],
+        "@api/*": ["./src/api/*"],
+        "@testing-tools": ["./src/testing-tools.ts"]
+      }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules" ]

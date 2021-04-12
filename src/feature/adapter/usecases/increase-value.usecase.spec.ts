@@ -1,5 +1,5 @@
-import { CounterStore } from '../../../stores/counter/counter.store';
-import { CounterModel } from '../../../stores/counter/counter.types';
+import { CounterStore } from '@stores/counter/counter.store';
+import { CounterModel } from '@stores/counter/counter.types';
 import { IncreaseValue } from './increase-value.usecase';
 
 describe(`${IncreaseValue.name}`, () => {

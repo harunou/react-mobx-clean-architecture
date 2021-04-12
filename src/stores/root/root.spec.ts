@@ -1,10 +1,9 @@
-import { DomainModel } from '../domain/domain.types';
 import {
     Selector,
-    SelectorBuilder,
-    UseCase,
-    UseCaseBuilder
-} from '../stores.types';
+    SelectorBuilder
+} from '@stores/helpers/selector/selector.types';
+import { UseCase, UseCaseBuilder } from '@stores/helpers/usecase/usecase.types';
+import { DomainModel } from '../domain/domain.types';
 import { PersistenceModel } from '../persistence/persistence.types';
 import { RootStore } from './root.store';
 

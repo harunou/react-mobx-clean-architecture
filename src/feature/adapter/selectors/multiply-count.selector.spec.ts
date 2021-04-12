@@ -1,4 +1,4 @@
-import { CounterState } from '../../../stores/counter/counter.types';
+import { CounterState } from '@stores/counter/counter.types';
 import { MultiplyCount } from './multiply-count.selector';
 
 describe(`${MultiplyCount.name}`, () => {

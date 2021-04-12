@@ -1,8 +1,8 @@
+import { counterServiceMock } from '@api/counter.mocks';
+import { CounterStore } from '@stores/counter/counter.store';
+import { CounterModel } from '@stores/counter/counter.types';
 import { CancellablePromise } from 'mobx/dist/internal';
-import { counterServiceMock } from '../../../api/counter.mocks';
-import { CounterStore } from '../../../stores/counter/counter.store';
-import { CounterModel } from '../../../stores/counter/counter.types';
-import { sleep } from '../../../testing-tools';
+import { sleep } from '@testing-tools';
 import { SaveCountSuccessEffect } from '../effects/save-count-success.effect';
 import { IncreaseValueAndSaveOptimistic } from './increase-value-and-save-optimistic.usecase';
 

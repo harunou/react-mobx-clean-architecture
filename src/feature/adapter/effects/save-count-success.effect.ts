@@ -1,7 +1,7 @@
 import { flow } from 'mobx';
 import { CancellablePromise } from 'mobx/dist/api/flow';
-import { CounterDataSource } from '../../../api/counter.types';
-import { PersistenceModel } from '../../../stores/persistence/persistence.types';
+import { PersistenceModel } from '@stores/persistence/persistence.types';
+import { CounterDataSource } from '@api/counter.types';
 
 export class SaveCountSuccessEffect {
     static flow: CancellablePromise<number>;

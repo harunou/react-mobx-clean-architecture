@@ -1,8 +1,8 @@
+import { CounterService } from '@api/counter.service';
+import { DomainState } from '@stores/domain/domain.types';
+import { RootStore } from '@stores/root/root.store';
 import { autorun } from 'mobx';
-import { CounterService } from '../api/counter.service';
-import { RootStore } from '../stores/root/root.store';
-import { DomainState } from '../stores/domain/domain.types';
-import { sleep } from '../testing-tools';
+import { sleep } from '@testing-tools';
 import { FeatureController } from './adapter/feature.controller';
 import { FeaturePresenter } from './adapter/feature.presenter';
 import { MultiplyCount } from './adapter/selectors/multiply-count.selector';
