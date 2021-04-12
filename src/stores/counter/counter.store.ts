@@ -17,7 +17,7 @@ export class CounterStore implements CounterModel {
         this.init(state);
     }
 
-    init(state: CounterState) {
+    init(state: CounterState): void {
         Object.assign(this, state);
     }
 

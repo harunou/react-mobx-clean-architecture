@@ -8,5 +8,7 @@
         "editor.formatOnSave": true,
         "editor.formatOnPaste": false
     },
-
+    "eslint.options": {
+         "configFile": "eslint.config.js"
+    }
 }

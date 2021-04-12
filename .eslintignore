@@ -1,0 +1,5 @@
+# exclude all
+/**/*
+# except /src/**/*
+!/src
+!/src/**/*

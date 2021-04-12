@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run tsc:type-check && npm run jest:all",
+    "test": "npm run tsc:type-check && npm run eslint:all && npm run jest:all",
     "jest:base": "npx jest",
     "jest:watch": "npm run jest:base -- --watchAll=true",
     "jest:all": "npm run jest:base -- --watchAll=false",
-    "tsc:type-check": "tsc --noEmit --project ./tsconfig.json"
+    "tsc:type-check": "tsc --noEmit --project ./tsconfig.json",
+    "eslint:base": "eslint --format=codeframe --max-warnings=0 --ext=ts,tsx --config=eslint.config.js",
+    "eslint:all": "npm run eslint:base -- ./src"
   },
   "repository": {
     "type": "git",
@@ -28,7 +30,10 @@
     "@babel/preset-typescript": "7.13.0",
     "@tsconfig/recommended": "1.0.1",
     "@types/jest": "26.0.22",
+    "@typescript-eslint/eslint-plugin": "4.22.0",
+    "@typescript-eslint/parser": "4.22.0",
     "babel-jest": "26.6.3",
+    "eslint": "7.24.0",
     "jest": "26.6.3",
     "jest-watch-typeahead": "0.6.2",
     "mobx": "6.1.8",
