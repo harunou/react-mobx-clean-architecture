@@ -4,11 +4,12 @@ import { IncreaseValueAndSaveOptimisticUseCase } from './usecases/increase-value
 import { IncreaseValueAndSavePessimisticUseCase } from './usecases/increase-value-and-save-pessimistic.usecase';
 import { RootStoreExecutor } from '../../stores/root/root.types';
 
+// Consider to use builder for controllers
 export class FeatureController {
     static make(store: RootStoreExecutor): FeatureController {
         return new FeatureController(store);
     }
-    constructor(private store: RootStoreExecutor) {
+    constructor(private readonly store: RootStoreExecutor) {
         makeObservable(this, {
             add_1_ButtonPushed: action.bound,
             add_1_and_save_optimistic_ButtonPushed: action.bound,

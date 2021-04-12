@@ -6,7 +6,7 @@ export class FeaturePresenter {
     static make(store: RootStoreQuery): FeaturePresenter {
         return new FeaturePresenter(store);
     }
-    constructor(private store: RootStoreQuery) {
+    constructor(private readonly store: RootStoreQuery) {
         makeObservable(this, {
             selectMultiplyCountOn_10: computed
         });
