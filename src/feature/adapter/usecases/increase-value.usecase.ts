@@ -1,5 +1,5 @@
 import { CounterModel } from '@stores/counter/counter.types';
-import { UseCaseInteractionBuilder } from '@stores/helpers/usecase/usecase.helpers';
+import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { UseCase } from '@stores/helpers/usecase/usecase.types';
 import { RootUseCaseParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
@@ -19,6 +19,4 @@ export class IncreaseValue implements UseCase {
         this.store.setCount(this.store.$count + this.props);
     }
 }
-export const IncreaseValueUseCase = UseCaseInteractionBuilder.make(
-    IncreaseValue
-);
+export const IncreaseValueUseCase = UseCaseBuilder.make(IncreaseValue);

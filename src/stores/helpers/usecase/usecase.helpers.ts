@@ -1,11 +1,15 @@
-import { UseCase, UseCaseBuilder, UseCaseConstructor } from './usecase.types';
+import {
+    UseCase,
+    UseCaseInteractionBuilder,
+    UseCaseConstructor
+} from './usecase.types';
 
-export class UseCaseInteractionBuilder<S, P, Props>
-    implements UseCaseBuilder<S, P> {
+export class UseCaseBuilder<S, P, Props>
+    implements UseCaseInteractionBuilder<S, P> {
     static make<CS, CP, CProps>(
         useCaseConstructor: UseCaseConstructor<CS, CP, CProps>
-    ): UseCaseInteractionBuilder<CS, CP, CProps> {
-        return new UseCaseInteractionBuilder(useCaseConstructor);
+    ): UseCaseBuilder<CS, CP, CProps> {
+        return new UseCaseBuilder(useCaseConstructor);
     }
 
     private props: Props | undefined = undefined;

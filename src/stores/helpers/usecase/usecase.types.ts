@@ -12,10 +12,10 @@ export interface UseCaseMakeParams<S, R, P> {
     props: P | undefined;
 }
 
-export interface UseCaseBuilder<S, P> {
+export interface UseCaseInteractionBuilder<S, P> {
     build(state: S, persistence: P): UseCase;
 }
 
 export interface StoreExecuter<S, P> {
-    execute(builder: UseCaseBuilder<S, P>): void;
+    execute(builder: UseCaseInteractionBuilder<S, P>): void;
 }

@@ -2,7 +2,10 @@ import {
     Selector,
     SelectorInteractionBuilder
 } from '@stores/helpers/selector/selector.types';
-import { UseCase, UseCaseBuilder } from '@stores/helpers/usecase/usecase.types';
+import {
+    UseCase,
+    UseCaseInteractionBuilder
+} from '@stores/helpers/usecase/usecase.types';
 import { DomainModel } from '../domain/domain.types';
 import { PersistenceModel } from '../persistence/persistence.types';
 import { RootStore } from './root.store';
@@ -22,7 +25,7 @@ describe(`${RootStore.name}`, () => {
         const useCaseMock: UseCase = {
             execute: jest.fn()
         };
-        const useCaseBuilderMock: UseCaseBuilder<
+        const useCaseBuilderMock: UseCaseInteractionBuilder<
             DomainModel,
             PersistenceModel
         > = {

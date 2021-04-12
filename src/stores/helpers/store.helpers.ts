@@ -2,7 +2,7 @@ import {
     Selector,
     SelectorInteractionBuilder
 } from './selector/selector.types';
-import { UseCaseBuilder } from './usecase/usecase.types';
+import { UseCaseInteractionBuilder } from './usecase/usecase.types';
 
 export abstract class Store<S, P> {
     constructor(private appStore: S, private persistenceStore: P) {}
@@ -11,7 +11,7 @@ export abstract class Store<S, P> {
         return selector.build(this.appStore);
     }
 
-    execute(useCase: UseCaseBuilder<S, P>): void {
+    execute(useCase: UseCaseInteractionBuilder<S, P>): void {
         useCase.build(this.appStore, this.persistenceStore).execute();
     }
 }
