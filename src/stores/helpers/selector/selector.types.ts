@@ -11,10 +11,10 @@ export interface SelectorMakeParams<S, P = unknown> {
     props: P | undefined;
 }
 
-export interface SelectorBuilder<S, R> {
+export interface SelectorInteractionBuilder<S, R> {
     build(state: S): Selector<R>;
 }
 
 export interface StoreQuery<S> {
-    query<R>(builder: SelectorBuilder<S, R>): Selector<R>;
+    query<R>(builder: SelectorInteractionBuilder<S, R>): Selector<R>;
 }

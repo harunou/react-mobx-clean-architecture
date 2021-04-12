@@ -1,15 +1,15 @@
 import {
     Selector,
-    SelectorBuilder,
+    SelectorInteractionBuilder,
     SelectorConstructor
 } from './selector.types';
 
-export class SelectorInteractionBuilder<S, Props, R>
-    implements SelectorBuilder<S, R> {
+export class SelectorBuilder<S, Props, R>
+    implements SelectorInteractionBuilder<S, R> {
     static make<CS, CProps, CR>(
         selectorConstructor: SelectorConstructor<CS, CProps, CR>
-    ): SelectorInteractionBuilder<CS, CProps, CR> {
-        return new SelectorInteractionBuilder(selectorConstructor);
+    ): SelectorBuilder<CS, CProps, CR> {
+        return new SelectorBuilder(selectorConstructor);
     }
 
     private props: Props | undefined = undefined;

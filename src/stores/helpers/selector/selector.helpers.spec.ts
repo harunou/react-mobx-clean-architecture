@@ -1,4 +1,4 @@
-import { SelectorInteractionBuilder } from './selector.helpers';
+import { SelectorBuilder } from './selector.helpers';
 import {
     Selector,
     SelectorConstructor,
@@ -16,7 +16,7 @@ type MockSelectorConstructor = SelectorConstructor<
     MockSelectorParams<MockGetBalanceProps>
 >;
 
-describe(`${SelectorInteractionBuilder.name}`, () => {
+describe(`${SelectorBuilder.name}`, () => {
     let GetBalanceClass: MockSelectorConstructor;
     let getBalanceSelectorMock: Selector;
 
@@ -29,9 +29,7 @@ describe(`${SelectorInteractionBuilder.name}`, () => {
         };
     });
     it('calls make static method to build selector', () => {
-        const getBalanceSelectorBuilder = SelectorInteractionBuilder.make(
-            GetBalanceClass
-        );
+        const getBalanceSelectorBuilder = SelectorBuilder.make(GetBalanceClass);
         const store: MockAccountState = {
             balance: 5
         };
@@ -40,9 +38,7 @@ describe(`${SelectorInteractionBuilder.name}`, () => {
         expect(selector).toEqual(getBalanceSelectorMock);
     });
     it('builds selector with store', () => {
-        const getBalanceSelectorBuilder = SelectorInteractionBuilder.make(
-            GetBalanceClass
-        );
+        const getBalanceSelectorBuilder = SelectorBuilder.make(GetBalanceClass);
         const store: MockAccountState = {
             balance: 5
         };
@@ -53,9 +49,7 @@ describe(`${SelectorInteractionBuilder.name}`, () => {
         });
     });
     it('builds selector with props and store', () => {
-        const getBalanceSelectorBuilder = SelectorInteractionBuilder.make(
-            GetBalanceClass
-        );
+        const getBalanceSelectorBuilder = SelectorBuilder.make(GetBalanceClass);
         const store: MockAccountState = {
             balance: 5
         };

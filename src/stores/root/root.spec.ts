@@ -1,6 +1,6 @@
 import {
     Selector,
-    SelectorBuilder
+    SelectorInteractionBuilder
 } from '@stores/helpers/selector/selector.types';
 import { UseCase, UseCaseBuilder } from '@stores/helpers/usecase/usecase.types';
 import { DomainModel } from '../domain/domain.types';
@@ -38,7 +38,10 @@ describe(`${RootStore.name}`, () => {
         const selectMock: Selector<number> = {
             result: queryResult
         };
-        const selectBuilderMock: SelectorBuilder<DomainModel, number> = {
+        const selectBuilderMock: SelectorInteractionBuilder<
+            DomainModel,
+            number
+        > = {
             build: jest.fn().mockReturnValue(selectMock)
         };
         const query = store.query(selectBuilderMock);
