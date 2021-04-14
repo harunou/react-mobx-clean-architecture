@@ -8,7 +8,7 @@ interface PersistenceMock {
     setCount(): void;
 }
 type SetCountPropsMock = number;
-type SetCountUseCaseClassMock = UseCaseConstructor<
+type UseCaseConstructorMock = UseCaseConstructor<
     CounterStateMock,
     PersistenceMock,
     SetCountPropsMock
@@ -16,7 +16,7 @@ type SetCountUseCaseClassMock = UseCaseConstructor<
 
 describe(`${UseCaseBuilder.name}`, () => {
     let persistence: PersistenceMock;
-    let SetCountUseCaseClassMock: SetCountUseCaseClassMock;
+    let SetCountUseCaseClassMock: UseCaseConstructorMock;
     let setCountUseCaseInstanceMock: UseCase;
 
     beforeEach(() => {

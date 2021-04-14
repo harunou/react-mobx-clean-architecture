@@ -1,61 +1,56 @@
 import { SelectorBuilder } from './selector.helpers';
-import {
-    Selector,
-    SelectorConstructor,
-    SelectorParams
-} from './selector.types';
+import { Selector, SelectorConstructor } from './selector.types';
 
-interface MockAccountState {
-    balance: number;
+interface CounterState {
+    $count: number;
 }
-type MockGetBalanceProps = number;
-type MockSelectorParams<P> = SelectorParams<MockAccountState, P>;
-type MockSelectorConstructor = SelectorConstructor<
-    MockAccountState,
-    MockGetBalanceProps,
-    MockSelectorParams<MockGetBalanceProps>
+type GetCountProps = string;
+type GetCountSelectorResult = number;
+type GetCountSelectorConstructor = SelectorConstructor<
+    CounterState,
+    GetCountProps,
+    GetCountSelectorResult
+>;
+type GetCountSelectorBuilder = SelectorBuilder<
+    CounterState,
+    GetCountProps,
+    GetCountSelectorResult
 >;
 
 describe(`${SelectorBuilder.name}`, () => {
-    let GetBalanceClass: MockSelectorConstructor;
-    let getBalanceSelectorMock: Selector;
+    let GetCountSelectorClassMock: GetCountSelectorConstructor;
+    let getCountSelectorInstanceMock: Selector;
+    let store: CounterState;
+    let builder: GetCountSelectorBuilder;
 
     beforeEach(() => {
-        getBalanceSelectorMock = {
+        getCountSelectorInstanceMock = {
             result: 3
         };
-        GetBalanceClass = {
-            make: jest.fn().mockReturnValueOnce(getBalanceSelectorMock)
+        GetCountSelectorClassMock = {
+            make: jest.fn().mockReturnValueOnce(getCountSelectorInstanceMock)
         };
+        store = {
+            $count: 5
+        };
+        builder = SelectorBuilder.make(GetCountSelectorClassMock);
     });
-    it('calls make static method to build selector', () => {
-        const getBalanceSelectorBuilder = SelectorBuilder.make(GetBalanceClass);
-        const store: MockAccountState = {
-            balance: 5
-        };
-        const selector = getBalanceSelectorBuilder.build(store);
-        expect(GetBalanceClass.make).toBeCalledTimes(1);
-        expect(selector).toEqual(getBalanceSelectorMock);
+    it('calls make static method to build a selector', () => {
+        const selector = builder.build(store);
+        expect(GetCountSelectorClassMock.make).toBeCalledTimes(1);
+        expect(selector).toEqual(getCountSelectorInstanceMock);
     });
-    it('builds selector with store', () => {
-        const getBalanceSelectorBuilder = SelectorBuilder.make(GetBalanceClass);
-        const store: MockAccountState = {
-            balance: 5
-        };
-        getBalanceSelectorBuilder.build(store);
-        expect(GetBalanceClass.make).toBeCalledWith({
+    it('builds selector with a store', () => {
+        builder.build(store);
+        expect(GetCountSelectorClassMock.make).toBeCalledWith({
             store,
             props: undefined
         });
     });
-    it('builds selector with props and store', () => {
-        const getBalanceSelectorBuilder = SelectorBuilder.make(GetBalanceClass);
-        const store: MockAccountState = {
-            balance: 5
-        };
-        const props: MockGetBalanceProps = 3;
-        getBalanceSelectorBuilder.withProps(props).build(store);
-        expect(GetBalanceClass.make).toBeCalledWith({
+    it('builds selector with props and a store', () => {
+        const props: GetCountProps = 'props';
+        builder.withProps(props).build(store);
+        expect(GetCountSelectorClassMock.make).toBeCalledWith({
             store,
             props
         });
