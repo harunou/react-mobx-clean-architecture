@@ -15,8 +15,8 @@ export class IncreaseValue implements UseCase {
         });
     }
 
-    execute(): void {
-        this.store.setCount(this.store.$count + this.props);
+    async execute(): Promise<void> {
+        await this.store.setCount(this.store.$count + this.props);
     }
 }
 export const IncreaseValueUseCase = UseCaseBuilder.make(IncreaseValue);
