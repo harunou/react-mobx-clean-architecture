@@ -1,23 +1,26 @@
 import { UseCaseBuilder } from './usecase.helpers';
 import { UseCase, UseCaseConstructor } from './usecase.types';
 
-interface CounterStateMock {
+interface CounterState {
     $count: number;
 }
-interface PersistenceMock {
+interface Persistence {
     setCount(): void;
 }
-type SetCountPropsMock = number;
-type UseCaseConstructorMock = UseCaseConstructor<
-    CounterStateMock,
-    PersistenceMock,
-    SetCountPropsMock
+type SetCountProps = string;
+type SetCountUseCaseConstructor = UseCaseConstructor<
+    CounterState,
+    Persistence,
+    SetCountProps
 >;
+type GetCountUseCaseBuilder = UseCaseBuilder<CounterState, Persistence, string>;
 
 describe(`${UseCaseBuilder.name}`, () => {
-    let persistence: PersistenceMock;
-    let SetCountUseCaseClassMock: UseCaseConstructorMock;
+    let SetCountUseCaseClassMock: SetCountUseCaseConstructor;
     let setCountUseCaseInstanceMock: UseCase;
+    let persistence: Persistence;
+    let store: CounterState;
+    let builder: GetCountUseCaseBuilder;
 
     beforeEach(() => {
         persistence = {
@@ -29,21 +32,17 @@ describe(`${UseCaseBuilder.name}`, () => {
         SetCountUseCaseClassMock = {
             make: jest.fn().mockReturnValueOnce(setCountUseCaseInstanceMock)
         };
-    });
-    it('calls make static method to build a usecase', () => {
-        const builder = UseCaseBuilder.make(SetCountUseCaseClassMock);
-        const store: CounterStateMock = {
+        store = {
             $count: 5
         };
+        builder = UseCaseBuilder.make(SetCountUseCaseClassMock);
+    });
+    it('calls make static method to build a usecase', () => {
         const useCase = builder.build(store, persistence);
         expect(SetCountUseCaseClassMock.make).toBeCalledTimes(1);
         expect(useCase).toEqual(setCountUseCaseInstanceMock);
     });
-    it('builds usecase with store and persistence', () => {
-        const builder = UseCaseBuilder.make(SetCountUseCaseClassMock);
-        const store: CounterStateMock = {
-            $count: 5
-        };
+    it('builds usecase with a store and a persistence', () => {
         builder.build(store, persistence);
         expect(SetCountUseCaseClassMock.make).toBeCalledWith({
             store,
@@ -51,12 +50,8 @@ describe(`${UseCaseBuilder.name}`, () => {
             props: undefined
         });
     });
-    it('builds usecase with props, store and persistence', () => {
-        const builder = UseCaseBuilder.make(SetCountUseCaseClassMock);
-        const store: CounterStateMock = {
-            $count: 5
-        };
-        const props: SetCountPropsMock = 3;
+    it('builds usecase with props, a store and a persistence', () => {
+        const props: SetCountProps = 'props';
         builder.withProps(props).build(store, persistence);
         expect(SetCountUseCaseClassMock.make).toBeCalledWith({
             store,
