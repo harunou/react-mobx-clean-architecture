@@ -12,7 +12,9 @@ export class CounterStore implements CounterModel {
         makeObservable(this, {
             $count: observable,
             init: action,
-            setCount: action
+            setCount: action,
+            increment: action,
+            decrement: action
         });
         this.init(state);
     }
@@ -23,5 +25,13 @@ export class CounterStore implements CounterModel {
 
     setCount(value: number): void {
         this.$count = value;
+    }
+
+    increment(value: number): void {
+        this.$count += value;
+    }
+
+    decrement(value: number): void {
+        this.$count -= value;
     }
 }

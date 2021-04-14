@@ -1,16 +1,31 @@
 import { CounterStore } from './counter.store';
+import { CounterState } from './counter.types';
 
 describe(`${CounterStore.name}`, () => {
-    it('initializing with a value', () => {
-        const init = 3;
-        const store = CounterStore.make({ $count: init });
-        expect(store.$count).toEqual(init);
+    let initial: CounterState;
+    let store: CounterStore;
+    beforeEach(() => {
+        initial = {
+            $count: 5
+        };
+        store = CounterStore.make(initial);
     });
-    it('changes count upon setCount method call', () => {
-        const init = 3;
-        const value = 7;
-        const store = CounterStore.make({ $count: init });
-        store.setCount(value);
-        expect(store.$count).toEqual(value);
+    it('can be initialized with initial state', () => {
+        expect(store.$count).toEqual(initial.$count);
+    });
+    it('changes changes state upon setState call', () => {
+        const count = 7;
+        store.setCount(count);
+        expect(store.$count).toEqual(count);
+    });
+    it('increments state on provided value upon increment call', () => {
+        const value = 4;
+        store.increment(value);
+        expect(store.$count).toEqual(initial.$count + value);
+    });
+    it('decrements state on provided value upon decrement call', () => {
+        const value = 4;
+        store.decrement(value);
+        expect(store.$count).toEqual(initial.$count - value);
     });
 });
