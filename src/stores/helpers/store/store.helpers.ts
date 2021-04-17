@@ -1,8 +1,8 @@
 import {
     Selector,
     SelectorInteractionBuilder
-} from './selector/selector.types';
-import { UseCaseInteractionBuilder } from './usecase/usecase.types';
+} from '../selector/selector.types';
+import { UseCaseInteractionBuilder } from '../usecase/usecase.types';
 
 export abstract class Store<S, P> {
     constructor(private appStore: S, private persistenceStore: P) {}
