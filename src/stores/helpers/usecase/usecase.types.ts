@@ -17,5 +17,5 @@ export interface UseCaseInteractionBuilder<S, P> {
 }
 
 export interface StoreExecuter<S, P> {
-    execute(builder: UseCaseInteractionBuilder<S, P>): void;
+    execute(builder: UseCaseInteractionBuilder<S, P>): Promise<void>;
 }
