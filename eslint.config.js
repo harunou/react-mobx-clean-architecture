@@ -5,8 +5,14 @@ const config = {
     extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:jest/recommended'
-    ]
+        'plugin:jest/recommended',
+        'plugin:react/recommended'
+    ],
+    rules: {
+        'react/react-in-jsx-scope': 'off',
+        'react/jsx-uses-react': 'off',
+        'react/prop-types': 'off'
+    }
 };
 
 module.exports = config;
