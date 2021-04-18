@@ -11,7 +11,7 @@ export abstract class Store<S, P> {
         return selector.build(this.appStore);
     }
 
-    execute(useCase: UseCaseInteractionBuilder<S, P>): void {
-        useCase.build(this.appStore, this.persistenceStore).execute();
+    async execute(useCase: UseCaseInteractionBuilder<S, P>): Promise<void> {
+        await useCase.build(this.appStore, this.persistenceStore).execute();
     }
 }

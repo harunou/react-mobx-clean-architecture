@@ -30,8 +30,8 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
         });
     }
 
-    execute(): void {
-        this.effect
+    async execute(): Promise<void> {
+        await this.effect
             .execute(this.store.$count + this.props)
             .then(this.saveSuccess);
     }

@@ -1,5 +1,5 @@
 export interface UseCase {
-    execute(): void;
+    execute(): Promise<void>;
 }
 
 export interface UseCaseParams<S, R, P> {
