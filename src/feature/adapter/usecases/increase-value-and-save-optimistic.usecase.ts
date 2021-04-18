@@ -4,7 +4,6 @@ import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { UseCase } from '@stores/helpers/usecase/usecase.types';
 import { RootUseCaseParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
-import { CancellablePromise } from 'mobx/dist/internal';
 import { saveCountSuccessEffect } from '../effects/save-count-success.effect';
 
 export class IncreaseValueAndSaveOptimistic implements UseCase {
@@ -19,7 +18,7 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
 
     constructor(
         private store: CounterModel,
-        private effect: Effect<CancellablePromise<number>>,
+        private effect: Effect<number, Promise<number>>,
         private props: number = 0
     ) {
         makeObservable(this, {

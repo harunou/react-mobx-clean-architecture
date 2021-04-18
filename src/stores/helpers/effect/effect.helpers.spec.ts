@@ -7,15 +7,18 @@ interface CounterState {
 interface Persistence {
     getCount(): void;
 }
+type GetCountEffectProps = number;
 type GetCountEffectResult = number;
 type GetCountEffectConstructor = EffectConstructor<
     CounterState,
     Persistence,
+    GetCountEffectProps,
     GetCountEffectResult
 >;
 type GetCountEffectBuilder = EffectBuilder<
     CounterState,
     Persistence,
+    GetCountEffectProps,
     GetCountEffectResult
 >;
 

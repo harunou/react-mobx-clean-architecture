@@ -5,19 +5,19 @@ import {
     EffectInteractionBuilder
 } from './effect.types';
 
-export class EffectBuilder<S, P, R>
-    implements EffectInteractionBuilder<S, P, R> {
-    static make<CS, CP, CR>(
-        useCaseConstructor: EffectConstructor<CS, CP, CR>
-    ): EffectBuilder<CS, CP, CR> {
+export class EffectBuilder<S, P, A, R>
+    implements EffectInteractionBuilder<S, P, A, R> {
+    static make<CS, CP, CA, CR>(
+        useCaseConstructor: EffectConstructor<CS, CP, CA, CR>
+    ): EffectBuilder<CS, CP, CA, CR> {
         return new EffectBuilder(useCaseConstructor);
     }
 
-    private effect: Effect<R> | null = null;
+    private effect: Effect<A, R> | null = null;
 
-    constructor(private EffectConstructor: EffectConstructor<S, P, R>) {}
+    constructor(private EffectConstructor: EffectConstructor<S, P, A, R>) {}
 
-    build(store: S, persistence: P, isSingleton = true): Effect<R> {
+    build(store: S, persistence: P, isSingleton = true): Effect<A, R> {
         if (!isSingleton) {
             return this.EffectConstructor.make({
                 store,

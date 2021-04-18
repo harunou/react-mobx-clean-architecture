@@ -1,5 +1,5 @@
-export interface Effect<R = unknown> {
-    execute(...args: unknown[]): R;
+export interface Effect<A = unknown, R = unknown> {
+    execute(args: A): R;
 }
 
 export interface EffectParams<S, P> {
@@ -7,10 +7,10 @@ export interface EffectParams<S, P> {
     persistence: P;
 }
 
-export interface EffectConstructor<S, P, R> {
-    make(params: EffectParams<S, P>): Effect<R>;
+export interface EffectConstructor<S, P, A, R> {
+    make(params: EffectParams<S, P>): Effect<A, R>;
 }
 
-export interface EffectInteractionBuilder<S, P, R> {
-    build(state: S, persistence: P): Effect<R>;
+export interface EffectInteractionBuilder<S, P, A, R> {
+    build(state: S, persistence: P): Effect<A, R>;
 }
