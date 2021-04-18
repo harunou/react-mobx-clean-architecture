@@ -1,8 +1,5 @@
-import {
-    UseCase,
-    UseCaseInteractionBuilder,
-    UseCaseConstructor
-} from './usecase.types';
+import { UseCase, UseCaseInteractionBuilder } from '../store/store.types';
+import { UseCaseConstructor } from './usecase.types';
 
 export class UseCaseBuilder<S, P, Props>
     implements UseCaseInteractionBuilder<S, P> {

@@ -1,5 +1,6 @@
+import { UseCase } from '../store/store.types';
 import { UseCaseBuilder } from './usecase.helpers';
-import { UseCase, UseCaseConstructor } from './usecase.types';
+import { UseCaseConstructor } from './usecase.types';
 
 interface CounterState {
     $count: number;

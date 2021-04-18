@@ -1,6 +1,6 @@
 import { CounterState } from '@stores/counter/counter.types';
 import { SelectorBuilder } from '@stores/helpers/selector/selector.helpers';
-import { Selector } from '@stores/helpers/selector/selector.types';
+import { Selector } from '@stores/helpers/store/store.types';
 import { RootSelectorParams } from '@stores/root/root.types';
 
 export class Count implements Selector {

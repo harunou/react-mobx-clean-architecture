@@ -1,7 +1,7 @@
 import { CounterModel } from '@stores/counter/counter.types';
 import { Effect } from '@stores/helpers/effect/effect.types';
+import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
-import { UseCase } from '@stores/helpers/usecase/usecase.types';
 import { RootUseCaseParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
 import { saveCountSuccessEffect } from '../effects/save-count-success.effect';

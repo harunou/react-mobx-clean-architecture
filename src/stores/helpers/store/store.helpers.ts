@@ -1,10 +1,13 @@
 import {
     Selector,
-    SelectorInteractionBuilder
-} from '../selector/selector.types';
-import { UseCaseInteractionBuilder } from '../usecase/usecase.types';
+    SelectorInteractionBuilder,
+    StoreExecuter,
+    StoreQuery,
+    UseCaseInteractionBuilder
+} from './store.types';
 
-export abstract class Store<S, P> {
+export abstract class Store<S, P>
+    implements StoreQuery<S>, StoreExecuter<S, P> {
     constructor(private appStore: S, private persistenceStore: P) {}
 
     query<R>(selector: SelectorInteractionBuilder<S, R>): Selector<R> {

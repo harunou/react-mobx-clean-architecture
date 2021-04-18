@@ -1,8 +1,5 @@
-import {
-    Selector,
-    SelectorInteractionBuilder,
-    SelectorConstructor
-} from './selector.types';
+import { Selector, SelectorInteractionBuilder } from '../store/store.types';
+import { SelectorConstructor } from './selector.types';
 
 export class SelectorBuilder<S, Props, R>
     implements SelectorInteractionBuilder<S, R> {

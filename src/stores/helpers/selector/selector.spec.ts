@@ -1,5 +1,6 @@
+import { Selector } from '../store/store.types';
 import { SelectorBuilder } from './selector.helpers';
-import { Selector, SelectorConstructor } from './selector.types';
+import { SelectorConstructor } from './selector.types';
 
 interface CounterState {
     $count: number;

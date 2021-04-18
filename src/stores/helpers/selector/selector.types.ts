@@ -1,6 +1,4 @@
-export interface Selector<R = unknown> {
-    result: R;
-}
+import { Selector } from '../store/store.types';
 
 export interface SelectorParams<S, P = unknown> {
     store: S;
@@ -9,12 +7,4 @@ export interface SelectorParams<S, P = unknown> {
 
 export interface SelectorConstructor<S, P, R> {
     make(params: SelectorParams<S, P>): Selector<R>;
-}
-
-export interface SelectorInteractionBuilder<S, R> {
-    build(state: S): Selector<R>;
-}
-
-export interface StoreQuery<S> {
-    query<R>(builder: SelectorInteractionBuilder<S, R>): Selector<R>;
 }

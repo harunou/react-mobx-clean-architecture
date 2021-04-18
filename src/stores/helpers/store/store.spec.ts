@@ -1,9 +1,10 @@
+import { Store } from './store.helpers';
 import {
     Selector,
-    SelectorInteractionBuilder
-} from '../selector/selector.types';
-import { UseCase, UseCaseInteractionBuilder } from '../usecase/usecase.types';
-import { Store } from './store.helpers';
+    SelectorInteractionBuilder,
+    UseCase,
+    UseCaseInteractionBuilder
+} from './store.types';
 
 interface State {
     $value: number;
