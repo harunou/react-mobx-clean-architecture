@@ -1,5 +1,5 @@
-export interface Effect<R> {
-    execute(): Promise<R>;
+export interface Effect<R = unknown> {
+    execute(...args: unknown[]): R;
 }
 
 export interface EffectParams<S, P> {

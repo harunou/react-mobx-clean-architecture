@@ -1,4 +1,5 @@
 import { DomainModel, DomainState } from '@stores/domain/domain.types';
+import { EffectParams } from '@stores/helpers/effect/effect.types';
 import {
     SelectorParams,
     StoreQuery
@@ -17,3 +18,4 @@ export type RootUseCaseParams<P = unknown> = UseCaseParams<
     P
 >;
 export type RootSelectorParams<P = unknown> = SelectorParams<DomainState, P>;
+export type RootEffectParams = EffectParams<DomainModel, PersistenceModel>;

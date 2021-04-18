@@ -1,3 +1,4 @@
+import { CancellablePromise } from 'mobx/dist/internal';
 import {
     Effect,
     EffectConstructor,
@@ -30,5 +31,27 @@ export class EffectBuilder<S, P, R>
             });
         }
         return this.effect;
+    }
+}
+
+export class EffectFlow<T> {
+    make(): EffectFlow<T> {
+        return new EffectFlow();
+    }
+
+    #flow: CancellablePromise<T> | null = null;
+
+    set flow(flow: CancellablePromise<T> | null) {
+        this.#flow = flow;
+    }
+
+    get flow(): CancellablePromise<T> | null {
+        return this.#flow;
+    }
+
+    cancel(): void {
+        if (this.#flow) {
+            this.#flow.cancel();
+        }
     }
 }
