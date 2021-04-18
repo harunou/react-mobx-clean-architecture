@@ -26,7 +26,7 @@ describe(`Feature functional react component`, () => {
     // NOTE(harunou): mobx streams are behavior subjects, subscription takes
     // place in the autorun function. As well autorun triggers functional component
     // to render
-    it('renders if event fires and changes the state ', () => {
+    it('renders if event fires and changes the state', () => {
         const controller = FeatureController.make(store);
         const presenter = FeaturePresenter.make(store);
 

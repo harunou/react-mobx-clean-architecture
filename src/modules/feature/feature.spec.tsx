@@ -5,6 +5,8 @@ describe(`${Feature.name}`, () => {
     it('renders component with feature text', () => {
         const halloWorld = 'Hallo world';
 
-        renderer.create(<Feature text={halloWorld}/>);
+        expect(() =>
+            renderer.create(<Feature text={halloWorld} />)
+        ).not.toThrow();
     });
 });
