@@ -6,7 +6,8 @@ const config = {
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:jest/recommended',
-        'plugin:react/recommended'
+        'plugin:react/recommended',
+        'plugin:jest-dom/recommended'
     ],
     rules: {
         'react/react-in-jsx-scope': 'off',
