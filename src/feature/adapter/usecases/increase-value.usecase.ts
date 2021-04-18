@@ -1,11 +1,14 @@
 import { CounterModel } from '@stores/counter/counter.types';
 import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
-import { RootUseCaseParams } from '@stores/root/root.types';
+import { RootUseCaseMakeParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
 
 export class IncreaseValue implements UseCase {
-    static make({ store, props }: RootUseCaseParams<number>): IncreaseValue {
+    static make({
+        store,
+        props
+    }: RootUseCaseMakeParams<number>): IncreaseValue {
         return new IncreaseValue(store.counter, props);
     }
 

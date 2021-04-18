@@ -2,7 +2,7 @@ import { CounterModel } from '@stores/counter/counter.types';
 import { Effect } from '@stores/helpers/effect/effect.types';
 import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
-import { RootUseCaseParams } from '@stores/root/root.types';
+import { RootUseCaseMakeParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
 import { saveCountSuccessEffect } from '../effects/save-count-success.effect';
 
@@ -11,7 +11,7 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
         store,
         persistence,
         props
-    }: RootUseCaseParams<number>): IncreaseValueAndSaveOptimistic {
+    }: RootUseCaseMakeParams<number>): IncreaseValueAndSaveOptimistic {
         const effect = saveCountSuccessEffect.build(store, persistence);
         return new IncreaseValueAndSaveOptimistic(store.counter, effect, props);
     }

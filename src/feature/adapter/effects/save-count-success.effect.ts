@@ -6,10 +6,10 @@ import {
     EffectBuilder,
     EffectFlow
 } from '@stores/helpers/effect/effect.helpers';
-import { RootEffectParams } from '@stores/root/root.types';
+import { RootEffectMakeParams } from '@stores/root/root.types';
 
 export class SaveCountSuccess implements Effect {
-    static make({ persistence }: RootEffectParams): SaveCountSuccess {
+    static make({ persistence }: RootEffectMakeParams): SaveCountSuccess {
         const effectFlow = EffectFlow.make<number>();
         return new SaveCountSuccess(persistence.counterDataSource, effectFlow);
     }
