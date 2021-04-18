@@ -5,7 +5,7 @@ export interface FeatureProps {
 }
 
 const Feature: FC<FeatureProps>  =({text}) => {
-    return <div>Text is: {text}</div>
+    return <h1>{text}</h1>
 }
 
 export default Feature

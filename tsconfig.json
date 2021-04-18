@@ -1,3 +1,5 @@
+// NOTE(harunou): to debug resulting tsconfig run
+// npx tsc -p ./path/to/tsconfig.json --showConfig
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
