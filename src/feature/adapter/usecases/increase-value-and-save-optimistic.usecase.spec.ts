@@ -5,14 +5,17 @@ import { CancellablePromise } from 'mobx/dist/internal';
 import { sleep } from '@testing-tools';
 import { SaveCountSuccess } from '../effects/save-count-success.effect';
 import { IncreaseValueAndSaveOptimistic } from './increase-value-and-save-optimistic.usecase';
+import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 
 describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
     let store: CounterModel;
     let effect: SaveCountSuccess;
+    let effectFlow: EffectFlow<number>;
     const increaseAmount = 4;
     beforeEach(() => {
         store = new CounterStore({ $count: 3 });
-        effect = new SaveCountSuccess(counterServiceMock);
+        effectFlow = new EffectFlow();
+        effect = new SaveCountSuccess(counterServiceMock, effectFlow);
     });
     it('increases model value on predefined amount and optimistically save to the BE', () => {
         const setCountSpy = jest.spyOn(store, 'setCount');

@@ -2,23 +2,27 @@ import { flow } from 'mobx';
 import { CancellablePromise } from 'mobx/dist/api/flow';
 import { CounterDataSource } from '@api/counter.types';
 import { Effect } from '@stores/helpers/effect/effect.types';
-import { EffectBuilder } from '@stores/helpers/effect/effect.helpers';
+import {
+    EffectBuilder,
+    EffectFlow
+} from '@stores/helpers/effect/effect.helpers';
 import { RootEffectParams } from '@stores/root/root.types';
 
 export class SaveCountSuccess implements Effect {
-    static flow: CancellablePromise<number>;
     static make({ persistence }: RootEffectParams): SaveCountSuccess {
-        return new SaveCountSuccess(persistence.counterDataSource);
+        const effectFlow = EffectFlow.make<number>();
+        return new SaveCountSuccess(persistence.counterDataSource, effectFlow);
     }
 
-    constructor(private counterDataSource: CounterDataSource) {}
+    constructor(
+        private counterDataSource: CounterDataSource,
+        private effectFlow: EffectFlow<number>
+    ) {}
 
     execute(count: number): CancellablePromise<number> {
-        if (SaveCountSuccess.flow) {
-            SaveCountSuccess.flow.cancel();
-        }
-        SaveCountSuccess.flow = flow(this.saveGenerator.bind(this))(count);
-        return SaveCountSuccess.flow;
+        this.effectFlow.cancel();
+        this.effectFlow.flow = flow(this.saveGenerator.bind(this))(count);
+        return this.effectFlow.flow;
     }
 
     private *saveGenerator(

@@ -34,8 +34,8 @@ export class EffectBuilder<S, P, A, R>
     }
 }
 
-export class EffectFlow<T> {
-    make(): EffectFlow<T> {
+export class EffectFlow<T = unknown> {
+    static make<CT>(): EffectFlow<CT> {
         return new EffectFlow();
     }
 
