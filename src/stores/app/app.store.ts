@@ -1,11 +1,11 @@
 import { CounterStore } from '../counter/counter.store';
 import { CounterModel } from '../counter/counter.types';
-import { DomainModel, DomainState } from './domain.types';
+import { AppModel, AppState } from './app.types';
 
-export class DomainStore implements DomainModel {
-    static make(state: DomainState): DomainStore {
+export class AppStore implements AppModel {
+    static make(state: AppState): AppStore {
         const counter = new CounterStore(state.counter);
-        return new DomainStore(counter);
+        return new AppStore(counter);
     }
 
     constructor(public counter: CounterModel) {}

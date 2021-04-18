@@ -1,9 +1,9 @@
 import { CounterModel, CounterState } from '../counter/counter.types';
 
-export interface DomainState {
+export interface AppState {
     counter: CounterState;
 }
 
-export interface DomainModel {
+export interface AppModel {
     counter: CounterModel;
 }

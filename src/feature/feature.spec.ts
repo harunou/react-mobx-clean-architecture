@@ -1,17 +1,17 @@
 import { CounterService } from '@api/counter.service';
-import { DomainState } from '@stores/domain/domain.types';
 import { RootStore } from '@stores/root/root.store';
 import { autorun } from 'mobx';
 import { sleep } from '@testing-tools';
 import { FeatureController } from './adapter/feature.controller';
 import { FeaturePresenter } from './adapter/feature.presenter';
 import { MultiplyCount } from './adapter/selectors/multiply-count.selector';
+import { AppState } from '@stores/app/app.types';
 
 describe(`Feature functional react component`, () => {
     let store: RootStore;
 
     beforeEach(() => {
-        const initial: DomainState = {
+        const initial: AppState = {
             counter: {
                 $count: 0
             }
