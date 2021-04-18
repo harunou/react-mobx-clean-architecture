@@ -37,6 +37,6 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
         this.store.setCount(this.store.$count - this.props);
     }
 }
-export const IncreaseValueAndSaveOptimisticUseCase = UseCaseBuilder.make(
+export const increaseValueAndSaveOptimisticUseCase = UseCaseBuilder.make(
     IncreaseValueAndSaveOptimistic
 );

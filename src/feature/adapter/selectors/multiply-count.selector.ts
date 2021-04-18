@@ -19,4 +19,4 @@ export class MultiplyCount implements Selector {
     }
 }
 
-export const MultiplyCountSelector = SelectorBuilder.make(MultiplyCount);
+export const multiplyCountSelector = SelectorBuilder.make(MultiplyCount);

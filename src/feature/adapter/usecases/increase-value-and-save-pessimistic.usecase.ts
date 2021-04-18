@@ -40,6 +40,6 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
         this.store.setCount(count);
     }
 }
-export const IncreaseValueAndSavePessimisticUseCase = UseCaseBuilder.make(
+export const increaseValueAndSavePessimisticUseCase = UseCaseBuilder.make(
     IncreaseValueAndSavePessimistic
 );

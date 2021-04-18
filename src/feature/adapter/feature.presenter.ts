@@ -1,6 +1,6 @@
 import { RootStoreQuery } from '@stores/root/root.types';
 import { computed, makeObservable } from 'mobx';
-import { MultiplyCountSelector } from './selectors/multiply-count.selector';
+import { multiplyCountSelector } from './selectors/multiply-count.selector';
 
 export class FeaturePresenter {
     static make(store: RootStoreQuery): FeaturePresenter {
@@ -12,6 +12,6 @@ export class FeaturePresenter {
         });
     }
     get selectMultiplyCountOn_10(): number {
-        return this.store.query(MultiplyCountSelector.withProps(10)).result;
+        return this.store.query(multiplyCountSelector.withProps(10)).result;
     }
 }
