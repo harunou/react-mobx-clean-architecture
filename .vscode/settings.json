@@ -8,6 +8,10 @@
         "editor.formatOnSave": true,
         "editor.formatOnPaste": false
     },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": false
+    },
     "eslint.options": {
          "configFile": "eslint.config.js"
     }
