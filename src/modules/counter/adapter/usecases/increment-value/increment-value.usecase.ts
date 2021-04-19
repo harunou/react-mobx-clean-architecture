@@ -4,12 +4,12 @@ import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { RootUseCaseMakeParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
 
-export class IncreaseValue implements UseCase {
+export class IncrementValue implements UseCase {
     static make({
         store,
         props
-    }: RootUseCaseMakeParams<number>): IncreaseValue {
-        return new IncreaseValue(store.counter, props);
+    }: RootUseCaseMakeParams<number>): IncrementValue {
+        return new IncrementValue(store.counter, props);
     }
 
     constructor(private store: CounterModel, private props: number = 0) {
@@ -19,7 +19,10 @@ export class IncreaseValue implements UseCase {
     }
 
     execute(): void {
-        this.store.setCount(this.store.$count + this.props);
+        this.store.increment(this.props);
     }
 }
-export const increaseValueUseCase = UseCaseBuilder.make(IncreaseValue);
+
+const incrementValueUseCase = UseCaseBuilder.make(IncrementValue);
+
+export default incrementValueUseCase;
