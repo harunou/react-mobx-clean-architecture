@@ -27,10 +27,10 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
         });
     }
 
-    async execute(): Promise<void> {
+    execute(): void {
         const count = this.store.$count + this.props;
         this.store.setCount(count);
-        await this.effect.execute(count).catch(this.saveFailure);
+        this.effect.execute(count).catch(this.saveFailure);
     }
 
     saveFailure(): void {

@@ -13,8 +13,7 @@ export class FeatureController {
         makeObservable(this, {
             add_1_ButtonPushed: action.bound,
             add_1_andSaveOptimisticButtonPushed: action.bound,
-            add_1_andSavePessimisticButtonPushed: action.bound,
-            runMultipleUseCasesAsyncButtonPushed: action.bound
+            add_1_andSavePessimisticButtonPushed: action.bound
         });
     }
     add_1_ButtonPushed(): void {
@@ -25,14 +24,5 @@ export class FeatureController {
     }
     add_1_andSavePessimisticButtonPushed(): void {
         this.store.execute(increaseValueAndSavePessimisticUseCase.withProps(1));
-    }
-
-    async runMultipleUseCasesAsyncButtonPushed(): Promise<void> {
-        await this.store.execute(
-            increaseValueAndSaveOptimisticUseCase.withProps(3)
-        );
-        await this.store.execute(
-            increaseValueAndSaveOptimisticUseCase.withProps(8)
-        );
     }
 }

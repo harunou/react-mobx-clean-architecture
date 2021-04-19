@@ -18,7 +18,7 @@ export class IncreaseValue implements UseCase {
         });
     }
 
-    async execute(): Promise<void> {
+    execute(): void {
         this.store.setCount(this.store.$count + this.props);
     }
 }

@@ -6,7 +6,6 @@ import { FeatureController } from './adapter/feature.controller';
 import { FeaturePresenter } from './adapter/feature.presenter';
 import { MultiplyCount } from './adapter/selectors/multiply-count.selector';
 import { AppState } from '@stores/app/app.types';
-import { Count } from './adapter/selectors/count.selector';
 
 describe(`Feature functional react component`, () => {
     let store: RootStore;
@@ -169,38 +168,6 @@ describe(`Feature functional react component`, () => {
         expect(renders).toEqual(6);
 
         expect(MultiplyCount.runs).toEqual(3);
-        expect(CounterService.successResponses).toEqual(2);
-    });
-
-    it('runs async usecases sequentially', async () => {
-        const controller = FeatureController.make(store);
-        const presenter = FeaturePresenter.make(store);
-
-        const { runMultipleUseCasesAsyncButtonPushed } = controller;
-
-        let renders = 0;
-        let value = 0;
-
-        autorun(function render() {
-            const { selectCount } = presenter;
-            renders += 1;
-            value = selectCount;
-        });
-
-        expect(value).toEqual(0);
-        expect(renders).toEqual(1);
-
-        runMultipleUseCasesAsyncButtonPushed();
-        expect(value).toEqual(3);
-        expect(renders).toEqual(2);
-
-        await sleep(0);
-        expect(value).toEqual(11);
-        expect(renders).toEqual(3);
-
-        await sleep(0);
-
-        expect(Count.runs).toEqual(3);
         expect(CounterService.successResponses).toEqual(2);
     });
 });

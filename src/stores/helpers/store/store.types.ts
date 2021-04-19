@@ -11,7 +11,7 @@ export interface StoreQuery<S> {
 }
 
 export interface UseCase {
-    execute(): Promise<void>;
+    execute(): void;
 }
 
 export interface UseCaseInteractionBuilder<S, P> {
@@ -19,5 +19,5 @@ export interface UseCaseInteractionBuilder<S, P> {
 }
 
 export interface StoreExecuter<S, P> {
-    execute(builder: UseCaseInteractionBuilder<S, P>): Promise<void>;
+    execute(builder: UseCaseInteractionBuilder<S, P>): void;
 }
