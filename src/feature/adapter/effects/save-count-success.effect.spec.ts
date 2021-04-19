@@ -4,20 +4,21 @@ import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { SaveCountSuccess } from './save-count-success.effect';
 
 describe(`${SaveCountSuccess.name}`, () => {
+    const count = 5;
+    let dataSource: CounterDataSource;
+    let effectFlow: EffectFlow<number>;
+    let effect: SaveCountSuccess;
+    beforeEach(() => {
+        dataSource = counterServiceMock;
+        effectFlow = new EffectFlow<number>();
+        effect = new SaveCountSuccess(dataSource, effectFlow);
+    });
     it('saves data to the BE', () => {
-        const value = 5;
-        const dataSource: CounterDataSource = counterServiceMock;
-        const effectFlow: EffectFlow<number> = new EffectFlow<number>();
-        const effect = new SaveCountSuccess(dataSource, effectFlow);
-        effect.execute(value);
+        effect.execute(count);
         expect(dataSource.saveSuccess).toBeCalledTimes(1);
-        expect(dataSource.saveSuccess).toBeCalledWith(value);
+        expect(dataSource.saveSuccess).toBeCalledWith(count);
     });
     it('returns BE response', async () => {
-        const value = 5;
-        const dataSource: CounterDataSource = counterServiceMock;
-        const effectFlow: EffectFlow<number> = new EffectFlow<number>();
-        const effect = new SaveCountSuccess(dataSource, effectFlow);
-        await expect(effect.execute(value)).resolves.toEqual(value);
+        await expect(effect.execute(count)).resolves.toEqual(count);
     });
 });
