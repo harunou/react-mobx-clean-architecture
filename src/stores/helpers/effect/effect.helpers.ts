@@ -39,19 +39,19 @@ export class EffectFlow<T = unknown> {
         return new EffectFlow();
     }
 
-    #flow: CancellablePromise<T> | null = null;
+    #promise: CancellablePromise<T> | null = null;
 
-    set flow(flow: CancellablePromise<T> | null) {
-        this.#flow = flow;
+    set promise(flow: CancellablePromise<T> | null) {
+        this.#promise = flow;
     }
 
-    get flow(): CancellablePromise<T> | null {
-        return this.#flow;
+    get promise(): CancellablePromise<T> | null {
+        return this.#promise;
     }
 
     cancel(): void {
-        if (this.#flow) {
-            this.#flow.cancel();
+        if (this.#promise) {
+            this.#promise.cancel();
         }
     }
 }

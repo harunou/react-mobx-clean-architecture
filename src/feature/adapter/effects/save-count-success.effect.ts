@@ -16,13 +16,13 @@ export class SaveCountSuccess implements Effect {
 
     constructor(
         private counterDataSource: CounterDataSource,
-        private effectFlow: EffectFlow<number>
+        private flow: EffectFlow<number>
     ) {}
 
     execute(count: number): CancellablePromise<number> {
-        this.effectFlow.cancel();
-        this.effectFlow.flow = flow(this.saveGenerator.bind(this))(count);
-        return this.effectFlow.flow;
+        this.flow.cancel();
+        this.flow.promise = flow(this.saveGenerator.bind(this))(count);
+        return this.flow.promise;
     }
 
     private *saveGenerator(

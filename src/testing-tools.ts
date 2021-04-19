@@ -26,3 +26,8 @@ export const sleep = (ms = 0): Promise<unknown> =>
             resolve(undefined);
         }, ms)
     );
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const noop = (..._args: unknown[]): void => {
+    /* noop */
+};
