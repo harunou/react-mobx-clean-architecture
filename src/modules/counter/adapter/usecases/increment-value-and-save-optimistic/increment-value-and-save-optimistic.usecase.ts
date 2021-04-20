@@ -4,16 +4,20 @@ import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { RootUseCaseMakeParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
-import { saveCountSuccessEffect } from '../effects/save-count-success.effect';
+import { saveCountSuccessEffect } from '../../effects/save-count-success.effect';
 
-export class IncreaseValueAndSaveOptimistic implements UseCase {
+export class IncrementValueAndSaveOptimistic implements UseCase {
     static make({
         store,
         persistence,
         props
-    }: RootUseCaseMakeParams<number>): IncreaseValueAndSaveOptimistic {
+    }: RootUseCaseMakeParams<number>): IncrementValueAndSaveOptimistic {
         const effect = saveCountSuccessEffect.build(store, persistence);
-        return new IncreaseValueAndSaveOptimistic(store.counter, effect, props);
+        return new IncrementValueAndSaveOptimistic(
+            store.counter,
+            effect,
+            props
+        );
     }
 
     constructor(
@@ -28,15 +32,16 @@ export class IncreaseValueAndSaveOptimistic implements UseCase {
     }
 
     execute(): void {
-        const count = this.store.$count + this.props;
-        this.store.setCount(count);
-        this.effect.execute(count).catch(this.saveFailure);
+        this.store.increment(this.props);
+        this.effect.execute(this.store.$count).catch(this.saveFailure);
     }
 
     saveFailure(): void {
-        this.store.setCount(this.store.$count - this.props);
+        this.store.decrement(this.props);
     }
 }
-export const increaseValueAndSaveOptimisticUseCase = UseCaseBuilder.make(
-    IncreaseValueAndSaveOptimistic
+const incrementValueAndSaveOptimisticUseCase = UseCaseBuilder.make(
+    IncrementValueAndSaveOptimistic
 );
+
+export default incrementValueAndSaveOptimisticUseCase;

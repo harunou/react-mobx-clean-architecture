@@ -1,7 +1,7 @@
 import { RootStoreExecutor } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
-import { increaseValueAndSaveOptimisticUseCase } from './usecases/increase-value-and-save-optimistic.usecase';
 import { increaseValueAndSavePessimisticUseCase } from './usecases/increase-value-and-save-pessimistic.usecase';
+import incrementValueAndSaveOptimisticUseCase from './usecases/increment-value-and-save-optimistic/increment-value-and-save-optimistic.usecase';
 import incrementValueUseCase from './usecases/increment-value/increment-value.usecase';
 
 export class CounterController {
@@ -19,7 +19,7 @@ export class CounterController {
         this.store.execute(incrementValueUseCase.withProps(1));
     }
     add_1_andSaveOptimisticButtonPushed(): void {
-        this.store.execute(increaseValueAndSaveOptimisticUseCase.withProps(1));
+        this.store.execute(incrementValueAndSaveOptimisticUseCase.withProps(1));
     }
     add_1_andSavePessimisticButtonPushed(): void {
         this.store.execute(increaseValueAndSavePessimisticUseCase.withProps(1));

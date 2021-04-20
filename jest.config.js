@@ -84,6 +84,7 @@ module.exports = {
     moduleNameMapper: {
         '^@stores/(.*)$': '<rootDir>/src/stores/$1',
         '^@api/(.*)$': '<rootDir>/src/api/$1',
+        '^@modules/(.*)$': '<rootDir>/src/modules/$1',
         '^@testing-tools$': '<rootDir>/src/testing-tools.ts'
     },
 
