@@ -1,7 +1,7 @@
 import { RootStoreQuery } from '@stores/root/root.types';
 import { computed, makeObservable } from 'mobx';
-import { countSelector } from './selectors/count.selector';
-import { multiplyCountSelector } from './selectors/multiply-count.selector';
+import countSelector from './selectors/count/count.selector';
+import multiplyCountSelector from './selectors/multiply-count/multiply-count.selector';
 
 export class CounterPresenter {
     static make(store: RootStoreQuery): CounterPresenter {
