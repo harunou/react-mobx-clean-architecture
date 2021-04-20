@@ -1,3 +1,4 @@
+import { makeContext } from '@stores/helpers/context/context.helpers';
 import { configure } from 'mobx';
 import { AppStore } from '../app/app.store';
 import { AppModel, AppState } from '../app/app.types';
@@ -21,3 +22,5 @@ export class RootStore extends Store<AppModel, PersistenceModel> {
         return new RootStore(domainStore, persistenceStore);
     }
 }
+
+export const { RootStoreContext, useAdapter } = makeContext<RootStore>();
