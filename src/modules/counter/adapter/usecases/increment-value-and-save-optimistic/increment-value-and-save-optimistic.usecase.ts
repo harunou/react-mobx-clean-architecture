@@ -4,7 +4,7 @@ import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { RootUseCaseMakeParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
-import { saveCountSuccessEffect } from '../../effects/save-count/save-count-success.effect';
+import saveCountSuccessEffect from '../../effects/save-count/save-count.effect';
 
 export class IncrementValueAndSaveOptimistic implements UseCase {
     static make({
@@ -40,8 +40,8 @@ export class IncrementValueAndSaveOptimistic implements UseCase {
         this.store.decrement(this.props);
     }
 }
+
 const incrementValueAndSaveOptimisticUseCase = UseCaseBuilder.make(
     IncrementValueAndSaveOptimistic
 );
-
 export default incrementValueAndSaveOptimisticUseCase;

@@ -8,10 +8,10 @@ import {
 } from '@stores/helpers/effect/effect.helpers';
 import { RootEffectMakeParams } from '@stores/root/root.types';
 
-export class SaveCountSuccess implements Effect {
-    static make({ persistence }: RootEffectMakeParams): SaveCountSuccess {
+export class SaveCount implements Effect {
+    static make({ persistence }: RootEffectMakeParams): SaveCount {
         const effectFlow = EffectFlow.make<number>();
-        return new SaveCountSuccess(persistence.counterDataSource, effectFlow);
+        return new SaveCount(persistence.counterDataSource, effectFlow);
     }
 
     constructor(
@@ -33,4 +33,5 @@ export class SaveCountSuccess implements Effect {
     }
 }
 
-export const saveCountSuccessEffect = EffectBuilder.make(SaveCountSuccess);
+const saveCountSuccessEffect = EffectBuilder.make(SaveCount);
+export default saveCountSuccessEffect;

@@ -1,17 +1,17 @@
 import { counterServiceMock } from '@api/counter.mocks';
 import { CounterDataSource } from '@api/counter.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
-import { SaveCountSuccess } from './save-count-success.effect';
+import { SaveCount } from './save-count.effect';
 
-describe(`${SaveCountSuccess.name}`, () => {
+describe(`${SaveCount.name}`, () => {
     const count = 5;
     let dataSource: CounterDataSource;
     let effectFlow: EffectFlow<number>;
-    let effect: SaveCountSuccess;
+    let effect: SaveCount;
     beforeEach(() => {
         dataSource = counterServiceMock;
         effectFlow = new EffectFlow<number>();
-        effect = new SaveCountSuccess(dataSource, effectFlow);
+        effect = new SaveCount(dataSource, effectFlow);
     });
     it('saves data to the BE', () => {
         effect.execute(count);
