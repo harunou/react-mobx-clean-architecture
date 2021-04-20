@@ -4,13 +4,14 @@ import { CounterDataSource as CounterDataSource } from './counter.types';
 export class CounterService implements CounterDataSource {
     // NOTE(harunou): for testing purposes
     static successResponses = 0;
+    static incrementResponses = 0;
 
     static make(): CounterService {
         return new CounterService();
     }
     increment(increment: number, count: number): Promise<number> {
         return makeAsyncRequest(0, increment + count).then((v) => {
-            CounterService.successResponses += 1;
+            CounterService.incrementResponses += 1;
             return v;
         });
     }
