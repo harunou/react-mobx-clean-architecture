@@ -4,9 +4,6 @@ import countSelector from './selectors/count/count.selector';
 import multiplyCountSelector from './selectors/multiply-count/multiply-count.selector';
 
 export class CounterPresenter {
-    static make(store: RootStoreQuery): CounterPresenter {
-        return new CounterPresenter(store);
-    }
     constructor(private readonly store: RootStoreQuery) {
         makeObservable(this, {
             selectMultiplyCountOn_10: computed

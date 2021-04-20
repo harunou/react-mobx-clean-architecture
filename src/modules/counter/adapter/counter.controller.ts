@@ -5,9 +5,6 @@ import incrementValueAndSavePessimisticUseCase from './usecases/increment-value-
 import incrementValueUseCase from './usecases/increment-value/increment-value.usecase';
 
 export class CounterController {
-    static make(store: RootStoreExecutor): CounterController {
-        return new CounterController(store);
-    }
     constructor(private readonly store: RootStoreExecutor) {
         makeObservable(this, {
             add_1_ButtonPushed: action.bound,
