@@ -1,24 +1,11 @@
-import { AppState } from '@stores/app/app.types';
-import {
-    RootStore,
-    RootStoreContext,
-    useAdapter
-} from '@stores/root/root.store';
+import { useAdapter } from '@stores/root/root.store';
 import { noop } from '@testing-tools';
-import { FC } from 'react';
 import { observer } from 'mobx-react-lite';
+import { FC } from 'react';
 import { CounterController } from './adapter/counter.controller';
 import { CounterPresenter } from './adapter/counter.presenter';
 
-const initial: AppState = {
-    counter: {
-        $count: 0
-    }
-};
-
-const rootStore = RootStore.make(initial);
-
-const Counter: FC = () => {
+export const Counter: FC = observer(() => {
     const { controller, presenter } = useAdapter(
         CounterController,
         CounterPresenter
@@ -27,14 +14,10 @@ const Counter: FC = () => {
     const { selectCount } = presenter;
 
     return (
-        <RootStoreContext.Provider value={rootStore}>
-            <div>
-                <button onClick={add_1_ButtonPushed}>+</button>
-                <span>{selectCount}</span>
-                <button onClick={noop}>-</button>
-            </div>
-        </RootStoreContext.Provider>
+        <div>
+            <button onClick={add_1_ButtonPushed}>+</button>
+            <span>{selectCount}</span>
+            <button onClick={noop}>-</button>
+        </div>
     );
-};
-
-export default observer(Counter);
+});
