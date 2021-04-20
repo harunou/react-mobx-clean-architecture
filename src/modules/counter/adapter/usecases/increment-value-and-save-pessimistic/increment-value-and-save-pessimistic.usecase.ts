@@ -4,16 +4,18 @@ import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { RootUseCaseMakeParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
-import { saveCountSuccessEffect } from '../effects/save-count-success.effect';
+import incrementCountEffect, {
+    IncrementCountExecuteProps
+} from '../../effects/increment-count/increment-count.effect';
 
-export class IncreaseValueAndSavePessimistic implements UseCase {
+export class IncrementValueAndSavePessimistic implements UseCase {
     static make({
         store,
         persistence,
         props
-    }: RootUseCaseMakeParams<number>): IncreaseValueAndSavePessimistic {
-        const effect = saveCountSuccessEffect.build(store, persistence);
-        return new IncreaseValueAndSavePessimistic(
+    }: RootUseCaseMakeParams<number>): IncrementValueAndSavePessimistic {
+        const effect = incrementCountEffect.build(store, persistence);
+        return new IncrementValueAndSavePessimistic(
             store.counter,
             effect,
             props
@@ -22,7 +24,7 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
 
     constructor(
         private store: CounterModel,
-        private effect: Effect<number, Promise<number>>,
+        private effect: Effect<IncrementCountExecuteProps, Promise<number>>,
         private props: number = 0
     ) {
         makeObservable(this, {
@@ -32,7 +34,7 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
 
     execute(): void {
         this.effect
-            .execute(this.store.$count + this.props)
+            .execute({ increment: this.props, count: this.store.$count })
             .then(this.saveSuccess);
     }
 
@@ -40,6 +42,7 @@ export class IncreaseValueAndSavePessimistic implements UseCase {
         this.store.setCount(count);
     }
 }
-export const increaseValueAndSavePessimisticUseCase = UseCaseBuilder.make(
-    IncreaseValueAndSavePessimistic
+const incrementValueAndSavePessimisticUseCase = UseCaseBuilder.make(
+    IncrementValueAndSavePessimistic
 );
+export default incrementValueAndSavePessimisticUseCase;

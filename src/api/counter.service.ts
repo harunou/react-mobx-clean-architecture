@@ -8,6 +8,12 @@ export class CounterService implements CounterDataSource {
     static make(): CounterService {
         return new CounterService();
     }
+    increment(increment: number, count: number): Promise<number> {
+        return makeAsyncRequest(0, increment + count).then((v) => {
+            CounterService.successResponses += 1;
+            return v;
+        });
+    }
     saveSuccess(value: number): Promise<number> {
         return makeAsyncRequest(0, value).then((v) => {
             CounterService.successResponses += 1;

@@ -1,0 +1,34 @@
+import { counterServiceMock } from '@api/counter.mocks';
+import { CounterStore } from '@stores/counter/counter.store';
+import { CounterModel } from '@stores/counter/counter.types';
+import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
+import { sleep } from '@testing-tools';
+import { IncrementCount } from '../../effects/increment-count/increment-count.effect';
+import { IncrementValueAndSavePessimistic } from './increment-value-and-save-pessimistic.usecase';
+
+describe(`${IncrementValueAndSavePessimistic.name}`, () => {
+    let store: CounterModel;
+    let effect: IncrementCount;
+    let effectFlow: EffectFlow<number>;
+    const increment = 4;
+    const count = 4;
+    beforeEach(() => {
+        store = new CounterStore({ $count: count });
+        effectFlow = new EffectFlow();
+        effect = new IncrementCount(counterServiceMock, effectFlow);
+    });
+    it('pessimistically increment count on the BE and on success set store', async () => {
+        jest.spyOn(effect, 'execute');
+        jest.spyOn(store, 'setCount');
+        const useCase = new IncrementValueAndSavePessimistic(
+            store,
+            effect,
+            increment
+        );
+        useCase.execute();
+        expect(effect.execute).toBeCalledWith({ increment, count });
+        await sleep(0);
+        expect(store.setCount).toBeCalledTimes(1);
+        expect(store.setCount).toBeCalledWith(count + increment);
+    });
+});

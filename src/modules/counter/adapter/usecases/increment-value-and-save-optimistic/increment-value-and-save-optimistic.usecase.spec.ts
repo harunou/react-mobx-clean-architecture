@@ -5,7 +5,7 @@ import { CancellablePromise } from 'mobx/dist/internal';
 import { sleep } from '@testing-tools';
 import { IncrementValueAndSaveOptimistic } from './increment-value-and-save-optimistic.usecase';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
-import { SaveCountSuccess } from '../../effects/save-count-success.effect';
+import { SaveCountSuccess } from '../../effects/save-count/save-count-success.effect';
 
 describe(`${IncrementValueAndSaveOptimistic.name}`, () => {
     let store: CounterModel;
