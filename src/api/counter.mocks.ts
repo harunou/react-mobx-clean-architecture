@@ -6,5 +6,7 @@ export const counterServiceMock: CounterDataSource = {
         .mockImplementation((increment: number, count: number) =>
             Promise.resolve(increment + count)
         ),
-    set: jest.fn().mockImplementation((count: number) => Promise.resolve(count))
+    save: jest
+        .fn()
+        .mockImplementation((count: number) => Promise.resolve(count))
 };

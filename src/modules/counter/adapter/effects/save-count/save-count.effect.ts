@@ -28,7 +28,7 @@ export class SaveCount implements Effect {
     private *saveGenerator(
         count: number
     ): Generator<Promise<number>, number, number> {
-        const countDto = yield this.counterDataSource.set(count);
+        const countDto = yield this.counterDataSource.save(count);
         return countDto;
     }
 }
