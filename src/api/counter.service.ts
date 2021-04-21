@@ -1,27 +1,20 @@
-import { makeAsyncRequest, makeAsyncThrow } from '../testing-tools';
+import { httpClient } from '@core/http-client';
 import { CounterDataSource as CounterDataSource } from './counter.types';
 
-export class CounterService implements CounterDataSource {
-    // NOTE(harunou): for testing purposes
-    static successResponses = 0;
-    static incrementResponses = 0;
+export const COUNTER_INCREMENT_ENDPOINT = 'counter/increment';
+export const COUNTER_SET_COUNT_ENDPOINT = 'counter/set-count';
 
+export class CounterService implements CounterDataSource {
     static make(): CounterService {
         return new CounterService();
     }
     increment(increment: number, count: number): Promise<number> {
-        return makeAsyncRequest(0, increment + count).then((v) => {
-            CounterService.incrementResponses += 1;
-            return v;
+        return httpClient.request(COUNTER_INCREMENT_ENDPOINT, {
+            increment,
+            count
         });
     }
-    saveSuccess(value: number): Promise<number> {
-        return makeAsyncRequest(0, value).then((v) => {
-            CounterService.successResponses += 1;
-            return v;
-        });
-    }
-    saveFailure(value: number): Promise<number> {
-        return makeAsyncThrow(0, value);
+    set(count: number): Promise<number> {
+        return httpClient.request(COUNTER_SET_COUNT_ENDPOINT, { count });
     }
 }

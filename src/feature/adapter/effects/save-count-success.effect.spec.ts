@@ -15,8 +15,8 @@ describe(`${SaveCountSuccess.name}`, () => {
     });
     it('saves data to the BE', () => {
         effect.execute(count);
-        expect(dataSource.saveSuccess).toBeCalledTimes(1);
-        expect(dataSource.saveSuccess).toBeCalledWith(count);
+        expect(dataSource.set).toBeCalledTimes(1);
+        expect(dataSource.set).toBeCalledWith(count);
     });
     it('returns BE response', async () => {
         await expect(effect.execute(count)).resolves.toEqual(count);

@@ -1,4 +1,4 @@
-import { CounterService } from '@api/counter.service';
+import { COUNTER_SET_COUNT_ENDPOINT } from '@api/counter.service';
 import { RootStore } from '@stores/root/root.store';
 import { autorun } from 'mobx';
 import { FeatureController } from './adapter/feature.controller';
@@ -6,6 +6,8 @@ import { FeaturePresenter } from './adapter/feature.presenter';
 import { MultiplyCount } from './adapter/selectors/multiply-count.selector';
 import { AppState } from '@stores/app/app.types';
 import { sleep } from '@testing-tools/testing-tools';
+import { httpClient } from '@core/http-client';
+import { PendingRequest } from '@testing-tools/testing-tools.types';
 
 describe(`Feature functional react component`, () => {
     let store: RootStore;
@@ -19,7 +21,11 @@ describe(`Feature functional react component`, () => {
         store = RootStore.make(initial);
 
         MultiplyCount.runs = 0;
-        CounterService.successResponses = 0;
+    });
+
+    afterEach(() => {
+        httpClient.verify();
+        httpClient.clean();
     });
 
     // NOTE(harunou): mobx streams are behavior subjects, subscription takes
@@ -96,6 +102,12 @@ describe(`Feature functional react component`, () => {
             add_1_andSaveOptimisticButtonPushed: add_1_and_save_optimistic_ButtonPushed
         } = controller;
 
+        let request: PendingRequest<
+            number,
+            {
+                count: number;
+            }
+        >;
         let renders = 0;
         let value = 0;
 
@@ -116,15 +128,24 @@ describe(`Feature functional react component`, () => {
         add_1_and_save_optimistic_ButtonPushed();
         expect(value).toEqual(10);
         expect(renders).toEqual(4);
+
+        request = httpClient.match<number, { count: number }>(
+            COUNTER_SET_COUNT_ENDPOINT
+        );
+        request.resolve(request.params.count);
         await sleep(0);
 
         add_1_and_save_optimistic_ButtonPushed();
         expect(value).toEqual(20);
         expect(renders).toEqual(6);
+
+        request = httpClient.match<number, { count: number }>(
+            COUNTER_SET_COUNT_ENDPOINT
+        );
+        request.resolve(request.params.count);
         await sleep(0);
 
         expect(MultiplyCount.runs).toEqual(3);
-        expect(CounterService.successResponses).toEqual(2);
     });
 
     it('renders after BE response when uses pessimistic save', async () => {
@@ -153,21 +174,32 @@ describe(`Feature functional react component`, () => {
         expect(renders).toEqual(2);
 
         add_1_and_save_pessimistic_ButtonPushed();
+
         expect(value).toEqual(0);
         expect(renders).toEqual(2);
 
+        const request0 = httpClient.match<number, { count: number }>(
+            COUNTER_SET_COUNT_ENDPOINT
+        );
+        request0.resolve(request0.params.count);
         await sleep(0);
+
         expect(value).toEqual(10);
         expect(renders).toEqual(4);
 
         add_1_and_save_pessimistic_ButtonPushed();
         expect(value).toEqual(10);
         expect(renders).toEqual(4);
+
+        const request1 = httpClient.match<number, { count: number }>(
+            COUNTER_SET_COUNT_ENDPOINT
+        );
+        request1.resolve(request1.params.count);
         await sleep(0);
+
         expect(value).toEqual(20);
         expect(renders).toEqual(6);
 
         expect(MultiplyCount.runs).toEqual(3);
-        expect(CounterService.successResponses).toEqual(2);
     });
 });

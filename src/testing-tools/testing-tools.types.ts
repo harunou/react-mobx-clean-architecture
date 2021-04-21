@@ -1,6 +1,6 @@
 export interface PendingRequest<R, P> {
     endpoint: string;
-    params?: P;
+    params: P;
     resolve: (v: R) => void;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     reject: (r: any) => void;
