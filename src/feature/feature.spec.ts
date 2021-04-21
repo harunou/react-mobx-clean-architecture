@@ -1,11 +1,11 @@
 import { CounterService } from '@api/counter.service';
 import { RootStore } from '@stores/root/root.store';
 import { autorun } from 'mobx';
-import { sleep } from '@testing-tools';
 import { FeatureController } from './adapter/feature.controller';
 import { FeaturePresenter } from './adapter/feature.presenter';
 import { MultiplyCount } from './adapter/selectors/multiply-count.selector';
 import { AppState } from '@stores/app/app.types';
+import { sleep } from '@testing-tools/testing-tools';
 
 describe(`Feature functional react component`, () => {
     let store: RootStore;

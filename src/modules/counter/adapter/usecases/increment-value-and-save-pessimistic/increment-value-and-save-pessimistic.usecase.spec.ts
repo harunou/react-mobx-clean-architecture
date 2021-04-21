@@ -2,7 +2,7 @@ import { counterServiceMock } from '@api/counter.mocks';
 import { CounterStore } from '@stores/counter/counter.store';
 import { CounterModel } from '@stores/counter/counter.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
-import { sleep } from '@testing-tools';
+import { sleep } from '@testing-tools/testing-tools';
 import { IncrementCount } from '../../effects/increment-count/increment-count.effect';
 import { IncrementValueAndSavePessimistic } from './increment-value-and-save-pessimistic.usecase';
 

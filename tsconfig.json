@@ -8,10 +8,11 @@
       "allowSyntheticDefaultImports": true,
       "jsx": "react-jsx",
       "paths": {
+        "@core/*": ["./src/core/*"],
         "@modules/*": ["./src/modules/*"],
         "@stores/*": ["./src/stores/*"],
         "@api/*": ["./src/api/*"],
-        "@testing-tools": ["./src/testing-tools.ts"]
+        "@testing-tools/*": ["./src/testing-tools/*"]
       }
   },
   "include": ["src/**/*"],

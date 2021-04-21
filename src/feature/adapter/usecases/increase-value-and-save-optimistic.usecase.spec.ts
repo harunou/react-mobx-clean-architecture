@@ -2,10 +2,10 @@ import { counterServiceMock } from '@api/counter.mocks';
 import { CounterStore } from '@stores/counter/counter.store';
 import { CounterModel } from '@stores/counter/counter.types';
 import { CancellablePromise } from 'mobx/dist/internal';
-import { sleep } from '@testing-tools';
 import { SaveCountSuccess } from '../effects/save-count-success.effect';
 import { IncreaseValueAndSaveOptimistic } from './increase-value-and-save-optimistic.usecase';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
+import { sleep } from '@testing-tools/testing-tools';
 
 describe(`${IncreaseValueAndSaveOptimistic.name}`, () => {
     let store: CounterModel;

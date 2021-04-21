@@ -1,5 +1,5 @@
+import { noop } from '@core/core.helpers';
 import { useAdapter } from '@stores/root/root.store';
-import { noop } from '@testing-tools';
 import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 import { CounterController } from './adapter/counter.controller';

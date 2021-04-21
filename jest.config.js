@@ -85,7 +85,8 @@ module.exports = {
         '^@stores/(.*)$': '<rootDir>/src/stores/$1',
         '^@api/(.*)$': '<rootDir>/src/api/$1',
         '^@modules/(.*)$': '<rootDir>/src/modules/$1',
-        '^@testing-tools$': '<rootDir>/src/testing-tools.ts'
+        '^@core/(.*)$': '<rootDir>/src/core/$1',
+        '^@testing-tools/(.*)$': '<rootDir>/src/testing-tools/$1'
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
