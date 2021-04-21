@@ -6,13 +6,26 @@ export const makeContext = <S>(): {
     RootStoreContext: React.Context<NonNullable<S>>;
     useAdapter: UseAdapter<S>;
 } => {
-    const RootStoreContext = createContext<S | undefined>(undefined);
+    const rootStoreContext = makeStoreContext<S>();
 
-    const useAdapter = <C, P>(
+    const useAdapter = makeStoreUseAdapter<S>(rootStoreContext);
+
+    return {
+        RootStoreContext: assertContextNonNullableCasting(rootStoreContext),
+        useAdapter
+    };
+};
+
+const makeStoreContext = <S>() => {
+    return createContext<S | undefined>(undefined);
+};
+
+const makeStoreUseAdapter = <S>(context: React.Context<S | undefined>) => {
+    return function useAdapter<C, P>(
         ControllerConstructor: AdapterConstructor<S, C>,
         PresenterConstructor: AdapterConstructor<S, P>
-    ): { controller: C; presenter: P } => {
-        const store = useContext(RootStoreContext);
+    ): { controller: C; presenter: P } {
+        const store = useContext(context);
         assert(
             store,
             'UseAdapter: root store context can not be undefined, check if context is set up correctly'
@@ -20,11 +33,6 @@ export const makeContext = <S>(): {
         const controller = new ControllerConstructor(store);
         const presenter = new PresenterConstructor(store);
         return { controller, presenter };
-    };
-
-    return {
-        RootStoreContext: assertContextNonNullableCasting(RootStoreContext),
-        useAdapter
     };
 };
 
