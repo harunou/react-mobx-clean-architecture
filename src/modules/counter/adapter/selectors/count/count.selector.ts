@@ -19,5 +19,4 @@ export class Count implements Selector {
     }
 }
 
-const countSelector = SelectorBuilder.make(Count);
-export default countSelector;
+export const countSelector = SelectorBuilder.make(Count);

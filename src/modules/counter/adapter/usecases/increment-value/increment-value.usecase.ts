@@ -23,6 +23,4 @@ export class IncrementValue implements UseCase {
     }
 }
 
-const incrementValueUseCase = UseCaseBuilder.make(IncrementValue);
-
-export default incrementValueUseCase;
+export const incrementValueUseCase = UseCaseBuilder.make(IncrementValue);

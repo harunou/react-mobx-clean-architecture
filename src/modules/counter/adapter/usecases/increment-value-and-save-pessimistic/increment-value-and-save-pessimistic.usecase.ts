@@ -4,7 +4,8 @@ import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { RootUseCaseMakeParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
-import incrementCountEffect, {
+import {
+    incrementCountEffect,
     IncrementCountExecuteProps
 } from '../../effects/increment-count/increment-count.effect';
 
@@ -42,7 +43,6 @@ export class IncrementValueAndSavePessimistic implements UseCase {
         this.store.setCount(count);
     }
 }
-const incrementValueAndSavePessimisticUseCase = UseCaseBuilder.make(
+export const incrementValueAndSavePessimisticUseCase = UseCaseBuilder.make(
     IncrementValueAndSavePessimistic
 );
-export default incrementValueAndSavePessimisticUseCase;

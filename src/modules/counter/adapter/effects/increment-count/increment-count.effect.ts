@@ -45,5 +45,4 @@ export class IncrementCount implements Effect {
     }
 }
 
-const incrementCountEffect = EffectBuilder.make(IncrementCount);
-export default incrementCountEffect;
+export const incrementCountEffect = EffectBuilder.make(IncrementCount);

@@ -1,8 +1,8 @@
 import { RootStoreExecutor } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
-import incrementValueAndSaveOptimisticUseCase from './usecases/increment-value-and-save-optimistic/increment-value-and-save-optimistic.usecase';
-import incrementValueAndSavePessimisticUseCase from './usecases/increment-value-and-save-pessimistic/increment-value-and-save-pessimistic.usecase';
-import incrementValueUseCase from './usecases/increment-value/increment-value.usecase';
+import { incrementValueAndSaveOptimisticUseCase } from './usecases/increment-value-and-save-optimistic/increment-value-and-save-optimistic.usecase';
+import { incrementValueAndSavePessimisticUseCase } from './usecases/increment-value-and-save-pessimistic/increment-value-and-save-pessimistic.usecase';
+import { incrementValueUseCase } from './usecases/increment-value/increment-value.usecase';
 
 export class CounterController {
     constructor(private readonly store: RootStoreExecutor) {

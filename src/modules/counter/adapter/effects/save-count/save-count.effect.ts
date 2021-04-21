@@ -33,5 +33,4 @@ export class SaveCount implements Effect {
     }
 }
 
-const saveCountSuccessEffect = EffectBuilder.make(SaveCount);
-export default saveCountSuccessEffect;
+export const saveCountSuccessEffect = EffectBuilder.make(SaveCount);
