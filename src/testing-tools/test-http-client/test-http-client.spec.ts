@@ -1,5 +1,5 @@
-import { makeTestHttpClient } from './testing-tools';
-import { TestHttpClient } from './testing-tools.types';
+import { makeTestHttpClient } from './test-http-client';
+import { TestHttpClient } from './test-http-client.types';
 
 describe(`TestHttpClient`, () => {
     let testHttpClient: TestHttpClient;

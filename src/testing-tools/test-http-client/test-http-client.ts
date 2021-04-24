@@ -1,11 +1,4 @@
-import { PendingRequest, TestHttpClient } from './testing-tools.types';
-
-export const sleep = (ms = 0): Promise<unknown> =>
-    new Promise((resolve) =>
-        setTimeout(() => {
-            resolve(undefined);
-        }, ms)
-    );
+import { PendingRequest, TestHttpClient } from './test-http-client.types';
 
 export const makeTestHttpClient = (): TestHttpClient => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

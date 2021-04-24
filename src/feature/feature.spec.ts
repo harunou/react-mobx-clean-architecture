@@ -5,9 +5,9 @@ import { FeatureController } from './adapter/feature.controller';
 import { FeaturePresenter } from './adapter/feature.presenter';
 import { MultiplyCount } from './adapter/selectors/multiply-count.selector';
 import { AppState } from '@stores/app/app.types';
-import { sleep } from '@testing-tools/testing-tools';
 import { httpClient } from '@core/http-client';
-import { PendingRequest } from '@testing-tools/testing-tools.types';
+import { PendingRequest } from '@testing-tools/test-http-client/test-http-client.types';
+import { sleep } from '@testing-tools/testing-tools.helpers';
 
 describe(`Feature functional react component`, () => {
     let store: RootStore;
