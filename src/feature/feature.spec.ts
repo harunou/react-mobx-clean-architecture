@@ -1,4 +1,4 @@
-import { COUNTER_SET_COUNT_ENDPOINT } from '@api/counter.service';
+import { COUNTER_SAVE_COUNT_ENDPOINT } from '@api/counter.service';
 import { RootStore } from '@stores/root/root.store';
 import { autorun } from 'mobx';
 import { FeatureController } from './adapter/feature.controller';
@@ -130,7 +130,7 @@ describe(`Feature functional react component`, () => {
         expect(renders).toEqual(4);
 
         request = httpClient.match<number, { count: number }>(
-            COUNTER_SET_COUNT_ENDPOINT
+            COUNTER_SAVE_COUNT_ENDPOINT
         );
         request.resolve(request.params.count);
         await sleep(0);
@@ -140,7 +140,7 @@ describe(`Feature functional react component`, () => {
         expect(renders).toEqual(6);
 
         request = httpClient.match<number, { count: number }>(
-            COUNTER_SET_COUNT_ENDPOINT
+            COUNTER_SAVE_COUNT_ENDPOINT
         );
         request.resolve(request.params.count);
         await sleep(0);
@@ -152,9 +152,7 @@ describe(`Feature functional react component`, () => {
         const controller = FeatureController.make(store);
         const presenter = FeaturePresenter.make(store);
 
-        const {
-            add_1_andSavePessimisticButtonPushed: add_1_and_save_pessimistic_ButtonPushed
-        } = controller;
+        const { add_1_andSavePessimisticButtonPushed } = controller;
 
         let renders = 0;
         let value = 0;
@@ -173,13 +171,13 @@ describe(`Feature functional react component`, () => {
         expect(value).toEqual(0);
         expect(renders).toEqual(2);
 
-        add_1_and_save_pessimistic_ButtonPushed();
+        add_1_andSavePessimisticButtonPushed();
 
         expect(value).toEqual(0);
         expect(renders).toEqual(2);
 
         const request0 = httpClient.match<number, { count: number }>(
-            COUNTER_SET_COUNT_ENDPOINT
+            COUNTER_SAVE_COUNT_ENDPOINT
         );
         request0.resolve(request0.params.count);
         await sleep(0);
@@ -187,12 +185,12 @@ describe(`Feature functional react component`, () => {
         expect(value).toEqual(10);
         expect(renders).toEqual(4);
 
-        add_1_and_save_pessimistic_ButtonPushed();
+        add_1_andSavePessimisticButtonPushed();
         expect(value).toEqual(10);
         expect(renders).toEqual(4);
 
         const request1 = httpClient.match<number, { count: number }>(
-            COUNTER_SET_COUNT_ENDPOINT
+            COUNTER_SAVE_COUNT_ENDPOINT
         );
         request1.resolve(request1.params.count);
         await sleep(0);

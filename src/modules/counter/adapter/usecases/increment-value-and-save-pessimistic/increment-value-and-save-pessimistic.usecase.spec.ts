@@ -10,7 +10,7 @@ describe(`${IncrementValueAndSavePessimistic.name}`, () => {
     let store: CounterModel;
     let effect: IncrementCount;
     let effectFlow: EffectFlow<number>;
-    const increment = 4;
+    const increment = 5;
     const count = 4;
     beforeEach(() => {
         store = new CounterStore({ $count: count });
@@ -26,9 +26,9 @@ describe(`${IncrementValueAndSavePessimistic.name}`, () => {
             increment
         );
         useCase.execute();
-        expect(effect.execute).toBeCalledWith({ increment, count });
+        expect(effect.execute).toBeCalledWith(increment);
         await sleep(0);
         expect(store.setCount).toBeCalledTimes(1);
-        expect(store.setCount).toBeCalledWith(count + increment);
+        expect(store.setCount).toBeCalledWith(increment);
     });
 });

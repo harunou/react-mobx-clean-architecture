@@ -4,7 +4,6 @@ import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { IncrementCount } from './increment-count.effect';
 
 describe(`${IncrementCount.name}`, () => {
-    const count = 5;
     const increment = 3;
     let dataSource: CounterDataSource;
     let effectFlow: EffectFlow<number>;
@@ -15,13 +14,11 @@ describe(`${IncrementCount.name}`, () => {
         effect = new IncrementCount(dataSource, effectFlow);
     });
     it('saves data to the BE', () => {
-        effect.execute({ increment: increment, count });
+        effect.execute(increment);
         expect(dataSource.increment).toBeCalledTimes(1);
-        expect(dataSource.increment).toBeCalledWith(increment, count);
+        expect(dataSource.increment).toBeCalledWith(increment);
     });
     it('returns BE response', async () => {
-        await expect(effect.execute({ increment, count })).resolves.toEqual(
-            increment + count
-        );
+        await expect(effect.execute(increment)).resolves.toEqual(increment);
     });
 });

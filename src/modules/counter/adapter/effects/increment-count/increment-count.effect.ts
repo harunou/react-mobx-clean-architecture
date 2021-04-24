@@ -8,11 +8,6 @@ import {
 } from '@stores/helpers/effect/effect.helpers';
 import { RootEffectMakeParams } from '@stores/root/root.types';
 
-export interface IncrementCountExecuteProps {
-    increment: number;
-    count: number;
-}
-
 export class IncrementCount implements Effect {
     static make({ persistence }: RootEffectMakeParams): IncrementCount {
         const effectFlow = EffectFlow.make<number>();
@@ -24,23 +19,16 @@ export class IncrementCount implements Effect {
         private flow: EffectFlow<number>
     ) {}
 
-    execute({
-        increment,
-        count
-    }: IncrementCountExecuteProps): CancellablePromise<number> {
+    execute(increment: number): CancellablePromise<number> {
         this.flow.cancel();
-        this.flow.promise = flow(this.saveGenerator.bind(this))(
-            increment,
-            count
-        );
+        this.flow.promise = flow(this.saveGenerator.bind(this))(increment);
         return this.flow.promise;
     }
 
     private *saveGenerator(
-        value: number,
-        count: number
+        value: number
     ): Generator<Promise<number>, number, number> {
-        const countDto = yield this.counterDataSource.increment(value, count);
+        const countDto = yield this.counterDataSource.increment(value);
         return countDto;
     }
 }
