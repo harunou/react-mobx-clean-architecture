@@ -9,7 +9,7 @@
     "jest:watch": "npm run jest:base -- --watchAll=true",
     "jest:all": "npm run jest:base -- --watchAll=false",
     "tsc:type-check": "tsc --noEmit --project ./tsconfig.json",
-    "eslint:base": "eslint --format=codeframe --max-warnings=0 --ext=ts,tsx --config=eslint.config.js",
+    "eslint:base": "eslint --format=codeframe --max-warnings=0 --ext=ts,tsx",
     "eslint:all": "npm run eslint:base -- ./src"
   },
   "repository": {
