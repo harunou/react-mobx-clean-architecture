@@ -1,6 +1,11 @@
 import assert from 'assert';
-import React, { createContext, useContext, useState } from 'react';
-import { AdapterConstructor, UseAdapter } from './context.types';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import {
+    AdapterConstructor,
+    OnDestroy,
+    OnInit,
+    UseAdapter
+} from './context.types';
 
 export const makeContext = <S>(): {
     RootStoreContext: React.Context<NonNullable<S>>;
@@ -16,7 +21,9 @@ export const makeContext = <S>(): {
     };
 };
 
-const makeStoreUseAdapter = <S>(context: React.Context<S | undefined>) => {
+export const makeStoreUseAdapter = <S>(
+    context: React.Context<S | undefined>
+) => {
     return function useAdapter<C, P>(
         ControllerConstructor: AdapterConstructor<S, C>,
         PresenterConstructor: AdapterConstructor<S, P>
@@ -28,8 +35,30 @@ const makeStoreUseAdapter = <S>(context: React.Context<S | undefined>) => {
         );
         const [controller] = useState(new ControllerConstructor(store));
         const [presenter] = useState(new PresenterConstructor(store));
+
+        useEffect(() => {
+            if (hasOnInitHook(controller)) {
+                controller.onInit();
+            }
+            return () => {
+                if (hasOnDestroyHook(controller)) {
+                    controller.onDestroy();
+                }
+            };
+        }, []);
+
         return { controller, presenter };
     };
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const hasOnInitHook = (c: any): c is OnInit => {
+    return typeof c.onInit === 'function';
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const hasOnDestroyHook = (c: any): c is OnDestroy => {
+    return typeof c.onDestroy === 'function';
 };
 
 const assertContextNonNullableCasting = <S>(

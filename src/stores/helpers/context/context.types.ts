@@ -9,3 +9,11 @@ export type UseAdapter<S> = <C, P>(
     controller: C;
     presenter: P;
 };
+
+export interface OnInit {
+    onInit(): void;
+}
+
+export interface OnDestroy {
+    onDestroy(): void;
+}
