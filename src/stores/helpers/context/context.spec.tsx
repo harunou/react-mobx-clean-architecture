@@ -14,6 +14,7 @@ class Controller implements OnInit, OnDestroy {
     onInit = jest.fn();
     onDestroy = jest.fn();
 }
+
 class Presenter {
     private p = 'presenter';
     constructor(public store: Store) {}
@@ -66,6 +67,23 @@ describe(`useAdapter hook`, () => {
 
         expect(first.controller).toBe(second.controller);
         expect(first.presenter).toBe(second.presenter);
+    });
+
+    it('runs presenter and controller constructor only once on mount', () => {
+        const ControllerStub = jest.fn();
+        const PresenterStub = jest.fn();
+
+        const { rerender } = renderHook(
+            () => useAdapter(ControllerStub, PresenterStub),
+            {
+                wrapper: ContextProvider
+            }
+        );
+
+        rerender();
+
+        expect(ControllerStub).toBeCalledTimes(1);
+        expect(PresenterStub).toBeCalledTimes(1);
     });
 
     it('calls onInit hook once', () => {
