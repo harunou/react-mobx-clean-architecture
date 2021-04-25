@@ -31,6 +31,7 @@
     "@babel/preset-typescript": "7.13.0",
     "@testing-library/jest-dom": "5.11.10",
     "@testing-library/react": "11.2.6",
+    "@testing-library/react-hooks": "5.1.2",
     "@tsconfig/recommended": "1.0.1",
     "@types/assert": "1.5.4",
     "@types/jest": "26.0.22",
