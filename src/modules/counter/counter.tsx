@@ -10,14 +10,25 @@ export const Counter: FC = observer(() => {
         CounterController,
         CounterPresenter
     );
-    const { add_1_ButtonPushed } = controller;
-    const { selectCount } = presenter;
+    const {
+        add_1_ButtonPushed,
+        add_1_andSaveOptimisticButtonPushed,
+        add_1_andSavePessimisticButtonPushed
+    } = controller;
+    const { selectCount, selectMultiplyCountOn_10 } = presenter;
 
     return (
         <div>
-            <button onClick={add_1_ButtonPushed}>+</button>
+            <button onClick={add_1_ButtonPushed}>+1</button>
+            <button onClick={add_1_andSaveOptimisticButtonPushed}>
+                +1 and save optimistic
+            </button>
+            <button onClick={add_1_andSavePessimisticButtonPushed}>
+                +1 and save pessimistic
+            </button>
             <span>{selectCount}</span>
-            <button onClick={noop}>-</button>
+            <span>{selectMultiplyCountOn_10}</span>
+            <button onClick={noop}>-1</button>
         </div>
     );
 });
