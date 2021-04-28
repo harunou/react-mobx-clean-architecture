@@ -7,15 +7,15 @@ export interface CancellableEffect<A = unknown, R = unknown>
     cancel(): void;
 }
 
-export interface EffectMakeParams<S, P> {
+export interface EffectMakeParams<S, R> {
     store: S;
-    persistence: P;
+    persistence: R;
 }
 
-export interface EffectConstructor<S, P, E> {
-    make(params: EffectMakeParams<S, P>): E;
+export interface EffectConstructor<S, R, E> {
+    make(params: EffectMakeParams<S, R>): E;
 }
 
-export interface EffectInteractionBuilder<S, P, E> {
-    build(state: S, persistence: P): E;
+export interface EffectInteractionBuilder<S, R, E> {
+    build(state: S, persistence: R): E;
 }
