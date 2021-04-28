@@ -1,31 +1,26 @@
 import { CancellablePromise } from 'mobx/dist/internal';
-import {
-    Effect,
-    EffectConstructor,
-    EffectInteractionBuilder
-} from './effect.types';
+import { EffectConstructor, EffectInteractionBuilder } from './effect.types';
 
-export class EffectBuilder<S, P, A, R>
-    implements EffectInteractionBuilder<S, P, A, R> {
-    static make<CS, CP, CA, CR>(
-        useCaseConstructor: EffectConstructor<CS, CP, CA, CR>
-    ): EffectBuilder<CS, CP, CA, CR> {
-        return new EffectBuilder(useCaseConstructor);
+export class EffectBuilder<S, P, E>
+    implements EffectInteractionBuilder<S, P, E> {
+    static make<CS, CP, CE>(
+        effectConstructor: EffectConstructor<CS, CP, CE>
+    ): EffectBuilder<CS, CP, CE> {
+        return new EffectBuilder(effectConstructor);
     }
+    private effect: E | null = null;
 
-    private effect: Effect<A, R> | null = null;
+    constructor(private effectConstructor: EffectConstructor<S, P, E>) {}
 
-    constructor(private EffectConstructor: EffectConstructor<S, P, A, R>) {}
-
-    build(store: S, persistence: P, isSingleton = true): Effect<A, R> {
+    build(store: S, persistence: P, isSingleton = true): E {
         if (!isSingleton) {
-            return this.EffectConstructor.make({
+            return this.effectConstructor.make({
                 store,
                 persistence
             });
         }
         if (!this.effect) {
-            this.effect = this.EffectConstructor.make({
+            this.effect = this.effectConstructor.make({
                 store,
                 persistence
             });

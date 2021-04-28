@@ -1,5 +1,4 @@
 import { flow } from 'mobx';
-import { CancellablePromise } from 'mobx/dist/api/flow';
 import { CounterDataSource } from '@api/counter.types';
 import { Effect } from '@stores/helpers/effect/effect.types';
 import {
@@ -19,8 +18,7 @@ export class SaveCount implements Effect {
         private flow: EffectFlow<number>
     ) {}
 
-    execute(count: number): CancellablePromise<number> {
-        this.flow.cancel();
+    execute(count: number): Promise<number> {
         this.flow.promise = flow(this.saveGenerator.bind(this))(count);
         return this.flow.promise;
     }
@@ -33,4 +31,4 @@ export class SaveCount implements Effect {
     }
 }
 
-export const saveCountSuccessEffect = EffectBuilder.make(SaveCount);
+export const saveCountEffect = EffectBuilder.make(SaveCount);

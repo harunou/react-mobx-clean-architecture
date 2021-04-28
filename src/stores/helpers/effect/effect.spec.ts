@@ -9,17 +9,16 @@ interface Persistence {
 }
 type GetCountEffectProps = number;
 type GetCountEffectResult = number;
+type GetCountEffect = Effect<GetCountEffectProps, GetCountEffectResult>;
 type GetCountEffectConstructor = EffectConstructor<
     CounterState,
     Persistence,
-    GetCountEffectProps,
-    GetCountEffectResult
+    GetCountEffect
 >;
 type GetCountEffectBuilder = EffectBuilder<
     CounterState,
     Persistence,
-    GetCountEffectProps,
-    GetCountEffectResult
+    GetCountEffect
 >;
 
 describe(`${EffectBuilder.name}`, () => {
