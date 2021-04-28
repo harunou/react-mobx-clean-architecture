@@ -10,7 +10,7 @@ export abstract class Store<S, P>
     implements StoreQuery<S>, StoreExecuter<S, P> {
     constructor(private appStore: S, private persistenceStore: P) {}
 
-    query<R>(selector: SelectorInteractionBuilder<S, R>): Selector<R> {
+    query<L extends Selector>(selector: SelectorInteractionBuilder<S, L>): L {
         return selector.build(this.appStore);
     }
 

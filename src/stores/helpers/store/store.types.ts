@@ -2,12 +2,12 @@ export interface Selector<R = unknown> {
     result: R;
 }
 
-export interface SelectorInteractionBuilder<S, R> {
-    build(state: S): Selector<R>;
+export interface SelectorInteractionBuilder<S, L> {
+    build(state: S): L;
 }
 
 export interface StoreQuery<S> {
-    query<R>(builder: SelectorInteractionBuilder<S, R>): Selector<R>;
+    query<L extends Selector>(builder: SelectorInteractionBuilder<S, L>): L;
 }
 
 export interface UseCase {

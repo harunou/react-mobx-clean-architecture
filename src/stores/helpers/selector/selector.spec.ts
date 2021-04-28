@@ -7,15 +7,16 @@ interface CounterState {
 }
 type GetCountProps = string;
 type GetCountSelectorResult = number;
+type GetCountSelector = Selector<GetCountSelectorResult>;
 type GetCountSelectorConstructor = SelectorConstructor<
     CounterState,
     GetCountProps,
-    GetCountSelectorResult
+    GetCountSelector
 >;
 type GetCountSelectorBuilder = SelectorBuilder<
     CounterState,
     GetCountProps,
-    GetCountSelectorResult
+    GetCountSelector
 >;
 
 describe(`${SelectorBuilder.name}`, () => {

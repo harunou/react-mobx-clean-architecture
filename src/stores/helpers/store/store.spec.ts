@@ -24,7 +24,7 @@ describe(`${RootStore.name} that extends Store helper`, () => {
 
     let queryResult: number;
     let selector: Selector<number>;
-    let selectorBuilder: SelectorInteractionBuilder<Model, number>;
+    let selectorBuilder: SelectorInteractionBuilder<Model, Selector<number>>;
 
     let useCase: UseCase;
     let useCaseBuilder: UseCaseInteractionBuilder<Model, Persistence>;
