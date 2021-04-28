@@ -3,18 +3,21 @@ import {
     SelectorInteractionBuilder,
     StoreExecuter,
     StoreQuery,
+    UseCase,
     UseCaseInteractionBuilder
 } from './store.types';
 
-export abstract class Store<S, P>
-    implements StoreQuery<S>, StoreExecuter<S, P> {
-    constructor(private appStore: S, private persistenceStore: P) {}
+export abstract class Store<S, R>
+    implements StoreQuery<S>, StoreExecuter<S, R> {
+    constructor(private appStore: S, private persistenceStore: R) {}
 
     query<L extends Selector>(selector: SelectorInteractionBuilder<S, L>): L {
         return selector.build(this.appStore);
     }
 
-    execute(useCase: UseCaseInteractionBuilder<S, P>): void {
+    execute<U extends UseCase>(
+        useCase: UseCaseInteractionBuilder<S, R, U>
+    ): void {
         useCase.build(this.appStore, this.persistenceStore).execute();
     }
 }

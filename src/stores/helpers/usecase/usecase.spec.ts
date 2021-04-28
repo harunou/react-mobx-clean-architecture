@@ -9,12 +9,19 @@ interface Persistence {
     setCount(): void;
 }
 type SetCountProps = string;
+type SetCountUseCase = UseCase;
 type SetCountUseCaseConstructor = UseCaseConstructor<
     CounterState,
     Persistence,
-    SetCountProps
+    SetCountProps,
+    SetCountUseCase
 >;
-type GetCountUseCaseBuilder = UseCaseBuilder<CounterState, Persistence, string>;
+type GetCountUseCaseBuilder = UseCaseBuilder<
+    CounterState,
+    Persistence,
+    string,
+    SetCountUseCase
+>;
 
 describe(`${UseCaseBuilder.name}`, () => {
     let SetCountUseCaseClassMock: SetCountUseCaseConstructor;

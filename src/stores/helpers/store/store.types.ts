@@ -14,10 +14,12 @@ export interface UseCase {
     execute(): void;
 }
 
-export interface UseCaseInteractionBuilder<S, P> {
-    build(state: S, persistence: P): UseCase;
+export interface UseCaseInteractionBuilder<S, R, U> {
+    build(state: S, persistence: R): U;
 }
 
-export interface StoreExecuter<S, P> {
-    execute(builder: UseCaseInteractionBuilder<S, P>): void;
+export interface StoreExecuter<S, R> {
+    execute<U extends UseCase>(
+        builder: UseCaseInteractionBuilder<S, R, U>
+    ): void;
 }
