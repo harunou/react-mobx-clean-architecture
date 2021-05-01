@@ -1,10 +1,10 @@
 import { httpClient } from '@core/http-client';
-import { CounterDataSource as CounterDataSource } from './counter.types';
+import { CounterSource } from '@stores/persistence/counter-source.types';
 
 export const COUNTER_INCREMENT_ENDPOINT = 'counter/increment';
 export const COUNTER_SAVE_COUNT_ENDPOINT = 'counter/save';
 
-export class CounterService implements CounterDataSource {
+export class CounterService implements CounterSource {
     static make(): CounterService {
         return new CounterService();
     }

@@ -1,5 +1,5 @@
-import { CounterDataSource } from '../../api/counter.types';
+import { CounterSource } from './counter-source.types';
 
 export interface PersistenceModel {
-    counterDataSource: CounterDataSource;
+    counterService: CounterSource;
 }

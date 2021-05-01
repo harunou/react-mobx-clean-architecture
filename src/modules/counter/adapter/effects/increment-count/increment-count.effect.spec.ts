@@ -2,30 +2,30 @@ import {
     CounterService,
     COUNTER_INCREMENT_ENDPOINT
 } from '@api/counter.service';
-import { CounterDataSource } from '@api/counter.types';
+import { CounterSource } from '@stores/persistence/counter-source.types';
 import { httpClient } from '@core/http-client';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { IncrementCount } from './increment-count.effect';
 
 describe(`${IncrementCount.name}`, () => {
     const increment = 3;
-    let dataSource: CounterDataSource;
+    let counterService: CounterSource;
     let effectFlow: EffectFlow<number>;
     let effect: IncrementCount;
     beforeEach(() => {
-        dataSource = new CounterService();
+        counterService = new CounterService();
         effectFlow = new EffectFlow<number>();
-        effect = new IncrementCount(dataSource, effectFlow);
+        effect = new IncrementCount(counterService, effectFlow);
     });
     afterEach(() => {
         httpClient.verify();
         httpClient.clean();
     });
     it('saves data to the BE', () => {
-        jest.spyOn(dataSource, 'increment');
+        jest.spyOn(counterService, 'increment');
         effect.execute(increment);
-        expect(dataSource.increment).toBeCalledTimes(1);
-        expect(dataSource.increment).toBeCalledWith(increment);
+        expect(counterService.increment).toBeCalledTimes(1);
+        expect(counterService.increment).toBeCalledWith(increment);
         httpClient.clean();
     });
     it('returns BE response', async () => {

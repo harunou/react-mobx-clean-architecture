@@ -1,22 +1,22 @@
 import { counterServiceMock } from '@api/counter.mocks';
-import { CounterDataSource } from '@api/counter.types';
+import { CounterSource } from '@stores/persistence/counter-source.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { SaveCount } from './save-count.effect';
 
 describe(`${SaveCount.name}`, () => {
     const count = 5;
-    let dataSource: CounterDataSource;
+    let counterService: CounterSource;
     let effectFlow: EffectFlow<number>;
     let effect: SaveCount;
     beforeEach(() => {
-        dataSource = counterServiceMock;
+        counterService = counterServiceMock;
         effectFlow = new EffectFlow<number>();
-        effect = new SaveCount(dataSource, effectFlow);
+        effect = new SaveCount(counterService, effectFlow);
     });
     it('saves data to the BE', () => {
         effect.execute(count);
-        expect(dataSource.save).toBeCalledTimes(1);
-        expect(dataSource.save).toBeCalledWith(count);
+        expect(counterService.save).toBeCalledTimes(1);
+        expect(counterService.save).toBeCalledWith(count);
     });
     it('returns BE response', async () => {
         await expect(effect.execute(count)).resolves.toEqual(count);

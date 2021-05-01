@@ -1,6 +1,6 @@
-import { CounterDataSource } from './counter.types';
+import { CounterSource } from '../stores/persistence/counter-source.types';
 
-export const counterServiceMock: CounterDataSource = {
+export const counterServiceMock: CounterSource = {
     increment: jest
         .fn()
         .mockImplementation((increment: number) => Promise.resolve(increment)),

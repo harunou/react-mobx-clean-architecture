@@ -1,5 +1,5 @@
 import { flow } from 'mobx';
-import { CounterDataSource } from '@api/counter.types';
+import { CounterSource } from '@stores/persistence/counter-source.types';
 import { Effect } from '@stores/helpers/effect/effect.types';
 import {
     EffectBuilder,
@@ -10,11 +10,11 @@ import { RootEffectMakeParams } from '@stores/root/root.types';
 export class SaveCount implements Effect {
     static make({ persistence }: RootEffectMakeParams): SaveCount {
         const effectFlow = EffectFlow.make<number>();
-        return new SaveCount(persistence.counterDataSource, effectFlow);
+        return new SaveCount(persistence.counterService, effectFlow);
     }
 
     constructor(
-        private counterDataSource: CounterDataSource,
+        private counterService: CounterSource,
         private flow: EffectFlow<number>
     ) {}
 
@@ -26,7 +26,7 @@ export class SaveCount implements Effect {
     private *saveGenerator(
         count: number
     ): Generator<Promise<number>, number, number> {
-        const countDto = yield this.counterDataSource.save(count);
+        const countDto = yield this.counterService.save(count);
         return countDto;
     }
 }
