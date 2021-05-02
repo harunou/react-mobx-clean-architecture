@@ -8,14 +8,14 @@ import {
     saveCountEffect
 } from '../../effects/save-count/save-count.effect';
 
-export class IncrementValueAndSaveOptimistic implements UseCase {
+export class IncrementCounterAndSaveOptimistic implements UseCase {
     static make({
         store,
         persistence,
         props
-    }: RootUseCaseMakeParams<number>): IncrementValueAndSaveOptimistic {
+    }: RootUseCaseMakeParams<number>): IncrementCounterAndSaveOptimistic {
         const effect = saveCountEffect.build(store, persistence);
-        return new IncrementValueAndSaveOptimistic(
+        return new IncrementCounterAndSaveOptimistic(
             store.counter,
             effect,
             props
@@ -43,6 +43,6 @@ export class IncrementValueAndSaveOptimistic implements UseCase {
     }
 }
 
-export const incrementValueAndSaveOptimisticUseCase = UseCaseBuilder.make(
-    IncrementValueAndSaveOptimistic
+export const incrementCounterAndSaveOptimisticUseCase = UseCaseBuilder.make(
+    IncrementCounterAndSaveOptimistic
 );

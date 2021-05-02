@@ -2,12 +2,12 @@ import { counterServiceMock } from '@api/counter.mocks';
 import { CounterStore } from '@stores/counter/counter.store';
 import { CounterModel } from '@stores/counter/counter.types';
 import { CancellablePromise } from 'mobx/dist/internal';
-import { IncrementValueAndSaveOptimistic } from './increment-value-and-save-optimistic.usecase';
+import { IncrementCounterAndSaveOptimistic } from './increment-counter-and-save-optimistic.usecase';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { SaveCount } from '../../effects/save-count/save-count.effect';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 
-describe(`${IncrementValueAndSaveOptimistic.name}`, () => {
+describe(`${IncrementCounterAndSaveOptimistic.name}`, () => {
     let store: CounterModel;
     let effect: SaveCount;
     let effectFlow: EffectFlow<number>;
@@ -20,7 +20,7 @@ describe(`${IncrementValueAndSaveOptimistic.name}`, () => {
     it('increments model value on predefined amount and optimistically save to the BE', () => {
         jest.spyOn(store, 'increment');
         jest.spyOn(effect, 'execute');
-        const useCase = new IncrementValueAndSaveOptimistic(
+        const useCase = new IncrementCounterAndSaveOptimistic(
             store,
             effect,
             increaseAmount
@@ -36,7 +36,7 @@ describe(`${IncrementValueAndSaveOptimistic.name}`, () => {
         jest.spyOn(effect, 'execute').mockImplementationOnce(
             () => Promise.reject('Error') as CancellablePromise<number>
         );
-        const useCase = new IncrementValueAndSaveOptimistic(
+        const useCase = new IncrementCounterAndSaveOptimistic(
             store,
             effect,
             increaseAmount
