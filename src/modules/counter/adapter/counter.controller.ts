@@ -1,3 +1,4 @@
+import { noop } from '@core/core.helpers';
 import { OnInit } from '@stores/helpers/context/context.types';
 import { RootStoreExecutor } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
@@ -16,6 +17,9 @@ export class CounterController implements OnInit {
     }
     onInit(): void {
         this.store.execute(initCounterUseCase);
+    }
+    onDestroy(): void {
+        noop();
     }
     add_1_ButtonPushed(): void {
         this.store.execute(incrementValueUseCase.withProps(1));
