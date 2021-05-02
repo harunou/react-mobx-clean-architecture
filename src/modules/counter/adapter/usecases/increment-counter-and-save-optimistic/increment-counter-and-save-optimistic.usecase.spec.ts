@@ -43,7 +43,7 @@ describe(`${IncrementCounterAndSaveOptimistic.name}`, () => {
         );
         useCase.execute();
         expect(store.increment).toBeCalledWith(increaseAmount);
-        await sleep(0);
+        await sleep();
         expect(store.decrement).toBeCalledWith(increaseAmount);
     });
 });

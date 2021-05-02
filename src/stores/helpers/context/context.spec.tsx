@@ -24,7 +24,7 @@ class Presenter {
     constructor(public store: Store) {}
 }
 
-describe(`useAdapter hook`, () => {
+describe(`useAdapter`, () => {
     let store: Store;
     let Context: Context<Store | undefined>;
     let useAdapter: <C, P>(

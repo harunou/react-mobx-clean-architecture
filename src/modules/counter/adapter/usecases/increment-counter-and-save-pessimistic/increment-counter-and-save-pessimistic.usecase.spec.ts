@@ -27,7 +27,7 @@ describe(`${IncrementCounterAndSavePessimistic.name}`, () => {
         );
         useCase.execute();
         expect(effect.execute).toBeCalledWith(increment);
-        await sleep(0);
+        await sleep();
         expect(store.setCount).toBeCalledTimes(1);
         expect(store.setCount).toBeCalledWith(increment);
     });
