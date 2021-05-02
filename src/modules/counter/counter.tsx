@@ -5,6 +5,14 @@ import { FC } from 'react';
 import { CounterController } from './adapter/counter.controller';
 import { CounterPresenter } from './adapter/counter.presenter';
 
+export const counterTestIds = {
+    add_1_button: 'add-1-button',
+    add_1_andSaveOptimisticButton: 'add-1-and-save-optimistic-button',
+    add_1_andSavePessimisticButton: 'add-1-and-save-pessimistic-button',
+    selectCount: 'select-count',
+    selectMultiplyCount: 'select-multiply-count'
+};
+
 export const Counter: FC = observer(() => {
     const { controller, presenter } = useAdapter(
         CounterController,
@@ -19,15 +27,28 @@ export const Counter: FC = observer(() => {
 
     return (
         <div>
-            <button onClick={add_1_ButtonPushed}>+1</button>
-            <button onClick={add_1_andSaveOptimisticButtonPushed}>
+            <button
+                data-testid={counterTestIds.add_1_button}
+                onClick={add_1_ButtonPushed}
+            >
+                +1
+            </button>
+            <button
+                data-testid={counterTestIds.add_1_andSaveOptimisticButton}
+                onClick={add_1_andSaveOptimisticButtonPushed}
+            >
                 +1 and save optimistic
             </button>
-            <button onClick={add_1_andSavePessimisticButtonPushed}>
+            <button
+                data-testid={counterTestIds.add_1_andSavePessimisticButton}
+                onClick={add_1_andSavePessimisticButtonPushed}
+            >
                 +1 and save pessimistic
             </button>
-            <span>{selectCount}</span>
-            <span>{selectMultiplyCountOn_10}</span>
+            <span data-testid={counterTestIds.selectCount}>{selectCount}</span>
+            <span data-testid={counterTestIds.selectMultiplyCount}>
+                {selectMultiplyCountOn_10}
+            </span>
             <button onClick={noop}>-1</button>
         </div>
     );
