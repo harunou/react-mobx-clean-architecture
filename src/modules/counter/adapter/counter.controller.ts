@@ -1,4 +1,7 @@
-import { OnDestroy, OnInit } from '@stores/helpers/context/context.types';
+import {
+    UnmountedHook,
+    MountedHook
+} from '@stores/helpers/context/context.types';
 import { RootStoreExecutor } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
 import { destroyCounterUseCase } from './usecases/destroy-counter/destroy-counter.usecase';
@@ -7,7 +10,7 @@ import { incrementCounterAndSavePessimisticUseCase } from './usecases/increment-
 import { incrementCounterUseCase } from './usecases/increment-counter/increment-counter.usecase';
 import { initCounterUseCase } from './usecases/init-counter/init-counter.usecase';
 
-export class CounterController implements OnInit, OnDestroy {
+export class CounterController implements MountedHook, UnmountedHook {
     constructor(private readonly store: RootStoreExecutor) {
         makeObservable(this, {
             add_1_ButtonPushed: action.bound,
@@ -15,10 +18,10 @@ export class CounterController implements OnInit, OnDestroy {
             add_1_andSavePessimisticButtonPushed: action.bound
         });
     }
-    onInit(): void {
+    mounted(): void {
         this.store.execute(initCounterUseCase);
     }
-    onDestroy(): void {
+    unmounted(): void {
         this.store.execute(destroyCounterUseCase);
     }
     add_1_ButtonPushed(): void {

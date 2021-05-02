@@ -2,17 +2,21 @@ import { renderHook } from '@testing-library/react-hooks';
 import assert from 'assert';
 import { Context, createContext, FC } from 'react';
 import { makeStoreUseAdapter } from './context.helpers';
-import { AdapterConstructor, OnDestroy, OnInit } from './context.types';
+import {
+    AdapterConstructor,
+    UnmountedHook,
+    MountedHook
+} from './context.types';
 
 interface Store {
     count: number;
 }
 
-class Controller implements OnInit, OnDestroy {
+class Controller implements MountedHook, UnmountedHook {
     private c = 'controller';
     constructor(public store: Store) {}
-    onInit = jest.fn();
-    onDestroy = jest.fn();
+    mounted = jest.fn();
+    unmounted = jest.fn();
 }
 
 class Presenter {
@@ -97,7 +101,7 @@ describe(`useAdapter hook`, () => {
         rerender();
         unmount();
 
-        expect(result.current.controller.onInit).toBeCalledTimes(1);
+        expect(result.current.controller.mounted).toBeCalledTimes(1);
     });
 
     it('calls onDestroy hook once', () => {
@@ -111,6 +115,6 @@ describe(`useAdapter hook`, () => {
         rerender();
         unmount();
 
-        expect(result.current.controller.onDestroy).toBeCalledTimes(1);
+        expect(result.current.controller.unmounted).toBeCalledTimes(1);
     });
 });

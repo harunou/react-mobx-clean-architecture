@@ -10,10 +10,10 @@ export type UseAdapter<S> = <C, P>(
     presenter: P;
 };
 
-export interface OnInit {
-    onInit(): void;
+export interface MountedHook {
+    mounted(): void;
 }
 
-export interface OnDestroy {
-    onDestroy(): void;
+export interface UnmountedHook {
+    unmounted(): void;
 }

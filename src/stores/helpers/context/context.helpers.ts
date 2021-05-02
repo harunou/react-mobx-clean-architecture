@@ -2,8 +2,8 @@ import assert from 'assert';
 import { Context, createContext, useContext, useEffect, useState } from 'react';
 import {
     AdapterConstructor,
-    OnDestroy,
-    OnInit,
+    UnmountedHook,
+    MountedHook,
     UseAdapter
 } from './context.types';
 
@@ -35,12 +35,12 @@ export const makeStoreUseAdapter = <S>(context: Context<S | undefined>) => {
         const [presenter] = useState(() => new PresenterConstructor(store));
 
         useEffect(() => {
-            if (hasOnInitHook(controller)) {
-                controller.onInit();
+            if (hasMountedHook(controller)) {
+                controller.mounted();
             }
             return () => {
-                if (hasOnDestroyHook(controller)) {
-                    controller.onDestroy();
+                if (hasUnmountedHook(controller)) {
+                    controller.unmounted();
                 }
             };
         }, []);
@@ -50,13 +50,13 @@ export const makeStoreUseAdapter = <S>(context: Context<S | undefined>) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const hasOnInitHook = (c: any): c is OnInit => {
-    return typeof c.onInit === 'function';
+const hasMountedHook = (c: any): c is MountedHook => {
+    return typeof c.unmounted === 'function';
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const hasOnDestroyHook = (c: any): c is OnDestroy => {
-    return typeof c.onDestroy === 'function';
+const hasUnmountedHook = (c: any): c is UnmountedHook => {
+    return typeof c.mounted === 'function';
 };
 
 const assertContextNonNullableCasting = <S>(
