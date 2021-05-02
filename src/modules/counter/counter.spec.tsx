@@ -5,6 +5,7 @@ import { RootStore, RootStoreContext } from '@stores/root/root.store';
 import { httpClient } from '@core/http-client';
 import assert from 'assert';
 import { Count } from './adapter/selectors/count/count.selector';
+import { COUNTER_SAVE_COUNT_ENDPOINT } from '@api/counter.service';
 
 describe(`${Counter.name}`, () => {
     const count = 3;
@@ -43,15 +44,15 @@ describe(`${Counter.name}`, () => {
         );
         const { queryByTestId, rerender } = render(sut);
 
-        const add_1_button = queryByTestId(counterTestIds.add_1_button);
-        assert(add_1_button);
+        const button = queryByTestId(counterTestIds.add_1_button);
+        assert(button);
 
         const selectCount = queryByTestId(counterTestIds.selectCount);
         assert(selectCount);
 
-        fireEvent.click(add_1_button);
-        fireEvent.click(add_1_button);
-        fireEvent.click(add_1_button);
+        fireEvent.click(button);
+        fireEvent.click(button);
+        fireEvent.click(button);
 
         expect(selectCount).toHaveTextContent(`${count + 3}`);
         expect(Count.runs).toEqual(4);
@@ -60,5 +61,31 @@ describe(`${Counter.name}`, () => {
 
         expect(selectCount).toHaveTextContent(`${count + 3}`);
         expect(Count.runs).toEqual(4);
+    });
+
+    it('increments store, save optimistic and renders result', () => {
+        const sut = (
+            <RootStoreContext.Provider value={rootStore}>
+                <Counter />
+            </RootStoreContext.Provider>
+        );
+        const { queryByTestId } = render(sut);
+
+        const button = queryByTestId(
+            counterTestIds.add_1_andSaveOptimisticButton
+        );
+        assert(button);
+
+        const selectCount = queryByTestId(counterTestIds.selectCount);
+        assert(selectCount);
+
+        fireEvent.click(button);
+        httpClient.match(COUNTER_SAVE_COUNT_ENDPOINT).resolve(count + 1);
+
+        fireEvent.click(button);
+        httpClient.match(COUNTER_SAVE_COUNT_ENDPOINT).resolve(count + 2);
+
+        expect(selectCount).toHaveTextContent(`${count + 2}`);
+        expect(Count.runs).toEqual(3);
     });
 });
