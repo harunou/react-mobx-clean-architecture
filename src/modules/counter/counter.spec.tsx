@@ -78,6 +78,33 @@ describe(`${Counter.name}`, () => {
         expect(MultiplyCount.runs).toEqual(2);
     });
 
+    it('cancels initial effect once destroyed before response', async () => {
+        const { unmount } = render(sut);
+
+        unmount();
+
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        await sleep();
+
+        const { queryByTestId } = render(sut);
+
+        const selectCount = queryByTestId(counterTestIds.selectCount);
+        assert(selectCount);
+        const selectMultiplyCount = queryByTestId(
+            counterTestIds.selectMultiplyCount
+        );
+        assert(selectMultiplyCount);
+
+        expect(selectCount).toHaveTextContent(`${initial.counter.$count}`);
+        expect(selectMultiplyCount).toHaveTextContent(
+            `${initial.counter.$count * 10}`
+        );
+        expect(Count.runs).toEqual(2);
+        expect(MultiplyCount.runs).toEqual(2);
+
+        httpClient.clean();
+    });
+
     it('increments store and renders result', async () => {
         const { queryByTestId } = render(sut);
 
@@ -144,6 +171,7 @@ describe(`${Counter.name}`, () => {
         expect(Count.runs).toEqual(4);
         expect(MultiplyCount.runs).toEqual(4);
     });
+
     it('increments store, saves pessimistic and renders result', async () => {
         const { queryByTestId } = render(sut);
 

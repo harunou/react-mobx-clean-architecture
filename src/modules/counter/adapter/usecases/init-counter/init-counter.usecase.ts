@@ -1,4 +1,5 @@
 import { CounterModel } from '@stores/counter/counter.types';
+import { FLOW_CANCELLED_MESSAGE } from '@stores/helpers/effect/effect.helpers';
 import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { RootUseCaseMakeParams } from '@stores/root/root.types';
@@ -22,7 +23,15 @@ export class InitCounter implements UseCase {
     }
 
     execute(): void {
-        this.getCountEffect.execute().then(this.getCountSuccess);
+        this.getCountEffect
+            .execute()
+            .then(this.getCountSuccess)
+            .catch((error: Error) => {
+                if (error.message === FLOW_CANCELLED_MESSAGE) {
+                    return;
+                }
+                throw error;
+            });
     }
 
     getCountSuccess(count: number): void {

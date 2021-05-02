@@ -1,13 +1,13 @@
-import { noop } from '@core/core.helpers';
-import { OnInit } from '@stores/helpers/context/context.types';
+import { OnDestroy, OnInit } from '@stores/helpers/context/context.types';
 import { RootStoreExecutor } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
+import { destroyCounterUseCase } from './usecases/destroy-counter/destroy-counter.usecase';
 import { incrementValueAndSaveOptimisticUseCase } from './usecases/increment-value-and-save-optimistic/increment-value-and-save-optimistic.usecase';
 import { incrementValueAndSavePessimisticUseCase } from './usecases/increment-value-and-save-pessimistic/increment-value-and-save-pessimistic.usecase';
 import { incrementValueUseCase } from './usecases/increment-value/increment-value.usecase';
 import { initCounterUseCase } from './usecases/init-counter/init-counter.usecase';
 
-export class CounterController implements OnInit {
+export class CounterController implements OnInit, OnDestroy {
     constructor(private readonly store: RootStoreExecutor) {
         makeObservable(this, {
             add_1_ButtonPushed: action.bound,
@@ -19,7 +19,7 @@ export class CounterController implements OnInit {
         this.store.execute(initCounterUseCase);
     }
     onDestroy(): void {
-        noop();
+        this.store.execute(destroyCounterUseCase);
     }
     add_1_ButtonPushed(): void {
         this.store.execute(incrementValueUseCase.withProps(1));
