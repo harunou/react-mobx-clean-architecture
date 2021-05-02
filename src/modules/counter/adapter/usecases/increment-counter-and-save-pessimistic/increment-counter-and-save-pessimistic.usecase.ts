@@ -8,14 +8,14 @@ import {
     incrementCountEffect
 } from '../../effects/increment-count/increment-count.effect';
 
-export class IncrementValueAndSavePessimistic implements UseCase {
+export class IncrementCounterAndSavePessimistic implements UseCase {
     static make({
         store,
         persistence,
         props
-    }: RootUseCaseMakeParams<number>): IncrementValueAndSavePessimistic {
+    }: RootUseCaseMakeParams<number>): IncrementCounterAndSavePessimistic {
         const effect = incrementCountEffect.build(store, persistence);
-        return new IncrementValueAndSavePessimistic(
+        return new IncrementCounterAndSavePessimistic(
             store.counter,
             effect,
             props
@@ -40,6 +40,6 @@ export class IncrementValueAndSavePessimistic implements UseCase {
         this.store.setCount(count);
     }
 }
-export const incrementValueAndSavePessimisticUseCase = UseCaseBuilder.make(
-    IncrementValueAndSavePessimistic
+export const incrementCounterAndSavePessimisticUseCase = UseCaseBuilder.make(
+    IncrementCounterAndSavePessimistic
 );

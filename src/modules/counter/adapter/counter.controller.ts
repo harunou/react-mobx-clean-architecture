@@ -3,7 +3,7 @@ import { RootStoreExecutor } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
 import { destroyCounterUseCase } from './usecases/destroy-counter/destroy-counter.usecase';
 import { incrementCounterAndSaveOptimisticUseCase } from './usecases/increment-counter-and-save-optimistic/increment-counter-and-save-optimistic.usecase';
-import { incrementValueAndSavePessimisticUseCase } from './usecases/increment-value-and-save-pessimistic/increment-value-and-save-pessimistic.usecase';
+import { incrementCounterAndSavePessimisticUseCase } from './usecases/increment-counter-and-save-pessimistic/increment-counter-and-save-pessimistic.usecase';
 import { incrementCounterUseCase } from './usecases/increment-counter/increment-counter.usecase';
 import { initCounterUseCase } from './usecases/init-counter/init-counter.usecase';
 
@@ -31,7 +31,7 @@ export class CounterController implements OnInit, OnDestroy {
     }
     add_1_andSavePessimisticButtonPushed(): void {
         this.store.execute(
-            incrementValueAndSavePessimisticUseCase.withProps(1)
+            incrementCounterAndSavePessimisticUseCase.withProps(1)
         );
     }
 }
