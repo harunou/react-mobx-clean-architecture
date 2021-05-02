@@ -6,6 +6,7 @@ import { httpClient } from '@core/http-client';
 import assert from 'assert';
 import { Count } from './adapter/selectors/count/count.selector';
 import { COUNTER_SAVE_COUNT_ENDPOINT } from '@api/counter.service';
+import { MultiplyCount } from './adapter/selectors/multiply-count/multiply-count.selector';
 
 describe(`${Counter.name}`, () => {
     const count = 3;
@@ -19,6 +20,7 @@ describe(`${Counter.name}`, () => {
     beforeEach(() => {
         rootStore = RootStore.make(initial);
         Count.runs = 0;
+        MultiplyCount.runs = 0;
     });
 
     afterEach(() => {
@@ -46,24 +48,30 @@ describe(`${Counter.name}`, () => {
 
         const button = queryByTestId(counterTestIds.add_1_button);
         assert(button);
-
         const selectCount = queryByTestId(counterTestIds.selectCount);
         assert(selectCount);
+        const selectMultiplyCount = queryByTestId(
+            counterTestIds.selectMultiplyCount
+        );
+        assert(selectMultiplyCount);
 
         fireEvent.click(button);
         fireEvent.click(button);
         fireEvent.click(button);
 
         expect(selectCount).toHaveTextContent(`${count + 3}`);
+        expect(selectMultiplyCount).toHaveTextContent(`${(count + 3) * 10}`);
         expect(Count.runs).toEqual(4);
+        expect(MultiplyCount.runs).toEqual(4);
 
         rerender(sut);
 
         expect(selectCount).toHaveTextContent(`${count + 3}`);
         expect(Count.runs).toEqual(4);
+        expect(MultiplyCount.runs).toEqual(4);
     });
 
-    it('increments store, save optimistic and renders result', () => {
+    it('increments store, saves optimistic and renders result', () => {
         const sut = (
             <RootStoreContext.Provider value={rootStore}>
                 <Counter />
@@ -75,9 +83,12 @@ describe(`${Counter.name}`, () => {
             counterTestIds.add_1_andSaveOptimisticButton
         );
         assert(button);
-
         const selectCount = queryByTestId(counterTestIds.selectCount);
         assert(selectCount);
+        const selectMultiplyCount = queryByTestId(
+            counterTestIds.selectMultiplyCount
+        );
+        assert(selectMultiplyCount);
 
         fireEvent.click(button);
         httpClient.match(COUNTER_SAVE_COUNT_ENDPOINT).resolve(count + 1);
@@ -86,6 +97,8 @@ describe(`${Counter.name}`, () => {
         httpClient.match(COUNTER_SAVE_COUNT_ENDPOINT).resolve(count + 2);
 
         expect(selectCount).toHaveTextContent(`${count + 2}`);
+        expect(selectMultiplyCount).toHaveTextContent(`${(count + 2) * 10}`);
         expect(Count.runs).toEqual(3);
+        expect(MultiplyCount.runs).toEqual(3);
     });
 });
