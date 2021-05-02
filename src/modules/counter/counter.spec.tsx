@@ -1,5 +1,5 @@
 import { AppState } from '@stores/app/app.types';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, within } from '@testing-library/react';
 import { Counter, counterTestIds } from './counter';
 import { RootStore, RootStoreContext } from '@stores/root/root.store';
 import { httpClient } from '@core/http-client';
@@ -209,5 +209,83 @@ describe(`${Counter.name}`, () => {
         expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
         expect(Count.runs).toEqual(4);
         expect(MultiplyCount.runs).toEqual(4);
+    });
+});
+
+describe(`Double ${Counter.name} app`, () => {
+    const countersTestIds = {
+        counter0: 'counter-0',
+        counter1: 'counter-1'
+    };
+    let count: number;
+    const initial: AppState = {
+        counter: {
+            $count: 0
+        }
+    };
+    let rootStore: RootStore;
+    let sut: JSX.Element;
+
+    beforeEach(() => {
+        count = 3;
+        rootStore = RootStore.make(initial);
+        sut = (
+            <RootStoreContext.Provider value={rootStore}>
+                <div data-testid={countersTestIds.counter0}>
+                    <Counter />
+                </div>
+                <div data-testid={countersTestIds.counter1}>
+                    <Counter />
+                </div>
+            </RootStoreContext.Provider>
+        );
+        Count.runs = 0;
+        MultiplyCount.runs = 0;
+    });
+
+    afterEach(() => {
+        httpClient.verify();
+        httpClient.clean();
+    });
+
+    it('renders without errors', async () => {
+        expect(() => render(sut)).not.toThrow();
+        httpClient.clean();
+    });
+
+    it('renders both component once one fires increment', async () => {
+        const { queryByTestId } = render(sut);
+
+        const counter0 = queryByTestId(countersTestIds.counter0);
+        assert(counter0);
+
+        const button0 = within(counter0).queryByTestId(
+            counterTestIds.add_1_button
+        );
+        assert(button0);
+        const selectCount0 = within(counter0).queryByTestId(
+            counterTestIds.selectCount
+        );
+        assert(selectCount0);
+
+        const counter1 = queryByTestId(countersTestIds.counter1);
+        assert(counter1);
+        const selectCount1 = within(counter1).queryByTestId(
+            counterTestIds.selectCount
+        );
+        assert(selectCount1);
+
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        await sleep();
+
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        await sleep();
+
+        fireEvent.click(button0);
+        count += 1;
+
+        expect(selectCount0).toHaveTextContent(`${count}`);
+        expect(selectCount1).toHaveTextContent(`${count}`);
+        expect(Count.runs).toEqual(6);
     });
 });
