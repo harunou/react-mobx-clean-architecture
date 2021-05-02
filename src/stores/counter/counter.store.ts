@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import { CounterModel, CounterState } from './counter.types';
 
 export class CounterStore implements CounterModel {
@@ -11,15 +11,16 @@ export class CounterStore implements CounterModel {
     constructor(state: CounterState) {
         makeObservable(this, {
             $count: observable,
-            init: action,
             setCount: action,
             increment: action,
             decrement: action
         });
-        this.init(state);
+        runInAction(() => {
+            this.init(state);
+        });
     }
 
-    init(state: CounterState): void {
+    private init(state: CounterState): void {
         Object.assign(this, state);
     }
 
