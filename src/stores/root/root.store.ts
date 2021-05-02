@@ -16,10 +16,10 @@ export class RootStore extends Store<AppModel, PersistenceModel> {
             disableErrorBoundaries: false
         });
 
-        const domainStore = AppStore.make(initial);
+        const appStore = AppStore.make(initial);
         const persistenceStore = PersistenceStore.make();
 
-        return new RootStore(domainStore, persistenceStore);
+        return new RootStore(appStore, persistenceStore);
     }
 }
 
