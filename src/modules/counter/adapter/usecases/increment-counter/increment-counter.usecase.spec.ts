@@ -1,13 +1,13 @@
 import { CounterStore } from '@stores/counter/counter.store';
-import { IncrementValue } from './increment-value.usecase';
+import { IncrementCounter } from './increment-counter.usecase';
 
-describe(`${IncrementValue.name}`, () => {
+describe(`${IncrementCounter.name}`, () => {
     it('increments model value on a predefined amount', () => {
         const initialState = 3;
         const increaseAmount = 4;
         const model = new CounterStore({ $count: initialState });
         jest.spyOn(model, 'increment');
-        const useCase = new IncrementValue(model, increaseAmount);
+        const useCase = new IncrementCounter(model, increaseAmount);
         useCase.execute();
         expect(model.increment).toBeCalledTimes(1);
         expect(model.increment).toBeCalledWith(increaseAmount);

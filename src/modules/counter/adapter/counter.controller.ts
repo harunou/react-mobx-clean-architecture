@@ -4,7 +4,7 @@ import { action, makeObservable } from 'mobx';
 import { destroyCounterUseCase } from './usecases/destroy-counter/destroy-counter.usecase';
 import { incrementValueAndSaveOptimisticUseCase } from './usecases/increment-value-and-save-optimistic/increment-value-and-save-optimistic.usecase';
 import { incrementValueAndSavePessimisticUseCase } from './usecases/increment-value-and-save-pessimistic/increment-value-and-save-pessimistic.usecase';
-import { incrementValueUseCase } from './usecases/increment-value/increment-value.usecase';
+import { incrementCounterUseCase } from './usecases/increment-counter/increment-counter.usecase';
 import { initCounterUseCase } from './usecases/init-counter/init-counter.usecase';
 
 export class CounterController implements OnInit, OnDestroy {
@@ -22,7 +22,7 @@ export class CounterController implements OnInit, OnDestroy {
         this.store.execute(destroyCounterUseCase);
     }
     add_1_ButtonPushed(): void {
-        this.store.execute(incrementValueUseCase.withProps(1));
+        this.store.execute(incrementCounterUseCase.withProps(1));
     }
     add_1_andSaveOptimisticButtonPushed(): void {
         this.store.execute(incrementValueAndSaveOptimisticUseCase.withProps(1));
