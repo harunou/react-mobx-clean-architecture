@@ -1,4 +1,3 @@
-import { noop } from '@core/core.helpers';
 import { OnInit } from '@stores/helpers/context/context.types';
 import { RootStoreExecutor } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
