@@ -9,7 +9,7 @@ import {
 
 export abstract class Store<S, R>
     implements StoreQuery<S>, StoreExecuter<S, R> {
-    constructor(private appStore: S, private persistenceStore: R) {}
+    constructor(public appStore: S, private persistenceStore: R) {}
 
     query<L extends Selector>(selector: SelectorInteractionBuilder<S, L>): L {
         return selector.build(this.appStore);

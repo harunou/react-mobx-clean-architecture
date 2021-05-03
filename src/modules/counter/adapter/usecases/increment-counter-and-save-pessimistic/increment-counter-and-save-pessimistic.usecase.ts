@@ -1,4 +1,5 @@
 import { CounterModel } from '@stores/counter/counter.types';
+import { FLOW_CANCELLED_MESSAGE } from '@stores/helpers/effect/effect.helpers';
 import { UseCase } from '@stores/helpers/store/store.types';
 import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
 import { RootUseCaseMakeParams } from '@stores/root/root.types';
@@ -33,7 +34,15 @@ export class IncrementCounterAndSavePessimistic implements UseCase {
     }
 
     execute(): void {
-        this.effect.execute(this.props).then(this.saveSuccess);
+        this.effect
+            .execute(this.props)
+            .then(this.saveSuccess)
+            .catch((error: Error) => {
+                if (error.message === FLOW_CANCELLED_MESSAGE) {
+                    return;
+                }
+                throw error;
+            });
     }
 
     saveSuccess(count: number): void {

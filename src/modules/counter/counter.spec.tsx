@@ -210,6 +210,37 @@ describe(`${Counter.name}`, () => {
         expect(Count.runs).toEqual(4);
         expect(MultiplyCount.runs).toEqual(4);
     });
+
+    it('cancels pessimistic effect once counter destroyed before response', async () => {
+        const { queryByTestId, unmount, rerender } = render(sut);
+
+        const button = queryByTestId(
+            counterTestIds.add_1_andSavePessimisticButton
+        );
+        assert(button);
+
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        await sleep();
+
+        fireEvent.click(button);
+
+        unmount();
+
+        const pendingRequest = httpClient.match<number, { increment: number }>(
+            COUNTER_INCREMENT_ENDPOINT
+        );
+        pendingRequest.resolve(count + pendingRequest.params.increment);
+        await sleep();
+
+        rerender(sut);
+
+        const selectCount = queryByTestId(counterTestIds.selectCount);
+        assert(selectCount);
+
+        expect(selectCount).toHaveTextContent(`${count}`);
+
+        httpClient.clean();
+    });
 });
 
 describe(`Double ${Counter.name} app`, () => {
