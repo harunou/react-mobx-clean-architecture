@@ -6,14 +6,22 @@ import {
     GetCount,
     getCountEffect
 } from '../../effects/get-count/get-count.effect';
+import {
+    IncrementCount,
+    incrementCountEffect
+} from '../../effects/increment-count/increment-count.effect';
 
 export class DestroyCounter implements UseCase {
     static make({ store, persistence }: RootUseCaseMakeParams): DestroyCounter {
-        const effect = getCountEffect.build(store, persistence);
-        return new DestroyCounter(effect);
+        const getCount = getCountEffect.build(store, persistence);
+        const incrementCount = incrementCountEffect.build(store, persistence);
+        return new DestroyCounter(getCount, incrementCount);
     }
 
-    constructor(private getCountEffect: GetCount) {
+    constructor(
+        private getCountEffect: GetCount,
+        private incrementCountEffect: IncrementCount
+    ) {
         makeObservable(this, {
             execute: action.bound
         });
@@ -21,6 +29,7 @@ export class DestroyCounter implements UseCase {
 
     execute(): void {
         this.getCountEffect.cancel();
+        this.incrementCountEffect.cancel();
     }
 }
 
