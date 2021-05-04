@@ -96,7 +96,7 @@ describe(`${Counter.name}`, () => {
         expect(selectCount).toHaveTextContent(`${initial.counter.$count}`);
         expect(Count.runs).toEqual(2);
 
-        httpClient.clean();
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('increments store and renders result', async () => {
@@ -236,7 +236,7 @@ describe(`${Counter.name}`, () => {
         expect(selectCount).toHaveTextContent(`${count}`);
         expect(Count.runs).toEqual(3);
 
-        httpClient.clean();
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT);
     });
 });
 
