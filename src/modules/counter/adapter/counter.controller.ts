@@ -13,6 +13,8 @@ import { initCounterUseCase } from './usecases/init-counter/init-counter.usecase
 export class CounterController implements MountedHook, UnmountedHook {
     constructor(private readonly store: RootStoreExecutor) {
         makeObservable(this, {
+            mounted: action.bound,
+            unmounted: action.bound,
             add_1_ButtonPushed: action.bound,
             add_1_andSaveOptimisticButtonPushed: action.bound,
             add_1_andSavePessimisticButtonPushed: action.bound
