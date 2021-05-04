@@ -1,8 +1,7 @@
 {
   "name": "react-mobx-clean-architecture",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Approach to mobx clean architecture",
   "scripts": {
     "test": "npm run tsc:type-check && npm run eslint:all && npm run jest:all",
     "jest:base": "npx jest",
@@ -16,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/harunou/react-mobx-clean-architecture.git"
   },
-  "author": "",
+  "author": "harunou",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/harunou/react-mobx-clean-architecture/issues"
