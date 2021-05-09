@@ -1,6 +1,6 @@
 {
   "name": "react-mobx-clean-architecture",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Approach to mobx clean architecture",
   "scripts": {
     "test": "npm run tsc:type-check && npm run eslint:all && npm run jest:all",
