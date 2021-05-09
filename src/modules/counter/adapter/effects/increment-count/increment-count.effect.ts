@@ -1,4 +1,4 @@
-import { flow } from 'mobx';
+import { flow, flowResult, makeObservable } from 'mobx';
 import { CounterSource } from '@stores/persistence/counter-source.types';
 import { CancellableEffect } from '@stores/helpers/effect/effect.types';
 import {
@@ -15,21 +15,23 @@ export class IncrementCount implements CancellableEffect {
 
     constructor(
         private counterService: CounterSource,
-        private flow: EffectFlow<number>
-    ) {}
+        private effectFlow: EffectFlow<number>
+    ) {
+        makeObservable(this, {
+            saveGenerator: flow
+        });
+    }
 
     cancel(): void {
-        this.flow.cancel();
+        this.effectFlow.cancel();
     }
 
     execute(increment: number): Promise<number> {
-        this.flow.promise = flow(this.saveGenerator.bind(this))(increment);
-        return this.flow.promise;
+        this.effectFlow.promise = flowResult(this.saveGenerator(increment));
+        return this.effectFlow.promise;
     }
 
-    private *saveGenerator(
-        value: number
-    ): Generator<Promise<number>, number, number> {
+    *saveGenerator(value: number): Generator<Promise<number>, number, number> {
         const countDto = yield this.counterService.increment(value);
         return countDto;
     }

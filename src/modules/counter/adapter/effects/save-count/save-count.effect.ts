@@ -1,4 +1,4 @@
-import { flow } from 'mobx';
+import { flow, flowResult, makeObservable } from 'mobx';
 import { CounterSource } from '@stores/persistence/counter-source.types';
 import { Effect } from '@stores/helpers/effect/effect.types';
 import {
@@ -15,17 +15,19 @@ export class SaveCount implements Effect {
 
     constructor(
         private counterService: CounterSource,
-        private flow: EffectFlow<number>
-    ) {}
-
-    execute(count: number): Promise<number> {
-        this.flow.promise = flow(this.saveGenerator.bind(this))(count);
-        return this.flow.promise;
+        private effectFlow: EffectFlow<number>
+    ) {
+        makeObservable(this, {
+            saveGenerator: flow
+        });
     }
 
-    private *saveGenerator(
-        count: number
-    ): Generator<Promise<number>, number, number> {
+    execute(count: number): Promise<number> {
+        this.effectFlow.promise = flowResult(this.saveGenerator(count));
+        return this.effectFlow.promise;
+    }
+
+    *saveGenerator(count: number): Generator<Promise<number>, number, number> {
         const countDto = yield this.counterService.save(count);
         return countDto;
     }
