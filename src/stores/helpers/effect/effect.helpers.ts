@@ -1,7 +1,7 @@
 import { CancellablePromise } from 'mobx/dist/internal';
 import { EffectConstructor, EffectInteractionBuilder } from './effect.types';
 
-export const FLOW_CANCELLED_MESSAGE = 'FLOW_CANCELLED';
+export const FLOW_CANCELLED = 'FLOW_CANCELLED';
 
 export class EffectBuilder<S, R, E>
     implements EffectInteractionBuilder<S, R, E> {
