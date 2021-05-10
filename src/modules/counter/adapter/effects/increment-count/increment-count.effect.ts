@@ -32,8 +32,7 @@ export class IncrementCount implements CancellableEffect {
     }
 
     *saveGenerator(value: number): Generator<Promise<number>, number, number> {
-        const countDto = yield this.counterService.increment(value);
-        return countDto;
+        return yield this.counterService.increment(value);
     }
 }
 

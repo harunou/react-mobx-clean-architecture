@@ -31,9 +31,8 @@ export class GetCount implements CancellableEffect {
         return this.effectFlow.promise;
     }
 
-    public *saveGenerator(): Generator<Promise<number>, number, number> {
-        const countDto = yield this.counterService.get();
-        return countDto;
+    *saveGenerator(): Generator<Promise<number>, number, number> {
+        return yield this.counterService.get();
     }
 }
 

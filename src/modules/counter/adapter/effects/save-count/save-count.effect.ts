@@ -28,8 +28,7 @@ export class SaveCount implements Effect {
     }
 
     *saveGenerator(count: number): Generator<Promise<number>, number, number> {
-        const countDto = yield this.counterService.save(count);
-        return countDto;
+        return yield this.counterService.save(count);
     }
 }
 
