@@ -42,7 +42,7 @@ describe(`${Counter.name}`, () => {
 
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        httpClient.clean();
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('inits store and renders initial result', async () => {
@@ -278,7 +278,8 @@ describe(`Double ${Counter.name} app`, () => {
 
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        httpClient.clean();
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.match<number>(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('renders both component once one fires increment', async () => {
