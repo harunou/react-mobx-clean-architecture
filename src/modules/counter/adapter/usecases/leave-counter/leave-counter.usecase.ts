@@ -11,11 +11,11 @@ import {
     incrementCountEffect
 } from '../../effects/increment-count/increment-count.effect';
 
-export class DestroyCounter implements UseCase {
-    static make({ store, persistence }: RootUseCaseMakeParams): DestroyCounter {
+export class LeaveCounter implements UseCase {
+    static make({ store, persistence }: RootUseCaseMakeParams): LeaveCounter {
         const getCount = getCountEffect.build(store, persistence);
         const incrementCount = incrementCountEffect.build(store, persistence);
-        return new DestroyCounter(getCount, incrementCount);
+        return new LeaveCounter(getCount, incrementCount);
     }
 
     constructor(
@@ -33,4 +33,4 @@ export class DestroyCounter implements UseCase {
     }
 }
 
-export const destroyCounterUseCase = UseCaseBuilder.make(DestroyCounter);
+export const leaveCounterUseCase = UseCaseBuilder.make(LeaveCounter);

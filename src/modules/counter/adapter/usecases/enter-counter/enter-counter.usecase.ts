@@ -9,10 +9,10 @@ import {
     getCountEffect
 } from '../../effects/get-count/get-count.effect';
 
-export class InitCounter implements UseCase {
-    static make({ store, persistence }: RootUseCaseMakeParams): InitCounter {
+export class EnterCounter implements UseCase {
+    static make({ store, persistence }: RootUseCaseMakeParams): EnterCounter {
         const effect = getCountEffect.build(store, persistence);
-        return new InitCounter(store.counter, effect);
+        return new EnterCounter(store.counter, effect);
     }
 
     constructor(private store: CounterModel, private getCountEffect: GetCount) {
@@ -39,4 +39,4 @@ export class InitCounter implements UseCase {
     }
 }
 
-export const initCounterUseCase = UseCaseBuilder.make(InitCounter);
+export const enterCounterUseCase = UseCaseBuilder.make(EnterCounter);
