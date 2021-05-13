@@ -2,8 +2,7 @@ export interface PendingRequest<R, P> {
     endpoint: string;
     params: P;
     resolve: (v: R) => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    reject: (r: any) => void;
+    reject: (r: Error) => void;
 }
 
 export interface TestHttpClient {

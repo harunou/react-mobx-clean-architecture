@@ -51,7 +51,7 @@ describe(`${Counter.name}`, () => {
         const selectCount = queryByTestId(counterTestIds.selectCount);
         assert(selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCount
+            counterTestIds.selectMultiplyCountOn_10
         );
         assert(selectMultiplyCount);
 
@@ -107,7 +107,7 @@ describe(`${Counter.name}`, () => {
         const selectCount = queryByTestId(counterTestIds.selectCount);
         assert(selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCount
+            counterTestIds.selectMultiplyCountOn_10
         );
         assert(selectMultiplyCount);
 
@@ -137,7 +137,7 @@ describe(`${Counter.name}`, () => {
         const selectCount = queryByTestId(counterTestIds.selectCount);
         assert(selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCount
+            counterTestIds.selectMultiplyCountOn_10
         );
         assert(selectMultiplyCount);
 
@@ -176,7 +176,7 @@ describe(`${Counter.name}`, () => {
         const selectCount = queryByTestId(counterTestIds.selectCount);
         assert(selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCount
+            counterTestIds.selectMultiplyCountOn_10
         );
         assert(selectMultiplyCount);
 

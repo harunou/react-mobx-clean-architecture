@@ -10,7 +10,7 @@ export const counterTestIds = {
     add_1_andSaveOptimisticButton: 'add-1-and-save-optimistic-button',
     add_1_andSavePessimisticButton: 'add-1-and-save-pessimistic-button',
     selectCount: 'select-count',
-    selectMultiplyCount: 'select-multiply-count'
+    selectMultiplyCountOn_10: 'select-multiply-count-on-10'
 };
 
 export const Counter: FC = observer(() => {
@@ -46,7 +46,7 @@ export const Counter: FC = observer(() => {
                 +1 and save pessimistic
             </button>
             <span data-testid={counterTestIds.selectCount}>{selectCount}</span>
-            <span data-testid={counterTestIds.selectMultiplyCount}>
+            <span data-testid={counterTestIds.selectMultiplyCountOn_10}>
                 {selectMultiplyCountOn_10}
             </span>
             <button onClick={noop}>-1</button>

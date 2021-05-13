@@ -25,11 +25,11 @@ describe(`TestHttpClient`, () => {
     it('finds pending request with match and allows to reject it', async () => {
         const { request, match } = testHttpClient;
         const endpoint = 'counter';
-        const rejectValue = 5;
+        const error = new Error('error');
         const r = request<number>(endpoint);
         const m = match<number>(endpoint);
-        m.reject(rejectValue);
-        await expect(r).rejects.toEqual(rejectValue);
+        m.reject(error);
+        await expect(r).rejects.toEqual(error);
     });
     it('verifies unresolved requests', () => {
         const { request, verify } = testHttpClient;
