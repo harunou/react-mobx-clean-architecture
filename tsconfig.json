@@ -15,6 +15,6 @@
         "@testing-tools/*": ["./src/testing-tools/*"]
       }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests-setup.js"],
   "exclude": ["node_modules" ]
 }
