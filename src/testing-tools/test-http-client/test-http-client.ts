@@ -18,7 +18,7 @@ export const makeTestHttpClient = (): TestHttpClient => {
         });
     };
 
-    const match = <R = unknown, P = unknown>(
+    const expect = <R = unknown, P = unknown>(
         endpoint: string
     ): PendingRequest<R, P> => {
         const index = pendingRequests.findIndex((r) => r.endpoint === endpoint);
@@ -42,7 +42,7 @@ export const makeTestHttpClient = (): TestHttpClient => {
 
     return {
         request,
-        match,
+        expect,
         verify,
         clean
     };

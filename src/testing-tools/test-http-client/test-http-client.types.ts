@@ -7,7 +7,7 @@ export interface PendingRequest<R, P> {
 
 export interface TestHttpClient {
     request: <R, P = unknown>(endpoint: string, params?: P) => Promise<R>;
-    match: <R, P = unknown>(endpoint: string) => PendingRequest<R, P>;
+    expect: <R, P = unknown>(endpoint: string) => PendingRequest<R, P>;
     verify: () => void;
     clean: () => void;
 }

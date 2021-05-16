@@ -7,14 +7,14 @@ describe(`TestHttpClient`, () => {
         testHttpClient = makeTestHttpClient();
     });
     it('finds pending request with match', () => {
-        const { request, match } = testHttpClient;
+        const { request, expect: match } = testHttpClient;
         const endpoint = 'counter';
         request(endpoint);
         const m = match(endpoint);
         expect(m.endpoint).toEqual(endpoint);
     });
     it('finds pending request with match and allows to resolve it', async () => {
-        const { request, match } = testHttpClient;
+        const { request, expect: match } = testHttpClient;
         const endpoint = 'counter';
         const resolveValue = 3;
         const r = request<number>(endpoint);
@@ -23,7 +23,7 @@ describe(`TestHttpClient`, () => {
         await expect(r).resolves.toEqual(resolveValue);
     });
     it('finds pending request with match and allows to reject it', async () => {
-        const { request, match } = testHttpClient;
+        const { request, expect: match } = testHttpClient;
         const endpoint = 'counter';
         const error = new Error('error');
         const r = request<number>(endpoint);

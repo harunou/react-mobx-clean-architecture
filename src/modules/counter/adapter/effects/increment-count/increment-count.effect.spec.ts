@@ -31,7 +31,9 @@ describe(`${IncrementCount.name}`, () => {
     it('returns BE response', async () => {
         const incrementResponse = 5;
         const data = effect.execute(increment);
-        httpClient.match(COUNTER_INCREMENT_ENDPOINT).resolve(incrementResponse);
+        httpClient
+            .expect(COUNTER_INCREMENT_ENDPOINT)
+            .resolve(incrementResponse);
         await expect(data).resolves.toEqual(incrementResponse);
     });
     it('cancels the request', async () => {
