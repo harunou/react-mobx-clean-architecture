@@ -7,41 +7,34 @@ describe(`TestHttpClient`, () => {
         testHttpClient = makeTestHttpClient();
     });
     it('finds pending request with match', () => {
-        const { request, expect: match } = testHttpClient;
         const endpoint = 'counter';
-        request(endpoint);
-        const m = match(endpoint);
+        testHttpClient.request(endpoint);
+        const m = testHttpClient.expect(endpoint);
         expect(m.endpoint).toEqual(endpoint);
     });
     it('finds pending request with match and allows to resolve it', async () => {
-        const { request, expect: match } = testHttpClient;
         const endpoint = 'counter';
         const resolveValue = 3;
-        const r = request<number>(endpoint);
-        const m = match<number>(endpoint);
-        m.resolve(resolveValue);
+        const r = testHttpClient.request(endpoint);
+        testHttpClient.expect<number>(endpoint).resolve(resolveValue);
         await expect(r).resolves.toEqual(resolveValue);
     });
     it('finds pending request with match and allows to reject it', async () => {
-        const { request, expect: match } = testHttpClient;
         const endpoint = 'counter';
         const error = new Error('error');
-        const r = request<number>(endpoint);
-        const m = match<number>(endpoint);
-        m.reject(error);
+        const r = testHttpClient.request(endpoint);
+        testHttpClient.expect(endpoint).reject(error);
         await expect(r).rejects.toEqual(error);
     });
     it('verifies unresolved requests', () => {
-        const { request, verify } = testHttpClient;
         const endpoint = 'counter';
-        request<number>(endpoint);
-        expect(() => verify()).toThrow();
+        testHttpClient.request(endpoint);
+        expect(() => testHttpClient.verify()).toThrow();
     });
     it('cleans all pending requests', () => {
-        const { request, clean, verify } = testHttpClient;
         const endpoint = 'counter';
-        request<number>(endpoint);
-        clean();
-        expect(() => verify()).not.toThrow();
+        testHttpClient.request(endpoint);
+        testHttpClient.clean();
+        expect(() => testHttpClient.verify()).not.toThrow();
     });
 });
