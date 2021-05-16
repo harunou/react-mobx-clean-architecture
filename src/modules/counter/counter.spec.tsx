@@ -42,7 +42,7 @@ describe(`${Counter.name}`, () => {
 
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('inits store and renders initial result', async () => {
@@ -96,7 +96,7 @@ describe(`${Counter.name}`, () => {
         expect(selectCount).toHaveTextContent(`${initial.counter.$count}`);
         expect(Count.runs).toEqual(2);
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('increments store and renders result', async () => {
@@ -236,7 +236,7 @@ describe(`${Counter.name}`, () => {
         expect(selectCount).toHaveTextContent(`${count}`);
         expect(Count.runs).toEqual(3);
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
     });
 });
 
@@ -278,8 +278,8 @@ describe(`Double ${Counter.name} app`, () => {
 
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT);
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('renders both component once one fires increment', async () => {
