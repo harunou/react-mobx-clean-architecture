@@ -42,7 +42,7 @@ describe(`${Counter.name}`, () => {
 
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('inits store and renders initial result', async () => {
@@ -62,7 +62,7 @@ describe(`${Counter.name}`, () => {
         expect(Count.runs).toEqual(1);
         expect(MultiplyCount.runs).toEqual(1);
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
         await sleep();
 
         expect(selectCount).toHaveTextContent(`${count}`);
@@ -83,7 +83,7 @@ describe(`${Counter.name}`, () => {
 
         unmount();
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
         await sleep();
 
         httpClient.verify();
@@ -96,7 +96,7 @@ describe(`${Counter.name}`, () => {
         expect(selectCount).toHaveTextContent(`${initial.counter.$count}`);
         expect(Count.runs).toEqual(2);
 
-        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('increments store and renders result', async () => {
@@ -111,7 +111,7 @@ describe(`${Counter.name}`, () => {
         );
         assert(selectMultiplyCount);
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
         await sleep();
 
         fireEvent.click(button);
@@ -141,11 +141,11 @@ describe(`${Counter.name}`, () => {
         );
         assert(selectMultiplyCount);
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
         await sleep();
 
         fireEvent.click(button);
-        let pendingRequest = httpClient.expect<number, { count: number }>(
+        let pendingRequest = httpClient.expectOne<number, { count: number }>(
             COUNTER_SAVE_COUNT_ENDPOINT
         );
         count = pendingRequest.params.count;
@@ -153,7 +153,7 @@ describe(`${Counter.name}`, () => {
         await sleep();
 
         fireEvent.click(button);
-        pendingRequest = httpClient.expect<number, { count: number }>(
+        pendingRequest = httpClient.expectOne<number, { count: number }>(
             COUNTER_SAVE_COUNT_ENDPOINT
         );
         count = pendingRequest.params.count;
@@ -180,19 +180,20 @@ describe(`${Counter.name}`, () => {
         );
         assert(selectMultiplyCount);
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
         await sleep();
 
         fireEvent.click(button);
-        let pendingRequest = httpClient.expect<number, { increment: number }>(
-            COUNTER_INCREMENT_ENDPOINT
-        );
+        let pendingRequest = httpClient.expectOne<
+            number,
+            { increment: number }
+        >(COUNTER_INCREMENT_ENDPOINT);
         count += pendingRequest.params.increment;
         pendingRequest.resolve(count);
         await sleep();
 
         fireEvent.click(button);
-        pendingRequest = httpClient.expect<number, { increment: number }>(
+        pendingRequest = httpClient.expectOne<number, { increment: number }>(
             COUNTER_INCREMENT_ENDPOINT
         );
         count += pendingRequest.params.increment;
@@ -213,16 +214,17 @@ describe(`${Counter.name}`, () => {
         );
         assert(button);
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
         await sleep();
 
         fireEvent.click(button);
 
         unmount();
 
-        const pendingRequest = httpClient.expect<number, { increment: number }>(
-            COUNTER_INCREMENT_ENDPOINT
-        );
+        const pendingRequest = httpClient.expectOne<
+            number,
+            { increment: number }
+        >(COUNTER_INCREMENT_ENDPOINT);
         pendingRequest.resolve(count + pendingRequest.params.increment);
         await sleep();
 
@@ -236,7 +238,7 @@ describe(`${Counter.name}`, () => {
         expect(selectCount).toHaveTextContent(`${count}`);
         expect(Count.runs).toEqual(3);
 
-        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
     });
 });
 
@@ -278,8 +280,8 @@ describe(`Double ${Counter.name} app`, () => {
 
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
-        httpClient.expect(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
     });
 
     it('renders both component once one fires increment', async () => {
@@ -304,10 +306,10 @@ describe(`Double ${Counter.name} app`, () => {
         );
         assert(selectCount1);
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
         await sleep();
 
-        httpClient.expect<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
         await sleep();
 
         fireEvent.click(button0);

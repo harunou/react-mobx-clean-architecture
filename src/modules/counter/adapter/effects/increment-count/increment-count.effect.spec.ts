@@ -32,7 +32,7 @@ describe(`${IncrementCount.name}`, () => {
         const incrementResponse = 5;
         const data = effect.execute(increment);
         httpClient
-            .expect(COUNTER_INCREMENT_ENDPOINT)
+            .expectOne(COUNTER_INCREMENT_ENDPOINT)
             .resolve(incrementResponse);
         await expect(data).resolves.toEqual(incrementResponse);
     });

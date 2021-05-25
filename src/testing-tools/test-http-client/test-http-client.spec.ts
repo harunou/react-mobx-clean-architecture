@@ -9,21 +9,21 @@ describe(`TestHttpClient`, () => {
     it('finds pending request', () => {
         const endpoint = 'counter';
         testHttpClient.request(endpoint);
-        const m = testHttpClient.expect(endpoint);
+        const m = testHttpClient.expectOne(endpoint);
         expect(m.endpoint).toEqual(endpoint);
     });
     it('finds pending request and allows to resolve it', async () => {
         const endpoint = 'counter';
         const resolveValue = 3;
         const r = testHttpClient.request(endpoint);
-        testHttpClient.expect<number>(endpoint).resolve(resolveValue);
+        testHttpClient.expectOne<number>(endpoint).resolve(resolveValue);
         await expect(r).resolves.toEqual(resolveValue);
     });
     it('finds pending request and allows to reject it', async () => {
         const endpoint = 'counter';
         const error = new Error('error');
         const r = testHttpClient.request(endpoint);
-        testHttpClient.expect(endpoint).reject(error);
+        testHttpClient.expectOne(endpoint).reject(error);
         await expect(r).rejects.toEqual(error);
     });
     it('verifies unresolved requests', () => {
