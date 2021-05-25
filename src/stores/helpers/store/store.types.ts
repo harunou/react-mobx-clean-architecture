@@ -2,6 +2,11 @@ export interface Selector<R = unknown> {
     result: R;
 }
 
+export interface SelectorWithProps<R = unknown, P = unknown> {
+    result: R;
+    withProps(...props: P[]): this;
+}
+
 export interface SelectorInteractionBuilder<S, L> {
     build(state: S): L;
 }

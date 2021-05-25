@@ -1,13 +1,13 @@
 import { CounterState } from '@stores/counter/counter.types';
-import { Count } from './count.selector';
+import { CountSelector } from './count.selector';
 
-describe(`${Count.name}`, () => {
+describe(`${CountSelector.name}`, () => {
     it('selects $count value from store', () => {
         const count = 3;
         const state: CounterState = {
             $count: count
         };
-        const select = new Count(state);
+        const select = new CountSelector(state);
         expect(select.result).toEqual(count);
     });
 });
