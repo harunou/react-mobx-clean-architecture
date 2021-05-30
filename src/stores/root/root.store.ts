@@ -8,10 +8,7 @@ import {
 } from 'tsyringe';
 import { APP_MODEL } from '../app/app.store';
 import { AppModel } from '../app/app.types';
-import {
-    PersistenceStore,
-    PERSISTENCE_MODEL
-} from '../persistence/persistence.store';
+import { PERSISTENCE_MODEL } from '../persistence/persistence.store';
 import { PersistenceModel } from '../persistence/persistence.types';
 import { RootModel, RootState } from './root.types';
 
@@ -36,7 +33,7 @@ export const ROOT_STATE: InjectionToken<RootState> = Symbol('ROOT_STATE');
 
 container.register(
     ROOT_MODEL,
-    { useClass: PersistenceStore },
+    { useClass: RootStore },
     { lifecycle: Lifecycle.Singleton }
 );
 
