@@ -1,15 +1,20 @@
-import { CounterStore } from './counter.store';
+import { container } from 'tsyringe';
+import { COUNTER_STATE, CounterStore } from './counter.store';
 import { CounterState } from './counter.types';
+import 'reflect-metadata';
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip(`${CounterStore.name}`, () => {
+describe(`${CounterStore.name}`, () => {
     let initial: CounterState;
     let store: CounterStore;
     beforeEach(() => {
         initial = {
             count$: 5
         };
-        store = CounterStore.make(initial);
+        container.register(COUNTER_STATE, { useValue: initial });
+        store = container.resolve(CounterStore);
+    });
+    afterEach(() => {
+        container.clearInstances();
     });
     it('can be initialized with initial state', () => {
         expect(store.count$).toEqual(initial.count$);
