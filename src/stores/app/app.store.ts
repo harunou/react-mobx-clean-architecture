@@ -1,12 +1,23 @@
-import { CounterStore } from '../counter/counter.store';
+import { COUNTER_MODEL } from '@stores/counter/counter.store';
+import {
+    container,
+    inject,
+    injectable,
+    InjectionToken,
+    Lifecycle
+} from 'tsyringe';
 import { CounterModel } from '../counter/counter.types';
-import { AppModel, AppState } from './app.types';
+import { AppModel } from './app.types';
 
+@injectable()
 export class AppStore implements AppModel {
-    static make(state: AppState): AppStore {
-        const counter = new CounterStore(state.counter);
-        return new AppStore(counter);
-    }
-
-    constructor(public counter: CounterModel) {}
+    constructor(@inject(COUNTER_MODEL) public counter: CounterModel) {}
 }
+
+export const APP_MODEL: InjectionToken<AppModel> = Symbol('APP_MODEL');
+
+container.register(
+    APP_MODEL,
+    { useClass: AppStore },
+    { lifecycle: Lifecycle.Singleton }
+);

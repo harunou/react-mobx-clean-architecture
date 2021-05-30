@@ -1,7 +1,8 @@
+import { noop } from '@core/core.helpers';
 import { makeContext } from '@stores/helpers/context/context.helpers';
 import { configure } from 'mobx';
 import { container } from 'tsyringe';
-import { AppStore } from '../app/app.store';
+import { APP_MODEL } from '../app/app.store';
 import { AppModel, AppState } from '../app/app.types';
 import { Store } from '../helpers/store/store.helpers';
 import { PersistenceStore } from '../persistence/persistence.store';
@@ -17,7 +18,9 @@ export class RootStore extends Store<AppModel, PersistenceModel> {
             disableErrorBoundaries: false
         });
 
-        const appStore = AppStore.make(initial);
+        noop(initial);
+
+        const appStore = container.resolve(APP_MODEL);
         const persistenceStore = container.resolve(PersistenceStore);
 
         return new RootStore(appStore, persistenceStore);

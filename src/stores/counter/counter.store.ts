@@ -1,5 +1,11 @@
 import { action, makeObservable, observable, runInAction } from 'mobx';
-import { inject, injectable, InjectionToken } from 'tsyringe';
+import {
+    container,
+    inject,
+    injectable,
+    InjectionToken,
+    Lifecycle
+} from 'tsyringe';
 import { CounterModel, CounterState } from './counter.types';
 
 export const COUNTER_STATE: InjectionToken<CounterState> = Symbol(
@@ -38,3 +44,13 @@ export class CounterStore implements CounterModel {
         this.count$ -= value;
     }
 }
+
+export const COUNTER_MODEL: InjectionToken<CounterModel> = Symbol(
+    'COUNTER_MODEL'
+);
+
+container.register(
+    COUNTER_MODEL,
+    { useClass: CounterStore },
+    { lifecycle: Lifecycle.Singleton }
+);
