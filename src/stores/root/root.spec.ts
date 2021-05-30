@@ -1,5 +1,5 @@
 import { AppStore } from '@stores/app/app.store';
-import { COUNTER_STATE } from '@stores/counter/counter.store';
+import { COUNTER_INITIAL_STATE } from '@stores/counter/counter.store';
 import { CounterState } from '@stores/counter/counter.types';
 import { PersistenceStore } from '@stores/persistence/persistence.store';
 import { container } from 'tsyringe';
@@ -12,7 +12,7 @@ describe(`${RootStore.name}`, () => {
         initial = {
             count$: 5
         };
-        container.register(COUNTER_STATE, { useValue: initial });
+        container.register(COUNTER_INITIAL_STATE, { useValue: initial });
     });
     afterEach(() => {
         container.clearInstances();

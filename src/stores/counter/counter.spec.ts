@@ -1,5 +1,5 @@
 import { container } from 'tsyringe';
-import { COUNTER_STATE, CounterStore } from './counter.store';
+import { COUNTER_INITIAL_STATE, CounterStore } from './counter.store';
 import { CounterState } from './counter.types';
 import 'reflect-metadata';
 
@@ -10,7 +10,7 @@ describe(`${CounterStore.name}`, () => {
         initial = {
             count$: 5
         };
-        container.register(COUNTER_STATE, { useValue: initial });
+        container.register(COUNTER_INITIAL_STATE, { useValue: initial });
         store = container.resolve(CounterStore);
     });
     afterEach(() => {

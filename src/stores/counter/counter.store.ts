@@ -8,15 +8,15 @@ import {
 } from 'tsyringe';
 import { CounterModel, CounterState } from './counter.types';
 
-export const COUNTER_STATE: InjectionToken<CounterState> = Symbol(
-    'COUNTER_STATE'
+export const COUNTER_INITIAL_STATE: InjectionToken<CounterState> = Symbol(
+    'COUNTER_INITIAL_STATE'
 );
 
 @injectable()
 export class CounterStore implements CounterModel {
     count$ = 0;
 
-    constructor(@inject(COUNTER_STATE) state: CounterState) {
+    constructor(@inject(COUNTER_INITIAL_STATE) state: CounterState) {
         makeObservable(this, {
             count$: observable,
             setCount: action,
@@ -45,12 +45,12 @@ export class CounterStore implements CounterModel {
     }
 }
 
-export const COUNTER_MODEL: InjectionToken<CounterModel> = Symbol(
-    'COUNTER_MODEL'
+export const COUNTER_STORE: InjectionToken<CounterStore> = Symbol(
+    'COUNTER_STORE'
 );
 
 container.register(
-    COUNTER_MODEL,
+    COUNTER_STORE,
     { useClass: CounterStore },
     { lifecycle: Lifecycle.Singleton }
 );

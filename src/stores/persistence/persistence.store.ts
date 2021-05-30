@@ -17,12 +17,12 @@ export class PersistenceStore implements PersistenceModel {
     ) {}
 }
 
-export const PERSISTENCE_MODEL: InjectionToken<PersistenceModel> = Symbol(
-    'PERSISTENCE_MODEL'
+export const PERSISTENCE_STORE: InjectionToken<PersistenceStore> = Symbol(
+    'PERSISTENCE_STORE'
 );
 
 container.register(
-    PERSISTENCE_MODEL,
+    PERSISTENCE_STORE,
     { useClass: PersistenceStore },
     { lifecycle: Lifecycle.Singleton }
 );

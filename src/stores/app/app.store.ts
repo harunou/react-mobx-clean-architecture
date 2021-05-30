@@ -1,4 +1,4 @@
-import { COUNTER_MODEL } from '@stores/counter/counter.store';
+import { COUNTER_STORE } from '@stores/counter/counter.store';
 import {
     container,
     inject,
@@ -11,13 +11,13 @@ import { AppModel } from './app.types';
 
 @injectable()
 export class AppStore implements AppModel {
-    constructor(@inject(COUNTER_MODEL) public counter: CounterModel) {}
+    constructor(@inject(COUNTER_STORE) public counter: CounterModel) {}
 }
 
-export const APP_MODEL: InjectionToken<AppModel> = Symbol('APP_MODEL');
+export const APP_STORE: InjectionToken<AppStore> = Symbol('APP_STORE');
 
 container.register(
-    APP_MODEL,
+    APP_STORE,
     { useClass: AppStore },
     { lifecycle: Lifecycle.Singleton }
 );

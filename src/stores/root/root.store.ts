@@ -6,9 +6,9 @@ import {
     InjectionToken,
     Lifecycle
 } from 'tsyringe';
-import { APP_MODEL } from '../app/app.store';
+import { APP_STORE } from '../app/app.store';
 import { AppModel } from '../app/app.types';
-import { PERSISTENCE_MODEL } from '../persistence/persistence.store';
+import { PERSISTENCE_STORE } from '../persistence/persistence.store';
 import { PersistenceModel } from '../persistence/persistence.types';
 import { RootModel, RootState } from './root.types';
 
@@ -21,10 +21,10 @@ configure({
 });
 
 @injectable()
-export class RootStore {
+export class RootStore implements RootModel {
     constructor(
-        @inject(APP_MODEL) public appStore: AppModel,
-        @inject(PERSISTENCE_MODEL) public persistenceStore: PersistenceModel
+        @inject(APP_STORE) public appStore: AppModel,
+        @inject(PERSISTENCE_STORE) public persistenceStore: PersistenceModel
     ) {}
 }
 
@@ -36,5 +36,4 @@ container.register(
     { useClass: RootStore },
     { lifecycle: Lifecycle.Singleton }
 );
-
 container.registerType(ROOT_STATE, ROOT_MODEL);
