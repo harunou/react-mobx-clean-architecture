@@ -10,7 +10,7 @@ import { RootEffectMakeParams } from '@stores/root/root.types';
 export class GetCount implements CancellableEffect {
     static make({ persistence }: RootEffectMakeParams): GetCount {
         const effectFlow = EffectFlow.make<number>();
-        return new GetCount(persistence.counterService, effectFlow);
+        return new GetCount(persistence.counterRemoteService, effectFlow);
     }
 
     constructor(

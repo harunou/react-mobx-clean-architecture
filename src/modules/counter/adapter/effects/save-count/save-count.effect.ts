@@ -10,7 +10,7 @@ import { RootEffectMakeParams } from '@stores/root/root.types';
 export class SaveCount implements Effect {
     static make({ persistence }: RootEffectMakeParams): SaveCount {
         const effectFlow = EffectFlow.make<number>();
-        return new SaveCount(persistence.counterService, effectFlow);
+        return new SaveCount(persistence.counterRemoteService, effectFlow);
     }
 
     constructor(

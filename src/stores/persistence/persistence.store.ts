@@ -1,11 +1,12 @@
-import { CounterService } from '../../api/counter.service';
+import { COUNTER_REMOTE_SERVICE } from '@api/counter.service';
+import { inject, injectable } from 'tsyringe';
 import { CounterSource } from './counter-source.types';
 import { PersistenceModel } from './persistence.types';
 
+@injectable()
 export class PersistenceStore implements PersistenceModel {
-    static make(): PersistenceStore {
-        const counterService = CounterService.make();
-        return new PersistenceStore(counterService);
-    }
-    constructor(public counterService: CounterSource) {}
+    constructor(
+        @inject(COUNTER_REMOTE_SERVICE)
+        public counterRemoteService: CounterSource
+    ) {}
 }

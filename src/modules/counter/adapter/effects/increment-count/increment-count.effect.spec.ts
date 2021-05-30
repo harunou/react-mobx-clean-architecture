@@ -1,5 +1,5 @@
 import {
-    CounterService,
+    CounterRemoteService,
     COUNTER_INCREMENT_ENDPOINT
 } from '@api/counter.service';
 import { CounterSource } from '@stores/persistence/counter-source.types';
@@ -13,7 +13,7 @@ describe(`${IncrementCount.name}`, () => {
     let effectFlow: EffectFlow<number>;
     let effect: IncrementCount;
     beforeEach(() => {
-        counterService = new CounterService();
+        counterService = new CounterRemoteService();
         effectFlow = new EffectFlow<number>();
         effect = new IncrementCount(counterService, effectFlow);
     });
