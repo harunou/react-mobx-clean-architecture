@@ -17,3 +17,12 @@ export type RootSelectorMakeParams<P = unknown> = SelectorMakeParams<
     P
 >;
 export type RootEffectMakeParams = EffectMakeParams<AppModel, PersistenceModel>;
+
+export interface RootModel {
+    appStore: AppModel;
+    persistenceStore: PersistenceModel;
+}
+
+export interface RootState {
+    appStore: AppState;
+}

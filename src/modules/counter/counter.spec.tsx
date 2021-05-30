@@ -1,7 +1,7 @@
 import { AppState } from '@stores/app/app.types';
 import { fireEvent, render, within } from '@testing-library/react';
 import { Counter, counterTestIds } from './counter';
-import { RootStore, RootStoreContext } from '@stores/root/root.store';
+import { RootStoreLegacy, RootStoreContext } from '@stores/root/root.store';
 import { httpClient } from '@core/http-client';
 import assert from 'assert';
 import { CountSelector } from './adapter/selectors/count/count.selector';
@@ -21,12 +21,12 @@ describe.skip(`${Counter.name}`, () => {
             count$: 0
         }
     };
-    let rootStore: RootStore;
+    let rootStore: RootStoreLegacy;
     let sut: JSX.Element;
 
     beforeEach(() => {
         count = 3;
-        rootStore = RootStore.make(initial);
+        rootStore = RootStoreLegacy.make(initial);
         sut = (
             <RootStoreContext.Provider value={rootStore}>
                 <Counter />
@@ -255,12 +255,12 @@ describe.skip(`Double ${Counter.name} app`, () => {
             count$: 0
         }
     };
-    let rootStore: RootStore;
+    let rootStore: RootStoreLegacy;
     let sut: JSX.Element;
 
     beforeEach(() => {
         count = 3;
-        rootStore = RootStore.make(initial);
+        rootStore = RootStoreLegacy.make(initial);
         sut = (
             <RootStoreContext.Provider value={rootStore}>
                 <div data-testid={countersTestIds.counter0}>
