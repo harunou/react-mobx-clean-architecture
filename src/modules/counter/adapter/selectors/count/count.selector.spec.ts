@@ -5,7 +5,7 @@ describe(`${CountSelector.name}`, () => {
     it('selects $count value from store', () => {
         const count = 3;
         const state: CounterState = {
-            $count: count
+            count$: count
         };
         const select = new CountSelector(state);
         expect(select.result).toEqual(count);

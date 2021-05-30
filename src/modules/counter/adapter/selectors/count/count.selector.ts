@@ -9,6 +9,6 @@ export class CountSelector implements Selector {
 
     get result(): number {
         CountSelector.runs += 1;
-        return this.store.$count;
+        return this.store.count$;
     }
 }

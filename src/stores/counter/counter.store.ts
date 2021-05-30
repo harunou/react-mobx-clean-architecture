@@ -6,11 +6,11 @@ export class CounterStore implements CounterModel {
         return new CounterStore(state);
     }
 
-    $count = 0;
+    count$ = 0;
 
     constructor(state: CounterState) {
         makeObservable(this, {
-            $count: observable,
+            count$: observable,
             setCount: action,
             increment: action,
             decrement: action
@@ -25,14 +25,14 @@ export class CounterStore implements CounterModel {
     }
 
     setCount(value: number): void {
-        this.$count = value;
+        this.count$ = value;
     }
 
     increment(value: number): void {
-        this.$count += value;
+        this.count$ += value;
     }
 
     decrement(value: number): void {
-        this.$count -= value;
+        this.count$ -= value;
     }
 }

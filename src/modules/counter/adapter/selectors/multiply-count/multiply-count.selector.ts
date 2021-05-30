@@ -16,6 +16,6 @@ export class MultiplyCountSelector implements SelectorWithProps {
 
     get result(): number {
         MultiplyCountSelector.runs += 1;
-        return this.store.$count * this.#factor;
+        return this.store.count$ * this.#factor;
     }
 }

@@ -13,7 +13,7 @@ describe(`${IncrementCounterAndSaveOptimistic.name}`, () => {
     let effectFlow: EffectFlow<number>;
     const increaseAmount = 4;
     beforeEach(() => {
-        store = new CounterStore({ $count: 3 });
+        store = new CounterStore({ count$: 3 });
         effectFlow = new EffectFlow();
         effect = new SaveCount(counterServiceMock, effectFlow);
     });
@@ -28,7 +28,7 @@ describe(`${IncrementCounterAndSaveOptimistic.name}`, () => {
         useCase.execute();
         expect(store.increment).toBeCalledTimes(1);
         expect(store.increment).toBeCalledWith(increaseAmount);
-        expect(effect.execute).toBeCalledWith(store.$count);
+        expect(effect.execute).toBeCalledWith(store.count$);
     });
     it('decrements model value on predefined amount and if save to the BE failed', async () => {
         jest.spyOn(store, 'increment');

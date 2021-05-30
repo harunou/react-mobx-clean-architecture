@@ -13,7 +13,7 @@ describe(`${IncrementCounterAndSavePessimistic.name}`, () => {
     const increment = 5;
     const count = 4;
     beforeEach(() => {
-        store = new CounterStore({ $count: count });
+        store = new CounterStore({ count$: count });
         effectFlow = new EffectFlow();
         effect = new IncrementCount(counterServiceMock, effectFlow);
     });

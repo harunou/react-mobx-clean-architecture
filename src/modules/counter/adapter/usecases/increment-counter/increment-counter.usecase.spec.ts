@@ -5,7 +5,7 @@ describe(`${IncrementCounter.name}`, () => {
     it('increments model value on a predefined amount', () => {
         const initialState = 3;
         const increaseAmount = 4;
-        const model = new CounterStore({ $count: initialState });
+        const model = new CounterStore({ count$: initialState });
         jest.spyOn(model, 'increment');
         const useCase = new IncrementCounter(model, increaseAmount);
         useCase.execute();

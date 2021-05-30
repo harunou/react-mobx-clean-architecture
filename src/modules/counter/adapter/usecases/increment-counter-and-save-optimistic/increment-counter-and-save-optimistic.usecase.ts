@@ -35,7 +35,7 @@ export class IncrementCounterAndSaveOptimistic implements UseCase {
 
     execute(): void {
         this.store.increment(this.props);
-        this.effect.execute(this.store.$count).catch(this.saveFailure);
+        this.effect.execute(this.store.count$).catch(this.saveFailure);
     }
 
     saveFailure(): void {

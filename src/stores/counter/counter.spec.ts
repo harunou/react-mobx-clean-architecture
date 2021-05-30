@@ -7,26 +7,26 @@ describe.skip(`${CounterStore.name}`, () => {
     let store: CounterStore;
     beforeEach(() => {
         initial = {
-            $count: 5
+            count$: 5
         };
         store = CounterStore.make(initial);
     });
     it('can be initialized with initial state', () => {
-        expect(store.$count).toEqual(initial.$count);
+        expect(store.count$).toEqual(initial.count$);
     });
-    it('changes changes state upon setState call', () => {
+    it('sets new count state upon setState call', () => {
         const count = 7;
         store.setCount(count);
-        expect(store.$count).toEqual(count);
+        expect(store.count$).toEqual(count);
     });
     it('increments state on provided value upon increment call', () => {
         const value = 4;
         store.increment(value);
-        expect(store.$count).toEqual(initial.$count + value);
+        expect(store.count$).toEqual(initial.count$ + value);
     });
     it('decrements state on provided value upon decrement call', () => {
         const value = 4;
         store.decrement(value);
-        expect(store.$count).toEqual(initial.$count - value);
+        expect(store.count$).toEqual(initial.count$ - value);
     });
 });

@@ -12,7 +12,7 @@ describe(`${EnterCounter.name}`, () => {
     let effectFlow: EffectFlow<number>;
     const count = 4;
     beforeEach(() => {
-        store = new CounterStore({ $count: count });
+        store = new CounterStore({ count$: count });
         effectFlow = new EffectFlow();
         effect = new GetCount(counterServiceMock, effectFlow);
     });

@@ -5,7 +5,7 @@ describe(`${MultiplyCountSelector.name}`, () => {
     it('selects $count value from store and multiply on predefined value', () => {
         const count = 3;
         const state: CounterState = {
-            $count: count
+            count$: count
         };
         const factor = 4;
         const select = new MultiplyCountSelector(state);

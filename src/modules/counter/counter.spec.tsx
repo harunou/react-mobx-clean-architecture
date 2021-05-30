@@ -18,7 +18,7 @@ describe.skip(`${Counter.name}`, () => {
     let count: number;
     const initial: AppState = {
         counter: {
-            $count: 0
+            count$: 0
         }
     };
     let rootStore: RootStore;
@@ -56,9 +56,9 @@ describe.skip(`${Counter.name}`, () => {
         );
         assert(selectMultiplyCount);
 
-        expect(selectCount).toHaveTextContent(`${initial.counter.$count}`);
+        expect(selectCount).toHaveTextContent(`${initial.counter.count$}`);
         expect(selectMultiplyCount).toHaveTextContent(
-            `${initial.counter.$count * 10}`
+            `${initial.counter.count$ * 10}`
         );
         expect(CountSelector.runs).toEqual(1);
         expect(MultiplyCountSelector.runs).toEqual(1);
@@ -94,7 +94,7 @@ describe.skip(`${Counter.name}`, () => {
         const selectCount = queryByTestId(counterTestIds.selectCount);
         assert(selectCount);
 
-        expect(selectCount).toHaveTextContent(`${initial.counter.$count}`);
+        expect(selectCount).toHaveTextContent(`${initial.counter.count$}`);
         expect(CountSelector.runs).toEqual(2);
 
         httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
@@ -252,7 +252,7 @@ describe.skip(`Double ${Counter.name} app`, () => {
     let count: number;
     const initial: AppState = {
         counter: {
-            $count: 0
+            count$: 0
         }
     };
     let rootStore: RootStore;
