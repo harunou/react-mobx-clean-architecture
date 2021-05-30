@@ -1,5 +1,3 @@
-import { noop } from '@core/core.helpers';
-import { makeContext } from '@stores/helpers/context/context.helpers';
 import { configure } from 'mobx';
 import {
     container,
@@ -9,8 +7,7 @@ import {
     Lifecycle
 } from 'tsyringe';
 import { APP_MODEL } from '../app/app.store';
-import { AppModel, AppState } from '../app/app.types';
-import { Store } from '../helpers/store/store.helpers';
+import { AppModel } from '../app/app.types';
 import {
     PersistenceStore,
     PERSISTENCE_MODEL
@@ -18,26 +15,13 @@ import {
 import { PersistenceModel } from '../persistence/persistence.types';
 import { RootModel, RootState } from './root.types';
 
-export class RootStoreLegacy extends Store<AppModel, PersistenceModel> {
-    static make(initial: AppState): RootStoreLegacy {
-        configure({
-            enforceActions: 'always',
-            computedRequiresReaction: true,
-            reactionRequiresObservable: true,
-            observableRequiresReaction: true,
-            disableErrorBoundaries: false
-        });
-
-        noop(initial);
-
-        const appStore = container.resolve(APP_MODEL);
-        const persistenceStore = container.resolve(PersistenceStore);
-
-        return new RootStoreLegacy(appStore, persistenceStore);
-    }
-}
-
-export const { RootStoreContext, useAdapter } = makeContext<RootStoreLegacy>();
+configure({
+    enforceActions: 'always',
+    computedRequiresReaction: true,
+    reactionRequiresObservable: true,
+    observableRequiresReaction: true,
+    disableErrorBoundaries: false
+});
 
 @injectable()
 export class RootStore {
