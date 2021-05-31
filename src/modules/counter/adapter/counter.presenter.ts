@@ -1,10 +1,19 @@
 import { computed, makeObservable } from 'mobx';
-import { CountSelector } from './selectors/count/count.selector';
-import { MultiplyCountSelector } from './selectors/multiply-count/multiply-count.selector';
+import { inject, injectable } from 'tsyringe';
+import {
+    CountSelector,
+    COUNT_SELECTOR
+} from './selectors/count/count.selector';
+import {
+    MultiplyCountSelector,
+    MULTIPLY_COUNT_SELECTOR
+} from './selectors/multiply-count/multiply-count.selector';
 
+@injectable()
 export class CounterPresenter {
     constructor(
-        private countSelector: CountSelector,
+        @inject(COUNT_SELECTOR) private countSelector: CountSelector,
+        @inject(MULTIPLY_COUNT_SELECTOR)
         private multiplyCountSelector: MultiplyCountSelector
     ) {
         makeObservable(this, {

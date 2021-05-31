@@ -1,38 +1,37 @@
+import { noop } from '@core/core.helpers';
+import { httpClient } from '@core/http-client';
+import { COUNTER_INITIAL_STATE } from '@stores/counter/counter.store';
+import { CounterState } from '@stores/counter/counter.types';
+import { render } from '@testing-library/react';
+import { container } from 'tsyringe';
+import { CountSelector } from './adapter/selectors/count/count.selector';
+import { MultiplyCountSelector } from './adapter/selectors/multiply-count/multiply-count.selector';
 import { Counter } from './counter';
 
 /* eslint-disable jest/no-commented-out-tests */
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip(`${Counter.name}`, () => {
-    it('fakes test suite', () => {
-        expect(true).toBeTruthy();
+describe(`${Counter.name}`, () => {
+    let count: number;
+    const initial: CounterState = {
+        count$: 0
+    };
+    let sut: JSX.Element;
+    beforeEach(() => {
+        count = 3;
+        sut = <Counter />;
+        container.register(COUNTER_INITIAL_STATE, { useValue: initial });
+        CountSelector.runs = 0;
+        MultiplyCountSelector.runs = 0;
+        noop(count);
     });
-    // let count: number;
-    // const initial: AppState = {
-    //     counter: {
-    //         count$: 0
-    //     }
-    // };
-    // let rootStore: RootStoreLegacy;
-    // let sut: JSX.Element;
-    // beforeEach(() => {
-    //     count = 3;
-    //     rootStore = RootStoreLegacy.make(initial);
-    //     sut = (
-    //         <RootStoreContext.Provider value={rootStore}>
-    //             <Counter />
-    //         </RootStoreContext.Provider>
-    //     );
-    //     CountSelector.runs = 0;
-    //     MultiplyCountSelector.runs = 0;
-    // });
-    // afterEach(() => {
-    //     httpClient.verify();
-    //     httpClient.clean();
-    // });
-    // it('renders without errors', async () => {
-    //     expect(() => render(sut)).not.toThrow();
-    //     httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
-    // });
+    afterEach(() => {
+        httpClient.verify();
+        httpClient.clean();
+    });
+    it('renders without errors', async () => {
+        expect(() => render(sut)).not.toThrow();
+        // httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+    });
     // it('inits store and renders initial result', async () => {
     //     const { queryByTestId, rerender } = render(sut);
     //     const selectCount = queryByTestId(counterTestIds.selectCount);
@@ -190,46 +189,42 @@ describe.skip(`${Counter.name}`, () => {
 
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip(`Double ${Counter.name} app`, () => {
-    it('fakes test suite', () => {
-        expect(true).toBeTruthy();
+    const countersTestIds = {
+        counter0: 'counter-0',
+        counter1: 'counter-1'
+    };
+    let count: number;
+    const initial: CounterState = {
+        count$: 0
+    };
+    let sut: JSX.Element;
+    beforeEach(() => {
+        count = 3;
+        sut = (
+            <>
+                <div data-testid={countersTestIds.counter0}>
+                    <Counter />
+                </div>
+                <div data-testid={countersTestIds.counter1}>
+                    <Counter />
+                </div>
+            </>
+        );
+        container.register(COUNTER_INITIAL_STATE, { useValue: initial });
+        CountSelector.runs = 0;
+        MultiplyCountSelector.runs = 0;
+        noop(initial);
+        noop(count);
     });
-    // const countersTestIds = {
-    //     counter0: 'counter-0',
-    //     counter1: 'counter-1'
-    // };
-    // let count: number;
-    // const initial: AppState = {
-    //     counter: {
-    //         count$: 0
-    //     }
-    // };
-    // let rootStore: RootStoreLegacy;
-    // let sut: JSX.Element;
-    // beforeEach(() => {
-    //     count = 3;
-    //     rootStore = RootStoreLegacy.make(initial);
-    //     sut = (
-    //         <RootStoreContext.Provider value={rootStore}>
-    //             <div data-testid={countersTestIds.counter0}>
-    //                 <Counter />
-    //             </div>
-    //             <div data-testid={countersTestIds.counter1}>
-    //                 <Counter />
-    //             </div>
-    //         </RootStoreContext.Provider>
-    //     );
-    //     CountSelector.runs = 0;
-    //     MultiplyCountSelector.runs = 0;
-    // });
-    // afterEach(() => {
-    //     httpClient.verify();
-    //     httpClient.clean();
-    // });
-    // it('renders without errors', async () => {
-    //     expect(() => render(sut)).not.toThrow();
-    //     httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
-    //     httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
-    // });
+    afterEach(() => {
+        httpClient.verify();
+        httpClient.clean();
+    });
+    it('renders without errors', async () => {
+        expect(() => render(sut)).not.toThrow();
+        // httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+        // httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+    });
     // it('renders both component once one fires increment', async () => {
     //     const { queryByTestId } = render(sut);
     //     const counter0 = queryByTestId(countersTestIds.counter0);

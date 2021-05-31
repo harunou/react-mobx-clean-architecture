@@ -1,13 +1,16 @@
+import { COUNTER_STORE } from '@stores/counter/counter.store';
 import { CounterState } from '@stores/counter/counter.types';
 import { SelectorWithProps } from '@stores/helpers/store/store.types';
+import { container, inject, injectable, InjectionToken } from 'tsyringe';
 
+@injectable()
 export class MultiplyCountSelector implements SelectorWithProps {
     // NOTE(harunou): for testing purposes
     static runs = 0;
 
     #factor = 1;
 
-    constructor(private store: CounterState) {}
+    constructor(@inject(COUNTER_STORE) private store: CounterState) {}
 
     withProps(factor: number): this {
         this.#factor = factor;
@@ -19,3 +22,11 @@ export class MultiplyCountSelector implements SelectorWithProps {
         return this.store.count$ * this.#factor;
     }
 }
+
+export const MULTIPLY_COUNT_SELECTOR: InjectionToken<SelectorWithProps> = Symbol(
+    'MULTIPLY_COUNT_SELECTOR'
+);
+
+container.register(MULTIPLY_COUNT_SELECTOR, {
+    useClass: MultiplyCountSelector
+});
