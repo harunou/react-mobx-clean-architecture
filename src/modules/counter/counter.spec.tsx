@@ -1,7 +1,7 @@
 import { noop } from '@core/core.helpers';
 import { httpClient } from '@core/http-client';
-import { COUNTER_INITIAL_STATE } from '@stores/counter/counter.store';
-import { CounterState } from '@stores/counter/counter.types';
+import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
+import { CounterState } from '@stores/domain/counter/counter.types';
 import { render } from '@testing-library/react';
 import { container } from 'tsyringe';
 import { CountSelector } from './adapter/selectors/count/count.selector';

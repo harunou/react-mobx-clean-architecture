@@ -1,6 +1,6 @@
 import { counterServiceMock } from '@api/counter.mocks';
-import { CounterStore } from '@stores/counter/counter.store';
-import { CounterModel } from '@stores/counter/counter.types';
+import { CounterStore } from '@stores/domain/counter/counter.store';
+import { CounterModel } from '@stores/domain/counter/counter.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';

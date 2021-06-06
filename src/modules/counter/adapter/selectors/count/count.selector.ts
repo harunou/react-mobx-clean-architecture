@@ -1,6 +1,6 @@
-import { CounterState } from '@stores/counter/counter.types';
+import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
+import { CounterState } from '@stores/domain/counter/counter.types';
 import { Selector } from '@stores/helpers/store/store.types';
-import { COUNTER_STORE } from '@stores/root/root.store';
 import { container, inject, injectable, InjectionToken } from 'tsyringe';
 
 @injectable()

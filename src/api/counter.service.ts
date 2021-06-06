@@ -1,5 +1,5 @@
 import { httpClient } from '@core/http-client';
-import { CounterSource } from '@stores/counter-source/counter-source.types';
+import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { container, InjectionToken } from 'tsyringe';
 
 export const COUNTER_GET_COUNT_ENDPOINT = 'counter/get';

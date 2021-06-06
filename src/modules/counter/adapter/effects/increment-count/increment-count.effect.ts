@@ -2,8 +2,8 @@ import { flow, flowResult, makeObservable } from 'mobx';
 import { CancellableEffect } from '@stores/helpers/effect/effect.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { container, inject, injectable, InjectionToken } from 'tsyringe';
-import { CounterSource } from '@stores/counter-source/counter-source.types';
-import { COUNTER_SOURCE_STORE } from '@stores/root/root.store';
+import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
+import { COUNTER_SOURCE_STORE } from '@stores/persistence/counter-source/counter-source.tokens';
 
 @injectable()
 export class IncrementCountEffect implements CancellableEffect {

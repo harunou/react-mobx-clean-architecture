@@ -1,4 +1,4 @@
-import { CounterStore } from '@stores/counter/counter.store';
+import { CounterStore } from '@stores/domain/counter/counter.store';
 import { IncrementCounterUseCase } from './increment-counter.usecase';
 
 describe(`${IncrementCounterUseCase.name}`, () => {
