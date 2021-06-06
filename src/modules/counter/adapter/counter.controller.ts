@@ -2,11 +2,42 @@ import {
     UnmountedHook,
     MountedHook
 } from '@stores/helpers/context/context.types';
-import { RootStoreExecutor } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
+import { inject } from 'tsyringe';
+import {
+    EnterCounterUseCase,
+    ENTER_COUNTER_USE_CASE
+} from './usecases/enter-counter/enter-counter.usecase';
+import {
+    IncrementCounterAndSaveOptimisticUseCase,
+    INCREMENT_COUNTER_AND_SAVE_OPTIMISTIC_USE_CASE
+} from './usecases/increment-counter-and-save-optimistic/increment-counter-and-save-optimistic.usecase';
+import {
+    IncrementCounterAndSavePessimisticUseCase,
+    INCREMENT_COUNTER_AND_SAVE_PESSIMISTIC_USE_CASE
+} from './usecases/increment-counter-and-save-pessimistic/increment-counter-and-save-pessimistic.usecase';
+import {
+    IncrementCounterUseCase,
+    INCREMENT_COUNTER_USE_CASE
+} from './usecases/increment-counter/increment-counter.usecase';
+import {
+    LeaveCounterUseCase,
+    LEAVE_COUNTER_USE_CASE
+} from './usecases/leave-counter/leave-counter.usecase';
 
 export class CounterController implements MountedHook, UnmountedHook {
-    constructor(private readonly store: RootStoreExecutor) {
+    constructor(
+        @inject(ENTER_COUNTER_USE_CASE)
+        private enterCounterUseCase: EnterCounterUseCase,
+        @inject(LEAVE_COUNTER_USE_CASE)
+        private leaveCounterUseCase: LeaveCounterUseCase,
+        @inject(INCREMENT_COUNTER_USE_CASE)
+        private incrementCounterUseCase: IncrementCounterUseCase,
+        @inject(INCREMENT_COUNTER_AND_SAVE_OPTIMISTIC_USE_CASE)
+        private incrementCounterAndSaveOptimisticUseCase: IncrementCounterAndSaveOptimisticUseCase,
+        @inject(INCREMENT_COUNTER_AND_SAVE_PESSIMISTIC_USE_CASE)
+        private incrementCounterAndSavePessimisticUseCase: IncrementCounterAndSavePessimisticUseCase
+    ) {
         makeObservable(this, {
             mounted: action.bound,
             unmounted: action.bound,
@@ -16,22 +47,18 @@ export class CounterController implements MountedHook, UnmountedHook {
         });
     }
     mounted(): void {
-        // this.store.execute(enterCounterUseCase);
+        this.enterCounterUseCase.execute();
     }
     unmounted(): void {
-        // this.store.execute(leaveCounterUseCase);
+        this.leaveCounterUseCase.execute();
     }
     add_1_ButtonPushed(): void {
-        // this.store.execute(incrementCounterUseCase.withProps(1));
+        this.incrementCounterUseCase.execute(1);
     }
     add_1_andSaveOptimisticButtonPushed(): void {
-        // this.store.execute(
-        //     incrementCounterAndSaveOptimisticUseCase.withProps(1)
-        // );
+        this.incrementCounterAndSaveOptimisticUseCase.execute(1);
     }
     add_1_andSavePessimisticButtonPushed(): void {
-        // this.store.execute(
-        //     incrementCounterAndSavePessimisticUseCase.withProps(1)
-        // );
+        this.incrementCounterAndSavePessimisticUseCase.execute(1);
     }
 }
