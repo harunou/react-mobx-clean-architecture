@@ -32,6 +32,7 @@ describe(`useAdapter`, () => {
         PresenterConstructor: AdapterConstructor<Store, P>
     ) => { controller: C; presenter: P };
     let ContextProvider: FC;
+
     beforeEach(() => {
         store = {
             count: 5

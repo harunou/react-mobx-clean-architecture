@@ -1,11 +1,12 @@
 import { counterServiceMock } from '@api/counter.mocks';
 import { CounterStore } from '@stores/counter/counter.store';
 import { CounterModel } from '@stores/counter/counter.types';
-import { CancellablePromise } from 'mobx/dist/internal';
 import { IncrementCounterAndSaveOptimisticUseCase } from './increment-counter-and-save-optimistic.usecase';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { SaveCountEffect } from '../../effects/save-count/save-count.effect';
 import { sleep } from '@testing-tools/testing-tools.helpers';
+import { runInAction } from 'mobx';
+import { CancellablePromise } from 'mobx/dist/api/flow';
 
 describe(`${IncrementCounterAndSaveOptimisticUseCase.name}`, () => {
     let store: CounterModel;
@@ -15,10 +16,7 @@ describe(`${IncrementCounterAndSaveOptimisticUseCase.name}`, () => {
     beforeEach(() => {
         store = new CounterStore({ count$: 3 });
         effectFlow = new EffectFlow();
-        effect = new SaveCountEffect(
-            { counterRemoteService: counterServiceMock },
-            effectFlow
-        );
+        effect = new SaveCountEffect(counterServiceMock, effectFlow);
     });
     it('increments model value on predefined amount and optimistically save to the BE', () => {
         jest.spyOn(store, 'increment');
@@ -30,7 +28,9 @@ describe(`${IncrementCounterAndSaveOptimisticUseCase.name}`, () => {
         useCase.execute(increaseAmount);
         expect(store.increment).toBeCalledTimes(1);
         expect(store.increment).toBeCalledWith(increaseAmount);
-        expect(effect.execute).toBeCalledWith(store.count$);
+        runInAction(() => {
+            expect(effect.execute).toBeCalledWith(store.count$);
+        });
     });
     it('decrements model value on predefined amount and if save to the BE failed', async () => {
         jest.spyOn(store, 'increment');

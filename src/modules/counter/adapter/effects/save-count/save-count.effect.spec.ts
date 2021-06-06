@@ -1,5 +1,5 @@
 import { counterServiceMock } from '@api/counter.mocks';
-import { CounterSource } from '@stores/persistence/counter-source.types';
+import { CounterSource } from '@stores/counter-source/counter-source.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { SaveCountEffect } from './save-count.effect';
 
@@ -11,10 +11,7 @@ describe(`${SaveCountEffect.name}`, () => {
     beforeEach(() => {
         counterService = counterServiceMock;
         effectFlow = new EffectFlow<number>();
-        effect = new SaveCountEffect(
-            { counterRemoteService: counterService },
-            effectFlow
-        );
+        effect = new SaveCountEffect(counterService, effectFlow);
     });
     it('saves data to the BE', () => {
         effect.execute(count);

@@ -11,12 +11,9 @@ describe(`${LeaveCounterUseCase.name}`, () => {
     let effectFlow: EffectFlow<number>;
     beforeEach(() => {
         effectFlow = new EffectFlow();
-        getCount = new GetCountEffect(
-            { counterRemoteService: counterServiceMock },
-            effectFlow
-        );
+        getCount = new GetCountEffect(counterServiceMock, effectFlow);
         incrementCount = new IncrementCountEffect(
-            { counterRemoteService: counterServiceMock },
+            counterServiceMock,
             effectFlow
         );
     });

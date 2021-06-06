@@ -1,8 +1,6 @@
 import { noop } from '@core/core.helpers';
 import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
-import { container } from 'tsyringe';
-import { CounterPresenter } from './adapter/counter.presenter';
 
 export const counterTestIds = {
     add_1_button: 'add-1-button',
@@ -16,9 +14,10 @@ export const Counter: FC = observer(() => {
     const add_1_ButtonPushed = noop;
     const add_1_andSaveOptimisticButtonPushed = noop;
     const add_1_andSavePessimisticButtonPushed = noop;
-    const { selectCount, selectMultiplyCountOn_10 } = container.resolve(
-        CounterPresenter
-    );
+    const { selectCount, selectMultiplyCountOn_10 } = {
+        selectCount: 0,
+        selectMultiplyCountOn_10: 0
+    };
 
     return (
         <div>

@@ -1,6 +1,6 @@
-import { COUNTER_STORE } from '@stores/counter/counter.store';
 import { CounterModel } from '@stores/counter/counter.types';
 import { UseCase } from '@stores/helpers/store/store.types';
+import { COUNTER_STORE } from '@stores/root/root.store';
 import { action, makeObservable } from 'mobx';
 import { container, inject, injectable, InjectionToken } from 'tsyringe';
 import {
