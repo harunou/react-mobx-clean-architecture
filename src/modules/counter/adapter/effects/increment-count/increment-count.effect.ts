@@ -1,25 +1,24 @@
 import { flow, flowResult, makeObservable } from 'mobx';
-import { CounterSource } from '@stores/persistence/counter-source.types';
 import { CancellableEffect } from '@stores/helpers/effect/effect.types';
-import {
-    EffectBuilder,
-    EffectFlow
-} from '@stores/helpers/effect/effect.helpers';
-import { RootEffectMakeParams } from '@stores/root/root.types';
+import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
+import { container, inject, injectable, InjectionToken } from 'tsyringe';
+import { PERSISTENCE_STORE } from '@stores/persistence/persistence.store';
+import { PersistenceModel } from '@stores/persistence/persistence.types';
+import { CounterSource } from '@stores/persistence/counter-source.types';
 
-export class IncrementCount implements CancellableEffect {
-    static make({ persistence }: RootEffectMakeParams): IncrementCount {
-        const effectFlow = EffectFlow.make<number>();
-        return new IncrementCount(persistence.counterRemoteService, effectFlow);
-    }
-
+@injectable()
+export class IncrementCountEffect implements CancellableEffect {
     constructor(
-        private counterService: CounterSource,
+        @inject(PERSISTENCE_STORE) private persistenceStore: PersistenceModel,
         private effectFlow: EffectFlow<number>
     ) {
         makeObservable(this, {
             saveGenerator: flow
         });
+    }
+
+    private get counterSource(): CounterSource {
+        return this.persistenceStore.counterRemoteService;
     }
 
     cancel(): void {
@@ -32,8 +31,14 @@ export class IncrementCount implements CancellableEffect {
     }
 
     *saveGenerator(value: number): Generator<Promise<number>, number, number> {
-        return yield this.counterService.increment(value);
+        return yield this.counterSource.increment(value);
     }
 }
 
-export const incrementCountEffect = EffectBuilder.make(IncrementCount);
+export const INCREMENT_COUNT_EFFECT: InjectionToken<CancellableEffect> = Symbol(
+    'INCREMENT_COUNT_EFFECT'
+);
+
+container.register(INCREMENT_COUNT_EFFECT, {
+    useClass: IncrementCountEffect
+});

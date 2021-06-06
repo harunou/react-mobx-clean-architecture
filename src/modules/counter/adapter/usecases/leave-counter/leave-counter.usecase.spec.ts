@@ -1,18 +1,24 @@
 import { counterServiceMock } from '@api/counter.mocks';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
-import { GetCount } from '../../effects/get-count/get-count.effect';
-import { IncrementCount } from '../../effects/increment-count/increment-count.effect';
+import { GetCountEffect } from '../../effects/get-count/get-count.effect';
+import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
 import { LeaveCounter } from './leave-counter.usecase';
 
 describe(`${LeaveCounter.name}`, () => {
-    let getCount: GetCount;
-    let incrementCount: IncrementCount;
+    let getCount: GetCountEffect;
+    let incrementCount: IncrementCountEffect;
     let effectFlow: EffectFlow<number>;
     beforeEach(() => {
         effectFlow = new EffectFlow();
-        getCount = new GetCount(counterServiceMock, effectFlow);
-        incrementCount = new IncrementCount(counterServiceMock, effectFlow);
+        getCount = new GetCountEffect(
+            { counterRemoteService: counterServiceMock },
+            effectFlow
+        );
+        incrementCount = new IncrementCountEffect(
+            { counterRemoteService: counterServiceMock },
+            effectFlow
+        );
     });
     it('cancels init flow', async () => {
         jest.spyOn(getCount, 'cancel');

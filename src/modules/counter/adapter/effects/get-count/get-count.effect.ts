@@ -1,25 +1,23 @@
 import { flow, flowResult, makeObservable } from 'mobx';
-import { CounterSource } from '@stores/persistence/counter-source.types';
 import { CancellableEffect } from '@stores/helpers/effect/effect.types';
-import {
-    EffectBuilder,
-    EffectFlow
-} from '@stores/helpers/effect/effect.helpers';
-import { RootEffectMakeParams } from '@stores/root/root.types';
+import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
+import { PERSISTENCE_STORE } from '@stores/persistence/persistence.store';
+import { container, inject, injectable, InjectionToken } from 'tsyringe';
+import { PersistenceModel } from '@stores/persistence/persistence.types';
+import { CounterSource } from '@stores/persistence/counter-source.types';
 
-export class GetCount implements CancellableEffect {
-    static make({ persistence }: RootEffectMakeParams): GetCount {
-        const effectFlow = EffectFlow.make<number>();
-        return new GetCount(persistence.counterRemoteService, effectFlow);
-    }
-
+@injectable()
+export class GetCountEffect implements CancellableEffect {
     constructor(
-        private counterService: CounterSource,
+        @inject(PERSISTENCE_STORE) private persistenceStore: PersistenceModel,
         private effectFlow: EffectFlow<number>
     ) {
         makeObservable(this, {
             saveGenerator: flow
         });
+    }
+    private get counterSource(): CounterSource {
+        return this.persistenceStore.counterRemoteService;
     }
 
     cancel(): void {
@@ -32,8 +30,14 @@ export class GetCount implements CancellableEffect {
     }
 
     *saveGenerator(): Generator<Promise<number>, number, number> {
-        return yield this.counterService.get();
+        return yield this.counterSource.get();
     }
 }
 
-export const getCountEffect = EffectBuilder.make(GetCount);
+export const GET_COUNT_EFFECT: InjectionToken<CancellableEffect> = Symbol(
+    'GET_COUNT_EFFECT'
+);
+
+container.register(GET_COUNT_EFFECT, {
+    useClass: GetCountEffect
+});

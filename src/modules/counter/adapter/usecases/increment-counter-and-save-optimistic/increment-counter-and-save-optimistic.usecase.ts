@@ -1,30 +1,12 @@
 import { CounterModel } from '@stores/counter/counter.types';
 import { UseCase } from '@stores/helpers/store/store.types';
-import { UseCaseBuilder } from '@stores/helpers/usecase/usecase.helpers';
-import { RootUseCaseMakeParams } from '@stores/root/root.types';
 import { action, makeObservable } from 'mobx';
-import {
-    SaveCount,
-    saveCountEffect
-} from '../../effects/save-count/save-count.effect';
+import { SaveCountEffect } from '../../effects/save-count/save-count.effect';
 
 export class IncrementCounterAndSaveOptimistic implements UseCase {
-    static make({
-        store,
-        persistence,
-        props
-    }: RootUseCaseMakeParams<number>): IncrementCounterAndSaveOptimistic {
-        const effect = saveCountEffect.build(store, persistence);
-        return new IncrementCounterAndSaveOptimistic(
-            store.counter,
-            effect,
-            props
-        );
-    }
-
     constructor(
         private store: CounterModel,
-        private effect: SaveCount,
+        private effect: SaveCountEffect,
         private props: number = 0
     ) {
         makeObservable(this, {
@@ -42,7 +24,3 @@ export class IncrementCounterAndSaveOptimistic implements UseCase {
         this.store.decrement(this.props);
     }
 }
-
-export const incrementCounterAndSaveOptimisticUseCase = UseCaseBuilder.make(
-    IncrementCounterAndSaveOptimistic
-);

@@ -1,16 +1,19 @@
 import { counterServiceMock } from '@api/counter.mocks';
 import { CounterSource } from '@stores/persistence/counter-source.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
-import { GetCount } from './get-count.effect';
+import { GetCountEffect } from './get-count.effect';
 
-describe(`${GetCount.name}`, () => {
+describe(`${GetCountEffect.name}`, () => {
     let counterService: CounterSource;
     let effectFlow: EffectFlow<number>;
-    let effect: GetCount;
+    let effect: GetCountEffect;
     beforeEach(() => {
         counterService = counterServiceMock;
         effectFlow = new EffectFlow<number>();
-        effect = new GetCount(counterService, effectFlow);
+        effect = new GetCountEffect(
+            { counterRemoteService: counterService },
+            effectFlow
+        );
     });
     it('calls count service get method', () => {
         effect.execute();

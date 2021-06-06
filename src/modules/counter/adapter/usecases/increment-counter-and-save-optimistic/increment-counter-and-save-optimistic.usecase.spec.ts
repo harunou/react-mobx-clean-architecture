@@ -4,18 +4,21 @@ import { CounterModel } from '@stores/counter/counter.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import { IncrementCounterAndSaveOptimistic } from './increment-counter-and-save-optimistic.usecase';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
-import { SaveCount } from '../../effects/save-count/save-count.effect';
+import { SaveCountEffect } from '../../effects/save-count/save-count.effect';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 
 describe(`${IncrementCounterAndSaveOptimistic.name}`, () => {
     let store: CounterModel;
-    let effect: SaveCount;
+    let effect: SaveCountEffect;
     let effectFlow: EffectFlow<number>;
     const increaseAmount = 4;
     beforeEach(() => {
         store = new CounterStore({ count$: 3 });
         effectFlow = new EffectFlow();
-        effect = new SaveCount(counterServiceMock, effectFlow);
+        effect = new SaveCountEffect(
+            { counterRemoteService: counterServiceMock },
+            effectFlow
+        );
     });
     it('increments model value on predefined amount and optimistically save to the BE', () => {
         jest.spyOn(store, 'increment');

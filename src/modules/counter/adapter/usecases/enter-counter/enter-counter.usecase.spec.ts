@@ -3,18 +3,21 @@ import { CounterStore } from '@stores/counter/counter.store';
 import { CounterModel } from '@stores/counter/counter.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
-import { GetCount } from '../../effects/get-count/get-count.effect';
+import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 import { EnterCounter } from './enter-counter.usecase';
 
 describe(`${EnterCounter.name}`, () => {
     let store: CounterModel;
-    let effect: GetCount;
+    let effect: GetCountEffect;
     let effectFlow: EffectFlow<number>;
     const count = 4;
     beforeEach(() => {
         store = new CounterStore({ count$: count });
         effectFlow = new EffectFlow();
-        effect = new GetCount(counterServiceMock, effectFlow);
+        effect = new GetCountEffect(
+            { counterRemoteService: counterServiceMock },
+            effectFlow
+        );
     });
     it('fetches data from BE and inits store', async () => {
         jest.spyOn(effect, 'execute');

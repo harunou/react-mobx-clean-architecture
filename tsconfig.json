@@ -13,7 +13,7 @@
         "@stores/*": ["./src/stores/*"],
         "@api/*": ["./src/api/*"],
         "@testing-tools/*": ["./src/testing-tools/*"]
-      }
+      },
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules" ]

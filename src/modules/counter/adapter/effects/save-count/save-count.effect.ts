@@ -1,25 +1,24 @@
 import { flow, flowResult, makeObservable } from 'mobx';
-import { CounterSource } from '@stores/persistence/counter-source.types';
 import { Effect } from '@stores/helpers/effect/effect.types';
-import {
-    EffectBuilder,
-    EffectFlow
-} from '@stores/helpers/effect/effect.helpers';
-import { RootEffectMakeParams } from '@stores/root/root.types';
+import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
+import { PERSISTENCE_STORE } from '@stores/persistence/persistence.store';
+import { container, inject, injectable, InjectionToken } from 'tsyringe';
+import { PersistenceModel } from '@stores/persistence/persistence.types';
+import { CounterSource } from '@stores/persistence/counter-source.types';
 
-export class SaveCount implements Effect {
-    static make({ persistence }: RootEffectMakeParams): SaveCount {
-        const effectFlow = EffectFlow.make<number>();
-        return new SaveCount(persistence.counterRemoteService, effectFlow);
-    }
-
+@injectable()
+export class SaveCountEffect implements Effect {
     constructor(
-        private counterService: CounterSource,
+        @inject(PERSISTENCE_STORE) private persistenceStore: PersistenceModel,
         private effectFlow: EffectFlow<number>
     ) {
         makeObservable(this, {
             saveGenerator: flow
         });
+    }
+
+    private get counterSource(): CounterSource {
+        return this.persistenceStore.counterRemoteService;
     }
 
     execute(count: number): Promise<number> {
@@ -28,8 +27,14 @@ export class SaveCount implements Effect {
     }
 
     *saveGenerator(count: number): Generator<Promise<number>, number, number> {
-        return yield this.counterService.save(count);
+        return yield this.counterSource.save(count);
     }
 }
 
-export const saveCountEffect = EffectBuilder.make(SaveCount);
+export const SAVE_COUNT_EFFECT: InjectionToken<Effect> = Symbol(
+    'SAVE_COUNT_EFFECT'
+);
+
+container.register(SAVE_COUNT_EFFECT, {
+    useClass: SaveCountEffect
+});
