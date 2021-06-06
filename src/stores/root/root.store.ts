@@ -10,7 +10,7 @@ import { APP_STORE } from '../app/app.store';
 import { AppModel } from '../app/app.types';
 import { PERSISTENCE_STORE } from '../persistence/persistence.store';
 import { PersistenceModel } from '../persistence/persistence.types';
-import { RootModel, RootState } from './root.types';
+import { RootModel } from './root.types';
 
 configure({
     enforceActions: 'always',
@@ -28,12 +28,10 @@ export class RootStore implements RootModel {
     ) {}
 }
 
-export const ROOT_MODEL: InjectionToken<RootModel> = Symbol('ROOT_MODEL');
-export const ROOT_STATE: InjectionToken<RootState> = Symbol('ROOT_STATE');
+export const ROOT_STORE: InjectionToken<RootStore> = Symbol('ROOT_STORE');
 
 container.register(
-    ROOT_MODEL,
+    ROOT_STORE,
     { useClass: RootStore },
     { lifecycle: Lifecycle.Singleton }
 );
-container.registerType(ROOT_STATE, ROOT_MODEL);
