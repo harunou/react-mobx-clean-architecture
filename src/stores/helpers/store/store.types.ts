@@ -2,6 +2,7 @@ export interface Selector<R = unknown> {
     result: R;
 }
 
+// TODO(harunou): extend selector
 export interface SelectorWithProps<R = unknown, P = unknown> {
     result: R;
     withProps(...props: P[]): this;
@@ -15,8 +16,8 @@ export interface StoreQuery<S> {
     query<L extends Selector>(builder: SelectorInteractionBuilder<S, L>): L;
 }
 
-export interface UseCase {
-    execute(): void;
+export interface UseCase<P = unknown> {
+    execute(...props: P[]): void;
 }
 
 export interface UseCaseInteractionBuilder<S, R, U> {

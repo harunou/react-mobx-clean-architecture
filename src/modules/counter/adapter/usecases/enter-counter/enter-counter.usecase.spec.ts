@@ -4,9 +4,9 @@ import { CounterModel } from '@stores/counter/counter.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';
-import { EnterCounter } from './enter-counter.usecase';
+import { EnterCounterUseCase } from './enter-counter.usecase';
 
-describe(`${EnterCounter.name}`, () => {
+describe(`${EnterCounterUseCase.name}`, () => {
     let store: CounterModel;
     let effect: GetCountEffect;
     let effectFlow: EffectFlow<number>;
@@ -22,7 +22,7 @@ describe(`${EnterCounter.name}`, () => {
     it('fetches data from BE and inits store', async () => {
         jest.spyOn(effect, 'execute');
         jest.spyOn(store, 'setCount');
-        const useCase = new EnterCounter(store, effect);
+        const useCase = new EnterCounterUseCase(store, effect);
         useCase.execute();
         expect(effect.execute).toBeCalledTimes(1);
         await sleep();

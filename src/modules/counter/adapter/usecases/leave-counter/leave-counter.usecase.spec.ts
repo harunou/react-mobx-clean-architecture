@@ -3,9 +3,9 @@ import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
-import { LeaveCounter } from './leave-counter.usecase';
+import { LeaveCounterUseCase } from './leave-counter.usecase';
 
-describe(`${LeaveCounter.name}`, () => {
+describe(`${LeaveCounterUseCase.name}`, () => {
     let getCount: GetCountEffect;
     let incrementCount: IncrementCountEffect;
     let effectFlow: EffectFlow<number>;
@@ -23,7 +23,7 @@ describe(`${LeaveCounter.name}`, () => {
     it('cancels init flow', async () => {
         jest.spyOn(getCount, 'cancel');
         jest.spyOn(incrementCount, 'cancel');
-        const useCase = new LeaveCounter(getCount, incrementCount);
+        const useCase = new LeaveCounterUseCase(getCount, incrementCount);
         useCase.execute();
         expect(getCount.cancel).toBeCalledTimes(1);
         expect(incrementCount.cancel).toBeCalledTimes(1);

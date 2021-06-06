@@ -4,9 +4,9 @@ import { CounterModel } from '@stores/counter/counter.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
-import { IncrementCounterAndSavePessimistic } from './increment-counter-and-save-pessimistic.usecase';
+import { IncrementCounterAndSavePessimisticUseCase } from './increment-counter-and-save-pessimistic.usecase';
 
-describe(`${IncrementCounterAndSavePessimistic.name}`, () => {
+describe(`${IncrementCounterAndSavePessimisticUseCase.name}`, () => {
     let store: CounterModel;
     let effect: IncrementCountEffect;
     let effectFlow: EffectFlow<number>;
@@ -23,12 +23,11 @@ describe(`${IncrementCounterAndSavePessimistic.name}`, () => {
     it('pessimistically increment count on the BE and on success set store', async () => {
         jest.spyOn(effect, 'execute');
         jest.spyOn(store, 'setCount');
-        const useCase = new IncrementCounterAndSavePessimistic(
+        const useCase = new IncrementCounterAndSavePessimisticUseCase(
             store,
-            effect,
-            increment
+            effect
         );
-        useCase.execute();
+        useCase.execute(increment);
         expect(effect.execute).toBeCalledWith(increment);
         await sleep();
         expect(store.setCount).toBeCalledTimes(1);

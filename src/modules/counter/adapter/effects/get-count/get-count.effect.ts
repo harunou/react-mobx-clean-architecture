@@ -34,7 +34,7 @@ export class GetCountEffect implements CancellableEffect {
     }
 }
 
-export const GET_COUNT_EFFECT: InjectionToken<CancellableEffect> = Symbol(
+export const GET_COUNT_EFFECT: InjectionToken<GetCountEffect> = Symbol(
     'GET_COUNT_EFFECT'
 );
 

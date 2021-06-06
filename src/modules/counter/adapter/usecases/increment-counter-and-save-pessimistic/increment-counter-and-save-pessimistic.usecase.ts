@@ -1,23 +1,28 @@
+import { COUNTER_STORE } from '@stores/counter/counter.store';
 import { CounterModel } from '@stores/counter/counter.types';
 import { FLOW_CANCELLED } from '@stores/helpers/effect/effect.helpers';
 import { UseCase } from '@stores/helpers/store/store.types';
 import { action, makeObservable } from 'mobx';
-import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
+import { container, inject, injectable, InjectionToken } from 'tsyringe';
+import {
+    IncrementCountEffect,
+    INCREMENT_COUNT_EFFECT
+} from '../../effects/increment-count/increment-count.effect';
 
-export class IncrementCounterAndSavePessimistic implements UseCase {
+@injectable()
+export class IncrementCounterAndSavePessimisticUseCase implements UseCase {
     constructor(
-        private store: CounterModel,
-        private effect: IncrementCountEffect,
-        private props: number = 0
+        @inject(COUNTER_STORE) private store: CounterModel,
+        @inject(INCREMENT_COUNT_EFFECT) private effect: IncrementCountEffect
     ) {
         makeObservable(this, {
             saveSuccess: action.bound
         });
     }
 
-    execute(): void {
+    execute(value: number): void {
         this.effect
-            .execute(this.props)
+            .execute(value)
             .then(this.saveSuccess)
             .catch((error: Error) => {
                 if (error.message === FLOW_CANCELLED) {
@@ -31,3 +36,11 @@ export class IncrementCounterAndSavePessimistic implements UseCase {
         this.store.setCount(count);
     }
 }
+
+export const INCREMENT_COUNTER_AND_SAVE_PESSIMISTIC_USE_CASE: InjectionToken<IncrementCounterAndSavePessimisticUseCase> = Symbol(
+    'INCREMENT_COUNTER_AND_SAVE_PESSIMISTIC_USE_CASE'
+);
+
+container.register(INCREMENT_COUNTER_AND_SAVE_PESSIMISTIC_USE_CASE, {
+    useClass: IncrementCounterAndSavePessimisticUseCase
+});

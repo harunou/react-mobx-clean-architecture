@@ -2,12 +2,12 @@ import { counterServiceMock } from '@api/counter.mocks';
 import { CounterStore } from '@stores/counter/counter.store';
 import { CounterModel } from '@stores/counter/counter.types';
 import { CancellablePromise } from 'mobx/dist/internal';
-import { IncrementCounterAndSaveOptimistic } from './increment-counter-and-save-optimistic.usecase';
+import { IncrementCounterAndSaveOptimisticUseCase } from './increment-counter-and-save-optimistic.usecase';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { SaveCountEffect } from '../../effects/save-count/save-count.effect';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 
-describe(`${IncrementCounterAndSaveOptimistic.name}`, () => {
+describe(`${IncrementCounterAndSaveOptimisticUseCase.name}`, () => {
     let store: CounterModel;
     let effect: SaveCountEffect;
     let effectFlow: EffectFlow<number>;
@@ -23,12 +23,11 @@ describe(`${IncrementCounterAndSaveOptimistic.name}`, () => {
     it('increments model value on predefined amount and optimistically save to the BE', () => {
         jest.spyOn(store, 'increment');
         jest.spyOn(effect, 'execute');
-        const useCase = new IncrementCounterAndSaveOptimistic(
+        const useCase = new IncrementCounterAndSaveOptimisticUseCase(
             store,
-            effect,
-            increaseAmount
+            effect
         );
-        useCase.execute();
+        useCase.execute(increaseAmount);
         expect(store.increment).toBeCalledTimes(1);
         expect(store.increment).toBeCalledWith(increaseAmount);
         expect(effect.execute).toBeCalledWith(store.count$);
@@ -39,12 +38,11 @@ describe(`${IncrementCounterAndSaveOptimistic.name}`, () => {
         jest.spyOn(effect, 'execute').mockImplementationOnce(
             () => Promise.reject('Error') as CancellablePromise<number>
         );
-        const useCase = new IncrementCounterAndSaveOptimistic(
+        const useCase = new IncrementCounterAndSaveOptimisticUseCase(
             store,
-            effect,
-            increaseAmount
+            effect
         );
-        useCase.execute();
+        useCase.execute(increaseAmount);
         expect(store.increment).toBeCalledWith(increaseAmount);
         await sleep();
         expect(store.decrement).toBeCalledWith(increaseAmount);
