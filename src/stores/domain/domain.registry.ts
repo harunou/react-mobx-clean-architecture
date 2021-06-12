@@ -7,11 +7,12 @@ import { CounterState } from './counter/counter.types';
 export const COUNTER_INITIAL_VALUE: CounterState = { count$: 0 };
 
 export const domainRegistry = Registry.make()
-    .add(COUNTER_INITIAL_STATE, {
+    .add({
+        token: COUNTER_INITIAL_STATE,
         useValue: COUNTER_INITIAL_VALUE
     })
-    .add(
-        COUNTER_STORE,
-        { useClass: CounterStore },
-        { lifecycle: Lifecycle.Singleton }
-    );
+    .add({
+        token: COUNTER_STORE,
+        useClass: CounterStore,
+        options: { lifecycle: Lifecycle.Singleton }
+    });
