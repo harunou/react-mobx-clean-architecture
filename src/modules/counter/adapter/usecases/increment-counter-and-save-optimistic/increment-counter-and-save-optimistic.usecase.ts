@@ -2,11 +2,8 @@ import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
 import { CounterModel } from '@stores/domain/counter/counter.types';
 import { UseCase } from '@stores/helpers/store/store.types';
 import { action, makeObservable } from 'mobx';
-import { container, inject, injectable, InjectionToken } from 'tsyringe';
-import {
-    SaveCountEffect,
-    SAVE_COUNT_EFFECT
-} from '../../effects/save-count/save-count.effect';
+import { inject, injectable } from 'tsyringe';
+import { SaveCountEffect } from '../../effects/save-count/save-count.effect';
 
 @injectable()
 export class IncrementCounterAndSaveOptimisticUseCase implements UseCase {
@@ -14,7 +11,7 @@ export class IncrementCounterAndSaveOptimisticUseCase implements UseCase {
 
     constructor(
         @inject(COUNTER_STORE) private store: CounterModel,
-        @inject(SAVE_COUNT_EFFECT) private effect: SaveCountEffect
+        private effect: SaveCountEffect
     ) {
         makeObservable(this, {
             execute: action.bound,
@@ -32,11 +29,3 @@ export class IncrementCounterAndSaveOptimisticUseCase implements UseCase {
         this.store.decrement(this.#value);
     }
 }
-
-export const INCREMENT_COUNTER_AND_SAVE_OPTIMISTIC_USE_CASE: InjectionToken<IncrementCounterAndSaveOptimisticUseCase> = Symbol(
-    'INCREMENT_COUNTER_AND_SAVE_OPTIMISTIC_USE_CASE'
-);
-
-container.register(INCREMENT_COUNTER_AND_SAVE_OPTIMISTIC_USE_CASE, {
-    useClass: IncrementCounterAndSaveOptimisticUseCase
-});

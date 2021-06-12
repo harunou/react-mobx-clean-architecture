@@ -2,8 +2,7 @@ import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
 import { CounterModel } from '@stores/domain/counter/counter.types';
 import { UseCase } from '@stores/helpers/store/store.types';
 import { action, makeObservable } from 'mobx';
-import { container, inject, injectable, InjectionToken } from 'tsyringe';
-import { EnterCounterUseCase } from '../enter-counter/enter-counter.usecase';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class IncrementCounterUseCase implements UseCase {
@@ -17,11 +16,3 @@ export class IncrementCounterUseCase implements UseCase {
         this.store.increment(value);
     }
 }
-
-export const INCREMENT_COUNTER_USE_CASE: InjectionToken<EnterCounterUseCase> = Symbol(
-    'INCREMENT_COUNTER_USE_CASE'
-);
-
-container.register(INCREMENT_COUNTER_USE_CASE, {
-    useClass: IncrementCounterUseCase
-});

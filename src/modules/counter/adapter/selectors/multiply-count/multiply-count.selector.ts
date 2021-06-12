@@ -1,7 +1,7 @@
 import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { SelectorWithProps } from '@stores/helpers/store/store.types';
-import { container, inject, injectable, InjectionToken } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class MultiplyCountSelector implements SelectorWithProps {
@@ -22,11 +22,3 @@ export class MultiplyCountSelector implements SelectorWithProps {
         return this.store.count$ * this.#factor;
     }
 }
-
-export const MULTIPLY_COUNT_SELECTOR: InjectionToken<SelectorWithProps> = Symbol(
-    'MULTIPLY_COUNT_SELECTOR'
-);
-
-container.register(MULTIPLY_COUNT_SELECTOR, {
-    useClass: MultiplyCountSelector
-});

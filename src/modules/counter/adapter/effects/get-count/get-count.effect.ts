@@ -1,7 +1,7 @@
 import { flow, flowResult, makeObservable } from 'mobx';
 import { CancellableEffect } from '@stores/helpers/effect/effect.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
-import { container, inject, injectable, InjectionToken } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { COUNTER_SOURCE_STORE } from '@stores/persistence/counter-source/counter-source.tokens';
 
@@ -29,11 +29,3 @@ export class GetCountEffect implements CancellableEffect {
         return yield this.counterSource.get();
     }
 }
-
-export const GET_COUNT_EFFECT: InjectionToken<GetCountEffect> = Symbol(
-    'GET_COUNT_EFFECT'
-);
-
-container.register(GET_COUNT_EFFECT, {
-    useClass: GetCountEffect
-});

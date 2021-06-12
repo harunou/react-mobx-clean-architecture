@@ -1,7 +1,7 @@
 import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { Selector } from '@stores/helpers/store/store.types';
-import { container, inject, injectable, InjectionToken } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class CountSelector implements Selector {
@@ -15,9 +15,3 @@ export class CountSelector implements Selector {
         return this.store.count$;
     }
 }
-
-export const COUNT_SELECTOR: InjectionToken<Selector> = Symbol(
-    'COUNT_SELECTOR'
-);
-
-container.register(COUNT_SELECTOR, { useClass: CountSelector });

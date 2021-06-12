@@ -2,24 +2,32 @@ import { noop } from '@core/core.helpers';
 import { httpClient } from '@core/http-client';
 import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
+import { rootRegistry } from '@stores/root/root.registry';
 import { render } from '@testing-library/react';
-import { container } from 'tsyringe';
+import { container, DependencyContainer } from 'tsyringe';
 import { CountSelector } from './adapter/selectors/count/count.selector';
 import { MultiplyCountSelector } from './adapter/selectors/multiply-count/multiply-count.selector';
-import { Counter } from './counter';
+import { Counter, RootContainerContext } from './counter';
 
 /* eslint-disable jest/no-commented-out-tests */
 // eslint-disable-next-line jest/no-disabled-tests
 describe(`${Counter.name}`, () => {
     let count: number;
-    const initial: CounterState = {
-        count$: 0
-    };
+    // const initial: CounterState = {
+    //     count$: 0
+    // };
     let sut: JSX.Element;
+    let rootContainer: DependencyContainer;
     beforeEach(() => {
+        rootContainer = container.createChildContainer();
+        rootRegistry.applyTo(rootContainer);
+        // rootContainer.register(COUNTER_INITIAL_STATE, { useValue: initial });
         count = 3;
-        sut = <Counter />;
-        container.register(COUNTER_INITIAL_STATE, { useValue: initial });
+        sut = (
+            <RootContainerContext.Provider value={rootContainer}>
+                <Counter />
+            </RootContainerContext.Provider>
+        );
         CountSelector.runs = 0;
         MultiplyCountSelector.runs = 0;
         noop(count);

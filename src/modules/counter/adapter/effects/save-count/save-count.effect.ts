@@ -1,7 +1,7 @@
 import { flow, flowResult, makeObservable } from 'mobx';
 import { Effect } from '@stores/helpers/effect/effect.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
-import { container, inject, injectable, InjectionToken } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { COUNTER_SOURCE_STORE } from '@stores/persistence/counter-source/counter-source.tokens';
 
@@ -25,11 +25,3 @@ export class SaveCountEffect implements Effect {
         return yield this.counterSource.save(count);
     }
 }
-
-export const SAVE_COUNT_EFFECT: InjectionToken<Effect> = Symbol(
-    'SAVE_COUNT_EFFECT'
-);
-
-container.register(SAVE_COUNT_EFFECT, {
-    useClass: SaveCountEffect
-});
