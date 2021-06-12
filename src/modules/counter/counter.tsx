@@ -1,6 +1,6 @@
 import { noop } from '@core/core.helpers';
 import { observer } from 'mobx-react-lite';
-import { createContext, FC, useContext } from 'react';
+import { createContext, FC, useContext, useEffect } from 'react';
 import { container } from 'tsyringe';
 import { CounterController } from './adapter/counter.controller';
 import { CounterPresenter } from './adapter/counter.presenter';
@@ -26,11 +26,21 @@ export const Counter: FC = observer(() => {
     const counterPresenter = counterContainer.resolve(CounterPresenter);
 
     const {
+        mounted,
+        unmounted,
         add_1_ButtonPushed,
         add_1_andSaveOptimisticButtonPushed,
         add_1_andSavePessimisticButtonPushed
     } = counterController;
     const { selectCount, selectMultiplyCountOn_10 } = counterPresenter;
+
+    useEffect(() => {
+        mounted();
+        return () => {
+            unmounted();
+            counterContainer.reset();
+        };
+    }, []);
 
     return (
         <div>
@@ -60,3 +70,5 @@ export const Counter: FC = observer(() => {
         </div>
     );
 });
+
+Counter.displayName = 'Counter';

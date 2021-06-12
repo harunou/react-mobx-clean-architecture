@@ -1,28 +1,33 @@
+import { COUNTER_GET_COUNT_ENDPOINT } from '@api/counter.service';
 import { noop } from '@core/core.helpers';
 import { httpClient } from '@core/http-client';
 import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { rootRegistry } from '@stores/root/root.registry';
 import { render } from '@testing-library/react';
+import { sleep } from '@testing-tools/testing-tools.helpers';
+import assert from 'assert';
 import { container, DependencyContainer } from 'tsyringe';
 import { CountSelector } from './adapter/selectors/count/count.selector';
 import { MultiplyCountSelector } from './adapter/selectors/multiply-count/multiply-count.selector';
-import { Counter, RootContainerContext } from './counter';
+import { Counter, counterTestIds, RootContainerContext } from './counter';
 
 /* eslint-disable jest/no-commented-out-tests */
 // eslint-disable-next-line jest/no-disabled-tests
-describe(`${Counter.name}`, () => {
+describe(`${Counter.displayName}`, () => {
     let count: number;
-    // const initial: CounterState = {
-    //     count$: 0
-    // };
-    let sut: JSX.Element;
+    const counterInitialState: CounterState = {
+        count$: 0
+    };
     let rootContainer: DependencyContainer;
+    let sut: JSX.Element;
     beforeEach(() => {
+        count = 3;
         rootContainer = container.createChildContainer();
         rootRegistry.applyTo(rootContainer);
-        // rootContainer.register(COUNTER_INITIAL_STATE, { useValue: initial });
-        count = 3;
+        rootContainer.register(COUNTER_INITIAL_STATE, {
+            useValue: counterInitialState
+        });
         sut = (
             <RootContainerContext.Provider value={rootContainer}>
                 <Counter />
@@ -38,34 +43,40 @@ describe(`${Counter.name}`, () => {
     });
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        // httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
     });
-    // it('inits store and renders initial result', async () => {
-    //     const { queryByTestId, rerender } = render(sut);
-    //     const selectCount = queryByTestId(counterTestIds.selectCount);
-    //     assert(selectCount);
-    //     const selectMultiplyCount = queryByTestId(
-    //         counterTestIds.selectMultiplyCountOn_10
-    //     );
-    //     assert(selectMultiplyCount);
-    //     expect(selectCount).toHaveTextContent(`${initial.counter.count$}`);
-    //     expect(selectMultiplyCount).toHaveTextContent(
-    //         `${initial.counter.count$ * 10}`
-    //     );
-    //     expect(CountSelector.runs).toEqual(1);
-    //     expect(MultiplyCountSelector.runs).toEqual(1);
-    //     httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
-    //     await sleep();
-    //     expect(selectCount).toHaveTextContent(`${count}`);
-    //     expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
-    //     expect(CountSelector.runs).toEqual(2);
-    //     expect(MultiplyCountSelector.runs).toEqual(2);
-    //     rerender(sut);
-    //     expect(selectCount).toHaveTextContent(`${count}`);
-    //     expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
-    //     expect(CountSelector.runs).toEqual(2);
-    //     expect(MultiplyCountSelector.runs).toEqual(2);
-    // });
+    it('inits store and renders initial result', async () => {
+        const { queryByTestId, rerender } = render(sut);
+        const selectCount = queryByTestId(counterTestIds.selectCount);
+        assert(selectCount);
+
+        const selectMultiplyCount = queryByTestId(
+            counterTestIds.selectMultiplyCountOn_10
+        );
+        assert(selectMultiplyCount);
+
+        expect(selectCount).toHaveTextContent(`${counterInitialState.count$}`);
+        expect(selectMultiplyCount).toHaveTextContent(
+            `${counterInitialState.count$ * 10}`
+        );
+        // expect(CountSelector.runs).toEqual(1);
+        // expect(MultiplyCountSelector.runs).toEqual(1);
+        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+
+        await sleep();
+
+        expect(selectCount).toHaveTextContent(`${count}`);
+        expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
+        // expect(CountSelector.runs).toEqual(2);
+        // expect(MultiplyCountSelector.runs).toEqual(2);
+
+        rerender(sut);
+
+        expect(selectCount).toHaveTextContent(`${count}`);
+        expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
+        // expect(CountSelector.runs).toEqual(2);
+        // expect(MultiplyCountSelector.runs).toEqual(2);
+    });
     // it('cancels initial effect once destroyed before response', async () => {
     //     const { unmount } = render(sut);
     //     unmount();

@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
-import { CounterStore } from './counter/counter.store';
+import { CounterStore, COUNTER_INITIAL_VALUE } from './counter/counter.store';
 import { COUNTER_INITIAL_STATE, COUNTER_STORE } from './counter/counter.tokens';
-import { COUNTER_INITIAL_VALUE, domainRegistry } from './domain.registry';
+import { domainRegistry } from './domain.registry';
 
 describe(`domainRegistry`, () => {
     it('has correct dependencies', () => {

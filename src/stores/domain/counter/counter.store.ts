@@ -3,6 +3,8 @@ import { inject, injectable } from 'tsyringe';
 import { COUNTER_INITIAL_STATE } from './counter.tokens';
 import { CounterModel, CounterState } from './counter.types';
 
+export const COUNTER_INITIAL_VALUE: CounterState = { count$: 0 };
+
 @injectable()
 export class CounterStore implements CounterModel {
     count$ = 0;
