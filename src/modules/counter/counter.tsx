@@ -21,7 +21,7 @@ export const RootContainerContext = createContext(
 export const Counter: FC = observer(() => {
     const rootContainer = useContext(RootContainerContext);
     const counterContainer = rootContainer.createChildContainer();
-    counterRegistry.applyTo(counterContainer);
+    counterRegistry.forwardTo(counterContainer);
     const counterController = counterContainer.resolve(CounterController);
     const counterPresenter = counterContainer.resolve(CounterPresenter);
 

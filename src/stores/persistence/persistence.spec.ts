@@ -6,7 +6,7 @@ import { persistenceRegistry } from './persistence.registry';
 describe(`persistenceModule`, () => {
     it('has correct dependencies', () => {
         const child = container.createChildContainer();
-        persistenceRegistry.applyTo(child);
+        persistenceRegistry.forwardTo(child);
         expect(child.resolve(COUNTER_SOURCE_STORE)).toBeInstanceOf(
             CounterSourceStore
         );

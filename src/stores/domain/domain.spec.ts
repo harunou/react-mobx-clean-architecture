@@ -6,7 +6,7 @@ import { domainRegistry } from './domain.registry';
 describe(`domainRegistry`, () => {
     it('has correct dependencies', () => {
         const child = container.createChildContainer();
-        domainRegistry.applyTo(child);
+        domainRegistry.forwardTo(child);
         expect(child.resolve(COUNTER_INITIAL_STATE)).toEqual(
             COUNTER_INITIAL_VALUE
         );

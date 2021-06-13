@@ -68,7 +68,7 @@ export class Registry {
         return this;
     }
 
-    public applyTo(container: DependencyContainer): this {
+    public forwardTo(container: DependencyContainer): this {
         this.#registrations.forEach(({ token, provider, options }) => {
             container.register(
                 token,

@@ -23,7 +23,7 @@ describe(`${Counter.displayName}`, () => {
     beforeEach(() => {
         count = 3;
         rootContainer = container.createChildContainer();
-        rootRegistry.applyTo(rootContainer);
+        rootRegistry.forwardTo(rootContainer);
         rootContainer.register(COUNTER_INITIAL_STATE, {
             useValue: counterInitialState
         });
@@ -229,7 +229,7 @@ describe(`Double ${Counter.displayName} app`, () => {
     beforeEach(() => {
         count = 3;
         rootContainer = container.createChildContainer();
-        rootRegistry.applyTo(rootContainer);
+        rootRegistry.forwardTo(rootContainer);
         rootContainer.register(COUNTER_INITIAL_STATE, {
             useValue: counterInitialState
         });
