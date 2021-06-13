@@ -26,13 +26,31 @@ export const counterRegistry = Registry.make()
     })
     .add({
         token: CountSelector,
-        useClass: CountSelector,
-        options: { lifecycle: Lifecycle.Singleton }
+        useClass: CountSelector
     })
     .add({
         token: MultiplyCountSelector,
-        useClass: MultiplyCountSelector,
-        options: { lifecycle: Lifecycle.Singleton }
+        useClass: MultiplyCountSelector
+    })
+    .add({
+        token: EnterCounterUseCase,
+        useClass: EnterCounterUseCase
+    })
+    .add({
+        token: IncrementCounterUseCase,
+        useClass: IncrementCounterUseCase
+    })
+    .add({
+        token: IncrementCounterAndSaveOptimisticUseCase,
+        useClass: IncrementCounterAndSaveOptimisticUseCase
+    })
+    .add({
+        token: IncrementCounterAndSavePessimisticUseCase,
+        useClass: IncrementCounterAndSavePessimisticUseCase
+    })
+    .add({
+        token: LeaveCounterUseCase,
+        useClass: LeaveCounterUseCase
     })
     .add({
         token: GetCountEffect,
@@ -47,30 +65,5 @@ export const counterRegistry = Registry.make()
     .add({
         token: SaveCountEffect,
         useClass: SaveCountEffect,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: EnterCounterUseCase,
-        useClass: EnterCounterUseCase,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: IncrementCounterUseCase,
-        useClass: IncrementCounterUseCase,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: IncrementCounterAndSaveOptimisticUseCase,
-        useClass: IncrementCounterAndSaveOptimisticUseCase,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: IncrementCounterAndSavePessimisticUseCase,
-        useClass: IncrementCounterAndSavePessimisticUseCase,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: LeaveCounterUseCase,
-        useClass: LeaveCounterUseCase,
         options: { lifecycle: Lifecycle.Singleton }
     });

@@ -3,10 +3,6 @@ import { CancellablePromise } from 'mobx/dist/internal';
 export const FLOW_CANCELLED = 'FLOW_CANCELLED';
 
 export class EffectFlow<T = unknown> {
-    static make<CT>(): EffectFlow<CT> {
-        return new EffectFlow();
-    }
-
     #promise: CancellablePromise<T> | null = null;
 
     set promise(flow: CancellablePromise<T> | null) {
