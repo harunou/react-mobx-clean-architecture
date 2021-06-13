@@ -1,4 +1,4 @@
-import { counterServiceMock } from '@api/counter.mocks';
+import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
 import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
@@ -14,7 +14,7 @@ describe(`${EnterCounterUseCase.name}`, () => {
     beforeEach(() => {
         store = new CounterStore({ count$: count });
         effectFlow = new EffectFlow();
-        effect = new GetCountEffect(counterServiceMock, effectFlow);
+        effect = new GetCountEffect(counterRemoteSourceServiceMock, effectFlow);
     });
     it('fetches data from BE and inits store', async () => {
         jest.spyOn(effect, 'execute');

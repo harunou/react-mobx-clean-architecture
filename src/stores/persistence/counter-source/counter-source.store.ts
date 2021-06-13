@@ -1,27 +1,24 @@
-import { COUNTER_REMOTE_SERVICE } from '@api/counter.service';
-import { inject, injectable } from 'tsyringe';
+import { CounterRemoteSourceService } from '@api/counterRemoteSource/counterRemoteSource.service';
+import { injectable } from 'tsyringe';
 import { CounterSource } from './counter-source.types';
 
 @injectable()
 export class CounterSourceStore implements CounterSource {
-    constructor(
-        @inject(COUNTER_REMOTE_SERVICE)
-        public counterRemoteService: CounterSource
-    ) {}
+    constructor(public counterRemoteService: CounterRemoteSourceService) {}
 
-    private get service(): CounterSource {
+    private get source(): CounterSource {
         return this.counterRemoteService;
     }
 
     get(): Promise<number> {
-        return this.service.get();
+        return this.source.get();
     }
 
     increment(value: number): Promise<number> {
-        return this.service.increment(value);
+        return this.source.increment(value);
     }
 
     save(value: number): Promise<number> {
-        return this.service.save(value);
+        return this.source.save(value);
     }
 }

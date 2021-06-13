@@ -1,4 +1,4 @@
-import { counterServiceMock } from '@api/counter.mocks';
+import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
 import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
 import { IncrementCounterAndSaveOptimisticUseCase } from './increment-counter-and-save-optimistic.usecase';
@@ -16,7 +16,10 @@ describe(`${IncrementCounterAndSaveOptimisticUseCase.name}`, () => {
     beforeEach(() => {
         store = new CounterStore({ count$: 3 });
         effectFlow = new EffectFlow();
-        effect = new SaveCountEffect(counterServiceMock, effectFlow);
+        effect = new SaveCountEffect(
+            counterRemoteSourceServiceMock,
+            effectFlow
+        );
     });
     it('increments model value on predefined amount and optimistically save to the BE', () => {
         jest.spyOn(store, 'increment');

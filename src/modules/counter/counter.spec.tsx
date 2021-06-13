@@ -2,7 +2,7 @@ import {
     COUNTER_GET_COUNT_ENDPOINT,
     COUNTER_INCREMENT_ENDPOINT,
     COUNTER_SAVE_COUNT_ENDPOINT
-} from '@api/counter.service';
+} from '@api/counterRemoteSource/counterRemoteSource.service';
 import { httpClient } from '@core/http-client';
 import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';

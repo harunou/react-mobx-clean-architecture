@@ -1,4 +1,4 @@
-import { counterServiceMock } from '@api/counter.mocks';
+import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { SaveCountEffect } from './save-count.effect';
@@ -9,7 +9,7 @@ describe(`${SaveCountEffect.name}`, () => {
     let effectFlow: EffectFlow<number>;
     let effect: SaveCountEffect;
     beforeEach(() => {
-        counterService = counterServiceMock;
+        counterService = counterRemoteSourceServiceMock;
         effectFlow = new EffectFlow<number>();
         effect = new SaveCountEffect(counterService, effectFlow);
     });
