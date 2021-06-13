@@ -1,5 +1,4 @@
 import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
-import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
@@ -8,16 +7,10 @@ import { LeaveCounterUseCase } from './leave-counter.usecase';
 describe(`${LeaveCounterUseCase.name}`, () => {
     let getCount: GetCountEffect;
     let incrementCount: IncrementCountEffect;
-    let effectFlow: EffectFlow<number>;
     beforeEach(() => {
-        effectFlow = new EffectFlow();
-        getCount = new GetCountEffect(
-            counterRemoteSourceServiceMock,
-            effectFlow
-        );
+        getCount = new GetCountEffect(counterRemoteSourceServiceMock);
         incrementCount = new IncrementCountEffect(
-            counterRemoteSourceServiceMock,
-            effectFlow
+            counterRemoteSourceServiceMock
         );
     });
     it('cancels init flow', async () => {

@@ -4,18 +4,15 @@ import {
 } from '@api/counterRemoteSource/counterRemoteSource.service';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { httpClient } from '@core/http-client';
-import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { IncrementCountEffect } from './increment-count.effect';
 
 describe(`${IncrementCountEffect.name}`, () => {
     const increment = 3;
     let counterService: CounterSource;
-    let effectFlow: EffectFlow<number>;
     let effect: IncrementCountEffect;
     beforeEach(() => {
         counterService = new CounterRemoteSourceService();
-        effectFlow = new EffectFlow<number>();
-        effect = new IncrementCountEffect(counterService, effectFlow);
+        effect = new IncrementCountEffect(counterService);
     });
     afterEach(() => {
         httpClient.verify();
@@ -39,7 +36,7 @@ describe(`${IncrementCountEffect.name}`, () => {
     it('cancels the request', async () => {
         const data = effect.execute(increment);
         effect.cancel();
-        httpClient.clean();
+        httpClient.expectOne(COUNTER_INCREMENT_ENDPOINT);
         await expect(data).rejects.toEqual(new Error('FLOW_CANCELLED'));
     });
 });

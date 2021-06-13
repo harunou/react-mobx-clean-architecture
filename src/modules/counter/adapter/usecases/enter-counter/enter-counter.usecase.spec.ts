@@ -1,7 +1,6 @@
 import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
 import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 import { EnterCounterUseCase } from './enter-counter.usecase';
@@ -9,12 +8,10 @@ import { EnterCounterUseCase } from './enter-counter.usecase';
 describe(`${EnterCounterUseCase.name}`, () => {
     let store: CounterModel;
     let effect: GetCountEffect;
-    let effectFlow: EffectFlow<number>;
     const count = 4;
     beforeEach(() => {
         store = new CounterStore({ count$: count });
-        effectFlow = new EffectFlow();
-        effect = new GetCountEffect(counterRemoteSourceServiceMock, effectFlow);
+        effect = new GetCountEffect(counterRemoteSourceServiceMock);
     });
     it('fetches data from BE and inits store', async () => {
         jest.spyOn(effect, 'execute');

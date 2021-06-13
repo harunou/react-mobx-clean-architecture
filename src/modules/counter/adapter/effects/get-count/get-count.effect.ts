@@ -1,28 +1,31 @@
 import { flow, flowResult, makeObservable } from 'mobx';
 import { CancellableEffect } from '@stores/helpers/effect/effect.types';
-import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { inject, injectable } from 'tsyringe';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { COUNTER_SOURCE_STORE } from '@stores/persistence/counter-source/counter-source.tokens';
+import { makeCancellablePromiseStub } from '@stores/helpers/store.helpers';
+import { CancellablePromise } from 'mobx/dist/api/flow';
 
 @injectable()
 export class GetCountEffect implements CancellableEffect {
     constructor(
-        @inject(COUNTER_SOURCE_STORE) private counterSource: CounterSource,
-        private effectFlow: EffectFlow<number>
+        @inject(COUNTER_SOURCE_STORE) private counterSource: CounterSource
     ) {
         makeObservable(this, {
             saveGenerator: flow
         });
     }
 
+    #promise: CancellablePromise<number> = makeCancellablePromiseStub();
+
     cancel(): void {
-        this.effectFlow.cancel();
+        this.#promise.cancel();
     }
 
     execute(): Promise<number> {
-        this.effectFlow.promise = flowResult(this.saveGenerator());
-        return this.effectFlow.promise;
+        this.cancel();
+        this.#promise = flowResult(this.saveGenerator());
+        return this.#promise;
     }
 
     *saveGenerator(): Generator<Promise<number>, number, number> {

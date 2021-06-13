@@ -1,7 +1,6 @@
 import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
 import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { EffectFlow } from '@stores/helpers/effect/effect.helpers';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
 import { IncrementCounterAndSavePessimisticUseCase } from './increment-counter-and-save-pessimistic.usecase';
@@ -9,16 +8,11 @@ import { IncrementCounterAndSavePessimisticUseCase } from './increment-counter-a
 describe(`${IncrementCounterAndSavePessimisticUseCase.name}`, () => {
     let store: CounterModel;
     let effect: IncrementCountEffect;
-    let effectFlow: EffectFlow<number>;
     const increment = 5;
     const count = 4;
     beforeEach(() => {
         store = new CounterStore({ count$: count });
-        effectFlow = new EffectFlow();
-        effect = new IncrementCountEffect(
-            counterRemoteSourceServiceMock,
-            effectFlow
-        );
+        effect = new IncrementCountEffect(counterRemoteSourceServiceMock);
     });
     it('pessimistically increment count on the BE and on success set store', async () => {
         jest.spyOn(effect, 'execute');
