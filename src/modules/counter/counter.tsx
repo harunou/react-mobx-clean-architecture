@@ -1,6 +1,8 @@
 import { noop } from '@core/core.helpers';
+import { RootContainerContext } from '@core/root-container-provider';
+import { useRegistry } from '@stores/helpers/store.helpers';
 import { observer } from 'mobx-react-lite';
-import { createContext, FC, useContext, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { container } from 'tsyringe';
 import { CounterController } from './adapter/counter.controller';
 import { CounterPresenter } from './adapter/counter.presenter';
@@ -14,16 +16,10 @@ export const counterTestIds = {
     selectMultiplyCountOn_10: 'select-multiply-count-on-10'
 };
 
-export const RootContainerContext = createContext(
-    container.createChildContainer()
-);
-
 export const Counter: FC = observer(() => {
-    const rootContainer = useContext(RootContainerContext);
-    const counterContainer = rootContainer.createChildContainer();
-    counterRegistry.forwardTo(counterContainer);
-    const counterController = counterContainer.resolve(CounterController);
-    const counterPresenter = counterContainer.resolve(CounterPresenter);
+    const { useAdapter } = useRegistry(counterRegistry, RootContainerContext);
+    const counterController = useAdapter(CounterController);
+    const counterPresenter = useAdapter(CounterPresenter);
 
     const {
         mounted,
@@ -38,7 +34,7 @@ export const Counter: FC = observer(() => {
         mounted();
         return () => {
             unmounted();
-            counterContainer.reset();
+            container.reset();
         };
     }, []);
 

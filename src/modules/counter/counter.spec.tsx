@@ -4,33 +4,31 @@ import {
     COUNTER_SAVE_COUNT_ENDPOINT
 } from '@api/counterRemoteSource/counterRemoteSource.service';
 import { httpClient } from '@core/http-client';
+import { RootContainerProvider } from '@core/root-container-provider';
 import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { rootRegistry } from '@stores/root/root.registry';
 import { fireEvent, render, within } from '@testing-library/react';
 import { sleep } from '@testing-tools/testing-tools.helpers';
 import assert from 'assert';
-import { container, DependencyContainer } from 'tsyringe';
-import { Counter, counterTestIds, RootContainerContext } from './counter';
+import { Counter, counterTestIds } from './counter';
 
 describe(`${Counter.displayName}`, () => {
     let count: number;
     const counterInitialState: CounterState = {
         count$: 3
     };
-    let rootContainer: DependencyContainer;
     let sut: JSX.Element;
     beforeEach(() => {
         count = 3;
-        rootContainer = container.createChildContainer();
-        rootRegistry.forwardTo(rootContainer);
-        rootContainer.register(COUNTER_INITIAL_STATE, {
+        rootRegistry.add({
+            token: COUNTER_INITIAL_STATE,
             useValue: counterInitialState
         });
         sut = (
-            <RootContainerContext.Provider value={rootContainer}>
+            <RootContainerProvider registry={rootRegistry}>
                 <Counter />
-            </RootContainerContext.Provider>
+            </RootContainerProvider>
         );
     });
     afterEach(() => {
@@ -224,24 +222,22 @@ describe(`Double ${Counter.displayName} app`, () => {
     const counterInitialState: CounterState = {
         count$: 3
     };
-    let rootContainer: DependencyContainer;
     let sut: JSX.Element;
     beforeEach(() => {
         count = 3;
-        rootContainer = container.createChildContainer();
-        rootRegistry.forwardTo(rootContainer);
-        rootContainer.register(COUNTER_INITIAL_STATE, {
+        rootRegistry.add({
+            token: COUNTER_INITIAL_STATE,
             useValue: counterInitialState
         });
         sut = (
-            <RootContainerContext.Provider value={rootContainer}>
+            <RootContainerProvider registry={rootRegistry}>
                 <div data-testid={countersTestIds.counter0}>
                     <Counter />
                 </div>
                 <div data-testid={countersTestIds.counter1}>
                     <Counter />
                 </div>
-            </RootContainerContext.Provider>
+            </RootContainerProvider>
         );
     });
     afterEach(() => {
