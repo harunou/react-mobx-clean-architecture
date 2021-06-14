@@ -1,7 +1,7 @@
 import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
 import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { sleep } from '@testing-tools/testing-tools.helpers';
+import { act } from '@testing-library/react';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
 import { IncrementCounterAndSavePessimisticUseCase } from './increment-counter-and-save-pessimistic.usecase';
 
@@ -21,9 +21,10 @@ describe(`${IncrementCounterAndSavePessimisticUseCase.name}`, () => {
             store,
             effect
         );
-        useCase.execute(increment);
+
+        await act(async () => useCase.execute(increment));
+
         expect(effect.execute).toBeCalledWith(increment);
-        await sleep();
         expect(store.setCount).toBeCalledTimes(1);
         expect(store.setCount).toBeCalledWith(increment);
     });

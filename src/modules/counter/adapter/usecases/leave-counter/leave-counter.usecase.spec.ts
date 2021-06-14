@@ -1,5 +1,5 @@
 import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
-import { sleep } from '@testing-tools/testing-tools.helpers';
+import { act } from '@testing-library/react';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
 import { LeaveCounterUseCase } from './leave-counter.usecase';
@@ -17,9 +17,10 @@ describe(`${LeaveCounterUseCase.name}`, () => {
         jest.spyOn(getCount, 'cancel');
         jest.spyOn(incrementCount, 'cancel');
         const useCase = new LeaveCounterUseCase(getCount, incrementCount);
-        useCase.execute();
+
+        await act(async () => useCase.execute());
+
         expect(getCount.cancel).toBeCalledTimes(1);
         expect(incrementCount.cancel).toBeCalledTimes(1);
-        await sleep();
     });
 });

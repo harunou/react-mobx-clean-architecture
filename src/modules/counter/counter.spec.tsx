@@ -8,9 +8,9 @@ import { RootContainerProvider } from '@core/root-container-provider';
 import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { rootRegistry } from '@stores/root/root.registry';
-import { fireEvent, render, within } from '@testing-library/react';
-import { sleep } from '@testing-tools/testing-tools.helpers';
+import { act, fireEvent, render, within } from '@testing-library/react';
 import assert from 'assert';
+import { StrictMode } from 'react';
 import { Counter, counterTestIds } from './counter';
 
 describe(`${Counter.displayName}`, () => {
@@ -26,9 +26,11 @@ describe(`${Counter.displayName}`, () => {
             useValue: counterInitialState
         });
         sut = (
-            <RootContainerProvider registry={rootRegistry}>
-                <Counter />
-            </RootContainerProvider>
+            <StrictMode>
+                <RootContainerProvider registry={rootRegistry}>
+                    <Counter />
+                </RootContainerProvider>
+            </StrictMode>
         );
     });
     afterEach(() => {
@@ -50,9 +52,12 @@ describe(`${Counter.displayName}`, () => {
         expect(selectMultiplyCount).toHaveTextContent(
             `${counterInitialState.count$ * 10}`
         );
-        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
 
-        await sleep();
+        await act(async () =>
+            httpClient
+                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
+                .resolve(count)
+        );
 
         expect(selectCount).toHaveTextContent(`${count}`);
         expect(selectMultiplyCount).toHaveTextContent(`${count * 0}`);
@@ -65,10 +70,12 @@ describe(`${Counter.displayName}`, () => {
     it('cancels initial effect once destroyed before response', async () => {
         const { unmount } = render(sut);
         unmount();
-        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
 
-        await sleep();
-
+        await act(async () =>
+            httpClient
+                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
+                .resolve(count)
+        );
         httpClient.verify();
 
         const { queryByTestId } = render(sut);
@@ -87,9 +94,11 @@ describe(`${Counter.displayName}`, () => {
             counterTestIds.selectMultiplyCountOn_10
         );
 
-        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
-
-        await sleep();
+        await act(async () =>
+            httpClient
+                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
+                .resolve(count)
+        );
 
         fireEvent.click(button);
         count += 1;
@@ -113,27 +122,27 @@ describe(`${Counter.displayName}`, () => {
             counterTestIds.selectMultiplyCountOn_10
         );
 
-        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
-
-        await sleep();
+        await act(async () =>
+            httpClient
+                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
+                .resolve(count)
+        );
 
         fireEvent.click(button);
+
         let pendingRequest = httpClient.expectOne<number, { count: number }>(
             COUNTER_SAVE_COUNT_ENDPOINT
         );
         count = pendingRequest.params.count;
-        pendingRequest.resolve(count);
-
-        await sleep();
+        await act(async () => pendingRequest.resolve(count));
 
         fireEvent.click(button);
+
         pendingRequest = httpClient.expectOne<number, { count: number }>(
             COUNTER_SAVE_COUNT_ENDPOINT
         );
         count = pendingRequest.params.count;
-        pendingRequest.resolve(count);
-
-        await sleep();
+        await act(async () => pendingRequest.resolve(count));
 
         expect(selectCount).toHaveTextContent(`${count}`);
         expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
@@ -150,9 +159,11 @@ describe(`${Counter.displayName}`, () => {
             counterTestIds.selectMultiplyCountOn_10
         );
 
-        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
-
-        await sleep();
+        await act(async () =>
+            httpClient
+                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
+                .resolve(count)
+        );
 
         fireEvent.click(button);
 
@@ -161,9 +172,7 @@ describe(`${Counter.displayName}`, () => {
             { increment: number }
         >(COUNTER_INCREMENT_ENDPOINT);
         count += pendingRequest.params.increment;
-        pendingRequest.resolve(count);
-
-        await sleep();
+        await act(async () => pendingRequest.resolve(count));
 
         fireEvent.click(button);
 
@@ -171,9 +180,7 @@ describe(`${Counter.displayName}`, () => {
             COUNTER_INCREMENT_ENDPOINT
         );
         count += pendingRequest.params.increment;
-        pendingRequest.resolve(count);
-
-        await sleep();
+        await act(async () => pendingRequest.resolve(count));
 
         expect(selectCount).toHaveTextContent(`${count}`);
         expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
@@ -186,9 +193,11 @@ describe(`${Counter.displayName}`, () => {
         );
         assert(button);
 
-        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
-
-        await sleep();
+        await act(async () =>
+            httpClient
+                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
+                .resolve(count)
+        );
 
         fireEvent.click(button);
 
@@ -198,15 +207,16 @@ describe(`${Counter.displayName}`, () => {
             number,
             { increment: number }
         >(COUNTER_INCREMENT_ENDPOINT);
-        pendingRequest.resolve(count + pendingRequest.params.increment);
-
-        await sleep();
+        await act(async () =>
+            pendingRequest.resolve(count + pendingRequest.params.increment)
+        );
 
         httpClient.verify();
 
         rerender(sut);
 
         const selectCount = queryByTestId(counterTestIds.selectCount);
+
         expect(selectCount).toHaveTextContent(`${count}`);
 
         httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
@@ -230,14 +240,16 @@ describe(`Double ${Counter.displayName} app`, () => {
             useValue: counterInitialState
         });
         sut = (
-            <RootContainerProvider registry={rootRegistry}>
-                <div data-testid={countersTestIds.counter0}>
-                    <Counter />
-                </div>
-                <div data-testid={countersTestIds.counter1}>
-                    <Counter />
-                </div>
-            </RootContainerProvider>
+            <StrictMode>
+                <RootContainerProvider registry={rootRegistry}>
+                    <div data-testid={countersTestIds.counter0}>
+                        <Counter />
+                    </div>
+                    <div data-testid={countersTestIds.counter1}>
+                        <Counter />
+                    </div>
+                </RootContainerProvider>
+            </StrictMode>
         );
     });
     afterEach(() => {
@@ -266,13 +278,17 @@ describe(`Double ${Counter.displayName} app`, () => {
             counterTestIds.selectCount
         );
 
-        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
+        await act(async () =>
+            httpClient
+                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
+                .resolve(count)
+        );
 
-        await sleep();
-
-        httpClient.expectOne<number>(COUNTER_GET_COUNT_ENDPOINT).resolve(count);
-
-        await sleep();
+        await act(async () =>
+            httpClient
+                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
+                .resolve(count)
+        );
 
         fireEvent.click(button0);
         count += 1;

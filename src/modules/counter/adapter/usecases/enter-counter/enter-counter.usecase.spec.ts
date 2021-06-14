@@ -1,7 +1,7 @@
 import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
 import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { sleep } from '@testing-tools/testing-tools.helpers';
+import { act } from '@testing-library/react';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 import { EnterCounterUseCase } from './enter-counter.usecase';
 
@@ -17,9 +17,10 @@ describe(`${EnterCounterUseCase.name}`, () => {
         jest.spyOn(effect, 'execute');
         jest.spyOn(store, 'setCount');
         const useCase = new EnterCounterUseCase(store, effect);
-        useCase.execute();
+
+        await act(async () => useCase.execute());
+
         expect(effect.execute).toBeCalledTimes(1);
-        await sleep();
         expect(store.setCount).toBeCalledTimes(1);
         expect(store.setCount).toBeCalledWith(0);
     });

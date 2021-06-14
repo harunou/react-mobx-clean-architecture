@@ -3,9 +3,9 @@ import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
 import { IncrementCounterAndSaveOptimisticUseCase } from './increment-counter-and-save-optimistic.usecase';
 import { SaveCountEffect } from '../../effects/save-count/save-count.effect';
-import { sleep } from '@testing-tools/testing-tools.helpers';
 import { runInAction } from 'mobx';
 import { CancellablePromise } from 'mobx/dist/api/flow';
+import { act } from '@testing-library/react';
 
 describe(`${IncrementCounterAndSaveOptimisticUseCase.name}`, () => {
     let store: CounterModel;
@@ -39,9 +39,10 @@ describe(`${IncrementCounterAndSaveOptimisticUseCase.name}`, () => {
             store,
             effect
         );
-        useCase.execute(increaseAmount);
+
+        await act(async () => useCase.execute(increaseAmount));
+
         expect(store.increment).toBeCalledWith(increaseAmount);
-        await sleep();
         expect(store.decrement).toBeCalledWith(increaseAmount);
     });
 });
