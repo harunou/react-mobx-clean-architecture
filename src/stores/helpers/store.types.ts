@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { DependencyContainer, InjectionToken } from 'tsyringe';
 import { Registry } from './registry/registry';
 
-export type ContainerProvider = FC<{ registry: Registry }>;
+export type ContainerProvider = FC<{ container: DependencyContainer }>;
 
 export type UseContainerHook = () => {
     container: DependencyContainer;

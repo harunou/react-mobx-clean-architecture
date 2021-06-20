@@ -68,7 +68,7 @@ export class Registry {
         return this;
     }
 
-    public forwardTo(container: DependencyContainer): this {
+    public forwardTo(container: DependencyContainer): DependencyContainer {
         this.#registrations.forEach(({ token, provider, options }) => {
             container.register(
                 token,
@@ -77,7 +77,7 @@ export class Registry {
                 options
             );
         });
-        return this;
+        return container;
     }
 
     public merge(registry: Registry): this {

@@ -6,6 +6,7 @@ import {
 import { httpClient } from '@core/http-client';
 import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
+import { makeRootContainer } from '@stores/helpers/store.helpers';
 import { rootRegistry } from '@stores/root/root.registry';
 import { act, fireEvent, render, within } from '@testing-library/react';
 import assert from 'assert';
@@ -24,9 +25,10 @@ describe(`${Counter.displayName}`, () => {
             token: COUNTER_INITIAL_STATE,
             useValue: counterInitialState
         });
+        const rootContainer = makeRootContainer(rootRegistry);
         sut = (
             <StrictMode>
-                <RootContainerProvider registry={rootRegistry}>
+                <RootContainerProvider container={rootContainer}>
                     <Counter />
                 </RootContainerProvider>
             </StrictMode>
@@ -238,9 +240,10 @@ describe(`Double ${Counter.displayName} app`, () => {
             token: COUNTER_INITIAL_STATE,
             useValue: counterInitialState
         });
+        const rootContainer = makeRootContainer(rootRegistry);
         sut = (
             <StrictMode>
-                <RootContainerProvider registry={rootRegistry}>
+                <RootContainerProvider container={rootContainer}>
                     <div data-testid={countersTestIds.counter0}>
                         <Counter />
                     </div>

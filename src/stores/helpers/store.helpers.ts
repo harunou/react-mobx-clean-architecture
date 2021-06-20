@@ -11,6 +11,7 @@ import {
 } from './store.types';
 import { Context, createContext, useContext, useEffect, useState } from 'react';
 import { Registry } from './registry/registry';
+import { makeContentProviderComponent } from './content-provider';
 
 export function makeInjectionToken<T = unknown>(
     key: string
@@ -25,6 +26,11 @@ export function makeCancellablePromiseStub(): CancellablePromise<never> {
     return f() as CancellablePromise<never>;
 }
 
+export const makeRootContainer = (registry: Registry): DependencyContainer => {
+    const rootContainer = container.createChildContainer();
+    return registry.forwardTo(rootContainer);
+};
+
 export function makeContainerProvider(): [ContainerProvider, UseContainerHook] {
     const Context: Context<DependencyContainer> = createContext(
         container.createChildContainer()
@@ -34,18 +40,6 @@ export function makeContainerProvider(): [ContainerProvider, UseContainerHook] {
         makeContentProviderComponent(Context),
         makeUseContainerHook(Context)
     ];
-}
-
-export function makeContentProviderComponent(
-    Context: Context<DependencyContainer>
-): ContainerProvider {
-    const Provider: ContainerProvider = ({ registry, children }) => {
-        registry.forwardTo(container);
-        return (
-            <Context.Provider value={container}>{children}</Context.Provider>
-        );
-    };
-    return Provider;
 }
 
 export function makeUseContainerHook(
@@ -64,17 +58,17 @@ export function makeUseContainerHook(
 export function makeUseRegistryHook(
     container: DependencyContainer
 ): UseRegistryHook {
-    const useRegistry: UseRegistryHook = (registry: Registry) => {
-        registry.forwardTo(container);
+    const useRegistryHook: UseRegistryHook = (registry: Registry) => {
+        const containerWithRegistry = registry.forwardTo(container);
         return {
             container,
-            useAdapter: makeUseAdapterHook(container)
+            useAdapter: makeUseAdapterHook(containerWithRegistry)
         };
     };
     // useEffect(() => {
     //     return () => container.reset();
     // }, []);
-    return useRegistry;
+    return useRegistryHook;
 }
 
 export function makeUseAdapterHook(
