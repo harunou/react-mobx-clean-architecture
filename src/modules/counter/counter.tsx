@@ -1,5 +1,5 @@
 import { noop } from '@core/core.helpers';
-import { useRootContainer } from '@core/root-container-provider';
+import { makeContainerProvider } from '@stores/helpers/store.helpers';
 import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 import { CounterController } from './adapter/counter.controller';
@@ -14,6 +14,11 @@ export const counterTestIds = {
     selectMultiplyCountOn_10: 'select-multiply-count-on-10'
 };
 
+export const [
+    RootContainerProvider,
+    useRootContainer
+] = makeContainerProvider();
+
 export const Counter: FC = observer(() => {
     const { useRegistry } = useRootContainer();
     const { useAdapter } = useRegistry(counterRegistry);
@@ -26,14 +31,6 @@ export const Counter: FC = observer(() => {
         add_1_andSavePessimisticButtonPushed
     } = counterController;
     const { selectCount, selectMultiplyCountOn_10 } = counterPresenter;
-
-    // useEffect(() => {
-    //     mounted();
-    //     return () => {
-    //         unmounted();
-    //         container.reset();
-    //     };
-    // }, []);
 
     return (
         <div>

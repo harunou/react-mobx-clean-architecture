@@ -4,14 +4,13 @@ import {
     COUNTER_SAVE_COUNT_ENDPOINT
 } from '@api/counterRemoteSource/counterRemoteSource.service';
 import { httpClient } from '@core/http-client';
-import { RootContainerProvider } from '@core/root-container-provider';
 import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { rootRegistry } from '@stores/root/root.registry';
 import { act, fireEvent, render, within } from '@testing-library/react';
 import assert from 'assert';
 import { StrictMode } from 'react';
-import { Counter, counterTestIds } from './counter';
+import { Counter, counterTestIds, RootContainerProvider } from './counter';
 
 describe(`${Counter.displayName}`, () => {
     let count: number;
