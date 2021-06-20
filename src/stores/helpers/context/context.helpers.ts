@@ -2,10 +2,10 @@ import assert from 'assert';
 import { Context, createContext, useContext, useEffect, useState } from 'react';
 import {
     AdapterConstructor,
-    UnmountedHook,
     MountedHook,
+    UnmountedHook,
     UseAdapter
-} from './context.types';
+} from '../store.types';
 
 export const makeContext = <S>(): {
     RootStoreContext: Context<NonNullable<S>>;

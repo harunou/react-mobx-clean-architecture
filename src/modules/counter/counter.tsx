@@ -1,9 +1,7 @@
 import { noop } from '@core/core.helpers';
-import { RootContainerContext } from '@core/root-container-provider';
-import { useRegistry } from '@stores/helpers/store.helpers';
+import { useRootContainer } from '@core/root-container-provider';
 import { observer } from 'mobx-react-lite';
-import { FC, useEffect } from 'react';
-import { container } from 'tsyringe';
+import { FC } from 'react';
 import { CounterController } from './adapter/counter.controller';
 import { CounterPresenter } from './adapter/counter.presenter';
 import { counterRegistry } from './adapter/counter.registry';
@@ -17,26 +15,25 @@ export const counterTestIds = {
 };
 
 export const Counter: FC = observer(() => {
-    const { useAdapter } = useRegistry(counterRegistry, RootContainerContext);
+    const { useRegistry } = useRootContainer();
+    const { useAdapter } = useRegistry(counterRegistry);
     const counterController = useAdapter(CounterController);
     const counterPresenter = useAdapter(CounterPresenter);
 
     const {
-        mounted,
-        unmounted,
         add_1_ButtonPushed,
         add_1_andSaveOptimisticButtonPushed,
         add_1_andSavePessimisticButtonPushed
     } = counterController;
     const { selectCount, selectMultiplyCountOn_10 } = counterPresenter;
 
-    useEffect(() => {
-        mounted();
-        return () => {
-            unmounted();
-            container.reset();
-        };
-    }, []);
+    // useEffect(() => {
+    //     mounted();
+    //     return () => {
+    //         unmounted();
+    //         container.reset();
+    //     };
+    // }, []);
 
     return (
         <div>

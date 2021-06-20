@@ -1,12 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import assert from 'assert';
 import { Context, createContext, FC } from 'react';
+import { AdapterConstructor, MountedHook, UnmountedHook } from '../store.types';
 import { makeStoreUseAdapter } from './context.helpers';
-import {
-    AdapterConstructor,
-    UnmountedHook,
-    MountedHook
-} from './context.types';
 
 interface Store {
     count: number;

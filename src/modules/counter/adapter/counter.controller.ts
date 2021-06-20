@@ -1,7 +1,4 @@
-import {
-    UnmountedHook,
-    MountedHook
-} from '@stores/helpers/context/context.types';
+import { MountedHook, UnmountedHook } from '@stores/helpers/store.types';
 import { action, makeObservable } from 'mobx';
 import { injectable } from 'tsyringe';
 import { EnterCounterUseCase } from './usecases/enter-counter/enter-counter.usecase';
