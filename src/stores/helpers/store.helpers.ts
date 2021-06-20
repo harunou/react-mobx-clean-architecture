@@ -47,9 +47,7 @@ export function makeUseContainerHook(
 ): UseContainerHook {
     const useContainer: UseContainerHook = () => {
         const container = useContext(context);
-        const useRegistry = makeUseRegistryHook(
-            container.createChildContainer()
-        );
+        const useRegistry = makeUseRegistryHook(container);
         return { container, useRegistry };
     };
     return useContainer;
@@ -59,7 +57,9 @@ export function makeUseRegistryHook(
     container: DependencyContainer
 ): UseRegistryHook {
     const useRegistryHook: UseRegistryHook = (registry: Registry) => {
-        const containerWithRegistry = registry.forwardTo(container);
+        const containerWithRegistry = registry.forwardTo(
+            container.createChildContainer()
+        );
         return {
             container,
             useAdapter: makeUseAdapterHook(containerWithRegistry)
