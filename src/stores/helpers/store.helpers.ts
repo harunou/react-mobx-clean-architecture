@@ -9,7 +9,7 @@ import {
     UseContainerHook,
     UseRegistryHook
 } from './store.types';
-import { Context, createContext, useContext, useEffect, useState } from 'react';
+import { Context, createContext, useContext, useEffect, useMemo } from 'react';
 import { Registry } from './registry/registry';
 import { makeContentProviderComponent } from './content-provider';
 
@@ -75,7 +75,10 @@ export function makeUseAdapterHook(
     container: DependencyContainer
 ): UseAdapterHook {
     return function useAdapter<T>(token: InjectionToken<T>): T {
-        const [adapter] = useState(() => container.resolve(token));
+        const adapter = useMemo(() => container.resolve(token), [
+            container,
+            token
+        ]);
 
         useEffect(() => {
             if (hasMountedHook(adapter)) {

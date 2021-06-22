@@ -66,7 +66,7 @@ describe(`UseAdapterHook`, () => {
                 useClass: Controller
             });
         child = container.createChildContainer();
-        registry.forwardTo(container);
+        registry.forwardTo(child);
         useAdapter = makeUseAdapterHook(child);
     });
     it('creates adapter instance', () => {
