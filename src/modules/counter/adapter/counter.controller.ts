@@ -19,9 +19,9 @@ export class CounterController implements MountedHook, UnmountedHook {
         makeObservable(this, {
             mounted: action.bound,
             unmounted: action.bound,
-            add_1_ButtonPushed: action.bound,
-            add_1_andSaveOptimisticButtonPushed: action.bound,
-            add_1_andSavePessimisticButtonPushed: action.bound
+            addOneButtonPushed: action.bound,
+            addOneAndSaveOptimisticButtonPushed: action.bound,
+            addOneAndSavePessimisticButtonPushed: action.bound
         });
     }
     mounted(): void {
@@ -30,13 +30,13 @@ export class CounterController implements MountedHook, UnmountedHook {
     unmounted(): void {
         this.leaveCounterUseCase.execute();
     }
-    add_1_ButtonPushed(): void {
+    addOneButtonPushed(): void {
         this.incrementCounterUseCase.execute(1);
     }
-    add_1_andSaveOptimisticButtonPushed(): void {
+    addOneAndSaveOptimisticButtonPushed(): void {
         this.incrementCounterAndSaveOptimisticUseCase.execute(1);
     }
-    add_1_andSavePessimisticButtonPushed(): void {
+    addOneAndSavePessimisticButtonPushed(): void {
         this.incrementCounterAndSavePessimisticUseCase.execute(1);
     }
 }

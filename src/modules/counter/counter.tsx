@@ -7,11 +7,11 @@ import { CounterPresenter } from './adapter/counter.presenter';
 import { counterRegistry } from './adapter/counter.registry';
 
 export const counterTestIds = {
-    add_1_button: 'add-1-button',
-    add_1_andSaveOptimisticButton: 'add-1-and-save-optimistic-button',
-    add_1_andSavePessimisticButton: 'add-1-and-save-pessimistic-button',
+    addOneButton: 'add-one-button',
+    addOneAndSaveOptimisticButton: 'add-one-and-save-optimistic-button',
+    addOneAndSavePessimisticButton: 'add-one-and-save-pessimistic-button',
     selectCount: 'select-count',
-    selectMultiplyCountOn_10: 'select-multiply-count-on-10'
+    selectMultiplyCountOnTen: 'select-multiply-count-on-ten'
 };
 
 export const [
@@ -20,41 +20,46 @@ export const [
 ] = makeContainerProvider();
 
 export const Counter: FC = observer(() => {
-    const { useRegistry } = useRootContainer();
-    const { useAdapter } = useRegistry(counterRegistry);
+    const { useRegistry, container: rootContainer } = useRootContainer();
+    const { useAdapter, container: counterContainer } = useRegistry(
+        counterRegistry
+    );
     const counterController = useAdapter(CounterController);
     const counterPresenter = useAdapter(CounterPresenter);
 
+    noop(rootContainer, counterContainer);
+
     const {
-        add_1_ButtonPushed,
-        add_1_andSaveOptimisticButtonPushed,
-        add_1_andSavePessimisticButtonPushed
+        addOneButtonPushed,
+        addOneAndSaveOptimisticButtonPushed,
+        addOneAndSavePessimisticButtonPushed
     } = counterController;
-    const { selectCount, selectMultiplyCountOn_10 } = counterPresenter;
+
+    const { selectCount, selectMultiplyCountOnTen } = counterPresenter;
 
     return (
         <div>
             <button
-                data-testid={counterTestIds.add_1_button}
-                onClick={add_1_ButtonPushed}
+                data-testid={counterTestIds.addOneButton}
+                onClick={addOneButtonPushed}
             >
                 +1
             </button>
             <button
-                data-testid={counterTestIds.add_1_andSaveOptimisticButton}
-                onClick={add_1_andSaveOptimisticButtonPushed}
+                data-testid={counterTestIds.addOneAndSaveOptimisticButton}
+                onClick={addOneAndSaveOptimisticButtonPushed}
             >
                 +1 and save optimistic
             </button>
             <button
-                data-testid={counterTestIds.add_1_andSavePessimisticButton}
-                onClick={add_1_andSavePessimisticButtonPushed}
+                data-testid={counterTestIds.addOneAndSavePessimisticButton}
+                onClick={addOneAndSavePessimisticButtonPushed}
             >
                 +1 and save pessimistic
             </button>
             <span data-testid={counterTestIds.selectCount}>{selectCount}</span>
-            <span data-testid={counterTestIds.selectMultiplyCountOn_10}>
-                {selectMultiplyCountOn_10}
+            <span data-testid={counterTestIds.selectMultiplyCountOnTen}>
+                {selectMultiplyCountOnTen}
             </span>
             <button onClick={noop}>-1</button>
         </div>

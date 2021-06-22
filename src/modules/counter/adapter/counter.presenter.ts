@@ -10,11 +10,11 @@ export class CounterPresenter {
         private multiplyCountSelector: MultiplyCountSelector
     ) {
         makeObservable(this, {
-            selectMultiplyCountOn_10: computed,
+            selectMultiplyCountOnTen: computed,
             selectCount: computed
         });
     }
-    get selectMultiplyCountOn_10(): number {
+    get selectMultiplyCountOnTen(): number {
         return this.multiplyCountSelector.withProps(10).result;
     }
 

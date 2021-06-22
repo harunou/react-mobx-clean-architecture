@@ -46,7 +46,7 @@ describe(`${Counter.displayName}`, () => {
         const { queryByTestId, rerender } = render(sut);
         const selectCount = queryByTestId(counterTestIds.selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCountOn_10
+            counterTestIds.selectMultiplyCountOnTen
         );
 
         expect(selectCount).toHaveTextContent(`${counterInitialState.count$}`);
@@ -88,11 +88,11 @@ describe(`${Counter.displayName}`, () => {
     });
     it('increments store and renders result', async () => {
         const { queryByTestId } = render(sut);
-        const button = queryByTestId(counterTestIds.add_1_button);
+        const button = queryByTestId(counterTestIds.addOneButton);
         assert(button);
         const selectCount = queryByTestId(counterTestIds.selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCountOn_10
+            counterTestIds.selectMultiplyCountOnTen
         );
 
         await act(async () =>
@@ -115,12 +115,12 @@ describe(`${Counter.displayName}`, () => {
         const { queryByTestId } = render(sut);
 
         const button = queryByTestId(
-            counterTestIds.add_1_andSaveOptimisticButton
+            counterTestIds.addOneAndSaveOptimisticButton
         );
         assert(button);
         const selectCount = queryByTestId(counterTestIds.selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCountOn_10
+            counterTestIds.selectMultiplyCountOnTen
         );
 
         await act(async () =>
@@ -152,12 +152,12 @@ describe(`${Counter.displayName}`, () => {
         const { queryByTestId } = render(sut);
 
         const button = queryByTestId(
-            counterTestIds.add_1_andSavePessimisticButton
+            counterTestIds.addOneAndSavePessimisticButton
         );
         assert(button);
         const selectCount = queryByTestId(counterTestIds.selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCountOn_10
+            counterTestIds.selectMultiplyCountOnTen
         );
 
         await act(async () =>
@@ -190,7 +190,7 @@ describe(`${Counter.displayName}`, () => {
         const { queryByTestId, unmount, rerender } = render(sut);
 
         const button = queryByTestId(
-            counterTestIds.add_1_andSavePessimisticButton
+            counterTestIds.addOneAndSavePessimisticButton
         );
         assert(button);
 
@@ -268,7 +268,7 @@ describe(`Double ${Counter.displayName} app`, () => {
         const counter0 = queryByTestId(countersTestIds.counter0);
         assert(counter0);
         const button0 = within(counter0).queryByTestId(
-            counterTestIds.add_1_button
+            counterTestIds.addOneButton
         );
         assert(button0);
         const selectCount0 = within(counter0).queryByTestId(
