@@ -56,19 +56,26 @@ export function makeUseContainerHook(
 export function makeUseRegistryHook(
     container: DependencyContainer
 ): UseRegistryHook {
-    const useRegistryHook: UseRegistryHook = (registry: Registry) => {
-        const containerWithRegistry = registry.forwardTo(
-            container.createChildContainer()
+    return function useRegistryHook(registry: Registry) {
+        const containerWithRegistry = useMemo(
+            () => registry.forwardTo(container.createChildContainer()),
+            [registry]
         );
+
+        useEffect(() => {
+            return () => {
+                containerWithRegistry.reset();
+            };
+        }, []);
+
         return {
-            container,
-            useAdapter: makeUseAdapterHook(containerWithRegistry)
+            container: containerWithRegistry,
+            useAdapter: useMemo(
+                () => makeUseAdapterHook(containerWithRegistry),
+                [containerWithRegistry]
+            )
         };
     };
-    // useEffect(() => {
-    //     return () => container.reset();
-    // }, []);
-    return useRegistryHook;
 }
 
 export function makeUseAdapterHook(
