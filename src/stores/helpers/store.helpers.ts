@@ -47,7 +47,9 @@ export function makeUseContainerHook(
 ): UseContainerHook {
     const useContainer: UseContainerHook = () => {
         const container = useContext(context);
-        const useRegistry = makeUseRegistryHook(container);
+        const useRegistry = useMemo(() => makeUseRegistryHook(container), [
+            container
+        ]);
         return { container, useRegistry };
     };
     return useContainer;
@@ -59,7 +61,7 @@ export function makeUseRegistryHook(
     return function useRegistryHook(registry: Registry) {
         const containerWithRegistry = useMemo(
             () => registry.forwardTo(container.createChildContainer()),
-            [registry]
+            [registry, container]
         );
 
         useEffect(() => {
