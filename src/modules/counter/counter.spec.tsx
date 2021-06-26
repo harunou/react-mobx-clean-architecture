@@ -13,7 +13,7 @@ import assert from 'assert';
 import { StrictMode } from 'react';
 import { Counter, counterTestIds, RootContainerProvider } from './counter';
 
-describe(`${Counter.displayName}`, () => {
+describe(`Counter`, () => {
     let count: number;
     const counterInitialState: CounterState = {
         count$: 3
@@ -224,7 +224,7 @@ describe(`${Counter.displayName}`, () => {
     });
 });
 
-describe(`Double ${Counter.displayName} app`, () => {
+describe(`Double Counter app`, () => {
     const countersTestIds = {
         counter0: 'counter-0',
         counter1: 'counter-1'

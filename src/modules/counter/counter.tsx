@@ -65,5 +65,3 @@ export const Counter: FC = observer(() => {
         </div>
     );
 });
-
-Counter.displayName = 'Counter';
