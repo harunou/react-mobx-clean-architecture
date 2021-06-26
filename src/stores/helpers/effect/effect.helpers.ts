@@ -1,1 +1,0 @@
-export const FLOW_CANCELLED = 'FLOW_CANCELLED';

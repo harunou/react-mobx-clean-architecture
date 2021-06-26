@@ -1,7 +1,7 @@
 import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { FLOW_CANCELLED } from '@stores/helpers/effect/effect.helpers';
-import { UseCase } from '@stores/helpers/store/store.types';
+import { FLOW_CANCELLED } from '@stores/helpers/store.helpers';
+import { UseCase } from '@stores/helpers/store.types';
 import { action, makeObservable } from 'mobx';
 import { inject, injectable } from 'tsyringe';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';

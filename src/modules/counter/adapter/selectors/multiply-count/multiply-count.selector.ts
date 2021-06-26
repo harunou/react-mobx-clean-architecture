@@ -1,6 +1,6 @@
 import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
 import { CounterState } from '@stores/domain/counter/counter.types';
-import { SelectorWithProps } from '@stores/helpers/store/store.types';
+import { SelectorWithProps } from '@stores/helpers/store.types';
 import { computed, makeObservable } from 'mobx';
 import { inject, injectable } from 'tsyringe';
 

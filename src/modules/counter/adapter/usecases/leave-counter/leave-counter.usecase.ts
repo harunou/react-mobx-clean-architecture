@@ -1,4 +1,4 @@
-import { UseCase } from '@stores/helpers/store/store.types';
+import { UseCase } from '@stores/helpers/store.types';
 import { action, makeObservable } from 'mobx';
 import { injectable } from 'tsyringe';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';

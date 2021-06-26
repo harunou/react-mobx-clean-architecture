@@ -11,7 +11,8 @@ import {
 } from './store.types';
 import { Context, createContext, useContext, useEffect, useMemo } from 'react';
 import { Registry } from './registry/registry';
-import { makeContentProviderComponent } from './content-provider';
+
+export const FLOW_CANCELLED = 'FLOW_CANCELLED';
 
 export function makeInjectionToken<T = unknown>(
     key: string
@@ -45,14 +46,13 @@ export function makeContainerProvider(): [ContainerProvider, UseContainerHook] {
 export function makeUseContainerHook(
     context: Context<DependencyContainer>
 ): UseContainerHook {
-    const useContainer: UseContainerHook = () => {
+    return function useContainerHook() {
         const container = useContext(context);
         const useRegistry = useMemo(() => makeUseRegistryHook(container), [
             container
         ]);
         return { container, useRegistry };
     };
-    return useContainer;
 }
 
 export function makeUseRegistryHook(
@@ -83,7 +83,7 @@ export function makeUseRegistryHook(
 export function makeUseAdapterHook(
     container: DependencyContainer
 ): UseAdapterHook {
-    return function useAdapter<T>(token: InjectionToken<T>): T {
+    return function useAdapterHook<T>(token: InjectionToken<T>): T {
         const adapter = useMemo(() => container.resolve(token), [
             container,
             token
@@ -101,6 +101,17 @@ export function makeUseAdapterHook(
         }, []);
         return adapter;
     };
+}
+
+export function makeContentProviderComponent(
+    Context: Context<DependencyContainer>
+): ContainerProvider {
+    const Provider: ContainerProvider = ({ container, children }) => {
+        return (
+            <Context.Provider value={container}>{children}</Context.Provider>
+        );
+    };
+    return Provider;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
