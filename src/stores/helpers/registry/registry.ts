@@ -23,9 +23,14 @@ export class Registry {
     }
 
     #registrations: Array<Registration<unknown>> = [];
+    #aliases: Array<[constructor<unknown>, constructor<unknown>]> = [];
 
     public get registrations(): Array<Registration<unknown>> {
         return this.#registrations;
+    }
+
+    public get aliases(): Array<[constructor<unknown>, constructor<unknown>]> {
+        return this.#aliases;
     }
 
     public add<T>(
@@ -123,6 +128,11 @@ export class Registry {
         return this;
     }
 
+    public addAlias<T, R>(from: constructor<T>, to: constructor<R>): this {
+        this.#aliases.push([from, to]);
+        return this;
+    }
+
     public forwardTo(container: DependencyContainer): DependencyContainer {
         this.#registrations.forEach(({ token, provider, options }) => {
             container.register(
@@ -132,6 +142,11 @@ export class Registry {
                 options
             );
         });
+        this.#aliases.forEach(([from, to]) => {
+            container.register(from, {
+                useToken: to
+            });
+        });
         return container;
     }
 
@@ -139,6 +154,7 @@ export class Registry {
         this.#registrations = this.#registrations.concat(
             registry.registrations
         );
+        this.#aliases = this.#aliases.concat(registry.aliases);
         return this;
     }
 }
