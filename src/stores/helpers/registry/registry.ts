@@ -87,6 +87,42 @@ export class Registry {
         return this;
     }
 
+    public addSelector<T>(token: constructor<T>): this {
+        this.add({
+            token,
+            useClass: token,
+            options: { lifecycle: Lifecycle.Transient }
+        });
+        return this;
+    }
+
+    public addUseCase<T>(token: constructor<T>): this {
+        this.add({
+            token,
+            useClass: token,
+            options: { lifecycle: Lifecycle.Transient }
+        });
+        return this;
+    }
+
+    public addEffect<T>(token: constructor<T>): this {
+        this.add({
+            token,
+            useClass: token,
+            options: { lifecycle: Lifecycle.Singleton }
+        });
+        return this;
+    }
+
+    public addAdapter<T>(token: constructor<T>): this {
+        this.add({
+            token,
+            useClass: token,
+            options: { lifecycle: Lifecycle.Singleton }
+        });
+        return this;
+    }
+
     public forwardTo(container: DependencyContainer): DependencyContainer {
         this.#registrations.forEach(({ token, provider, options }) => {
             container.register(

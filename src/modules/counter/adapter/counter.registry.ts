@@ -1,5 +1,4 @@
 import { Registry } from '@stores/helpers/registry/registry';
-import { Lifecycle } from 'tsyringe';
 import { CounterController } from './counter.controller';
 import { CounterPresenter } from './counter.presenter';
 import { GetCountEffect } from './effects/get-count/get-count.effect';
@@ -14,56 +13,15 @@ import { IncrementCounterUseCase } from './usecases/increment-counter/increment-
 import { LeaveCounterUseCase } from './usecases/leave-counter/leave-counter.usecase';
 
 export const counterRegistry = Registry.make()
-    .add({
-        token: CounterController,
-        useClass: CounterController,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: CounterPresenter,
-        useClass: CounterPresenter,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: CountSelector,
-        useClass: CountSelector
-    })
-    .add({
-        token: MultiplyCountSelector,
-        useClass: MultiplyCountSelector
-    })
-    .add({
-        token: EnterCounterUseCase,
-        useClass: EnterCounterUseCase
-    })
-    .add({
-        token: IncrementCounterUseCase,
-        useClass: IncrementCounterUseCase
-    })
-    .add({
-        token: IncrementCounterAndSaveOptimisticUseCase,
-        useClass: IncrementCounterAndSaveOptimisticUseCase
-    })
-    .add({
-        token: IncrementCounterAndSavePessimisticUseCase,
-        useClass: IncrementCounterAndSavePessimisticUseCase
-    })
-    .add({
-        token: LeaveCounterUseCase,
-        useClass: LeaveCounterUseCase
-    })
-    .add({
-        token: GetCountEffect,
-        useClass: GetCountEffect,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: IncrementCountEffect,
-        useClass: IncrementCountEffect,
-        options: { lifecycle: Lifecycle.Singleton }
-    })
-    .add({
-        token: SaveCountEffect,
-        useClass: SaveCountEffect,
-        options: { lifecycle: Lifecycle.Singleton }
-    });
+    .addSelector(CountSelector)
+    .addSelector(MultiplyCountSelector)
+    .addUseCase(EnterCounterUseCase)
+    .addUseCase(IncrementCounterUseCase)
+    .addUseCase(IncrementCounterAndSaveOptimisticUseCase)
+    .addUseCase(IncrementCounterAndSavePessimisticUseCase)
+    .addUseCase(LeaveCounterUseCase)
+    .addEffect(GetCountEffect)
+    .addEffect(IncrementCountEffect)
+    .addEffect(SaveCountEffect)
+    .addAdapter(CounterController)
+    .addAdapter(CounterPresenter);
