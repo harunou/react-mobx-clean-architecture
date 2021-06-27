@@ -1,7 +1,7 @@
 import { Registry } from '@stores/helpers/registry/registry';
 import { Lifecycle } from 'tsyringe';
 import { CounterStore, COUNTER_INITIAL_VALUE } from './counter/counter.store';
-import { COUNTER_INITIAL_STATE, COUNTER_STORE } from './counter/counter.tokens';
+import { COUNTER_INITIAL_STATE } from './counter/counter.tokens';
 
 export const domainRegistry = Registry.make()
     .add({
@@ -9,7 +9,7 @@ export const domainRegistry = Registry.make()
         useValue: COUNTER_INITIAL_VALUE
     })
     .add({
-        token: COUNTER_STORE,
+        token: CounterStore,
         useClass: CounterStore,
         options: { lifecycle: Lifecycle.Singleton }
     });

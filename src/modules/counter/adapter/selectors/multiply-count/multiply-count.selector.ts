@@ -1,4 +1,4 @@
-import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
+import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { SelectorWithProps } from '@stores/helpers/store.types';
 import { computed, makeObservable } from 'mobx';
@@ -8,7 +8,7 @@ import { inject, injectable } from 'tsyringe';
 export class MultiplyCountSelector implements SelectorWithProps {
     #factor = 1;
 
-    constructor(@inject(COUNTER_STORE) private store: CounterState) {
+    constructor(@inject(CounterStore) private store: CounterState) {
         makeObservable(this, {
             result: computed
         });

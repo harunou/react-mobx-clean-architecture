@@ -1,9 +1,9 @@
-export interface CounterState {
-    count$: number;
+export abstract class CounterState {
+    abstract count$: number;
 }
 
-export interface CounterModel extends CounterState {
-    setCount(value: number): void;
-    increment(value: number): void;
-    decrement(value: number): void;
+export abstract class CounterModel extends CounterState {
+    abstract setCount(value: number): void;
+    abstract increment(value: number): void;
+    abstract decrement(value: number): void;
 }

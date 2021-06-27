@@ -1,4 +1,4 @@
-import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
+import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
 import { FLOW_CANCELLED } from '@stores/helpers/store.helpers';
 import { UseCase } from '@stores/helpers/store.types';
@@ -9,7 +9,7 @@ import { IncrementCountEffect } from '../../effects/increment-count/increment-co
 @injectable()
 export class IncrementCounterAndSavePessimisticUseCase implements UseCase {
     constructor(
-        @inject(COUNTER_STORE) private store: CounterModel,
+        @inject(CounterStore) private store: CounterModel,
         private effect: IncrementCountEffect
     ) {
         makeObservable(this, {

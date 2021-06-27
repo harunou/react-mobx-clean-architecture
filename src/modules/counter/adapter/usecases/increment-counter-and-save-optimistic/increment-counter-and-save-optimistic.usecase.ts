@@ -1,4 +1,4 @@
-import { COUNTER_STORE } from '@stores/domain/counter/counter.tokens';
+import { CounterStore } from '@stores/domain/counter/counter.store';
 import { CounterModel } from '@stores/domain/counter/counter.types';
 import { UseCase } from '@stores/helpers/store.types';
 import { action, makeObservable } from 'mobx';
@@ -10,7 +10,7 @@ export class IncrementCounterAndSaveOptimisticUseCase implements UseCase {
     #value = 0;
 
     constructor(
-        @inject(COUNTER_STORE) private store: CounterModel,
+        @inject(CounterStore) private store: CounterModel,
         private effect: SaveCountEffect
     ) {
         makeObservable(this, {
