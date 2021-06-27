@@ -9,9 +9,8 @@ describe(`${IncrementCounterAndSavePessimisticUseCase.name}`, () => {
     let store: CounterModel;
     let effect: IncrementCountEffect;
     const increment = 5;
-    const count = 4;
     beforeEach(() => {
-        store = new CounterStore({ count$: count });
+        store = new CounterStore();
         effect = new IncrementCountEffect(counterRemoteSourceServiceMock);
     });
     it('pessimistically increment count on the BE and on success set store', async () => {

@@ -8,9 +8,8 @@ import { EnterCounterUseCase } from './enter-counter.usecase';
 describe(`${EnterCounterUseCase.name}`, () => {
     let store: CounterModel;
     let effect: GetCountEffect;
-    const count = 4;
     beforeEach(() => {
-        store = new CounterStore({ count$: count });
+        store = new CounterStore();
         effect = new GetCountEffect(counterRemoteSourceServiceMock);
     });
     it('fetches data from BE and inits store', async () => {

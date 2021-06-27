@@ -4,8 +4,6 @@ import {
     COUNTER_SAVE_COUNT_ENDPOINT
 } from '@api/counterRemoteSource/counterRemoteSource.service';
 import { httpClient } from '@core/http-client';
-import { COUNTER_INITIAL_STATE } from '@stores/domain/counter/counter.tokens';
-import { CounterState } from '@stores/domain/counter/counter.types';
 import { makeRootContainer } from '@stores/helpers/store.helpers';
 import { rootRegistry } from '@stores/root/root.registry';
 import { act, fireEvent, render, within } from '@testing-library/react';
@@ -14,17 +12,11 @@ import { StrictMode } from 'react';
 import { Counter, counterTestIds, RootContainerProvider } from './counter';
 
 describe(`Counter`, () => {
+    const initial = 0;
     let count: number;
-    const counterInitialState: CounterState = {
-        count$: 3
-    };
     let sut: JSX.Element;
     beforeEach(() => {
         count = 3;
-        rootRegistry.add({
-            token: COUNTER_INITIAL_STATE,
-            useValue: counterInitialState
-        });
         const rootContainer = makeRootContainer(rootRegistry);
         sut = (
             <StrictMode>
@@ -49,10 +41,8 @@ describe(`Counter`, () => {
             counterTestIds.selectMultiplyCountOnTen
         );
 
-        expect(selectCount).toHaveTextContent(`${counterInitialState.count$}`);
-        expect(selectMultiplyCount).toHaveTextContent(
-            `${counterInitialState.count$ * 10}`
-        );
+        expect(selectCount).toHaveTextContent(`${initial}`);
+        expect(selectMultiplyCount).toHaveTextContent(`${initial * 10}`);
 
         await act(async () =>
             httpClient
@@ -82,7 +72,7 @@ describe(`Counter`, () => {
         const { queryByTestId } = render(sut);
         const selectCount = queryByTestId(counterTestIds.selectCount);
 
-        expect(selectCount).toHaveTextContent(`${counterInitialState.count$}`);
+        expect(selectCount).toHaveTextContent(`${initial}`);
 
         httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
     });
@@ -230,16 +220,9 @@ describe(`Double Counter app`, () => {
         counter1: 'counter-1'
     };
     let count: number;
-    const counterInitialState: CounterState = {
-        count$: 3
-    };
     let sut: JSX.Element;
     beforeEach(() => {
         count = 3;
-        rootRegistry.add({
-            token: COUNTER_INITIAL_STATE,
-            useValue: counterInitialState
-        });
         const rootContainer = makeRootContainer(rootRegistry);
         sut = (
             <StrictMode>

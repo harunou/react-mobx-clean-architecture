@@ -2,23 +2,18 @@ import { Selector } from '@stores/helpers/store.types';
 import { container, injectable } from 'tsyringe';
 import { constructor } from 'tsyringe/dist/typings/types';
 import { CounterStore } from './counter.store';
-import { COUNTER_INITIAL_STATE } from './counter.tokens';
 import { CounterState } from './counter.types';
 
 describe(`${CounterStore.name}`, () => {
-    let initial: CounterState;
+    let initial: number;
     let store: CounterStore;
     beforeEach(() => {
-        initial = {
-            count$: 5
-        };
-        store = new CounterStore(initial);
+        initial = 5;
+        store = new CounterStore();
+        store.setCount(initial);
     });
     afterEach(() => {
         container.reset();
-    });
-    it('can be initialized with initial state', () => {
-        expect(store.count$).toEqual(initial.count$);
     });
     it('sets new count state upon setState call', () => {
         const count = 7;
@@ -28,18 +23,15 @@ describe(`${CounterStore.name}`, () => {
     it('increments state on provided value upon increment call', () => {
         const value = 4;
         store.increment(value);
-        expect(store.count$).toEqual(initial.count$ + value);
+        expect(store.count$).toEqual(initial + value);
     });
     it('decrements state on provided value upon decrement call', () => {
         const value = 4;
         store.decrement(value);
-        expect(store.count$).toEqual(initial.count$ - value);
+        expect(store.count$).toEqual(initial - value);
     });
     it('can be injected via abstract classes', () => {
-        const initial = 5;
-        container.register(COUNTER_INITIAL_STATE, {
-            useValue: { count$: initial }
-        });
+        const initial = 0;
         container.registerSingleton(CounterStore);
         container.registerType(
             CounterState as constructor<CounterState>,

@@ -1,28 +1,18 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
-import { inject, injectable } from 'tsyringe';
-import { COUNTER_INITIAL_STATE } from './counter.tokens';
-import { CounterModel, CounterState } from './counter.types';
-
-export const COUNTER_INITIAL_VALUE: CounterState = { count$: 0 };
+import { action, makeObservable, observable } from 'mobx';
+import { injectable } from 'tsyringe';
+import { CounterModel } from './counter.types';
 
 @injectable()
 export class CounterStore implements CounterModel {
     count$ = 0;
 
-    constructor(@inject(COUNTER_INITIAL_STATE) state: CounterState) {
+    constructor() {
         makeObservable(this, {
             count$: observable,
             setCount: action,
             increment: action,
             decrement: action
         });
-        runInAction(() => {
-            this.init(state);
-        });
-    }
-
-    private init(state: CounterState): void {
-        Object.assign(this, state);
     }
 
     setCount(value: number): void {

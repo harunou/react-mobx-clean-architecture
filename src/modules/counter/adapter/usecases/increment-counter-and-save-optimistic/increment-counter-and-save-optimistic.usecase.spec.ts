@@ -12,7 +12,7 @@ describe(`${IncrementCounterAndSaveOptimisticUseCase.name}`, () => {
     let effect: SaveCountEffect;
     const increaseAmount = 4;
     beforeEach(() => {
-        store = new CounterStore({ count$: 3 });
+        store = new CounterStore();
         effect = new SaveCountEffect(counterRemoteSourceServiceMock);
     });
     it('increments model value on predefined amount and optimistically save to the BE', () => {
