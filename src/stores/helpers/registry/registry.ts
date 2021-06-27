@@ -9,6 +9,7 @@ import {
     ValueProvider,
     RegistrationOptions
 } from 'tsyringe';
+import { constructor } from 'tsyringe/dist/typings/types';
 
 interface Registration<T> {
     token: InjectionToken<T>;
@@ -64,6 +65,24 @@ export class Registry {
             token,
             options,
             provider
+        });
+        return this;
+    }
+
+    public addSingleton<T>(token: constructor<T>): this {
+        this.add({
+            token,
+            useClass: token,
+            options: { lifecycle: Lifecycle.Singleton }
+        });
+        return this;
+    }
+
+    public addTransient<T>(token: constructor<T>): this {
+        this.add({
+            token,
+            useClass: token,
+            options: { lifecycle: Lifecycle.Transient }
         });
         return this;
     }

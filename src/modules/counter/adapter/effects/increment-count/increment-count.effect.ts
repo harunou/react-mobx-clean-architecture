@@ -1,15 +1,15 @@
 import { flow, flowResult, makeObservable } from 'mobx';
 import { inject, injectable } from 'tsyringe';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
-import { COUNTER_SOURCE_STORE } from '@stores/persistence/counter-source/counter-source.tokens';
 import { makeCancellablePromiseStub } from '@stores/helpers/store.helpers';
 import { CancellablePromise } from 'mobx/dist/api/flow';
 import { CancellableEffect } from '@stores/helpers/store.types';
+import { CounterSourceStore } from '@stores/persistence/counter-source/counter-source.store';
 
 @injectable()
 export class IncrementCountEffect implements CancellableEffect {
     constructor(
-        @inject(COUNTER_SOURCE_STORE) private counterSource: CounterSource
+        @inject(CounterSourceStore) private counterSource: CounterSource
     ) {
         makeObservable(this, {
             saveGenerator: flow
