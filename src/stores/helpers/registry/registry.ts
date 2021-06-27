@@ -10,6 +10,7 @@ import {
     RegistrationOptions
 } from 'tsyringe';
 import { constructor } from 'tsyringe/dist/typings/types';
+import { AbstractType } from '../store.types';
 
 interface Registration<T> {
     token: InjectionToken<T>;
@@ -128,8 +129,11 @@ export class Registry {
         return this;
     }
 
-    public addAlias<T, R>(from: constructor<T>, to: constructor<R>): this {
-        this.#aliases.push([from, to]);
+    public addAlias<T, R>(
+        from: constructor<T> | AbstractType<T>,
+        to: constructor<R>
+    ): this {
+        this.#aliases.push([from as constructor<T>, to]);
         return this;
     }
 

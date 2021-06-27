@@ -2,6 +2,10 @@ import { FC } from 'react';
 import { DependencyContainer, InjectionToken } from 'tsyringe';
 import { Registry } from './registry/registry';
 
+export interface AbstractType<T> extends Function {
+    prototype: T;
+}
+
 export interface Selector<R = unknown> {
     result: R;
 }
