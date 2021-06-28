@@ -12,7 +12,7 @@ import {
 import { constructor } from 'tsyringe/dist/typings/types';
 import { AbstractType } from '../store.types';
 
-interface Registration<T> {
+export interface Registration<T> {
     token: InjectionToken<T>;
     provider: Provider<T>;
     options: RegistrationOptions;
@@ -137,6 +137,14 @@ export class Registry {
         return this;
     }
 
+    public merge(registry: Registry): this {
+        this.#registrations = this.#registrations.concat(
+            registry.registrations
+        );
+        this.#aliases = this.#aliases.concat(registry.aliases);
+        return this;
+    }
+
     public forwardTo(container: DependencyContainer): DependencyContainer {
         this.#registrations.forEach(({ token, provider, options }) => {
             container.register(
@@ -152,13 +160,5 @@ export class Registry {
             });
         });
         return container;
-    }
-
-    public merge(registry: Registry): this {
-        this.#registrations = this.#registrations.concat(
-            registry.registrations
-        );
-        this.#aliases = this.#aliases.concat(registry.aliases);
-        return this;
     }
 }
