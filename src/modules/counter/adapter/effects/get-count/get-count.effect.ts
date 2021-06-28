@@ -9,7 +9,7 @@ import { CancellableEffect } from '@stores/helpers/store.types';
 export class GetCountEffect implements CancellableEffect {
     constructor(private counterSource: CounterSource) {
         makeObservable(this, {
-            saveGenerator: flow
+            getGenerator: flow
         });
     }
 
@@ -21,11 +21,11 @@ export class GetCountEffect implements CancellableEffect {
 
     execute(): Promise<number> {
         this.cancel();
-        this.#promise = flowResult(this.saveGenerator());
+        this.#promise = flowResult(this.getGenerator());
         return this.#promise;
     }
 
-    *saveGenerator(): Generator<Promise<number>, number, number> {
+    *getGenerator(): Generator<Promise<number>, number, number> {
         return yield this.counterSource.get();
     }
 }
