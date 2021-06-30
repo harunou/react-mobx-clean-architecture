@@ -1,9 +1,12 @@
 import { CounterRemoteSourceService } from '@api/counterRemoteSource/counterRemoteSource.service';
-import { injectable } from 'tsyringe';
-import { CounterSource } from './counter-source.types';
+import { CounterSource, CounterSourceModel } from './counter-source.types';
 
-@injectable()
-export class CounterSourceStore implements CounterSource {
+export class CounterSourceStore implements CounterSourceModel {
+    static make(): CounterSourceStore {
+        const counterRemoteService = new CounterRemoteSourceService();
+        return new CounterSourceStore(counterRemoteService);
+    }
+
     constructor(public counterRemoteService: CounterRemoteSourceService) {}
 
     private get source(): CounterSource {

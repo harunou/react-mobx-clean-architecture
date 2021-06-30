@@ -5,7 +5,7 @@ import { act } from '@testing-library/react';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 import { EnterCounterUseCase } from './enter-counter.usecase';
 
-describe(`${EnterCounterUseCase.name}`, () => {
+describe.skip(`${EnterCounterUseCase.name}`, () => {
     let store: CounterModel;
     let effect: GetCountEffect;
     beforeEach(() => {

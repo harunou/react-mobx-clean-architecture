@@ -6,6 +6,10 @@ export const COUNTER_INCREMENT_ENDPOINT = 'counter/increment';
 export const COUNTER_SAVE_COUNT_ENDPOINT = 'counter/save';
 
 export class CounterRemoteSourceService implements CounterSource {
+    static make(): CounterRemoteSourceService {
+        return new CounterRemoteSourceService();
+    }
+
     get(): Promise<number> {
         return httpClient.request(COUNTER_GET_COUNT_ENDPOINT);
     }

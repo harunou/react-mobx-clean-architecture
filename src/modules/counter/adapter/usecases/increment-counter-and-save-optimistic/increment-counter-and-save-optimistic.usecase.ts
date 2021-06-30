@@ -1,11 +1,8 @@
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { UseCase } from '@stores/helpers/store.types';
 import { action, makeObservable } from 'mobx';
-import { injectable } from 'tsyringe';
 import { SaveCountEffect } from '../../effects/save-count/save-count.effect';
 
-@injectable()
-export class IncrementCounterAndSaveOptimisticUseCase implements UseCase {
+export class IncrementCounterAndSaveOptimisticUseCase {
     #value = 0;
 
     constructor(private store: CounterModel, private effect: SaveCountEffect) {

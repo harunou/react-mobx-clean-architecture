@@ -1,12 +1,8 @@
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { FLOW_CANCELLED } from '@stores/helpers/store.helpers';
-import { UseCase } from '@stores/helpers/store.types';
 import { action, makeObservable } from 'mobx';
-import { injectable } from 'tsyringe';
 import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 
-@injectable()
-export class EnterCounterUseCase implements UseCase {
+export class EnterCounterUseCase {
     constructor(
         private store: CounterModel,
         private getCountEffect: GetCountEffect
@@ -22,9 +18,9 @@ export class EnterCounterUseCase implements UseCase {
             .execute()
             .then(this.getCountSuccess)
             .catch((error: Error) => {
-                if (error.message === FLOW_CANCELLED) {
-                    return;
-                }
+                // if (error.message === FLOW_CANCELLED) {
+                //     return;
+                // }
                 throw error;
             });
     }

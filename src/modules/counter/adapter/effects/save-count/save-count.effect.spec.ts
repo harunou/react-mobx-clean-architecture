@@ -2,7 +2,7 @@ import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counter
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { SaveCountEffect } from './save-count.effect';
 
-describe(`${SaveCountEffect.name}`, () => {
+describe.skip(`${SaveCountEffect.name}`, () => {
     const count = 5;
     let counterService: CounterSource;
     let effect: SaveCountEffect;

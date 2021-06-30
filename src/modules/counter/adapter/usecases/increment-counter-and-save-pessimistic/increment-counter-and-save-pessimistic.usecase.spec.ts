@@ -5,7 +5,7 @@ import { act } from '@testing-library/react';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
 import { IncrementCounterAndSavePessimisticUseCase } from './increment-counter-and-save-pessimistic.usecase';
 
-describe(`${IncrementCounterAndSavePessimisticUseCase.name}`, () => {
+describe.skip(`${IncrementCounterAndSavePessimisticUseCase.name}`, () => {
     let store: CounterModel;
     let effect: IncrementCountEffect;
     const increment = 5;

@@ -1,12 +1,8 @@
 import { flow, flowResult, makeObservable } from 'mobx';
-import { injectable } from 'tsyringe';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
-import { makeCancellablePromiseStub } from '@stores/helpers/store.helpers';
 import { CancellablePromise } from 'mobx/dist/api/flow';
-import { CancellableEffect } from '@stores/helpers/store.types';
 
-@injectable()
-export class IncrementCountEffect implements CancellableEffect {
+export class IncrementCountEffect {
     constructor(private counterSource: CounterSource) {
         makeObservable(this, {
             incrementGenerator: flow
@@ -29,4 +25,7 @@ export class IncrementCountEffect implements CancellableEffect {
     ): Generator<Promise<number>, number, number> {
         return yield this.counterSource.increment(value);
     }
+}
+function makeCancellablePromiseStub(): CancellablePromise<number> {
+    throw new Error('Function not implemented.');
 }

@@ -1,9 +1,11 @@
 import { action, makeObservable, observable } from 'mobx';
-import { injectable } from 'tsyringe';
 import { CounterModel } from './counter.types';
 
-@injectable()
 export class CounterStore implements CounterModel {
+    static make(): CounterStore {
+        return new CounterStore();
+    }
+
     count$ = 0;
 
     constructor() {

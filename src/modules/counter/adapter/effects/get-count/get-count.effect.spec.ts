@@ -2,7 +2,7 @@ import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counter
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { GetCountEffect } from './get-count.effect';
 
-describe(`${GetCountEffect.name}`, () => {
+describe.skip(`${GetCountEffect.name}`, () => {
     let counterService: CounterSource;
     let effect: GetCountEffect;
     beforeEach(() => {

@@ -4,7 +4,7 @@ import { GetCountEffect } from '../../effects/get-count/get-count.effect';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
 import { LeaveCounterUseCase } from './leave-counter.usecase';
 
-describe(`${LeaveCounterUseCase.name}`, () => {
+describe.skip(`${LeaveCounterUseCase.name}`, () => {
     let getCount: GetCountEffect;
     let incrementCount: IncrementCountEffect;
     beforeEach(() => {

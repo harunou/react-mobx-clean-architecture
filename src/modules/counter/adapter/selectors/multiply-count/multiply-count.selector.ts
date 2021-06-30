@@ -1,10 +1,7 @@
 import { CounterState } from '@stores/domain/counter/counter.types';
-import { SelectorWithProps } from '@stores/helpers/store.types';
 import { computed, makeObservable } from 'mobx';
-import { injectable } from 'tsyringe';
 
-@injectable()
-export class MultiplyCountSelector implements SelectorWithProps {
+export class MultiplyCountSelector {
     #factor = 1;
 
     constructor(private store: CounterState) {

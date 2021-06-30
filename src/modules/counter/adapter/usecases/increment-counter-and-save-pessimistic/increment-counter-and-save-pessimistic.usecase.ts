@@ -1,12 +1,8 @@
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { FLOW_CANCELLED } from '@stores/helpers/store.helpers';
-import { UseCase } from '@stores/helpers/store.types';
 import { action, makeObservable } from 'mobx';
-import { injectable } from 'tsyringe';
 import { IncrementCountEffect } from '../../effects/increment-count/increment-count.effect';
 
-@injectable()
-export class IncrementCounterAndSavePessimisticUseCase implements UseCase {
+export class IncrementCounterAndSavePessimisticUseCase {
     constructor(
         private store: CounterModel,
         private effect: IncrementCountEffect
@@ -21,9 +17,9 @@ export class IncrementCounterAndSavePessimisticUseCase implements UseCase {
             .execute(value)
             .then(this.saveSuccess)
             .catch((error: Error) => {
-                if (error.message === FLOW_CANCELLED) {
-                    return;
-                }
+                // if (error.message === FLOW_CANCELLED) {
+                //     return;
+                // }
                 throw error;
             });
     }

@@ -1,10 +1,6 @@
 import { noop } from '@core/core.helpers';
-import { makeContainerProvider } from '@stores/helpers/store.helpers';
 import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
-import { CounterController } from './adapter/counter.controller';
-import { CounterPresenter } from './adapter/counter.presenter';
-import { counterRegistry } from './adapter/counter.registry';
 
 export const counterTestIds = {
     addOneButton: 'add-one-button',
@@ -14,28 +10,14 @@ export const counterTestIds = {
     selectMultiplyCountOnTen: 'select-multiply-count-on-ten'
 };
 
-export const [
-    RootContainerProvider,
-    useRootContainer
-] = makeContainerProvider();
-
 export const Counter: FC = observer(() => {
-    const { useRegistry, container: rootContainer } = useRootContainer();
-    const { useAdapter, container: counterContainer } = useRegistry(
-        counterRegistry
-    );
-    const counterController = useAdapter(CounterController);
-    const counterPresenter = useAdapter(CounterPresenter);
-
-    noop(rootContainer, counterContainer);
-
-    const {
+    const [
         addOneButtonPushed,
         addOneAndSaveOptimisticButtonPushed,
         addOneAndSavePessimisticButtonPushed
-    } = counterController;
+    ] = [noop, noop, noop];
 
-    const { selectCount, selectMultiplyCountOnTen } = counterPresenter;
+    const [selectCount, selectMultiplyCountOnTen] = [0, 0];
 
     return (
         <div>
