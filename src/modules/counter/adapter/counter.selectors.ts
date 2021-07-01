@@ -1,15 +1,19 @@
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { computed, IComputedValue } from 'mobx';
 
-type Computed<T> = IComputedValue<T>;
-
 // Selector contains application specific selection logic
-export const countSelector = (counter: CounterState): Computed<number> =>
-    computed(() => counter.count$);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const selector = <R, Args extends any[]>(
+    fn: (...args: Args) => R
+): ((...args: Args) => IComputedValue<R>) => {
+    return (...args: Args): IComputedValue<R> => computed(() => fn(...args));
+};
 
-// const counteSel = selector((counter: CounterState) => counter.count$);
+export const countSelector = selector(
+    (stores: { counter: CounterState }) => stores.counter.count$
+);
 
-export const countMultiplySelector = (
-    counter: CounterState,
-    factor: number
-): Computed<number> => computed(() => counter.count$ * factor);
+export const countMultiplySelector = selector(
+    (factor: number, stores: { counter: CounterState }) =>
+        stores.counter.count$ * factor
+);

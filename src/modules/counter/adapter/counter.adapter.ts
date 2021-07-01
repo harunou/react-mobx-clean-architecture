@@ -34,7 +34,6 @@ const sliceCounterSourceStore = (rootStore: RootStore): CounterSourceStore => {
 export const counterAdapter = (rootStore: RootStore): unknown => {
     const counter = sliceCounterStore(rootStore);
     const counterSource = sliceCounterSourceStore(rootStore);
-    const multiplyFactor = 10;
 
     const getCount = getCountEffect(counterSource);
 
@@ -47,8 +46,8 @@ export const counterAdapter = (rootStore: RootStore): unknown => {
     let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
 
     return {
-        count$: countSelector(counter),
-        multiplyCount$: countMultiplySelector(counter, multiplyFactor),
+        count$: countSelector({ counter }),
+        multiplyTenTimesCount$: countMultiplySelector(10, { counter }),
         addOneButtonPushed: (): void => incrementCounterAction(1, { counter }),
         addOneAndSaveOptimisticButtonPushed: (): void => {
             incrementCounterAction(1, { counter });
