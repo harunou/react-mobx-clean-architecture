@@ -7,6 +7,8 @@ type Computed<T> = IComputedValue<T>;
 export const countSelector = (counter: CounterState): Computed<number> =>
     computed(() => counter.count$);
 
+// const counteSel = selector((counter: CounterState) => counter.count$);
+
 export const countMultiplySelector = (
     counter: CounterState,
     factor: number

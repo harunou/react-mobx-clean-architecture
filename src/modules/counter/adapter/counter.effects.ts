@@ -8,19 +8,15 @@ const runInFlow = <R>(
     return flow(generator)();
 };
 
-export const saveCountEffect = (counterSource: CounterSourceModel) => (
-    value: number
-): CancellablePromise<number> => {
-    return runInFlow(function* saveCountEffectGenerator(): Generator<
-        Promise<number>,
-        number,
-        number
-    > {
-        return yield counterSource.save(value);
-    });
-};
+export const saveCountEffect = flow(function* saveCountEffectGenerator(
+    value: number,
+    stores: { counterSource: CounterSourceModel }
+): Generator<Promise<number>, number, number> {
+    return yield stores.counterSource.save(value);
+});
 
-export const incrementCountEffect = (counterSource: CounterSourceModel) => (
+export const incrementCountEffect = (
+    counterSource: CounterSourceModel,
     value: number
 ): CancellablePromise<number> => {
     return runInFlow(function* saveCountEffectGenerator(): Generator<

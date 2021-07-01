@@ -37,10 +37,7 @@ export const counterAdapter = (rootStore: RootStore): unknown => {
     const multiplyFactor = 10;
 
     const getCount = getCountEffect(counterSource);
-    const saveCount = saveCountEffect(counterSource);
-    const incrementCount = incrementCountEffect(counterSource);
 
-    const incrementCounter = incrementCounterAction(counter);
     const incrementCounterSuccess = incrementCounterSuccessAction(counter);
     const incrementCounterFailure = incrementCounterFailureAction();
     const getCounterSuccess = getCounterSuccessAction(counter);
@@ -52,14 +49,14 @@ export const counterAdapter = (rootStore: RootStore): unknown => {
     return {
         count$: countSelector(counter),
         multiplyCount$: countMultiplySelector(counter, multiplyFactor),
-        addOneButtonPushed: (): void => incrementCounter(1),
+        addOneButtonPushed: (): void => incrementCounterAction(1, { counter }),
         addOneAndSaveOptimisticButtonPushed: (): void => {
-            incrementCounter(1);
-            saveCountPromise = saveCount(1);
+            incrementCounterAction(1, { counter });
+            saveCountPromise = saveCountEffect(1, { counterSource });
             saveCountPromise.catch(saveCounterFailureAction(counter, 1));
         },
         addOneAndSavePessimisticButtonPushed: (): void => {
-            incrementCountPromise = incrementCount(1);
+            incrementCountPromise = incrementCountEffect(counterSource, 1);
             incrementCountPromise
                 .then(incrementCounterSuccess)
                 .catch(incrementCounterFailure);

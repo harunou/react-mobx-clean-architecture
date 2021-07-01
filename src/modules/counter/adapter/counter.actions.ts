@@ -1,11 +1,14 @@
 import { noop } from '@core/core.helpers';
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { runInAction } from 'mobx/dist/internal';
+import { action, runInAction } from 'mobx/dist/internal';
 
 // action contains application logic, transaction of state from A to B
-export const incrementCounterAction = (counter: CounterModel) => (
-    value: number
-): void => runInAction(() => counter.increment(value));
+
+export const incrementCounterAction = action(
+    (value: number, stores: { counter: CounterModel }) => {
+        stores.counter.increment(value);
+    }
+);
 
 export const incrementCounterSuccessAction = (counter: CounterModel) => (
     value: number
