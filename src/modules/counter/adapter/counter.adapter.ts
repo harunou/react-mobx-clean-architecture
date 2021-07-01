@@ -3,11 +3,11 @@ import { CounterSourceStore } from '@stores/persistence/counter-source/counter-s
 import { RootStore } from '@stores/root/root.store';
 import { CancellablePromise, flow } from 'mobx/dist/internal';
 import {
+    incrementCounterSuccessAction,
+    getCounterSuccessAction,
     incrementCounterAction,
-    incrementCounterAndSaveOptimisticAction,
-    incrementCounterAndSavePessimisticAction,
-    enterCounterViewAction,
-    leaveCounterViewAction
+    incrementCounterFailureAction,
+    saveCounterFailureAction
 } from './counter.actions';
 import {
     getCountEffect,
@@ -41,40 +41,37 @@ export const counterAdapter = (rootStore: RootStore): unknown => {
     const incrementCount = incrementCountEffect(counterSource);
 
     const incrementCounter = incrementCounterAction(counter);
-    const incrementCounterAndSaveOptimistic = incrementCounterAndSaveOptimisticAction(
-        counter,
-        saveCount
-    );
-    const incrementCounterAndSavePessimistic = incrementCounterAndSavePessimisticAction(
-        counter,
-        incrementCount
-    );
-    const enterCounterView = enterCounterViewAction(counter, getCount);
-    const leaveCounterView = leaveCounterViewAction();
+    const incrementCounterSuccess = incrementCounterSuccessAction(counter);
+    const incrementCounterFailure = incrementCounterFailureAction();
+    const getCounterSuccess = getCounterSuccessAction(counter);
 
-    let saveOptimisticCountPromise: CancellablePromise<unknown> = makeCancellablePromiseStub();
-    let savePessimisticCountPromise: CancellablePromise<unknown> = makeCancellablePromiseStub();
-    let getCountPromise: CancellablePromise<unknown> = makeCancellablePromiseStub();
+    let saveCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
+    let incrementCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
+    let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
 
     return {
         count$: countSelector(counter),
         multiplyCount$: countMultiplySelector(counter, multiplyFactor),
         addOneButtonPushed: (): void => incrementCounter(1),
         addOneAndSaveOptimisticButtonPushed: (): void => {
-            saveOptimisticCountPromise = incrementCounterAndSaveOptimistic(1);
+            incrementCounter(1);
+            saveCountPromise = saveCount(1);
+            saveCountPromise.catch(saveCounterFailureAction(counter, 1));
         },
         addOneAndSavePessimisticButtonPushed: (): void => {
-            savePessimisticCountPromise = incrementCounterAndSavePessimistic(1);
+            incrementCountPromise = incrementCount(1);
+            incrementCountPromise
+                .then(incrementCounterSuccess)
+                .catch(incrementCounterFailure);
         },
         mounted: (): void => {
-            getCountPromise = enterCounterView();
+            getCountPromise = getCount();
+            getCountPromise.then(getCounterSuccess);
         },
         unmounted: (): void => {
-            leaveCounterView(
-                saveOptimisticCountPromise,
-                savePessimisticCountPromise,
-                getCountPromise
-            );
+            saveCountPromise.cancel();
+            incrementCountPromise.cancel();
+            getCountPromise.cancel();
         }
     };
 };

@@ -8,16 +8,6 @@ const runInFlow = <R>(
     return flow(generator)();
 };
 
-// Effect contains data fetching logic only, data transition from A to B
-// export const saveCountEffect = (
-//     counterSource: CounterSourceModel
-// ): ((value: number) => CancellablePromise<unknown>) =>
-//     flow(function* saveCountEffectGenerator(
-//         value: number
-//     ): Generator<Promise<number>, number, number> {
-//         return yield counterSource.save(value);
-//     });
-
 export const saveCountEffect = (counterSource: CounterSourceModel) => (
     value: number
 ): CancellablePromise<number> => {
