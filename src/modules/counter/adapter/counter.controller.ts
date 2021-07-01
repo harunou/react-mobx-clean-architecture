@@ -1,39 +1,67 @@
-import { action, makeObservable } from 'mobx';
-import { EnterCounterUseCase } from './usecases/enter-counter/enter-counter.usecase';
-import { IncrementCounterAndSaveOptimisticUseCase } from './usecases/increment-counter-and-save-optimistic/increment-counter-and-save-optimistic.usecase';
-import { IncrementCounterAndSavePessimisticUseCase } from './usecases/increment-counter-and-save-pessimistic/increment-counter-and-save-pessimistic.usecase';
-import { IncrementCounterUseCase } from './usecases/increment-counter/increment-counter.usecase';
-import { LeaveCounterUseCase } from './usecases/leave-counter/leave-counter.usecase';
+import { RootStore } from '@stores/root/root.store';
+import {
+    makeCancellablePromiseStub,
+    sliceCounterSourceStore,
+    sliceCounterStore
+} from '@stores/stores.helpers';
+import { Action } from '@stores/stores.types';
+import { CancellablePromise } from 'mobx/dist/internal';
+import {
+    incrementCounterSuccessAction,
+    getCounterSuccessAction,
+    incrementCounterAction,
+    incrementCounterFailureAction,
+    saveCounterFailureAction
+} from './counter.actions';
+import {
+    getCountEffect,
+    incrementCountEffect,
+    saveCountEffect
+} from './counter.effects';
 
-export class CounterController {
-    constructor(
-        private enterCounterUseCase: EnterCounterUseCase,
-        private leaveCounterUseCase: LeaveCounterUseCase,
-        private incrementCounterUseCase: IncrementCounterUseCase,
-        private incrementCounterAndSaveOptimisticUseCase: IncrementCounterAndSaveOptimisticUseCase,
-        private incrementCounterAndSavePessimisticUseCase: IncrementCounterAndSavePessimisticUseCase
-    ) {
-        makeObservable(this, {
-            mounted: action.bound,
-            unmounted: action.bound,
-            addOneButtonPushed: action.bound,
-            addOneAndSaveOptimisticButtonPushed: action.bound,
-            addOneAndSavePessimisticButtonPushed: action.bound
-        });
-    }
-    mounted(): void {
-        this.enterCounterUseCase.execute();
-    }
-    unmounted(): void {
-        this.leaveCounterUseCase.execute();
-    }
-    addOneButtonPushed(): void {
-        this.incrementCounterUseCase.execute(1);
-    }
-    addOneAndSaveOptimisticButtonPushed(): void {
-        this.incrementCounterAndSaveOptimisticUseCase.execute(1);
-    }
-    addOneAndSavePessimisticButtonPushed(): void {
-        this.incrementCounterAndSavePessimisticUseCase.execute(1);
-    }
+export interface CounterController {
+    addOneButtonPushed: Action;
+    addOneAndSaveOptimisticButtonPushed: Action;
+    addOneAndSavePessimisticButtonPushed: Action;
+    mounted: Action;
+    unmounted: Action;
 }
+
+export const counterController = (rootStore: RootStore): CounterController => {
+    const counter = sliceCounterStore(rootStore);
+    const counterSource = sliceCounterSourceStore(rootStore);
+
+    let saveCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
+    let incrementCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
+    let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
+
+    return {
+        addOneButtonPushed: (): void => incrementCounterAction(1, { counter }),
+        addOneAndSaveOptimisticButtonPushed: (): void => {
+            incrementCounterAction(1, { counter });
+            saveCountPromise = saveCountEffect(1, { counterSource });
+            saveCountPromise.catch(() =>
+                saveCounterFailureAction(1, { counter })
+            );
+        },
+        addOneAndSavePessimisticButtonPushed: (): void => {
+            incrementCountPromise = incrementCountEffect(1, { counterSource });
+            incrementCountPromise
+                .then((value) =>
+                    incrementCounterSuccessAction(value, { counter })
+                )
+                .catch((error: Error) => incrementCounterFailureAction(error));
+        },
+        mounted: (): void => {
+            getCountPromise = getCountEffect({ counterSource });
+            getCountPromise.then((value: number) =>
+                getCounterSuccessAction(value, { counter })
+            );
+        },
+        unmounted: (): void => {
+            saveCountPromise.cancel();
+            incrementCountPromise.cancel();
+            getCountPromise.cancel();
+        }
+    };
+};

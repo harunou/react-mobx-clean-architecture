@@ -1,41 +1,24 @@
 import { CounterSourceModel } from '@stores/persistence/counter-source/counter-source.types';
-import { CancellablePromise, flow } from 'mobx/dist/internal';
+import { effect } from '@stores/stores.helpers';
 
-const runInFlow = <R>(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    generator: () => Generator<any, R, any> | AsyncGenerator<any, R, any>
-): CancellablePromise<R> => {
-    return flow(generator)();
-};
-
-export const saveCountEffect = flow(function* saveCountEffectGenerator(
+export const saveCountEffect = effect(function* saveCountEffectGenerator(
     value: number,
     stores: { counterSource: CounterSourceModel }
 ): Generator<Promise<number>, number, number> {
     return yield stores.counterSource.save(value);
 });
 
-export const incrementCountEffect = (
-    counterSource: CounterSourceModel,
-    value: number
-): CancellablePromise<number> => {
-    return runInFlow(function* saveCountEffectGenerator(): Generator<
-        Promise<number>,
-        number,
-        number
-    > {
-        return yield counterSource.increment(value);
-    });
-};
+export const incrementCountEffect = effect(
+    function* incrementCountEffectGenerator(
+        value: number,
+        stores: { counterSource: CounterSourceModel }
+    ): Generator<Promise<number>, number, number> {
+        return yield stores.counterSource.increment(value);
+    }
+);
 
-export const getCountEffect = (
-    counterSource: CounterSourceModel
-) => (): CancellablePromise<number> => {
-    return runInFlow(function* saveCountEffectGenerator(): Generator<
-        Promise<number>,
-        number,
-        number
-    > {
-        return yield counterSource.get();
-    });
-};
+export const getCountEffect = effect(function* getCountEffectGenerator(stores: {
+    counterSource: CounterSourceModel;
+}): Generator<Promise<number>, number, number> {
+    return yield stores.counterSource.get();
+});

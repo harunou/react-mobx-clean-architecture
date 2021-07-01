@@ -1,22 +1,17 @@
-import { computed, makeObservable } from 'mobx';
-import { CountSelector } from './selectors/count/count.selector';
-import { MultiplyCountSelector } from './selectors/multiply-count/multiply-count.selector';
+import { RootStore } from '@stores/root/root.store';
+import { sliceCounterStore } from '@stores/stores.helpers';
+import { countMultiplySelector, countSelector } from './counter.selectors';
 
-export class CounterPresenter {
-    constructor(
-        private countSelector: CountSelector,
-        private multiplyCountSelector: MultiplyCountSelector
-    ) {
-        makeObservable(this, {
-            selectMultiplyCountOnTen: computed,
-            selectCount: computed
-        });
-    }
-    get selectMultiplyCountOnTen(): number {
-        return this.multiplyCountSelector.withProps(10).result;
-    }
-
-    get selectCount(): number {
-        return this.countSelector.result;
-    }
+export interface CounterPresenter {
+    count$: number;
+    multiplyTenTimesCount$: number;
 }
+
+export const counterPresenter = (rootStore: RootStore): CounterPresenter => {
+    const counter = sliceCounterStore(rootStore);
+
+    return {
+        count$: countSelector({ counter }),
+        multiplyTenTimesCount$: countMultiplySelector(10, { counter })
+    };
+};
