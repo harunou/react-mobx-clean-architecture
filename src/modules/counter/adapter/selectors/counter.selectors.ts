@@ -5,7 +5,7 @@ export const countSelector = selector(
     (stores: { counter: CounterState }) => stores.counter.count$
 );
 
-export const countMultiplySelector = selector(
+export const multiplyCountSelector = selector(
     (factor: number, stores: { counter: CounterState }) =>
         stores.counter.count$ * factor
 );

@@ -1,6 +1,9 @@
 import { RootStore } from '@stores/root/root.store';
 import { sliceCounterStore } from '@stores/stores.helpers';
-import { countMultiplySelector, countSelector } from './counter.selectors';
+import {
+    multiplyCountSelector,
+    countSelector
+} from './selectors/counter.selectors';
 
 export interface CounterPresenter {
     count$: number;
@@ -12,6 +15,6 @@ export const counterPresenter = (rootStore: RootStore): CounterPresenter => {
 
     return {
         count$: countSelector({ counter }),
-        multiplyTenTimesCount$: countMultiplySelector(10, { counter })
+        multiplyTenTimesCount$: multiplyCountSelector(10, { counter })
     };
 };

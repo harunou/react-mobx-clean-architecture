@@ -12,12 +12,12 @@ import {
     incrementCounterAction,
     incrementCounterFailureAction,
     saveCounterFailureAction
-} from './counter.actions';
+} from './actions/counter.actions';
 import {
     getCountEffect,
     incrementCountEffect,
     saveCountEffect
-} from './counter.effects';
+} from './effects/counter.effects';
 
 export interface CounterController {
     addOneButtonPushed: Action;
