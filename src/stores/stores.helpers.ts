@@ -7,6 +7,7 @@ import { RootStore } from './root/root.store';
 
 export const selector = computedFn;
 export const effect = flow;
+
 export function makeCancellablePromiseStub(): CancellablePromise<never> {
     const f = flow(function* generator() {
         /* noop */

@@ -9,7 +9,7 @@ import { CancellablePromise } from 'mobx/dist/internal';
 import {
     incrementCounterSuccessAction,
     getCounterSuccessAction,
-    incrementCounterAction,
+    incrementCounterRequestedAction,
     incrementCounterFailureAction,
     saveCounterFailureAction
 } from './actions/counter.actions';
@@ -36,9 +36,10 @@ export const counterController = (rootStore: RootStore): CounterController => {
     let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
 
     return {
-        addOneButtonPushed: (): void => incrementCounterAction(1, { counter }),
+        addOneButtonPushed: (): void =>
+            incrementCounterRequestedAction(1, { counter }),
         addOneAndSaveOptimisticButtonPushed: (): void => {
-            incrementCounterAction(1, { counter });
+            incrementCounterRequestedAction(1, { counter });
             saveCountPromise = saveCountEffect(1, { counterSource });
             saveCountPromise.catch(() =>
                 saveCounterFailureAction(1, { counter })

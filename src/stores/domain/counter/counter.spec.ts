@@ -5,8 +5,7 @@ describe(`${CounterStore.name}`, () => {
     let store: CounterStore;
     beforeEach(() => {
         initial = 5;
-        store = new CounterStore();
-        store.setCount(initial);
+        store = new CounterStore(initial);
     });
     it('sets new count state upon setState call', () => {
         const count = 7;

@@ -1,8 +1,8 @@
 import { noop } from '@core/core.helpers';
 import { CounterModel } from '@stores/domain/counter/counter.types';
-import { action } from 'mobx/dist/internal';
+import { action } from 'mobx';
 
-export const incrementCounterAction = action(
+export const incrementCounterRequestedAction = action(
     (value: number, stores: { counter: CounterModel }) => {
         stores.counter.increment(value);
     }

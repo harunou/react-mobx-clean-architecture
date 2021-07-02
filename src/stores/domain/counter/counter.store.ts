@@ -3,18 +3,20 @@ import { CounterModel } from './counter.types';
 
 export class CounterStore implements CounterModel {
     static make(): CounterStore {
-        return new CounterStore();
+        const initial = 0;
+        return new CounterStore(initial);
     }
 
     count$ = 0;
 
-    constructor() {
+    constructor(initial: number) {
         makeObservable(this, {
             count$: observable,
             setCount: action,
             increment: action,
             decrement: action
         });
+        this.setCount(initial);
     }
 
     setCount(value: number): void {
