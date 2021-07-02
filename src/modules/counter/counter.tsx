@@ -1,23 +1,44 @@
 import { noop } from '@core/core.helpers';
+import { RootStore } from '@stores/root/root.store';
+import {
+    useMountedHook,
+    useStore,
+    useUnMountedHook
+} from '@stores/stores.helpers';
 import { observer } from 'mobx-react-lite';
-import { FC } from 'react';
+import { createContext, FC } from 'react';
+import { counterController } from './adapter/counter.controller';
+import { counterPresenter } from './adapter/counter.presenter';
 
 export const counterTestIds = {
     addOneButton: 'add-one-button',
     addOneAndSaveOptimisticButton: 'add-one-and-save-optimistic-button',
     addOneAndSavePessimisticButton: 'add-one-and-save-pessimistic-button',
     selectCount: 'select-count',
-    selectMultiplyCountOnTen: 'select-multiply-count-on-ten'
+    selectMultiplyTenTimesCount: 'select-multiply-ten-times-count'
 };
 
+export const RootStoreContext = createContext({} as RootStore);
+
 export const Counter: FC = observer(() => {
-    const [
+    const { useAdapter, store } = useStore(RootStoreContext);
+
+    noop(store);
+
+    const controller = useAdapter(counterController);
+    const presenter = useAdapter(counterPresenter);
+
+    const {
         addOneButtonPushed,
         addOneAndSaveOptimisticButtonPushed,
-        addOneAndSavePessimisticButtonPushed
-    ] = [noop, noop, noop];
+        addOneAndSavePessimisticButtonPushed,
+        mounted,
+        unmounted
+    } = controller;
+    const { selectCount$, selectMultiplyTenTimesCount$ } = presenter;
 
-    const [selectCount, selectMultiplyCountOnTen] = [0, 0];
+    useMountedHook(() => mounted());
+    useUnMountedHook(() => unmounted());
 
     return (
         <div>
@@ -39,9 +60,9 @@ export const Counter: FC = observer(() => {
             >
                 +1 and save pessimistic
             </button>
-            <span data-testid={counterTestIds.selectCount}>{selectCount}</span>
-            <span data-testid={counterTestIds.selectMultiplyCountOnTen}>
-                {selectMultiplyCountOnTen}
+            <span data-testid={counterTestIds.selectCount}>{selectCount$}</span>
+            <span data-testid={counterTestIds.selectMultiplyTenTimesCount}>
+                {selectMultiplyTenTimesCount$}
             </span>
             <button onClick={noop}>-1</button>
         </div>

@@ -36,7 +36,7 @@ describe.skip(`Counter`, () => {
         const { queryByTestId, rerender } = render(sut);
         const selectCount = queryByTestId(counterTestIds.selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCountOnTen
+            counterTestIds.selectMultiplyTenTimesCount
         );
 
         expect(selectCount).toHaveTextContent(`${initial}`);
@@ -80,7 +80,7 @@ describe.skip(`Counter`, () => {
         assert(button);
         const selectCount = queryByTestId(counterTestIds.selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCountOnTen
+            counterTestIds.selectMultiplyTenTimesCount
         );
 
         await act(async () =>
@@ -108,7 +108,7 @@ describe.skip(`Counter`, () => {
         assert(button);
         const selectCount = queryByTestId(counterTestIds.selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCountOnTen
+            counterTestIds.selectMultiplyTenTimesCount
         );
 
         await act(async () =>
@@ -145,7 +145,7 @@ describe.skip(`Counter`, () => {
         assert(button);
         const selectCount = queryByTestId(counterTestIds.selectCount);
         const selectMultiplyCount = queryByTestId(
-            counterTestIds.selectMultiplyCountOnTen
+            counterTestIds.selectMultiplyTenTimesCount
         );
 
         await act(async () =>

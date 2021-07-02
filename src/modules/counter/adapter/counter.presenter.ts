@@ -6,15 +6,15 @@ import {
 } from './selectors/counter.selectors';
 
 export interface CounterPresenter {
-    count$: number;
-    multiplyTenTimesCount$: number;
+    selectCount$: number;
+    selectMultiplyTenTimesCount$: number;
 }
 
 export const counterPresenter = (rootStore: RootStore): CounterPresenter => {
     const counter = sliceCounterStore(rootStore);
 
     return {
-        count$: countSelector({ counter }),
-        multiplyTenTimesCount$: multiplyCountSelector(10, { counter })
+        selectCount$: countSelector({ counter }),
+        selectMultiplyTenTimesCount$: multiplyCountSelector(10, { counter })
     };
 };
