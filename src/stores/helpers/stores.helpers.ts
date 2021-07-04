@@ -5,7 +5,7 @@ import { Context, useContext, useEffect, useMemo } from 'react';
 import { CounterStore } from '../domain/counter/counter.store';
 import { CounterSourceStore } from '../persistence/counter-source/counter-source.store';
 import { RootStore } from '../root/root.store';
-import { UseAdapterHook } from '../stores.types';
+import { UseAdapterHook, UseStoreHook } from '../stores.types';
 
 export const selector = computedFn;
 export const effect = flow;
@@ -17,9 +17,7 @@ export function makeCancellablePromiseStub(): CancellablePromise<never> {
     return f() as CancellablePromise<never>;
 }
 
-export function useStore<T>(
-    context: Context<T>
-): { store: T; useAdapter: UseAdapterHook<T> } {
+export function useStore<T>(context: Context<T>): UseStoreHook<T> {
     const store = useContext(context);
     const useAdapter = useMemo(() => makeUseAdapterHook(store), [store]);
     return {
