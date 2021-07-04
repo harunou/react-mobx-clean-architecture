@@ -1,5 +1,4 @@
-import { counterRemoteSourceServiceMock } from '@api/counterRemoteSource/counterRemoteSource.mocks';
-import { CounterSourceStore } from '@stores/persistence/counter-source/counter-source.store';
+import { makeCounterSourceModelMock } from '@stores/persistence/counter-source/counter-source.mock';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import {
@@ -10,13 +9,11 @@ import {
 
 describe(`${getCountEffect.name}`, () => {
     const initial = 3;
-    let counterSourceService: CounterSource;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
 
     beforeEach(() => {
-        counterSourceService = counterRemoteSourceServiceMock(initial);
-        counterSource = new CounterSourceStore(counterSourceService);
+        counterSource = makeCounterSourceModelMock(initial);
         jest.spyOn(counterSource, 'get');
         effect = getCountEffect({ counterSource });
     });
@@ -32,12 +29,10 @@ describe(`${getCountEffect.name}`, () => {
 describe(`${incrementCountEffect.name}`, () => {
     const initial = 4;
     const increment = 3;
-    let counterSourceService: CounterSource;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
     beforeEach(() => {
-        counterSourceService = counterRemoteSourceServiceMock(initial);
-        counterSource = new CounterSourceStore(counterSourceService);
+        counterSource = makeCounterSourceModelMock(initial);
         jest.spyOn(counterSource, 'increment');
         effect = incrementCountEffect(increment, {
             counterSource
@@ -56,12 +51,10 @@ describe(`${incrementCountEffect.name}`, () => {
 describe.skip(`${saveCountEffect.name}`, () => {
     const initial = 4;
     const count = 3;
-    let counterSourceService: CounterSource;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
     beforeEach(() => {
-        counterSourceService = counterRemoteSourceServiceMock(initial);
-        counterSource = new CounterSourceStore(counterSourceService);
+        counterSource = makeCounterSourceModelMock(initial);
         jest.spyOn(counterSource, 'increment');
         effect = saveCountEffect(count, {
             counterSource
