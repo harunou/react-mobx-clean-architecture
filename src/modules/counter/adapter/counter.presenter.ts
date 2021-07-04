@@ -1,5 +1,5 @@
 import { RootStore } from '@stores/root/root.store';
-import { sliceCounterStore } from '@stores/stores.helpers';
+import { sliceCounterStore } from '@stores/helpers/stores.helpers';
 import {
     multiplyCountSelector,
     countSelector

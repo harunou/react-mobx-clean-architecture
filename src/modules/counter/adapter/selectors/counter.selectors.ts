@@ -1,5 +1,5 @@
 import { CounterState } from '@stores/domain/counter/counter.types';
-import { selector } from '@stores/stores.helpers';
+import { selector } from '@stores/helpers/stores.helpers';
 
 export const countSelector = selector(
     (stores: { counter: CounterState }) => stores.counter.count$

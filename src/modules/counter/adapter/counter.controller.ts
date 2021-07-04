@@ -3,7 +3,7 @@ import {
     makeCancellablePromiseStub,
     sliceCounterSourceStore,
     sliceCounterStore
-} from '@stores/stores.helpers';
+} from '@stores/helpers/stores.helpers';
 import { Action } from '@stores/stores.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import {

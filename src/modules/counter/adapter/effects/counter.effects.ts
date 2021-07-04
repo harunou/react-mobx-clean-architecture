@@ -1,5 +1,5 @@
 import { CounterSourceModel } from '@stores/persistence/counter-source/counter-source.types';
-import { effect } from '@stores/stores.helpers';
+import { effect } from '@stores/helpers/stores.helpers';
 
 export const saveCountEffect = effect(function* saveCountEffectGenerator(
     value: number,

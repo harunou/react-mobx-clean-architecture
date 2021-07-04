@@ -2,10 +2,10 @@ import { flow } from 'mobx';
 import { computedFn } from 'mobx-utils';
 import { CancellablePromise } from 'mobx/dist/internal';
 import { Context, useContext, useEffect, useMemo } from 'react';
-import { CounterStore } from './domain/counter/counter.store';
-import { CounterSourceStore } from './persistence/counter-source/counter-source.store';
-import { RootStore } from './root/root.store';
-import { UseAdapterHook } from './stores.types';
+import { CounterStore } from '../domain/counter/counter.store';
+import { CounterSourceStore } from '../persistence/counter-source/counter-source.store';
+import { RootStore } from '../root/root.store';
+import { UseAdapterHook } from '../stores.types';
 
 export const selector = computedFn;
 export const effect = flow;

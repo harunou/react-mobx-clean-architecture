@@ -4,7 +4,7 @@ import {
     useMountedHook,
     useStore,
     useUnMountedHook
-} from '@stores/stores.helpers';
+} from '@stores/helpers/stores.helpers';
 import { observer } from 'mobx-react-lite';
 import { createContext, FC } from 'react';
 import { counterController } from './adapter/counter.controller';
