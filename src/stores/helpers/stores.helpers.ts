@@ -9,6 +9,7 @@ import { UseAdapterHook, UseStoreHook } from '../stores.types';
 
 export const selector = computedFn;
 export const effect = flow;
+export const FLOW_CANCELLED = 'FLOW_CANCELLED';
 
 export function makeCancellablePromiseStub(): CancellablePromise<never> {
     const f = flow(function* generator() {

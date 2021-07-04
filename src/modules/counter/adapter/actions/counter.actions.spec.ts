@@ -22,7 +22,7 @@ describe(`${incrementCounterSuccessAction.name}`, () => {
         const value = 3;
         const counter = new CounterStore(initial);
         incrementCounterSuccessAction(value, { counter });
-        expect(counter.count$).toEqual(value + initial);
+        expect(counter.count$).toEqual(value);
     });
 });
 

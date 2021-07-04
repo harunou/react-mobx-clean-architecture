@@ -1,9 +1,9 @@
 import { httpClient } from '@core/http-client';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 
-export const COUNTER_GET_COUNT_ENDPOINT = 'counter/get';
-export const COUNTER_INCREMENT_ENDPOINT = 'counter/increment';
-export const COUNTER_SAVE_COUNT_ENDPOINT = 'counter/save';
+export const COUNTER_GET_COUNT_ENDPOINT = '/fake-api/counter/get';
+export const COUNTER_INCREMENT_ENDPOINT = '/fake-api/counter/increment';
+export const COUNTER_SAVE_COUNT_ENDPOINT = '/fake-api/counter/save';
 
 export class CounterRemoteSourceService implements CounterSource {
     static make(): CounterRemoteSourceService {

@@ -4,6 +4,7 @@ import {
     sliceCounterSourceStore,
     sliceCounterStore
 } from '@stores/helpers/stores.helpers';
+import { makeAutoObservable } from 'mobx';
 import { Action } from '@stores/stores.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import {
@@ -11,7 +12,8 @@ import {
     getCounterSuccessAction,
     incrementCounterRequestedAction,
     incrementCounterFailureAction,
-    saveCounterFailureAction
+    saveCounterFailureAction,
+    getCounterFailureAction
 } from './actions/counter.actions';
 import {
     getCountEffect,
@@ -35,12 +37,14 @@ export const counterController = (rootStore: RootStore): CounterController => {
     let incrementCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
     let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
 
-    return {
+    return makeAutoObservable({
         addOneButtonPushed: (): void =>
             incrementCounterRequestedAction(1, { counter }),
         addOneAndSaveOptimisticButtonPushed: (): void => {
             incrementCounterRequestedAction(1, { counter });
-            saveCountPromise = saveCountEffect(1, { counterSource });
+            saveCountPromise = saveCountEffect(counter.count$, {
+                counterSource
+            });
             saveCountPromise.catch(() =>
                 saveCounterFailureAction(1, { counter })
             );
@@ -48,21 +52,25 @@ export const counterController = (rootStore: RootStore): CounterController => {
         addOneAndSavePessimisticButtonPushed: (): void => {
             incrementCountPromise = incrementCountEffect(1, { counterSource });
             incrementCountPromise
-                .then((value) =>
-                    incrementCounterSuccessAction(value, { counter })
-                )
+                .then((value) => {
+                    incrementCounterSuccessAction(value, { counter });
+                })
                 .catch((error: Error) => incrementCounterFailureAction(error));
         },
         mounted: (): void => {
             getCountPromise = getCountEffect({ counterSource });
-            getCountPromise.then((value: number) =>
-                getCounterSuccessAction(value, { counter })
-            );
+            getCountPromise
+                .then((value: number) =>
+                    getCounterSuccessAction(value, { counter })
+                )
+                .catch((error: Error) => {
+                    getCounterFailureAction(error);
+                });
         },
         unmounted: (): void => {
             saveCountPromise.cancel();
             incrementCountPromise.cancel();
             getCountPromise.cancel();
         }
-    };
+    });
 };

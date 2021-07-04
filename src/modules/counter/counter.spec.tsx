@@ -4,23 +4,26 @@ import {
     COUNTER_SAVE_COUNT_ENDPOINT
 } from '@api/counterRemoteSource/counterRemoteSource.service';
 import { httpClient } from '@core/http-client';
+import { RootStore } from '@stores/root/root.store';
 import { act, fireEvent, render, within } from '@testing-library/react';
 import assert from 'assert';
 import { StrictMode } from 'react';
-import { counterTestIds } from './counter';
+import { multiplyFactor } from './adapter/counter.presenter';
+import { Counter, counterTestIds, RootStoreContext } from './counter';
 
-describe.skip(`Counter`, () => {
+describe(`Counter`, () => {
     const initial = 0;
     let count: number;
     let sut: JSX.Element;
+    let rootStore: RootStore;
     beforeEach(() => {
         count = 3;
-        // const rootContainer = makeRootContainer(rootRegistry);
+        rootStore = RootStore.make();
         sut = (
             <StrictMode>
-                {/* <RootContainerProvider container={rootContainer}>
+                <RootStoreContext.Provider value={rootStore}>
                     <Counter />
-                </RootContainerProvider> */}
+                </RootStoreContext.Provider>
             </StrictMode>
         );
     });
@@ -40,7 +43,9 @@ describe.skip(`Counter`, () => {
         );
 
         expect(selectCount).toHaveTextContent(`${initial}`);
-        expect(selectMultiplyCount).toHaveTextContent(`${initial * 10}`);
+        expect(selectMultiplyCount).toHaveTextContent(
+            `${initial * multiplyFactor}`
+        );
 
         await act(async () =>
             httpClient
@@ -48,13 +53,18 @@ describe.skip(`Counter`, () => {
                 .resolve(count)
         );
 
+        await new Promise((resolve) => setTimeout(resolve, 0));
         expect(selectCount).toHaveTextContent(`${count}`);
-        expect(selectMultiplyCount).toHaveTextContent(`${count * 0}`);
+        expect(selectMultiplyCount).toHaveTextContent(
+            `${count * multiplyFactor}`
+        );
 
         rerender(sut);
 
         expect(selectCount).toHaveTextContent(`${count}`);
-        expect(selectMultiplyCount).toHaveTextContent(`${count * 0}`);
+        expect(selectMultiplyCount).toHaveTextContent(
+            `${count * multiplyFactor}`
+        );
     });
     it('cancels initial effect once destroyed before response', async () => {
         const { unmount } = render(sut);
@@ -97,7 +107,9 @@ describe.skip(`Counter`, () => {
         count += 1;
 
         expect(selectCount).toHaveTextContent(`${count}`);
-        expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
+        expect(selectMultiplyCount).toHaveTextContent(
+            `${count * multiplyFactor}`
+        );
     });
     it('increments store, saves optimistic and renders result', async () => {
         const { queryByTestId } = render(sut);
@@ -134,7 +146,9 @@ describe.skip(`Counter`, () => {
         await act(async () => pendingRequest.resolve(count));
 
         expect(selectCount).toHaveTextContent(`${count}`);
-        expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
+        expect(selectMultiplyCount).toHaveTextContent(
+            `${count * multiplyFactor}`
+        );
     });
     it('increments store, saves pessimistic and renders result', async () => {
         const { queryByTestId } = render(sut);
@@ -172,7 +186,9 @@ describe.skip(`Counter`, () => {
         await act(async () => pendingRequest.resolve(count));
 
         expect(selectCount).toHaveTextContent(`${count}`);
-        expect(selectMultiplyCount).toHaveTextContent(`${count * 10}`);
+        expect(selectMultiplyCount).toHaveTextContent(
+            `${count * multiplyFactor}`
+        );
     });
     it('cancels pessimistic effect once counter destroyed before response', async () => {
         const { queryByTestId, unmount, rerender } = render(sut);
@@ -212,26 +228,27 @@ describe.skip(`Counter`, () => {
     });
 });
 
-describe.skip(`Double Counter app`, () => {
+describe(`Double Counter app`, () => {
     const countersTestIds = {
         counter0: 'counter-0',
         counter1: 'counter-1'
     };
     let count: number;
     let sut: JSX.Element;
+    let rootStore: RootStore;
     beforeEach(() => {
         count = 3;
-        // const rootContainer = makeRootContainer(rootRegistry);
+        rootStore = RootStore.make();
         sut = (
             <StrictMode>
-                {/* <RootContainerProvider container={rootContainer}>
+                <RootStoreContext.Provider value={rootStore}>
                     <div data-testid={countersTestIds.counter0}>
                         <Counter />
                     </div>
                     <div data-testid={countersTestIds.counter1}>
                         <Counter />
                     </div>
-                </RootContainerProvider> */}
+                </RootStoreContext.Provider>
             </StrictMode>
         );
     });

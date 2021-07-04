@@ -18,7 +18,8 @@ export const counterTestIds = {
     selectMultiplyTenTimesCount: 'select-multiply-ten-times-count'
 };
 
-export const RootStoreContext = createContext({} as RootStore);
+export const rootStore = RootStore.make();
+export const RootStoreContext = createContext(rootStore);
 
 export const Counter: FC = observer(() => {
     const { useAdapter, store } = useStore(RootStoreContext);
@@ -35,10 +36,10 @@ export const Counter: FC = observer(() => {
         mounted,
         unmounted
     } = controller;
-    const { selectCount$, selectMultiplyTenTimesCount$ } = presenter;
+    const { count$, multiplyTenTimesCount$ } = presenter;
 
-    useMountedHook(() => mounted());
-    useUnMountedHook(() => unmounted());
+    useMountedHook(mounted);
+    useUnMountedHook(unmounted);
 
     return (
         <div>
@@ -60,9 +61,9 @@ export const Counter: FC = observer(() => {
             >
                 +1 and save pessimistic
             </button>
-            <span data-testid={counterTestIds.selectCount}>{selectCount$}</span>
+            <span data-testid={counterTestIds.selectCount}>{count$}</span>
             <span data-testid={counterTestIds.selectMultiplyTenTimesCount}>
-                {selectMultiplyTenTimesCount$}
+                {multiplyTenTimesCount$}
             </span>
             <button onClick={noop}>-1</button>
         </div>
