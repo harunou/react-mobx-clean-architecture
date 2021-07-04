@@ -1,47 +1,47 @@
 import { CounterStore } from '@stores/domain/counter/counter.store';
 import {
-    getCounterSuccess,
-    incrementCounterRequested,
-    incrementCounterSuccess,
-    saveCounterFailure
+    getCounterSuccessAction,
+    incrementCounterRequestedAction,
+    incrementCounterSuccessAction,
+    saveCounterFailureAction
 } from './counter.actions';
 
-describe(`${incrementCounterRequested.name}`, () => {
+describe(`${incrementCounterRequestedAction.name}`, () => {
     it('increments count', () => {
         const initial = 5;
         const value = 3;
         const counter = new CounterStore(initial);
-        incrementCounterRequested(value, { counter });
+        incrementCounterRequestedAction(value, { counter });
         expect(counter.count$).toEqual(value + initial);
     });
 });
 
-describe(`${incrementCounterSuccess.name}`, () => {
+describe(`${incrementCounterSuccessAction.name}`, () => {
     it('increments count', () => {
         const initial = 5;
         const value = 3;
         const counter = new CounterStore(initial);
-        incrementCounterSuccess(value, { counter });
+        incrementCounterSuccessAction(value, { counter });
         expect(counter.count$).toEqual(value);
     });
 });
 
-describe(`${saveCounterFailure.name}`, () => {
+describe(`${saveCounterFailureAction.name}`, () => {
     it('decrements counter', () => {
         const initial = 5;
         const value = 3;
         const counter = new CounterStore(initial);
-        saveCounterFailure(value, { counter });
+        saveCounterFailureAction(value, { counter });
         expect(counter.count$).toEqual(initial - value);
     });
 });
 
-describe(`${getCounterSuccess.name}`, () => {
+describe(`${getCounterSuccessAction.name}`, () => {
     it('sets counter', () => {
         const initial = 5;
         const value = 3;
         const counter = new CounterStore(initial);
-        getCounterSuccess(value, { counter });
+        getCounterSuccessAction(value, { counter });
         expect(counter.count$).toEqual(value);
     });
 });
