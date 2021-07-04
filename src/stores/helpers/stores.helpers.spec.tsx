@@ -2,7 +2,12 @@ import { UseAdapterHook } from '@stores/stores.types';
 import { renderHook } from '@testing-library/react-hooks';
 import assert from 'assert';
 import { createContext, FC } from 'react';
-import { makeUseAdapterHook, useStore } from './stores.helpers';
+import {
+    makeUseAdapterHook,
+    useMountedHook,
+    useStore,
+    useUnMountedHook
+} from './stores.helpers';
 
 class Store {
     private type = 'store';
@@ -152,5 +157,31 @@ describe(`useStoreHook`, () => {
         expect(first.useAdapter !== second.useAdapter).toEqual(true);
         expect(first.contextStore !== second.contextStore).toEqual(true);
         expect(first.storeAdapter !== second.storeAdapter).toEqual(true);
+    });
+});
+
+describe(`${useMountedHook.name}`, () => {
+    it('run once when component mounted', () => {
+        const mounted = jest.fn();
+        const { rerender, unmount } = renderHook(() => useMountedHook(mounted));
+
+        rerender();
+        unmount();
+
+        expect(mounted).toBeCalledTimes(1);
+    });
+});
+
+describe(`${useUnMountedHook.name}`, () => {
+    it('run once when component unmounted', () => {
+        const unmounted = jest.fn();
+        const { rerender, unmount } = renderHook(() =>
+            useUnMountedHook(unmounted)
+        );
+
+        rerender();
+        unmount();
+
+        expect(unmounted).toBeCalledTimes(1);
     });
 });
