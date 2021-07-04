@@ -8,8 +8,12 @@ import { RootStore } from '@stores/root/root.store';
 import { act, fireEvent, render, within } from '@testing-library/react';
 import assert from 'assert';
 import { StrictMode } from 'react';
-import { multiplyFactor } from './adapter/counter.presenter';
-import { Counter, counterTestIds, RootStoreContext } from './counter';
+import {
+    Counter,
+    counterTestIds,
+    multiplyFactor,
+    RootStoreContext
+} from './counter';
 
 describe(`Counter`, () => {
     const initial = 0;

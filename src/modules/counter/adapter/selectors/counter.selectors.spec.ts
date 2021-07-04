@@ -1,8 +1,8 @@
 import { CounterState } from '@stores/domain/counter/counter.types';
 import { runInReactiveContext } from '@testing-tools/testing-tools.helpers';
-import { selectCount$, selectMultiplyCount$ } from './counter.selectors';
+import { countSelector, multiplyCountSelector } from './counter.selectors';
 
-describe(`${selectCount$.name}`, () => {
+describe(`${countSelector.name}`, () => {
     it('selects $count value from store', () => {
         const count = 3;
         const counter: CounterState = {
@@ -10,14 +10,14 @@ describe(`${selectCount$.name}`, () => {
         };
         const result: number[] = [];
         runInReactiveContext(() => {
-            const select = selectCount$({ counter });
+            const select = countSelector({ counter });
             result.push(select);
         });
         expect(result).toEqual([count]);
     });
 });
 
-describe(`${selectMultiplyCount$.name}`, () => {
+describe(`${multiplyCountSelector.name}`, () => {
     it('selects $count value from store and multiply on predefined value', () => {
         const count = 3;
         const counter: CounterState = {
@@ -27,7 +27,7 @@ describe(`${selectMultiplyCount$.name}`, () => {
         const result: number[] = [];
 
         runInReactiveContext(() => {
-            const select = selectMultiplyCount$(factor, { counter });
+            const select = multiplyCountSelector(factor, { counter });
             result.push(select);
         });
         expect(result).toEqual([count * factor]);
