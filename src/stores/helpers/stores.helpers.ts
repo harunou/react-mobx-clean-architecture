@@ -2,10 +2,7 @@ import { flow, observable } from 'mobx';
 import { computedFn } from 'mobx-utils';
 import { AnnotationsMap, CancellablePromise } from 'mobx/dist/internal';
 import { Context, useContext, useEffect, useMemo } from 'react';
-import { CounterStore } from '../domain/counter/counter.store';
-import { CounterSourceStore } from '../persistence/counter-source/counter-source.store';
-import { RootStore } from '../root/root.store';
-import { UseAdapterHook, UseStoreHook } from '../stores.types';
+import { UseAdapterHook, UseStoreHook } from './stores.types';
 
 export const selector = computedFn;
 export const effect = flow;
@@ -53,13 +50,3 @@ export function useUnMountedHook(fn: () => void): void {
         return fn;
     }, []);
 }
-
-export const sliceCounterStore = (rootStore: RootStore): CounterStore => {
-    return rootStore.domain.counter;
-};
-
-export const sliceCounterSourceStore = (
-    rootStore: RootStore
-): CounterSourceStore => {
-    return rootStore.persistence.counterSource;
-};

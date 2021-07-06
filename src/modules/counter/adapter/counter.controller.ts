@@ -1,13 +1,13 @@
 import { RootStore } from '@stores/root/root.store';
-import {
-    makeCancellablePromiseStub,
-    sliceCounterSourceStore,
-    sliceCounterStore
-} from '@stores/helpers/stores.helpers';
-import { Action } from '@stores/stores.types';
+import { makeCancellablePromiseStub } from '@stores/helpers/stores.helpers';
+import { Action } from '@stores/helpers/stores.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import { counterEffects } from './effects/counter.effects';
 import { counterActions } from './actions/counter.actions';
+import {
+    sliceCounterSourceStore,
+    sliceCounterStore
+} from '@stores/root/root.helpers';
 
 export interface CounterController {
     addOneButtonPushed: Action;

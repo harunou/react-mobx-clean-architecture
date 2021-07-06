@@ -1,4 +1,4 @@
-import { UseAdapterHook } from '@stores/stores.types';
+import { UseAdapterHook } from '@stores/helpers/stores.types';
 import { renderHook } from '@testing-library/react-hooks';
 import assert from 'assert';
 import { createContext, FC } from 'react';
