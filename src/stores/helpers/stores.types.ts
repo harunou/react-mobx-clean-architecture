@@ -1,4 +1,5 @@
 export type Action = () => void;
+export type ActionWithPayload<T> = (payload: T) => void;
 
 export type UseStoreHook<T> = { store: T; useAdapter: UseAdapterHook<T> };
 
