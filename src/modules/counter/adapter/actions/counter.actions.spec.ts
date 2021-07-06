@@ -1,47 +1,47 @@
 import { CounterStore } from '@stores/domain/counter/counter.store';
 import {
-    getCounterSuccessAction,
-    incrementCounterRequestedAction,
-    incrementCounterSuccessAction,
-    saveCounterFailureAction
+    getCounterEffectSuccess,
+    incrementCounterRequested,
+    incrementCounterEffectSuccess,
+    setCounterEffectFailure
 } from './counter.actions';
 
-describe(`${incrementCounterRequestedAction.name}`, () => {
+describe(`${incrementCounterRequested.name}`, () => {
     it('increments count', () => {
         const initial = 5;
         const value = 3;
         const counter = new CounterStore(initial);
-        incrementCounterRequestedAction(value, { counter });
+        incrementCounterRequested(value, { counter });
         expect(counter.count$).toEqual(value + initial);
     });
 });
 
-describe(`${incrementCounterSuccessAction.name}`, () => {
+describe(`${incrementCounterEffectSuccess.name}`, () => {
     it('increments count', () => {
         const initial = 5;
         const value = 3;
         const counter = new CounterStore(initial);
-        incrementCounterSuccessAction(value, { counter });
+        incrementCounterEffectSuccess(value, { counter });
         expect(counter.count$).toEqual(value);
     });
 });
 
-describe(`${saveCounterFailureAction.name}`, () => {
+describe(`${setCounterEffectFailure.name}`, () => {
     it('decrements counter', () => {
         const initial = 5;
         const value = 3;
         const counter = new CounterStore(initial);
-        saveCounterFailureAction(value, { counter });
+        setCounterEffectFailure(value, { counter });
         expect(counter.count$).toEqual(initial - value);
     });
 });
 
-describe(`${getCounterSuccessAction.name}`, () => {
+describe(`${getCounterEffectSuccess.name}`, () => {
     it('sets counter', () => {
         const initial = 5;
         const value = 3;
         const counter = new CounterStore(initial);
-        getCounterSuccessAction(value, { counter });
+        getCounterEffectSuccess(value, { counter });
         expect(counter.count$).toEqual(value);
     });
 });
