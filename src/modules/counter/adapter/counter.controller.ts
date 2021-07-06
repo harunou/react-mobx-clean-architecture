@@ -10,6 +10,7 @@ import {
 } from '@stores/root/root.helpers';
 
 export interface CounterController {
+    addAnyButtonPushed: (value: number) => void;
     addOneButtonPushed: Action;
     addOneAndSaveOptimisticButtonPushed: Action;
     addOneAndSavePessimisticButtonPushed: Action;
@@ -26,6 +27,8 @@ export const counterController = (rootStore: RootStore): CounterController => {
     let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
 
     return {
+        addAnyButtonPushed: (value: number): void =>
+            counterActions.incrementCounterRequested(value, { counter }),
         addOneButtonPushed: (): void =>
             counterActions.incrementCounterRequested(1, { counter }),
         addOneAndSaveOptimisticButtonPushed: (): void => {
