@@ -2,70 +2,67 @@ import { makeCounterSourceModelMock } from '@stores/persistence/counter-source/c
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import {
-    getCountEffect,
-    incrementCountEffect,
-    saveCountEffect
+    getCounterEffect,
+    incrementCounterEffect,
+    setCounterEffect
 } from './counter.effects';
 
-describe(`${getCountEffect.name}`, () => {
+describe(`${getCounterEffect.name}`, () => {
     const initial = 3;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
 
     beforeEach(() => {
         counterSource = makeCounterSourceModelMock(initial);
-        jest.spyOn(counterSource, 'get');
-        effect = getCountEffect({ counterSource });
+        effect = getCounterEffect({ counterSource });
     });
-    it('calls count service get method', async () => {
+    it('calls counter source getCount method', async () => {
         await effect;
         expect(counterSource.get).toBeCalledTimes(1);
     });
-    it('returns BE response', async () => {
+    it('returns counter state', async () => {
         await expect(effect).resolves.toEqual(initial);
     });
 });
 
-describe(`${incrementCountEffect.name}`, () => {
+describe(`${incrementCounterEffect.name}`, () => {
     const initial = 4;
     const increment = 3;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
     beforeEach(() => {
         counterSource = makeCounterSourceModelMock(initial);
-        jest.spyOn(counterSource, 'increment');
-        effect = incrementCountEffect(increment, {
+        effect = incrementCounterEffect(increment, {
             counterSource
         });
     });
-    it('saves data to the BE', async () => {
+    it('calls counter source increment method', async () => {
         await effect;
         expect(counterSource.increment).toBeCalledTimes(1);
         expect(counterSource.increment).toBeCalledWith(increment);
     });
-    it('returns BE response', async () => {
+    it('returns incremented value', async () => {
         await expect(effect).resolves.toEqual(initial + increment);
     });
 });
 
-describe.skip(`${saveCountEffect.name}`, () => {
+describe(`${setCounterEffect.name}`, () => {
     const initial = 4;
     const count = 3;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
     beforeEach(() => {
         counterSource = makeCounterSourceModelMock(initial);
-        jest.spyOn(counterSource, 'increment');
-        effect = saveCountEffect(count, {
+        effect = setCounterEffect(count, {
             counterSource
         });
     });
-    it('saves data to the BE', async () => {
+    it('calls counter source setCount method', async () => {
         await effect;
-        expect(counterSource.save).toBeCalledTimes(1);
-        expect(counterSource.save).toBeCalledWith(count);
+        expect(counterSource.set).toBeCalledTimes(1);
+        expect(counterSource.set).toBeCalledWith(count);
     });
-    it('returns BE response', async () => {
+    it('return counter state', async () => {
         await expect(effect).resolves.toEqual(count);
     });
 });

@@ -1,22 +1,22 @@
 import { httpClient } from '@core/http-client';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 
-export const COUNTER_GET_COUNT_ENDPOINT = '/fake-api/counter/get';
+export const COUNTER_SET_ENDPOINT = '/fake-api/counter/set';
+export const COUNTER_GET_ENDPOINT = '/fake-api/counter/get';
 export const COUNTER_INCREMENT_ENDPOINT = '/fake-api/counter/increment';
-export const COUNTER_SAVE_COUNT_ENDPOINT = '/fake-api/counter/save';
 
 export class CounterRemoteSourceService implements CounterSource {
     static make(): CounterRemoteSourceService {
         return new CounterRemoteSourceService();
     }
 
+    set(count: number): Promise<number> {
+        return httpClient.request(COUNTER_SET_ENDPOINT, { count });
+    }
     get(): Promise<number> {
-        return httpClient.request(COUNTER_GET_COUNT_ENDPOINT);
+        return httpClient.request(COUNTER_GET_ENDPOINT);
     }
     increment(increment: number): Promise<number> {
         return httpClient.request(COUNTER_INCREMENT_ENDPOINT, { increment });
-    }
-    save(count: number): Promise<number> {
-        return httpClient.request(COUNTER_SAVE_COUNT_ENDPOINT, { count });
     }
 }

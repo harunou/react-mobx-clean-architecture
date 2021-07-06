@@ -16,9 +16,9 @@ import {
     getCounterFailureAction
 } from './actions/counter.actions';
 import {
-    getCountEffect,
-    incrementCountEffect,
-    saveCountEffect
+    getCounterEffect,
+    incrementCounterEffect,
+    setCounterEffect
 } from './effects/counter.effects';
 
 export interface CounterController {
@@ -42,7 +42,7 @@ export const counterController = (rootStore: RootStore): CounterController => {
             incrementCounterRequestedAction(1, { counter }),
         addOneAndSaveOptimisticButtonPushed: (): void => {
             incrementCounterRequestedAction(1, { counter });
-            saveCountPromise = saveCountEffect(counter.count$, {
+            saveCountPromise = setCounterEffect(counter.count$, {
                 counterSource
             });
             saveCountPromise.catch(() =>
@@ -50,7 +50,9 @@ export const counterController = (rootStore: RootStore): CounterController => {
             );
         },
         addOneAndSavePessimisticButtonPushed: (): void => {
-            incrementCountPromise = incrementCountEffect(1, { counterSource });
+            incrementCountPromise = incrementCounterEffect(1, {
+                counterSource
+            });
             incrementCountPromise
                 .then((value) => {
                     incrementCounterSuccessAction(value, { counter });
@@ -58,7 +60,7 @@ export const counterController = (rootStore: RootStore): CounterController => {
                 .catch((error: Error) => incrementCounterFailureAction(error));
         },
         mounted: (): void => {
-            getCountPromise = getCountEffect({ counterSource });
+            getCountPromise = getCounterEffect({ counterSource });
             getCountPromise
                 .then((value: number) =>
                     getCounterSuccessAction(value, { counter })

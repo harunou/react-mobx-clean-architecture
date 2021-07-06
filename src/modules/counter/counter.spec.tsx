@@ -1,7 +1,7 @@
 import {
-    COUNTER_GET_COUNT_ENDPOINT,
+    COUNTER_GET_ENDPOINT,
     COUNTER_INCREMENT_ENDPOINT,
-    COUNTER_SAVE_COUNT_ENDPOINT
+    COUNTER_SET_ENDPOINT
 } from '@api/counterRemoteSource/counterRemoteSource.service';
 import { httpClient } from '@core/http-client';
 import { RootStore } from '@stores/root/root.store';
@@ -37,7 +37,7 @@ describe(`Counter`, () => {
     });
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_ENDPOINT);
     });
     it('inits store and renders initial result', async () => {
         const { queryByTestId, rerender } = render(sut);
@@ -52,9 +52,7 @@ describe(`Counter`, () => {
         );
 
         await act(async () =>
-            httpClient
-                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
-                .resolve(count)
+            httpClient.expectOne<number>(COUNTER_GET_ENDPOINT).resolve(count)
         );
 
         await new Promise((resolve) => setTimeout(resolve, 0));
@@ -75,9 +73,7 @@ describe(`Counter`, () => {
         unmount();
 
         await act(async () =>
-            httpClient
-                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
-                .resolve(count)
+            httpClient.expectOne<number>(COUNTER_GET_ENDPOINT).resolve(count)
         );
         httpClient.verify();
 
@@ -86,7 +82,7 @@ describe(`Counter`, () => {
 
         expect(selectCount).toHaveTextContent(`${initial}`);
 
-        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_ENDPOINT);
     });
     it('increments store and renders result', async () => {
         const { queryByTestId } = render(sut);
@@ -98,9 +94,7 @@ describe(`Counter`, () => {
         );
 
         await act(async () =>
-            httpClient
-                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
-                .resolve(count)
+            httpClient.expectOne<number>(COUNTER_GET_ENDPOINT).resolve(count)
         );
 
         fireEvent.click(button);
@@ -128,15 +122,13 @@ describe(`Counter`, () => {
         );
 
         await act(async () =>
-            httpClient
-                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
-                .resolve(count)
+            httpClient.expectOne<number>(COUNTER_GET_ENDPOINT).resolve(count)
         );
 
         fireEvent.click(button);
 
         let pendingRequest = httpClient.expectOne<number, { count: number }>(
-            COUNTER_SAVE_COUNT_ENDPOINT
+            COUNTER_SET_ENDPOINT
         );
         count = pendingRequest.params.count;
         await act(async () => pendingRequest.resolve(count));
@@ -144,7 +136,7 @@ describe(`Counter`, () => {
         fireEvent.click(button);
 
         pendingRequest = httpClient.expectOne<number, { count: number }>(
-            COUNTER_SAVE_COUNT_ENDPOINT
+            COUNTER_SET_ENDPOINT
         );
         count = pendingRequest.params.count;
         await act(async () => pendingRequest.resolve(count));
@@ -167,9 +159,7 @@ describe(`Counter`, () => {
         );
 
         await act(async () =>
-            httpClient
-                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
-                .resolve(count)
+            httpClient.expectOne<number>(COUNTER_GET_ENDPOINT).resolve(count)
         );
 
         fireEvent.click(button);
@@ -203,9 +193,7 @@ describe(`Counter`, () => {
         assert(button);
 
         await act(async () =>
-            httpClient
-                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
-                .resolve(count)
+            httpClient.expectOne<number>(COUNTER_GET_ENDPOINT).resolve(count)
         );
 
         fireEvent.click(button);
@@ -228,7 +216,7 @@ describe(`Counter`, () => {
 
         expect(selectCount).toHaveTextContent(`${count}`);
 
-        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_ENDPOINT);
     });
 });
 
@@ -262,8 +250,8 @@ describe(`Double Counter app`, () => {
     });
     it('renders without errors', async () => {
         expect(() => render(sut)).not.toThrow();
-        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
-        httpClient.expectOne(COUNTER_GET_COUNT_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_ENDPOINT);
+        httpClient.expectOne(COUNTER_GET_ENDPOINT);
     });
     it('renders both component once one fires increment', async () => {
         const { queryByTestId } = render(sut);
@@ -283,15 +271,11 @@ describe(`Double Counter app`, () => {
         );
 
         await act(async () =>
-            httpClient
-                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
-                .resolve(count)
+            httpClient.expectOne<number>(COUNTER_GET_ENDPOINT).resolve(count)
         );
 
         await act(async () =>
-            httpClient
-                .expectOne<number>(COUNTER_GET_COUNT_ENDPOINT)
-                .resolve(count)
+            httpClient.expectOne<number>(COUNTER_GET_ENDPOINT).resolve(count)
         );
 
         fireEvent.click(button0);

@@ -13,15 +13,15 @@ export class CounterSourceStore implements CounterSourceModel {
         return this.counterRemoteService;
     }
 
+    set(value: number): Promise<number> {
+        return this.source.set(value);
+    }
+
     get(): Promise<number> {
         return this.source.get();
     }
 
     increment(value: number): Promise<number> {
         return this.source.increment(value);
-    }
-
-    save(value: number): Promise<number> {
-        return this.source.save(value);
     }
 }
