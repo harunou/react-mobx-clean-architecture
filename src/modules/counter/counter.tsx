@@ -31,6 +31,7 @@ export const Counter: FC = observer(() => {
     const presenter = useAdapter(counterPresenter);
 
     const {
+        addAnyButtonPushed,
         addOneButtonPushed,
         addOneAndSaveOptimisticButtonPushed,
         addOneAndSavePessimisticButtonPushed,
@@ -38,6 +39,8 @@ export const Counter: FC = observer(() => {
         unmounted
     } = controller;
     const { count$, selectMultiplyCount$ } = presenter;
+
+    noop(addAnyButtonPushed);
 
     useMountedHook(mounted);
     useUnMountedHook(unmounted);

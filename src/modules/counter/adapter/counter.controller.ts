@@ -1,6 +1,6 @@
 import { RootStore } from '@stores/root/root.store';
 import { makeCancellablePromiseStub } from '@stores/helpers/stores.helpers';
-import { Action, ActionWithPayload } from '@stores/helpers/stores.types';
+import { Action } from '@stores/helpers/stores.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import { counterEffects } from './effects/counter.effects';
 import { counterActions } from './actions/counter.actions';
@@ -10,7 +10,7 @@ import {
 } from '@stores/root/root.helpers';
 
 export interface CounterController {
-    addAnyButtonPushed: ActionWithPayload<number>;
+    addAnyButtonPushed: Action<number>;
     addOneButtonPushed: Action;
     addOneAndSaveOptimisticButtonPushed: Action;
     addOneAndSavePessimisticButtonPushed: Action;
