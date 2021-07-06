@@ -1,10 +1,7 @@
 import { RootStore } from '@stores/root/root.store';
 import { sliceCounterStore } from '@stores/helpers/stores.helpers';
-import {
-    multiplyCountSelector,
-    countSelector
-} from './selectors/counter.selectors';
 import { makeAutoObservable } from 'mobx';
+import { counterSelectors } from './selectors/counter.selectors';
 
 export interface CounterPresenter {
     count$: number;
@@ -16,9 +13,9 @@ export const counterPresenter = (rootStore: RootStore): CounterPresenter => {
 
     return makeAutoObservable({
         get count$(): number {
-            return countSelector({ counter });
+            return counterSelectors.selectCount({ counter });
         },
         selectMultiplyCount$: (factor: number): number =>
-            multiplyCountSelector(factor, { counter })
+            counterSelectors.selectMultiplyCount(factor, { counter })
     });
 };

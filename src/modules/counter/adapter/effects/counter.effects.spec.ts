@@ -1,20 +1,16 @@
 import { makeCounterSourceModelMock } from '@stores/persistence/counter-source/counter-source.mock';
 import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
 import { CancellablePromise } from 'mobx/dist/internal';
-import {
-    getCounterEffect,
-    incrementCounterEffect,
-    setCounterEffect
-} from './counter.effects';
+import { counterEffects } from './counter.effects';
 
-describe(`${getCounterEffect.name}`, () => {
+describe(`${counterEffects.getCounter.name}`, () => {
     const initial = 3;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
 
     beforeEach(() => {
         counterSource = makeCounterSourceModelMock(initial);
-        effect = getCounterEffect({ counterSource });
+        effect = counterEffects.getCounter({ counterSource });
     });
     it('calls counter source getCount method', async () => {
         await effect;
@@ -25,14 +21,14 @@ describe(`${getCounterEffect.name}`, () => {
     });
 });
 
-describe(`${incrementCounterEffect.name}`, () => {
+describe(`${counterEffects.incrementCounter.name}`, () => {
     const initial = 4;
     const increment = 3;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
     beforeEach(() => {
         counterSource = makeCounterSourceModelMock(initial);
-        effect = incrementCounterEffect(increment, {
+        effect = counterEffects.incrementCounter(increment, {
             counterSource
         });
     });
@@ -46,14 +42,14 @@ describe(`${incrementCounterEffect.name}`, () => {
     });
 });
 
-describe(`${setCounterEffect.name}`, () => {
+describe(`${counterEffects.setCounter.name}`, () => {
     const initial = 4;
     const count = 3;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
     beforeEach(() => {
         counterSource = makeCounterSourceModelMock(initial);
-        effect = setCounterEffect(count, {
+        effect = counterEffects.setCounter(count, {
             counterSource
         });
     });

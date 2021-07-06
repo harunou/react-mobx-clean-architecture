@@ -7,19 +7,8 @@ import {
 import { makeAutoObservable } from 'mobx';
 import { Action } from '@stores/stores.types';
 import { CancellablePromise } from 'mobx/dist/internal';
-import {
-    incrementCounterEffectSuccess,
-    getCounterEffectSuccess,
-    incrementCounterRequested,
-    incrementCounterEffectFailure,
-    setCounterEffectFailure,
-    getCounterEffectFailure
-} from './actions/counter.actions';
-import {
-    getCounterEffect,
-    incrementCounterEffect,
-    setCounterEffect
-} from './effects/counter.effects';
+import { counterEffects } from './effects/counter.effects';
+import { counterActions } from './actions/counter.actions';
 
 export interface CounterController {
     addOneButtonPushed: Action;
@@ -39,34 +28,38 @@ export const counterController = (rootStore: RootStore): CounterController => {
 
     return makeAutoObservable({
         addOneButtonPushed: (): void =>
-            incrementCounterRequested(1, { counter }),
+            counterActions.incrementCounterRequested(1, { counter }),
         addOneAndSaveOptimisticButtonPushed: (): void => {
-            incrementCounterRequested(1, { counter });
-            saveCountPromise = setCounterEffect(counter.count$, {
+            counterActions.incrementCounterRequested(1, { counter });
+            saveCountPromise = counterEffects.setCounter(counter.count$, {
                 counterSource
             });
             saveCountPromise.catch(() =>
-                setCounterEffectFailure(1, { counter })
+                counterActions.setCounterEffectFailure(1, { counter })
             );
         },
         addOneAndSavePessimisticButtonPushed: (): void => {
-            incrementCountPromise = incrementCounterEffect(1, {
+            incrementCountPromise = counterEffects.incrementCounter(1, {
                 counterSource
             });
             incrementCountPromise
                 .then((value) => {
-                    incrementCounterEffectSuccess(value, { counter });
+                    counterActions.incrementCounterEffectSuccess(value, {
+                        counter
+                    });
                 })
-                .catch((error: Error) => incrementCounterEffectFailure(error));
+                .catch((error: Error) =>
+                    counterActions.incrementCounterEffectFailure(error)
+                );
         },
         mounted: (): void => {
-            getCountPromise = getCounterEffect({ counterSource });
+            getCountPromise = counterEffects.getCounter({ counterSource });
             getCountPromise
                 .then((value: number) =>
-                    getCounterEffectSuccess(value, { counter })
+                    counterActions.getCounterEffectSuccess(value, { counter })
                 )
                 .catch((error: Error) => {
-                    getCounterEffectFailure(error);
+                    counterActions.getCounterEffectFailure(error);
                 });
         },
         unmounted: (): void => {
