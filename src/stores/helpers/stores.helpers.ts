@@ -1,6 +1,6 @@
-import { flow } from 'mobx';
+import { flow, observable } from 'mobx';
 import { computedFn } from 'mobx-utils';
-import { CancellablePromise } from 'mobx/dist/internal';
+import { AnnotationsMap, CancellablePromise } from 'mobx/dist/internal';
 import { Context, useContext, useEffect, useMemo } from 'react';
 import { CounterStore } from '../domain/counter/counter.store';
 import { CounterSourceStore } from '../persistence/counter-source/counter-source.store';
@@ -28,8 +28,18 @@ export function useStore<T>(context: Context<T>): UseStoreHook<T> {
 }
 
 export function makeUseAdapterHook<T>(store: T): UseAdapterHook<T> {
-    return function useAdapterHook<R>(adapterFunction: (store: T) => R): R {
-        const adapter = useMemo(() => adapterFunction(store), [store]);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return function useAdapterHook<R extends Record<string, any>>(
+        adapterFunction: (store: T) => R,
+        annotations?: AnnotationsMap<R, never>
+    ): R {
+        const adapter = useMemo(
+            () =>
+                observable(adapterFunction(store), annotations, {
+                    autoBind: true
+                }),
+            [store]
+        );
         return adapter;
     };
 }

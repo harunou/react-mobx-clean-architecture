@@ -4,7 +4,6 @@ import {
     sliceCounterSourceStore,
     sliceCounterStore
 } from '@stores/helpers/stores.helpers';
-import { makeAutoObservable } from 'mobx';
 import { Action } from '@stores/stores.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import { counterEffects } from './effects/counter.effects';
@@ -26,7 +25,7 @@ export const counterController = (rootStore: RootStore): CounterController => {
     let incrementCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
     let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
 
-    return makeAutoObservable({
+    return {
         addOneButtonPushed: (): void =>
             counterActions.incrementCounterRequested(1, { counter }),
         addOneAndSaveOptimisticButtonPushed: (): void => {
@@ -67,5 +66,5 @@ export const counterController = (rootStore: RootStore): CounterController => {
             incrementCountPromise.cancel();
             getCountPromise.cancel();
         }
-    });
+    };
 };
