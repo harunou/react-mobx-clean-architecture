@@ -8,6 +8,8 @@ import {
     sliceCounterSourceStore,
     sliceCounterStore
 } from '@stores/root/root.helpers';
+import { FeatureStore } from '../stores/feature.store';
+import { noop } from '@core/core.helpers';
 
 export interface CounterController {
     addAnyButtonPushed: Action<number>;
@@ -18,9 +20,14 @@ export interface CounterController {
     unmounted: Action;
 }
 
-export const counterController = (rootStore: RootStore): CounterController => {
-    const counter = sliceCounterStore(rootStore);
-    const counterSource = sliceCounterSourceStore(rootStore);
+export const counterController = (stores: {
+    rootStore: RootStore;
+    featureStore: FeatureStore;
+}): CounterController => {
+    noop(stores.featureStore);
+
+    const counter = sliceCounterStore(stores.rootStore);
+    const counterSource = sliceCounterSourceStore(stores.rootStore);
 
     let saveCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
     let incrementCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();

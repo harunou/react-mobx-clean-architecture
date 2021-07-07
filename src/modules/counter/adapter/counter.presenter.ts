@@ -7,8 +7,10 @@ export interface CounterPresenter {
     selectMultiplyCount$: (factor: number) => number;
 }
 
-export const counterPresenter = (rootStore: RootStore): CounterPresenter => {
-    const counter = sliceCounterStore(rootStore);
+export const counterPresenter = (stores: {
+    rootStore: RootStore;
+}): CounterPresenter => {
+    const counter = sliceCounterStore(stores.rootStore);
 
     return {
         get count$(): number {

@@ -2,13 +2,13 @@ import { noop } from '@core/core.helpers';
 import { RootStore } from '@stores/root/root.store';
 import {
     useMountedHook,
-    useStore,
     useUnMountedHook
 } from '@stores/helpers/stores.helpers';
-import { observer } from 'mobx-react-lite';
-import { createContext, FC } from 'react';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import { createContext, FC, useContext, useState } from 'react';
 import { counterController } from './adapter/counter.controller';
 import { counterPresenter } from './adapter/counter.presenter';
+import { FeatureStore } from './stores/feature.store';
 
 export const counterTestIds = {
     addOneButton: 'add-one-button',
@@ -23,12 +23,14 @@ export const RootStoreContext = createContext(rootStore);
 export const multiplyFactor = 10;
 
 export const Counter: FC = observer(() => {
-    const { useAdapter, store } = useStore(RootStoreContext);
+    const rootStore = useContext(RootStoreContext);
 
-    noop(store);
+    const [featureStore] = useState(() => FeatureStore.make());
 
-    const controller = useAdapter(counterController);
-    const presenter = useAdapter(counterPresenter);
+    const controller = useLocalObservable(() =>
+        counterController({ rootStore, featureStore })
+    );
+    const presenter = useLocalObservable(() => counterPresenter({ rootStore }));
 
     const {
         addAnyButtonPushed,
