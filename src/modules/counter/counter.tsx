@@ -9,6 +9,7 @@ import { createContext, FC, useContext, useState } from 'react';
 import { counterController } from './adapter/counter.controller';
 import { counterPresenter } from './adapter/counter.presenter';
 import { FeatureStore } from './stores/feature.store';
+import assert from 'assert';
 
 export const counterTestIds = {
     addOneButton: 'add-one-button',
@@ -19,11 +20,12 @@ export const counterTestIds = {
 };
 
 export const rootStore = RootStore.make();
-export const RootStoreContext = createContext(rootStore);
+export const RootStoreContext = createContext<RootStore | undefined>(undefined);
 export const multiplyFactor = 10;
 
 export const Counter: FC = observer(() => {
     const rootStore = useContext(RootStoreContext);
+    assert(rootStore);
 
     const [featureStore] = useState(() => FeatureStore.make());
 
