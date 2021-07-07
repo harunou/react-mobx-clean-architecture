@@ -24,7 +24,6 @@ export const multiplyFactor = 10;
 
 export const Counter: FC = observer(() => {
     const rootStore = useContextRootStore();
-
     const featureStore = useStore(() => FeatureStore.make());
 
     const controller = useAdapter(() =>

@@ -16,6 +16,19 @@ export function makeCancellablePromiseStub(): CancellablePromise<never> {
     return f() as CancellablePromise<never>;
 }
 
+export const makeStoreContext = <T>(): readonly [Context<T>, () => T] => {
+    const StoreContext = createContext<T | undefined>(undefined) as Context<T>;
+    const useContextStore = (): T => {
+        const contextStore = useContext(StoreContext);
+        assert(
+            contextStore,
+            'StoreContext: no value was provided for StoreContext.Provider'
+        );
+        return contextStore;
+    };
+    return [StoreContext, useContextStore] as const;
+};
+
 export const useStore = <T>(fn: () => T): T => {
     const [store] = useState(fn);
     return store;
@@ -31,14 +44,4 @@ export const useUnMountedHook = (fn: () => void): void => {
     useEffect(() => {
         return fn;
     }, []);
-};
-
-export const makeStoreContext = <T>(): readonly [Context<T>, () => T] => {
-    const StoreContext = createContext<T | undefined>(undefined) as Context<T>;
-    const useContextStore = (): T => {
-        const contextStore = useContext(StoreContext);
-        assert(contextStore);
-        return contextStore;
-    };
-    return [StoreContext, useContextStore] as const;
 };

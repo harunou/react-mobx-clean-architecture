@@ -1,5 +1,25 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useMountedHook, useUnMountedHook } from './stores.helpers';
+import assert from 'assert';
+import { useMountedHook, useStore, useUnMountedHook } from './stores.helpers';
+
+class Store {
+    private value = 0;
+}
+
+describe(`${useStore.name}`, () => {
+    it('creates store once each render cycle', () => {
+        const { result, rerender } = renderHook(() =>
+            useStore(() => new Store())
+        );
+
+        rerender();
+
+        const [first, second] = result.all;
+        assert(!(first instanceof Error));
+        assert(!(second instanceof Error));
+        expect(first === second).toEqual(true);
+    });
+});
 
 describe(`${useMountedHook.name}`, () => {
     it('run once when component mounted', () => {
