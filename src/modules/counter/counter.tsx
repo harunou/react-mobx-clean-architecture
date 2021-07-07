@@ -1,17 +1,16 @@
 import { noop } from '@core/core.helpers';
-import { RootStore } from '@stores/root/root.store';
 import {
     useAdapter,
     useMountedHook,
     useStore,
     useUnMountedHook
 } from '@stores/helpers/stores.helpers';
+import { useContextRootStore } from '@stores/root/root.helpers';
 import { observer } from 'mobx-react-lite';
-import { createContext, FC, useContext } from 'react';
+import { FC } from 'react';
 import { counterController } from './adapter/counter.controller';
 import { counterPresenter } from './adapter/counter.presenter';
 import { FeatureStore } from './stores/feature.store';
-import assert from 'assert';
 
 export const counterTestIds = {
     addOneButton: 'add-one-button',
@@ -21,12 +20,10 @@ export const counterTestIds = {
     selectMultiplyTenTimesCount: 'select-multiply-ten-times-count'
 };
 
-export const RootStoreContext = createContext<RootStore | undefined>(undefined);
 export const multiplyFactor = 10;
 
 export const Counter: FC = observer(() => {
-    const rootStore = useContext(RootStoreContext);
-    assert(rootStore);
+    const rootStore = useContextRootStore();
 
     const featureStore = useStore(() => FeatureStore.make());
 

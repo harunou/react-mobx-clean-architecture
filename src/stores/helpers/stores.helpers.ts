@@ -1,8 +1,9 @@
+import assert from 'assert';
 import { flow } from 'mobx';
 import { useLocalObservable } from 'mobx-react-lite';
 import { computedFn } from 'mobx-utils';
 import { CancellablePromise } from 'mobx/dist/internal';
-import { useEffect, useState } from 'react';
+import { Context, createContext, useContext, useEffect, useState } from 'react';
 
 export const selector = computedFn;
 export const effect = flow;
@@ -30,4 +31,14 @@ export const useUnMountedHook = (fn: () => void): void => {
     useEffect(() => {
         return fn;
     }, []);
+};
+
+export const makeStoreContext = <T>(): readonly [Context<T>, () => T] => {
+    const StoreContext = createContext<T | undefined>(undefined) as Context<T>;
+    const useContextStore = (): T => {
+        const contextStore = useContext(StoreContext);
+        assert(contextStore);
+        return contextStore;
+    };
+    return [StoreContext, useContextStore] as const;
 };

@@ -4,16 +4,12 @@ import {
     COUNTER_SET_ENDPOINT
 } from '@api/counterRemoteSource/counterRemoteSource.service';
 import { httpClient } from '@core/http-client';
+import { RootStoreContext } from '@stores/root/root.helpers';
 import { RootStore } from '@stores/root/root.store';
 import { act, fireEvent, render, within } from '@testing-library/react';
 import assert from 'assert';
 import { StrictMode } from 'react';
-import {
-    Counter,
-    counterTestIds,
-    multiplyFactor,
-    RootStoreContext
-} from './counter';
+import { Counter, counterTestIds, multiplyFactor } from './counter';
 
 describe(`Counter`, () => {
     const initial = 0;
