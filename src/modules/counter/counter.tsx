@@ -1,11 +1,13 @@
 import { noop } from '@core/core.helpers';
 import { RootStore } from '@stores/root/root.store';
 import {
+    useAdapter,
     useMountedHook,
+    useStore,
     useUnMountedHook
 } from '@stores/helpers/stores.helpers';
-import { observer, useLocalObservable } from 'mobx-react-lite';
-import { createContext, FC, useContext, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { createContext, FC, useContext } from 'react';
 import { counterController } from './adapter/counter.controller';
 import { counterPresenter } from './adapter/counter.presenter';
 import { FeatureStore } from './stores/feature.store';
@@ -19,7 +21,6 @@ export const counterTestIds = {
     selectMultiplyTenTimesCount: 'select-multiply-ten-times-count'
 };
 
-export const rootStore = RootStore.make();
 export const RootStoreContext = createContext<RootStore | undefined>(undefined);
 export const multiplyFactor = 10;
 
@@ -27,12 +28,12 @@ export const Counter: FC = observer(() => {
     const rootStore = useContext(RootStoreContext);
     assert(rootStore);
 
-    const [featureStore] = useState(() => FeatureStore.make());
+    const featureStore = useStore(() => FeatureStore.make());
 
-    const controller = useLocalObservable(() =>
+    const controller = useAdapter(() =>
         counterController({ rootStore, featureStore })
     );
-    const presenter = useLocalObservable(() => counterPresenter({ rootStore }));
+    const presenter = useAdapter(() => counterPresenter({ rootStore }));
 
     const {
         addAnyButtonPushed,

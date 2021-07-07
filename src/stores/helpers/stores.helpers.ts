@@ -1,8 +1,8 @@
-import { flow, observable } from 'mobx';
+import { flow } from 'mobx';
+import { useLocalObservable } from 'mobx-react-lite';
 import { computedFn } from 'mobx-utils';
-import { AnnotationsMap, CancellablePromise } from 'mobx/dist/internal';
-import { Context, useContext, useEffect, useMemo } from 'react';
-import { UseAdapterHook, UseStoreHook } from './stores.types';
+import { CancellablePromise } from 'mobx/dist/internal';
+import { useEffect, useState } from 'react';
 
 export const selector = computedFn;
 export const effect = flow;
@@ -15,38 +15,19 @@ export function makeCancellablePromiseStub(): CancellablePromise<never> {
     return f() as CancellablePromise<never>;
 }
 
-export function useStore<T>(context: Context<T>): UseStoreHook<T> {
-    const store = useContext(context);
-    const useAdapter = useMemo(() => makeUseAdapterHook(store), [store]);
-    return {
-        store,
-        useAdapter
-    };
-}
+export const useStore = <T>(fn: () => T): T => {
+    const [store] = useState(fn);
+    return store;
+};
 
-export function makeUseAdapterHook<T>(store: T): UseAdapterHook<T> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return function useAdapterHook<R extends Record<string, any>>(
-        adapterFunction: (store: T) => R,
-        annotations?: AnnotationsMap<R, never>
-    ): R {
-        const adapter = useMemo(
-            () =>
-                observable(adapterFunction(store), annotations, {
-                    autoBind: true
-                }),
-            [store]
-        );
-        return adapter;
-    };
-}
+export const useAdapter = useLocalObservable;
 
-export function useMountedHook(fn: () => void): void {
+export const useMountedHook = (fn: () => void): void => {
     useEffect(fn, []);
-}
+};
 
-export function useUnMountedHook(fn: () => void): void {
+export const useUnMountedHook = (fn: () => void): void => {
     useEffect(() => {
         return fn;
     }, []);
-}
+};
