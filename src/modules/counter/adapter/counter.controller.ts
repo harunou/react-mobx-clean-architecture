@@ -8,7 +8,7 @@ import {
     sliceCounterSourceStore,
     sliceCounterStore
 } from '@stores/root/root.helpers';
-import { FeatureStore } from '../stores/feature.store';
+import { ModuleStore } from '../stores/module.store';
 import { noop } from '@core/core.helpers';
 
 export interface CounterController {
@@ -22,9 +22,9 @@ export interface CounterController {
 
 export const counterController = (stores: {
     rootStore: RootStore;
-    featureStore: FeatureStore;
+    moduleStore: ModuleStore;
 }): CounterController => {
-    noop(stores.featureStore);
+    noop(stores.moduleStore);
 
     const counter = sliceCounterStore(stores.rootStore);
     const counterSource = sliceCounterSourceStore(stores.rootStore);

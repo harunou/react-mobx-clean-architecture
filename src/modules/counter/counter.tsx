@@ -10,7 +10,7 @@ import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 import { counterController } from './adapter/counter.controller';
 import { counterPresenter } from './adapter/counter.presenter';
-import { FeatureStore } from './stores/feature.store';
+import { ModuleStore } from './stores/module.store';
 
 export const counterTestIds = {
     addOneButton: 'add-one-button',
@@ -24,10 +24,10 @@ export const multiplyFactor = 10;
 
 export const Counter: FC = observer(() => {
     const rootStore = useContextRootStore();
-    const featureStore = useStore(() => FeatureStore.make());
+    const moduleStore = useStore(() => ModuleStore.make());
 
     const controller = useAdapter(() =>
-        counterController({ rootStore, featureStore })
+        counterController({ rootStore, moduleStore: moduleStore })
     );
     const presenter = useAdapter(() => counterPresenter({ rootStore }));
 
