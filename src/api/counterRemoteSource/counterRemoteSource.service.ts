@@ -1,5 +1,5 @@
 import { httpClient } from '@core/http-client';
-import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
+import { CounterSource } from '@stores/persistence/counter-source/counter-source-store.types';
 
 export const COUNTER_SET_ENDPOINT = '/fake-api/counter/set';
 export const COUNTER_GET_ENDPOINT = '/fake-api/counter/get';

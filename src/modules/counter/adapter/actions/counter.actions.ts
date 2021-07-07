@@ -1,4 +1,4 @@
-import { CounterModel } from '@stores/domain/counter/counter.types';
+import { CounterModel } from '@stores/domain/counter/counter-store.types';
 import { FLOW_CANCELLED } from '@stores/helpers/stores.helpers';
 import { action } from 'mobx';
 

@@ -5,12 +5,12 @@ import {
     useStore,
     useUnMountedHook
 } from '@stores/helpers/stores.helpers';
-import { useContextRootStore } from '@stores/root/root.helpers';
+import { useContextRootStore } from '@stores/root/root-store.helpers';
 import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 import { counterController } from './adapter/counter.controller';
 import { counterPresenter } from './adapter/counter.presenter';
-import { ModuleStore } from './stores/module.store';
+import { ModuleStore } from './stores/module-store';
 
 export const counterTestIds = {
     addOneButton: 'add-one-button',

@@ -4,8 +4,8 @@ import {
     COUNTER_SET_ENDPOINT
 } from '@api/counterRemoteSource/counterRemoteSource.service';
 import { httpClient } from '@core/http-client';
-import { RootStoreContext } from '@stores/root/root.helpers';
-import { RootStore } from '@stores/root/root.store';
+import { RootStoreContext } from '@stores/root/root-store.helpers';
+import { RootStore } from '@stores/root/root-store';
 import { act, fireEvent, render, within } from '@testing-library/react';
 import assert from 'assert';
 import { StrictMode } from 'react';

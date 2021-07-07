@@ -1,4 +1,4 @@
-import { CounterSourceStore } from './counter-source/counter-source.store';
+import { CounterSourceStore } from './counter-source/counter-source-store';
 
 export class PersistenceStore {
     static make(): PersistenceStore {

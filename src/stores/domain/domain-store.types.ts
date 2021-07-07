@@ -1,4 +1,4 @@
-import { CounterModel, CounterState } from './counter/counter.types';
+import { CounterModel, CounterState } from './counter/counter-store.types';
 
 export interface DomainState {
     counter: CounterState;

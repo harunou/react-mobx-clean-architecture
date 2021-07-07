@@ -1,5 +1,8 @@
 import { CounterRemoteSourceService } from '@api/counterRemoteSource/counterRemoteSource.service';
-import { CounterSource, CounterSourceModel } from './counter-source.types';
+import {
+    CounterSource,
+    CounterSourceModel
+} from './counter-source-store.types';
 
 export class CounterSourceStore implements CounterSourceModel {
     static make(): CounterSourceStore {

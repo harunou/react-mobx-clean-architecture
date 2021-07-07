@@ -1,4 +1,4 @@
-import { CounterSource } from './counter-source.types';
+import { CounterSource } from './counter-source-store.types';
 
 export const makeCounterSourceModelMock = (count = 0): CounterSource => {
     return {

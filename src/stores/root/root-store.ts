@@ -1,7 +1,7 @@
-import { DomainStore } from '@stores/domain/domain.store';
-import { PersistenceStore } from '@stores/persistence/persistence.store';
+import { DomainStore } from '@stores/domain/domain-store';
+import { PersistenceStore } from '@stores/persistence/persistence-store';
 import { configure } from 'mobx';
-import { RootModel } from './root.types';
+import { RootModel } from './root-store.types';
 
 configure({
     enforceActions: 'always',

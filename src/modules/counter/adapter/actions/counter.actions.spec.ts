@@ -1,4 +1,4 @@
-import { CounterStore } from '@stores/domain/counter/counter.store';
+import { CounterStore } from '@stores/domain/counter/counter-store';
 import { counterActions } from './counter.actions';
 
 describe(`${counterActions.incrementCounterRequested.name}`, () => {

@@ -1,4 +1,4 @@
-import { RootStore } from '@stores/root/root.store';
+import { RootStore } from '@stores/root/root-store';
 import { makeCancellablePromiseStub } from '@stores/helpers/stores.helpers';
 import { Action } from '@stores/helpers/stores.types';
 import { CancellablePromise } from 'mobx/dist/internal';
@@ -7,8 +7,8 @@ import { counterActions } from './actions/counter.actions';
 import {
     sliceCounterSourceStore,
     sliceCounterStore
-} from '@stores/root/root.helpers';
-import { ModuleStore } from '../stores/module.store';
+} from '@stores/root/root-store.helpers';
+import { ModuleStore } from '../stores/module-store';
 import { noop } from '@core/core.helpers';
 
 export interface CounterController {

@@ -1,4 +1,4 @@
-import { CounterState } from '@stores/domain/counter/counter.types';
+import { CounterState } from '@stores/domain/counter/counter-store.types';
 import { selector } from '@stores/helpers/stores.helpers';
 
 const selectCount = selector(

@@ -1,5 +1,5 @@
-import { sliceCounterStore } from '@stores/root/root.helpers';
-import { RootStore } from '@stores/root/root.store';
+import { sliceCounterStore } from '@stores/root/root-store.helpers';
+import { RootStore } from '@stores/root/root-store';
 import { counterSelectors } from './selectors/counter.selectors';
 
 export interface CounterPresenter {

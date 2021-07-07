@@ -1,4 +1,4 @@
-import { CounterStore } from './counter.store';
+import { CounterStore } from './counter-store';
 
 describe(`${CounterStore.name}`, () => {
     let initial: number;

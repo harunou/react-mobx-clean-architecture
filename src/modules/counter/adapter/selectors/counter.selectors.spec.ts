@@ -1,4 +1,4 @@
-import { CounterState } from '@stores/domain/counter/counter.types';
+import { CounterState } from '@stores/domain/counter/counter-store.types';
 import { runInReactiveContext } from '@testing-tools/testing-tools.helpers';
 import { counterSelectors } from './counter.selectors';
 

@@ -1,4 +1,4 @@
-import { CounterSourceModel } from '@stores/persistence/counter-source/counter-source.types';
+import { CounterSourceModel } from '@stores/persistence/counter-source/counter-source-store.types';
 import { effect } from '@stores/helpers/stores.helpers';
 
 const setCounter = effect(function* setCountGenerator(

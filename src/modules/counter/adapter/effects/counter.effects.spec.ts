@@ -1,5 +1,5 @@
-import { makeCounterSourceModelMock } from '@stores/persistence/counter-source/counter-source.mock';
-import { CounterSource } from '@stores/persistence/counter-source/counter-source.types';
+import { makeCounterSourceModelMock } from '@stores/persistence/counter-source/counter-source-store.mocks';
+import { CounterSource } from '@stores/persistence/counter-source/counter-source-store.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import { counterEffects } from './counter.effects';
 

@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from 'mobx';
-import { CounterModel } from './counter.types';
+import { CounterModel } from './counter-store.types';
 
 export class CounterStore implements CounterModel {
     static make(): CounterStore {

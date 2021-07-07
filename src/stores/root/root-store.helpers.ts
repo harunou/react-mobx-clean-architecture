@@ -1,7 +1,7 @@
-import { CounterStore } from '@stores/domain/counter/counter.store';
+import { CounterStore } from '@stores/domain/counter/counter-store';
 import { makeStoreContext } from '@stores/helpers/stores.helpers';
-import { CounterSourceStore } from '@stores/persistence/counter-source/counter-source.store';
-import { RootStore } from './root.store';
+import { CounterSourceStore } from '@stores/persistence/counter-source/counter-source-store';
+import { RootStore } from './root-store';
 
 export const [
     RootStoreContext,
