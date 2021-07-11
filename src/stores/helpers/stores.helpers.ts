@@ -5,9 +5,11 @@ import { computedFn } from 'mobx-utils';
 import { CancellablePromise } from 'mobx/dist/internal';
 import { Context, createContext, useContext, useEffect, useState } from 'react';
 
+export const FLOW_CANCELLED = 'FLOW_CANCELLED';
+
 export const selector = computedFn;
 export const effect = flow;
-export const FLOW_CANCELLED = 'FLOW_CANCELLED';
+export const useAdapter = useLocalObservable;
 
 export function makeCancellablePromiseStub(): CancellablePromise<never> {
     const f = flow(function* generator() {
@@ -33,8 +35,6 @@ export const useStore = <T>(fn: () => T): T => {
     const [store] = useState(fn);
     return store;
 };
-
-export const useAdapter = useLocalObservable;
 
 export const useMountedHook = (fn: () => void): void => {
     useEffect(fn, []);
