@@ -1,6 +1,6 @@
-import { CounterSource } from './counter-source-store.types';
+import { CounterSourceModel } from './counter-source-store.types';
 
-export const makeCounterSourceModelMock = (count = 0): CounterSource => {
+export const makeCounterSourceModelMock = (count = 0): CounterSourceModel => {
     return {
         set: jest
             .fn()
