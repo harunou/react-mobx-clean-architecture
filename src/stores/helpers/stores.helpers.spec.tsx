@@ -9,15 +9,17 @@ class Store {
 describe(`${useStore.name}`, () => {
     it('creates store once each render cycle', () => {
         const { result, rerender } = renderHook(() =>
-            useStore(() => new Store())
+            useStore(new Store())
         );
 
         rerender();
+        rerender();
 
-        const [first, second] = result.all;
+        const [first, second, third] = result.all;
         assert(!(first instanceof Error));
         assert(!(second instanceof Error));
-        expect(first === second).toEqual(true);
+        assert(!(third instanceof Error));
+        expect(first === second && first === third).toEqual(true);
     });
 });
 

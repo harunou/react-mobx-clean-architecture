@@ -31,8 +31,8 @@ export const makeStoreContext = <T>(): readonly [Context<T>, () => T] => {
     return [StoreContext, useContextStore] as const;
 };
 
-export const useStore = <T>(fn: () => T): T => {
-    const [store] = useState(fn);
+export const useStore = <T>(s:T): T => {
+    const [store] = useState(() => s);
     return store;
 };
 
