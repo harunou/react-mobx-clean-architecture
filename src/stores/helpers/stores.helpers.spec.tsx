@@ -9,7 +9,7 @@ class Store {
 describe(`${useStore.name}`, () => {
     it('creates store once each render cycle', () => {
         const { result, rerender } = renderHook(() =>
-            useStore(new Store())
+            useStore(() => new Store())
         );
 
         rerender();

@@ -1,6 +1,6 @@
 import { RootStore } from '@stores/root/root-store';
 import { makeCancellablePromiseStub } from '@stores/helpers/stores.helpers';
-import { Action } from '@stores/helpers/stores.types';
+import { UseCase } from '@stores/helpers/stores.types';
 import { CancellablePromise } from 'mobx/dist/internal';
 import { counterEffects } from './effects/counter.effects';
 import { counterActions } from './actions/counter.actions';
@@ -12,12 +12,12 @@ import { ModuleStore } from '../stores/module-store';
 import { noop } from '@core/core.helpers';
 
 export interface CounterController {
-    addAnyButtonPushed: Action<number>;
-    addOneButtonPushed: Action;
-    addOneAndSaveOptimisticButtonPushed: Action;
-    addOneAndSavePessimisticButtonPushed: Action;
-    mounted: Action;
-    unmounted: Action;
+    addValueToCounter: UseCase<number>;
+    addOneToCounter: UseCase;
+    addOneToCounterAndSaveOptimistic: UseCase;
+    addOneAndSavePessimistic: UseCase;
+    loadCountAndInitializeCounter: UseCase;
+    cancelAllPendingPromises: UseCase;
 }
 
 export const counterController = (stores: {
@@ -34,11 +34,11 @@ export const counterController = (stores: {
     let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
 
     return {
-        addAnyButtonPushed: (payload: number): void =>
+        addValueToCounter: (payload: number): void =>
             counterActions.incrementCounterRequested(payload, { counter }),
-        addOneButtonPushed: (): void =>
+        addOneToCounter: (): void =>
             counterActions.incrementCounterRequested(1, { counter }),
-        addOneAndSaveOptimisticButtonPushed: (): void => {
+        addOneToCounterAndSaveOptimistic: (): void => {
             counterActions.incrementCounterRequested(1, { counter });
             saveCountPromise = counterEffects.setCounter(counter.count$, {
                 counterSource
@@ -47,7 +47,7 @@ export const counterController = (stores: {
                 counterActions.setCounterEffectFailure(1, { counter })
             );
         },
-        addOneAndSavePessimisticButtonPushed: (): void => {
+        addOneAndSavePessimistic: (): void => {
             incrementCountPromise = counterEffects.incrementCounter(1, {
                 counterSource
             });
@@ -61,7 +61,7 @@ export const counterController = (stores: {
                     counterActions.incrementCounterEffectFailure(error)
                 );
         },
-        mounted: (): void => {
+        loadCountAndInitializeCounter: (): void => {
             getCountPromise = counterEffects.getCounter({ counterSource });
             getCountPromise
                 .then((value: number) =>
@@ -71,7 +71,7 @@ export const counterController = (stores: {
                     counterActions.getCounterEffectFailure(error);
                 });
         },
-        unmounted: (): void => {
+        cancelAllPendingPromises: (): void => {
             saveCountPromise.cancel();
             incrementCountPromise.cancel();
             getCountPromise.cancel();

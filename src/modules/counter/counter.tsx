@@ -24,7 +24,7 @@ export const multiplyFactor = 10;
 
 export const Counter: FC = observer(() => {
     const rootStore = useContextRootStore();
-    const moduleStore = useStore(ModuleStore.make());
+    const moduleStore = useStore(() => ModuleStore.make());
 
     const controller = useAdapter(() =>
         counterController({ rootStore, moduleStore: moduleStore })
@@ -32,37 +32,37 @@ export const Counter: FC = observer(() => {
     const presenter = useAdapter(() => counterPresenter({ rootStore }));
 
     const {
-        addAnyButtonPushed,
-        addOneButtonPushed,
-        addOneAndSaveOptimisticButtonPushed,
-        addOneAndSavePessimisticButtonPushed,
-        mounted,
-        unmounted
+        addValueToCounter,
+        addOneToCounter,
+        addOneToCounterAndSaveOptimistic,
+        addOneAndSavePessimistic,
+        loadCountAndInitializeCounter,
+        cancelAllPendingPromises
     } = controller;
     const { count$, selectMultiplyCount$ } = presenter;
 
-    noop(addAnyButtonPushed);
+    noop(addValueToCounter);
 
-    useMountedHook(mounted);
-    useUnMountedHook(unmounted);
+    useMountedHook(loadCountAndInitializeCounter);
+    useUnMountedHook(cancelAllPendingPromises);
 
     return (
         <div>
             <button
                 data-testid={counterTestIds.addOneButton}
-                onClick={addOneButtonPushed}
+                onClick={addOneToCounter}
             >
                 +1
             </button>
             <button
                 data-testid={counterTestIds.addOneAndSaveOptimisticButton}
-                onClick={addOneAndSaveOptimisticButtonPushed}
+                onClick={addOneToCounterAndSaveOptimistic}
             >
                 +1 and save optimistic
             </button>
             <button
                 data-testid={counterTestIds.addOneAndSavePessimisticButton}
-                onClick={addOneAndSavePessimisticButtonPushed}
+                onClick={addOneAndSavePessimistic}
             >
                 +1 and save pessimistic
             </button>
