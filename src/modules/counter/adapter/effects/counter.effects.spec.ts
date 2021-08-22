@@ -3,14 +3,14 @@ import { CounterSource } from '@stores/persistence/counter-source/counter-source
 import { CancellablePromise } from 'mobx/dist/internal';
 import { counterEffects } from './counter.effects';
 
-describe(`${counterEffects.getCounter.name}`, () => {
+describe(`${counterEffects.fetchCounter.name}`, () => {
     const initial = 3;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
 
     beforeEach(() => {
         counterSource = makeCounterSourceModelMock(initial);
-        effect = counterEffects.getCounter({ counterSource });
+        effect = counterEffects.fetchCounter({ counterSource });
     });
     it('calls counter source getCount method', async () => {
         await effect;
@@ -42,14 +42,14 @@ describe(`${counterEffects.incrementCounter.name}`, () => {
     });
 });
 
-describe(`${counterEffects.setCounter.name}`, () => {
+describe(`${counterEffects.saveCounter.name}`, () => {
     const initial = 4;
     const count = 3;
     let counterSource: CounterSource;
     let effect: CancellablePromise<number>;
     beforeEach(() => {
         counterSource = makeCounterSourceModelMock(initial);
-        effect = counterEffects.setCounter(count, {
+        effect = counterEffects.saveCounter(count, {
             counterSource
         });
     });

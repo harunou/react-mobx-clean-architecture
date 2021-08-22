@@ -1,7 +1,7 @@
 import { RootStore } from '@stores/root/root-store';
 import { makeCancellablePromiseStub } from '@stores/helpers/stores.helpers';
 import { UseCase } from '@stores/helpers/stores.types';
-import { CancellablePromise } from 'mobx/dist/internal';
+import { action, AnnotationsMap, CancellablePromise } from 'mobx/dist/internal';
 import { counterEffects } from './effects/counter.effects';
 import { counterActions } from './actions/counter.actions';
 import {
@@ -16,7 +16,7 @@ export interface CounterController {
     addOneToCounter: UseCase;
     addOneToCounterAndSaveOptimistic: UseCase;
     addOneAndSavePessimistic: UseCase;
-    loadCountAndInitializeCounter: UseCase;
+    loadDataAndInitializeStores: UseCase;
     cancelAllPendingPromises: UseCase;
 }
 
@@ -29,52 +29,52 @@ export const counterController = (stores: {
     const counter = sliceCounterStore(stores.rootStore);
     const counterSource = sliceCounterSourceStore(stores.rootStore);
 
-    let saveCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
-    let incrementCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
-    let getCountPromise: CancellablePromise<number> = makeCancellablePromiseStub();
+    let saveCounterPromise: CancellablePromise<number> = makeCancellablePromiseStub();
+    let incrementCounterPromise: CancellablePromise<number> = makeCancellablePromiseStub();
+    let getCounterPromise: CancellablePromise<number> = makeCancellablePromiseStub();
 
     return {
         addValueToCounter: (payload: number): void =>
-            counterActions.incrementCounterRequested(payload, { counter }),
+            counterActions.incrementCounter(payload, { counter }),
         addOneToCounter: (): void =>
-            counterActions.incrementCounterRequested(1, { counter }),
-        addOneToCounterAndSaveOptimistic: (): void => {
-            counterActions.incrementCounterRequested(1, { counter });
-            saveCountPromise = counterEffects.setCounter(counter.count$, {
+            counterActions.incrementCounter(1, { counter }),
+        addOneToCounterAndSaveOptimistic: async (): Promise<void> => {
+            counterActions.incrementCounter(1, { counter });
+            saveCounterPromise = counterEffects.saveCounter(counter.count$, {
                 counterSource
             });
-            saveCountPromise.catch(() =>
-                counterActions.setCounterEffectFailure(1, { counter })
-            );
+            try {
+                await saveCounterPromise;
+            } catch (error) {
+                counterActions.saveCounterEffectFailure(1, { counter });
+            }
         },
-        addOneAndSavePessimistic: (): void => {
-            incrementCountPromise = counterEffects.incrementCounter(1, {
+        addOneAndSavePessimistic: async (): Promise<void> => {
+            incrementCounterPromise = counterEffects.incrementCounter(1, {
                 counterSource
             });
-            incrementCountPromise
-                .then((value) => {
-                    counterActions.incrementCounterEffectSuccess(value, {
-                        counter
-                    });
-                })
-                .catch((error: Error) =>
-                    counterActions.incrementCounterEffectFailure(error)
-                );
-        },
-        loadCountAndInitializeCounter: (): void => {
-            getCountPromise = counterEffects.getCounter({ counterSource });
-            getCountPromise
-                .then((value: number) =>
-                    counterActions.getCounterEffectSuccess(value, { counter })
-                )
-                .catch((error: Error) => {
-                    counterActions.getCounterEffectFailure(error);
+            try {
+                const value = await incrementCounterPromise;
+                counterActions.incrementCounterEffectSuccess(value, {
+                    counter
                 });
+            } catch (error) {
+                counterActions.incrementCounterEffectFailure(error);
+            }
+        },
+        loadDataAndInitializeStores: async (): Promise<void> => {
+            getCounterPromise = counterEffects.fetchCounter({ counterSource });
+            try {
+                const value = await getCounterPromise;
+                counterActions.fetchCounterEffectSuccess(value, { counter });
+            } catch (error) {
+                counterActions.fetchCounterEffectFailure(error);
+            }
         },
         cancelAllPendingPromises: (): void => {
-            saveCountPromise.cancel();
-            incrementCountPromise.cancel();
-            getCountPromise.cancel();
+            saveCounterPromise.cancel();
+            incrementCounterPromise.cancel();
+            getCounterPromise.cancel();
         }
     };
 };

@@ -36,7 +36,7 @@ export const Counter: FC = observer(() => {
         addOneToCounter,
         addOneToCounterAndSaveOptimistic,
         addOneAndSavePessimistic,
-        loadCountAndInitializeCounter,
+        loadDataAndInitializeStores: loadCountAndInitializeCounter,
         cancelAllPendingPromises
     } = controller;
     const { count$, selectMultiplyCount$ } = presenter;

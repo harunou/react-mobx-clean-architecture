@@ -2,7 +2,7 @@ import { CounterModel } from '@stores/domain/counter/counter-store.types';
 import { FLOW_CANCELLED } from '@stores/helpers/stores.helpers';
 import { action } from 'mobx';
 
-const incrementCounterRequested = action(
+const incrementCounter = action(
     (value: number, stores: { counter: CounterModel }) => {
         stores.counter.increment(value);
     }
@@ -20,17 +20,17 @@ const incrementCounterEffectFailure = action((error: Error) => {
     throw error;
 });
 
-const setCounterEffectFailure = action(
+const saveCounterEffectFailure = action(
     (value: number, stores: { counter: CounterModel }) =>
         stores.counter.decrement(value)
 );
 
-const getCounterEffectSuccess = action(
+const fetchCounterEffectSuccess = action(
     (value: number, stores: { counter: CounterModel }) =>
         stores.counter.setCount(value)
 );
 
-const getCounterEffectFailure = action((error: Error) => {
+const fetchCounterEffectFailure = action((error: Error) => {
     if (error.message === FLOW_CANCELLED) {
         return;
     }
@@ -38,10 +38,10 @@ const getCounterEffectFailure = action((error: Error) => {
 });
 
 export const counterActions = {
-    incrementCounterRequested,
+    incrementCounter,
     incrementCounterEffectSuccess,
     incrementCounterEffectFailure,
-    setCounterEffectFailure,
-    getCounterEffectSuccess,
-    getCounterEffectFailure
+    saveCounterEffectFailure,
+    fetchCounterEffectSuccess,
+    fetchCounterEffectFailure
 };

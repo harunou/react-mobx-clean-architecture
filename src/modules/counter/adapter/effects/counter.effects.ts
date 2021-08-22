@@ -1,14 +1,14 @@
 import { CounterSourceModel } from '@stores/persistence/counter-source/counter-source-store.types';
 import { effect } from '@stores/helpers/stores.helpers';
 
-const setCounter = effect(function* setCounterGenerator(
+const saveCounter = effect(function* saveCounterGenerator(
     value: number,
     stores: { counterSource: CounterSourceModel }
 ): Generator<Promise<number>, number, number> {
     return yield stores.counterSource.set(value);
 });
 
-const getCounter = effect(function* getCounterGenerator(stores: {
+const fetchCounter = effect(function* fetchCounterGenerator(stores: {
     counterSource: CounterSourceModel;
 }): Generator<Promise<number>, number, number> {
     return yield stores.counterSource.get();
@@ -22,7 +22,7 @@ const incrementCounter = effect(function* incrementCounterGenerator(
 });
 
 export const counterEffects = {
-    setCounter,
-    getCounter,
+    saveCounter,
+    fetchCounter,
     incrementCounter
 };
