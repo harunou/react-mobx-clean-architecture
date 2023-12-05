@@ -1,0 +1,19 @@
+# NOTE(harunou): As the component used as a submodule in Ansera GUI repo, the
+# Ansera GUI .prettierignore should be in sync with the current .prettierignore
+# file. Reason: prettier does not support nested .prettierignore files
+# https://github.com/prettier/prettier/issues/4081
+
+# exclude all
+/**/*
+
+# except /src
+!/src
+!/src/**/*
+
+# except config files
+!/*.config.js
+!.eslintrc.js
+!.prettier.config.js
+!package.json
+!tsconfig.json
+!.dependency-cruiser.config.js
