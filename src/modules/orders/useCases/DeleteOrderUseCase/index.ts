@@ -1,1 +1,1 @@
-export * from './DeleteOrderUseCase';
+export { DeleteOrderUseCase } from './DeleteOrderUseCaseWithExtractedUnits';

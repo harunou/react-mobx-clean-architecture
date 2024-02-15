@@ -1,27 +1,27 @@
 import type { EffectParams } from 'src/@types';
-import { orderDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
-import type { OrderEntity, OrderEntityDto, OrdersGateway } from 'src/modules/orders/types';
+import { orderEntityDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
+import type { OrderEntityDto, OrdersGateway } from 'src/modules/orders/types';
 import { toCancellablePromise } from 'src/utils';
-import { sleep } from 'src/utils/testing';
+import { sleepTimeout } from 'src/utils/testing';
 
 export class LocalOrdersGateway implements OrdersGateway {
     static make(): LocalOrdersGateway {
-        const fakeOrders = orderDtoFactory.list({ count: 5 });
+        const fakeOrders = orderEntityDtoFactory.list({ count: 5 });
         return new LocalOrdersGateway(fakeOrders);
     }
 
     constructor(private orders: OrderEntityDto[] = []) {}
 
     async fetchOrders(params: EffectParams = {}): Promise<OrderEntityDto[]> {
-        await sleep(1000);
+        await sleepTimeout(1000);
         const cancellableRequest = toCancellablePromise(() => Promise.resolve(this.orders));
         return cancellableRequest(params);
     }
 
-    async updateOrder(order: OrderEntity): Promise<OrderEntityDto> {
-        await sleep(3000);
-        const orderDto = order.dto;
-        const currentOrder = this.orders.find(({ id }) => id === orderDto.userId);
+    async updateOrder(order: OrderEntityDto): Promise<OrderEntityDto> {
+        await sleepTimeout(3000);
+        const orderDto = order;
+        const currentOrder = this.orders.find(({ id }) => id === orderDto.id);
         if (!currentOrder) {
             throw new Error('Orders: order was not found');
         }
@@ -30,8 +30,8 @@ export class LocalOrdersGateway implements OrdersGateway {
         return Promise.resolve(currentOrder);
     }
 
-    async deleteOrder(id: OrderEntity['id']): Promise<void> {
-        await sleep(1700);
+    async deleteOrder(id: OrderEntityDto['id']): Promise<void> {
+        await sleepTimeout(1700);
         const index = this.orders.findIndex((order) => order.id === id);
 
         if (index === -1) {
@@ -41,8 +41,8 @@ export class LocalOrdersGateway implements OrdersGateway {
         return Promise.resolve();
     }
 
-    async deleteItem(orderId: OrderEntity['id'], itemId: OrderEntity['id']): Promise<void> {
-        await sleep(1700);
+    async deleteItem(orderId: OrderEntityDto['id'], itemId: OrderEntityDto['id']): Promise<void> {
+        await sleepTimeout(1700);
         const order = this.orders.find((order) => order.id === orderId);
 
         if (!order) {

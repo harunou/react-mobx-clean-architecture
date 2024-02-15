@@ -21,7 +21,7 @@ export class UpdateOrderUseCase implements UseCase<[OrderEntity]> {
     async execute(order: OrderEntity): Promise<void> {
         this.ordersPresentation.patchData({ isLoading: true });
         try {
-            const updatedOrder = await this.ordersGateway.updateOrder(order);
+            const updatedOrder = await this.ordersGateway.updateOrder(order.dto);
 
             this.successTransaction(updatedOrder);
         } catch (error) {

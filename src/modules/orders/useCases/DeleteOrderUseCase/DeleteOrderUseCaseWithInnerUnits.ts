@@ -1,17 +1,17 @@
 import { action } from 'mobx';
-import type { Effect, Transaction, UseCase } from 'src/@types';
-import { DeleteOrderEffect } from '../../effects';
-import { DeleteOrderTransaction } from '../../transactions';
+import type { UseCase } from 'src/@types';
 import type {
     OrderEntityCollection,
     OrdersPresentationEntity,
     AbstractOrdersStore,
     ServiceGateway,
+    OrdersGateway,
 } from '../../types';
 
-type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'remove' | 'entities'>;
-type OrdersPresentationEntityDep = Pick<OrdersPresentationEntity, 'patchData'>;
-type ServiceGatewayDep = Pick<ServiceGateway, 'logOrders'>;
+export type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'remove' | 'entities'>;
+export type OrdersPresentationEntityDep = Pick<OrdersPresentationEntity, 'patchData'>;
+export type ServiceGatewayDep = Pick<ServiceGateway, 'logOrders'>;
+export type OrdersGatewayDep = Pick<OrdersGateway, 'deleteOrder'>;
 
 export class DeleteOrderUseCase implements UseCase<[string]> {
     static make(ordersStore: AbstractOrdersStore): UseCase<[string]> {
@@ -19,23 +19,21 @@ export class DeleteOrderUseCase implements UseCase<[string]> {
             ordersStore.orderEntityCollection,
             ordersStore.ordersPresentationEntity,
             ordersStore.serviceGateway,
-            DeleteOrderEffect.make(ordersStore),
-            DeleteOrderTransaction.make(ordersStore),
+            ordersStore.ordersGateway,
         );
     }
     constructor(
         private orderEntityCollection: OrderEntityCollectionDep,
         private ordersPresentation: OrdersPresentationEntityDep,
         private serviceGateway: ServiceGatewayDep,
-        private deleteOrderEffect: Effect<[string]>,
-        private deleteOrderTransaction: Transaction<[string]>,
+        private ordersGateway: OrdersGatewayDep,
     ) {}
 
     @action
     async execute(id: string): Promise<void> {
         this.ordersPresentation.patchData({ isLoading: true });
         try {
-            await this.deleteOrderEffect.run(id);
+            await this.deleteOrderEffect(id);
 
             this.successTransaction(id);
             void this.serviceGateway.logOrders(this.orderEntityCollection.entities);
@@ -44,14 +42,23 @@ export class DeleteOrderUseCase implements UseCase<[string]> {
         }
     }
 
+    private deleteOrderEffect(id: string): Promise<void> {
+        return this.ordersGateway.deleteOrder(id);
+    }
+
     @action
     private successTransaction(id: string): void {
-        this.deleteOrderTransaction.commit(id);
+        this.deleteOrderTransaction(id);
         this.ordersPresentation.patchData({ isLoading: false });
     }
 
     @action
     private failureTransaction(): void {
         this.ordersPresentation.patchData({ isLoading: false });
+    }
+
+    @action
+    private deleteOrderTransaction(id: string): void {
+        this.orderEntityCollection.remove(id);
     }
 }

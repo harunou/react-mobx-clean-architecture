@@ -6,13 +6,6 @@ import { tick } from 'src/utils/testing';
 import { App } from './App';
 
 describe(`${App.name}`, () => {
-    beforeEach(() => {
-        jest.useFakeTimers();
-    });
-    afterEach(() => {
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
-    });
     it('renders app container', async () => {
         const rootStore = RootStore.make();
         render(
@@ -23,7 +16,6 @@ describe(`${App.name}`, () => {
             </StrictMode>,
         );
 
-        jest.runAllTimers();
         await tick();
 
         const element = screen.getByText(/mobx-react-clean-architecture/i);

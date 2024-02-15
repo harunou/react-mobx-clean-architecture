@@ -2,12 +2,13 @@ import { act, render, screen } from '@testing-library/react';
 import assert from 'assert';
 import { runInAction } from 'mobx';
 import { OrdersStoreContext } from 'src/modules/orders/contexts';
-import { orderDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
+import { orderEntityDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
 import { OrdersStore } from 'src/modules/orders/stores';
 import type { AbstractOrdersStore, OrderEntityDto } from 'src/modules/orders/types';
 import { OrderItem } from './OrderItem';
 import { ordersApiUrl } from 'src/modules/orders/api/OrdersApi';
-import { testHttpClient } from 'src/utils/testing';
+import { RequestMatcher, testHttpClient } from 'src/utils/testing';
+import { StrictMode } from 'react';
 
 describe(`${OrderItem.name}`, () => {
     let ordersStore: AbstractOrdersStore;
@@ -16,7 +17,7 @@ describe(`${OrderItem.name}`, () => {
     const orderItemsAmount = 5;
     beforeEach(() => {
         jest.restoreAllMocks();
-        ordersEntitiesDto = orderDtoFactory.list(
+        ordersEntitiesDto = orderEntityDtoFactory.list(
             { count: ordersAmount },
             { itemsAmount: orderItemsAmount },
         );
@@ -34,13 +35,15 @@ describe(`${OrderItem.name}`, () => {
         const item0 = order0.items.entities[orderItemsAmount - 1];
         assert(item0);
         const deleteUrl = `${ordersApiUrl}/${order0.id}/items/${item0.id}`;
-        const deleteUrlMatcher = (req: Request): boolean =>
+        const deleteUrlMatcher: RequestMatcher = (req: Request): boolean =>
             req.url === deleteUrl && req.method === 'DELETE';
 
         render(
-            <OrdersStoreContext.Provider value={ordersStore}>
-                <OrderItem orderId={order0.id} itemId={item0.id} />
-            </OrdersStoreContext.Provider>,
+            <StrictMode>
+                <OrdersStoreContext.Provider value={ordersStore}>
+                    <OrderItem orderId={order0.id} itemId={item0.id} />
+                </OrdersStoreContext.Provider>
+            </StrictMode>,
         );
 
         const deleteButton = screen.getByRole('button');

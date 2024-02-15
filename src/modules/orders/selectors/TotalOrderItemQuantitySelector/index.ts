@@ -1,1 +1,1 @@
-export * from './TotalOrderItemQuantitySelector';
+export { TotalOrderItemQuantitySelectorOptimized as TotalOrderItemQuantitySelector } from './TotalOrderItemQuantitySelectorOptimized';

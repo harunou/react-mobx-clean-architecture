@@ -66,8 +66,8 @@ dependencies:
     specifier: 5.0.1
     version: 5.0.1(@babel/plugin-syntax-flow@7.22.5)(@babel/plugin-transform-react-jsx@7.22.15)(eslint@8.50.0)(react@18.2.0)(typescript@4.9.5)
   test-http-client:
-    specifier: 1.0.0
-    version: 1.0.0
+    specifier: 1.0.2
+    version: 1.0.2
   typescript:
     specifier: 4.9.5
     version: 4.9.5
@@ -11110,8 +11110,8 @@ packages:
       minimatch: 3.1.2
     dev: false
 
-  /test-http-client@1.0.0:
-    resolution: {integrity: sha512-tk7IuP4Fud0itu0G0ZqpC6kNK/9C9qgpmikvSIdlEtKER0N211/P86FUaYNHEFeylDg6DqyF7jtgGXDUsj8XGw==}
+  /test-http-client@1.0.2:
+    resolution: {integrity: sha512-GKCEMljkWUCoPD+bYi9AiaE7TZ5Y4BRFLQemvZiXGnKcMybXos2OmgfKqyX4HxQNQSo29AJyuyJsW5o3ss+0pg==}
     dependencies:
       '@esfx/async-deferred': 1.0.0
     dev: false

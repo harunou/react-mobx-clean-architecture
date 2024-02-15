@@ -1,1 +1,1 @@
-export * from './DeleteOrderTransactions';
+export { DeleteOrderTransaction } from './DeleteOrderTransactions';

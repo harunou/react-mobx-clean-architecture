@@ -1,10 +1,10 @@
-import type { Effect, EffectParams } from 'src/@types';
+import type { Effect } from 'src/@types';
 import type { OrdersGateway, AbstractOrdersStore } from '../../types';
 
-type OrdersGatewayDep = Pick<OrdersGateway, 'deleteOrder'>;
+export type OrdersGatewayDep = Pick<OrdersGateway, 'deleteOrder'>;
 
-export class DeleteOrderEffect implements Effect<[string, EffectParams]> {
-    static make(ordersStore: AbstractOrdersStore): DeleteOrderEffect {
+export class DeleteOrderEffect implements Effect<[orderId: string]> {
+    static make(ordersStore: AbstractOrdersStore): Effect<[orderId: string]> {
         return new DeleteOrderEffect(ordersStore.ordersGateway);
     }
 

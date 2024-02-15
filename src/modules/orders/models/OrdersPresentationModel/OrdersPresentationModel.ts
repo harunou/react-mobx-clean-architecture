@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import type { OrdersPresentationEntity, OrdersPresentationEntityDto } from '../../types';
 
-const DEFAULTS: OrdersPresentationEntityDto = {
+export const DEFAULTS: OrdersPresentationEntityDto = {
     isLoading: false,
 };
 

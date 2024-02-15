@@ -15,7 +15,7 @@ export class HybridOrdersGateway implements OrdersGateway, OrdersGatewayRuntimeS
         return new HybridOrdersGateway(remoteGateway, localGateway);
     }
 
-    private gateway: OrdersGateway;
+    gateway: OrdersGateway;
 
     constructor(
         private remoteGateway: OrdersGateway,
@@ -36,7 +36,7 @@ export class HybridOrdersGateway implements OrdersGateway, OrdersGatewayRuntimeS
         return this.gateway.fetchOrders(params);
     }
 
-    async updateOrder(order: OrderEntity): Promise<OrderEntityDto> {
+    async updateOrder(order: OrderEntityDto): Promise<OrderEntityDto> {
         return this.gateway.updateOrder(order);
     }
 

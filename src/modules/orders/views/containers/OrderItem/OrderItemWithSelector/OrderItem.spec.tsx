@@ -2,7 +2,7 @@ import { act, render } from '@testing-library/react';
 import assert from 'assert';
 import { runInAction } from 'mobx';
 import { OrdersStoreContext } from 'src/modules/orders/contexts';
-import { orderDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
+import { orderEntityDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
 import { OrdersStore } from 'src/modules/orders/stores';
 import type { AbstractOrdersStore, OrderEntityDto } from 'src/modules/orders/types';
 import { OrderItem } from './OrderItem';
@@ -14,7 +14,7 @@ describe(`${OrderItem.name}`, () => {
     const orderItemsAmount = 5;
     beforeEach(() => {
         jest.restoreAllMocks();
-        ordersEntitiesDto = orderDtoFactory.list(
+        ordersEntitiesDto = orderEntityDtoFactory.list(
             { count: ordersAmount },
             { itemsAmount: orderItemsAmount },
         );

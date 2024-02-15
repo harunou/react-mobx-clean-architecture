@@ -1,1 +1,1 @@
-export * from './DeleteOrderEffect';
+export { DeleteOrderEffect } from './DeleteOrderEffect';

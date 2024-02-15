@@ -1,6 +1,6 @@
 import type { EffectParams } from 'src/@types';
 import { OrdersApi } from 'src/modules/orders/api';
-import type { OrderEntity, OrderEntityDto, OrdersGateway } from 'src/modules/orders/types';
+import type { OrderEntityDto, OrdersGateway } from 'src/modules/orders/types';
 import { toCancellablePromise } from 'src/utils';
 import type {
     OrderDtoToOrderEntityDtoMapper,
@@ -32,8 +32,8 @@ export class RemoteOrdersGateway implements OrdersGateway {
         return ordersDto.map((dto) => this.mapOrderDtoToOrderEntityDto(dto));
     }
 
-    async updateOrder(order: OrderEntity): Promise<OrderEntityDto> {
-        const entity = await this.orderApi.updateOrder(this.mapOrderEntityDtoToOrderDto(order.dto));
+    async updateOrder(order: OrderEntityDto): Promise<OrderEntityDto> {
+        const entity = await this.orderApi.updateOrder(this.mapOrderEntityDtoToOrderDto(order));
         return this.mapOrderDtoToOrderEntityDto(entity);
     }
 

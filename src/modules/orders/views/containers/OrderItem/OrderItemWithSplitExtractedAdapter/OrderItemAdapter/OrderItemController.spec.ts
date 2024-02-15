@@ -1,7 +1,7 @@
 import assert from 'assert';
 import type { Selector } from 'src/@types';
 import { OrderModel, OrderModelCollection } from 'src/modules/orders/models';
-import { orderDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
+import { orderEntityDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
 import { OrderByIdSelector } from 'src/modules/orders/selectors';
 import type { OrderEntity, OrderEntityCollection, OrderEntityDto } from 'src/modules/orders/types';
 import {
@@ -63,7 +63,7 @@ describe(`${OrderItemController.name}`, () => {
         let controller: OrderItemController;
         let orderEntityCollection: OrderEntityCollection;
         beforeEach(() => {
-            orderEntitiesDto = orderDtoFactory.list({ count: 5 });
+            orderEntitiesDto = orderEntityDtoFactory.list({ count: 5 });
             const orderEntities = orderEntitiesDto.map((dto) => OrderModel.make(dto));
             orderEntityCollection = OrderModelCollection.make(orderEntities);
             orderByIdSelector = new OrderByIdSelector(orderEntityCollection);
