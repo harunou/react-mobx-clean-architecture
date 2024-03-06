@@ -28,7 +28,7 @@ Dependency graph of the code units.
 
 A more detailed dependency graph can be found [here](docs/images/dependency-graph-overview-1.svg).
 
-Dependency graph, data and control flows inside a React component
+Dependency, data and events flow inside a React component
 
 ![react component](docs/images/react-component-dependencies-and-flow.png)
 
@@ -61,4 +61,4 @@ Dependency graph, data and control flows inside a React component
 
 ## Units Lifecycle
 
-For the units implementation, it is suggested to use Cluster Lifecycle model described in this article [Cluster Lifecycle](docs/the-new-culture-of-software-development-reflection.pdf), where generalization is important and mandatory step.
+For the units implementation, it is suggested to use Cluster Lifecycle model described in this [article](docs/the-new-culture-of-software-development-reflection.pdf), where generalization is important and mandatory step.
