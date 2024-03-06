@@ -58,3 +58,7 @@ Dependency graph, data and control flows inside a React component
 - [DeleteOrderEffect](src/modules/orders/effects/DeleteOrderEffect/DeleteOrderEffect.spec.ts)
 - [HybridOrdersGateway](src/modules/orders/gateways/HybridOrdersGateway/HybridOrdersGateway.spec.ts)
 - [LocalOrdersGateway](src/modules/orders/gateways/HybridOrdersGateway/LocalOrdersGateway/LocalOrdersGateway.spec.ts)
+
+## Units Lifecycle
+
+For the units implementation, it is suggested to use Cluster Lifecycle model described in this article [Cluster Lifecycle](docs/the-new-culture-of-software-development-reflection.pdf), where generalization is important and mandatory step.
