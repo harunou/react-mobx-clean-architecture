@@ -30,7 +30,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "pnpm prettier:check && pnpm types:check && pnpm eslint:check && pnpm deps:check && pnpm jest:check",
+    "test": "npm run  prettier:check && npm run types:check && npm run eslint:check && npm run deps:check && npm run jest:check",
     "eject": "react-scripts eject",
     "jest:watch": "react-scripts test",
     "jest:check": "react-scripts test --watchAll=false",
@@ -43,8 +43,8 @@
     "prettier:check": "prettier --check ./",
     "prettier:format": "prettier --write ./",
     "packages:upgrade": "ncu --interactive --upgrade",
-    "git:hooks:pre-commit": "pnpm prettier:check",
-    "git:hooks:pre-push": "pnpm test",
+    "git:hooks:pre-commit": "npm run prettier:check",
+    "git:hooks:pre-push": "npm run test",
     "prepare": "husky install"
   },
   "browserslist": {
@@ -58,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "7.21.11"
   }
 }
