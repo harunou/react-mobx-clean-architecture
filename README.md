@@ -32,7 +32,7 @@ Dependency graph, data and control flows inside a React component
 
 ![react component](docs/images/react-component-dependencies-and-flow.png)
 
-## Some examples of units implementations
+## Examples of Units Implementation
 
 - [OrderItemModel](src/modules/orders/models/OrderItemModel/OrderItemModel.spec.ts)
 - [DeleteOrderTransactions](src/modules/orders/transactions/DeleteOrderTransactions/DeleteOrderTransactions.spec.ts)
