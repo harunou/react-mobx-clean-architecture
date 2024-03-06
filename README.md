@@ -2,7 +2,7 @@
 
 The repository provides an example React application that uses the Mobx state management library. The application is implemented with [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
 
-## Some Definitions
+## Definitions
 
 - **Business Entity**: Unit that encapsulate business rules and data.
 - **Business Rules and Data**: The most general and high-level rules and data that are presentation-agnostic. They are the least likely to change when something external changes.
