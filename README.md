@@ -1,6 +1,13 @@
-# Clean Architecture for React Application with Mobx Store
+# Clean Architecture Implementation for React Application with Mobx Store
 
-The repository provides an example React application that uses Mobx state management library. The application is implemented with [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
+The repository provides an example React application that uses Mobx state management library with [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) applied.
+
+## Benefits
+
+1. Independent and reusable code units with separated concerns.
+2. Unified control and data flow.
+3. Testable code.
+4. Reduced cognitive overload when working with a codebase.
 
 ## Definitions
 
@@ -32,7 +39,7 @@ Dependency, data and events flow inside a React component
 
 ![react component](docs/images/react-component-dependencies-and-flow.png)
 
-## Examples of Units Implementation
+## Examples of Units Implementation and Specs
 
 - [OrderItemModel](src/modules/orders/models/OrderItemModel/OrderItemModel.spec.ts)
 - [DeleteOrderTransactions](src/modules/orders/transactions/DeleteOrderTransactions/DeleteOrderTransactions.spec.ts)
