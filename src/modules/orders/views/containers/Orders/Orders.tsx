@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { FC, useContext, useEffect } from 'react';
-import { RootStoreContext } from 'src/contexts';
+import { FC, useEffect } from 'react';
 import { useAdapter, useLocalAdapter } from 'src/hooks';
 import { OrdersStoreContext } from 'src/modules/orders/contexts';
 import { TotalOrderItemQuantitySelector } from 'src/modules/orders/selectors';
@@ -8,9 +7,9 @@ import { OrdersStore } from 'src/modules/orders/stores';
 import { DestroyModuleUseCase, LoadOrdersUseCase } from 'src/modules/orders/useCases';
 import { ordersTestId, totalItemQuantityTestId } from '../../testIds';
 import { Order } from '../Order/Order';
+import { useAttachOrdersStoreToRootStore } from './Orders.utils';
 
 export const Orders: FC = observer(function Orders() {
-    const rootStore = useContext(RootStoreContext);
     const ordersStore = useAdapter(() => OrdersStore.make());
     const presenter = useLocalAdapter(() => {
         const totalOrderItemQuantitySelector = TotalOrderItemQuantitySelector.make(ordersStore);
@@ -39,10 +38,7 @@ export const Orders: FC = observer(function Orders() {
         };
     });
 
-    useEffect(() => {
-        rootStore.setOrdersStore(ordersStore);
-        return () => rootStore.setOrdersStore(undefined);
-    }, [rootStore, ordersStore]);
+    useAttachOrdersStoreToRootStore(ordersStore);
 
     useEffect(() => {
         controller.moduleStarted();
