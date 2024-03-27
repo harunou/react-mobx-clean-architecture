@@ -7,7 +7,7 @@ import type {
     OrdersGateway,
     OrdersPresentationEntity,
     OrdersAggregate,
-    AbstractOrdersCancelEffects,
+    OrdersCancelEffectCollection,
 } from '../../types';
 
 export type OrdersPresentationEntityDep = Pick<OrdersPresentationEntity, 'patchData'>;
@@ -26,7 +26,7 @@ export class LoadOrdersUseCase implements UseCase {
     constructor(
         private orderModelCollection: OrderEntityCollectionDep,
         private ordersPresentationModel: OrdersPresentationEntityDep,
-        private ordersCancelEffects: AbstractOrdersCancelEffects,
+        private ordersCancelEffects: OrdersCancelEffectCollection,
         private ordersGateway: OrdersGatewayDep,
     ) {}
 

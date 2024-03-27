@@ -1,10 +1,10 @@
 import type { CancelEffect } from 'src/@types';
 import { removeFromArray } from 'src/utils';
-import type { AbstractOrdersCancelEffects } from '../types';
+import type { OrdersCancelEffectCollection } from '../types';
 
 type OrderId = string;
 
-export class OrdersCancelEffects implements AbstractOrdersCancelEffects {
+export class OrdersCancelEffects implements OrdersCancelEffectCollection {
     static make(): OrdersCancelEffects {
         return new OrdersCancelEffects();
     }

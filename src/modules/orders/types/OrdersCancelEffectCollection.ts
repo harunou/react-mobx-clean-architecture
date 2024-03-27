@@ -1,6 +1,6 @@
-import type { CancelEffect, CancelEffects } from 'src/@types';
+import type { CancelEffect, CancelEffectCollection } from 'src/@types';
 
-export interface AbstractOrdersCancelEffects extends CancelEffects {
+export interface OrdersCancelEffectCollection extends CancelEffectCollection {
     cancelByOrderId(orderId: string): void;
     addFetchOrders(effect: CancelEffect): void;
     removeFetchOrders(): void;
