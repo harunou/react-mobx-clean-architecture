@@ -17,8 +17,8 @@ export type OrdersGatewayDep = Pick<OrdersGateway, 'fetchOrders'>;
 export class LoadOrdersUseCase implements UseCase {
     static make(ordersStore: OrdersAggregate): UseCase {
         return new LoadOrdersUseCase(
-            ordersStore.orderEntityCollection,
-            ordersStore.ordersPresentationEntity,
+            ordersStore.orderModelCollection,
+            ordersStore.ordersPresentationModel,
             ordersStore.ordersCancelEffects,
             ordersStore.ordersGateway,
         );

@@ -10,7 +10,7 @@ interface OrderItemProps {
 }
 
 export const OrderItem: FC<OrderItemProps> = observer(function OrderItem(props) {
-    const { orderEntityCollection: orders } = useContext(OrdersStoreContext);
+    const { orderModelCollection: orders } = useContext(OrdersStoreContext);
     props.rendersCounter?.();
     return (
         <div data-testid={orderItemTestId}>

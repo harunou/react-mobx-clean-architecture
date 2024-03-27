@@ -34,10 +34,10 @@ describe.each([
         );
         ordersStore = OrdersStore.make();
         ordersStore.ordersGateway.useLocalGateway();
-        ordersStore.orderEntityCollection.replaceAllFromDto(ordersEntitiesDto);
+        ordersStore.orderModelCollection.replaceAllFromDto(ordersEntitiesDto);
     });
     it('renders item data if supplied ids refer to a existing orderItem', () => {
-        const order0 = ordersStore.orderEntityCollection.entities[ordersAmount - 1];
+        const order0 = ordersStore.orderModelCollection.entities[ordersAmount - 1];
         assert(order0);
         const item0 = order0.items.entities[orderItemsAmount - 1];
         assert(item0);
@@ -57,9 +57,9 @@ describe.each([
         expect(quantityElement).toBeInTheDocument();
     });
     it('renders correct item data if props are changed', () => {
-        const order0 = ordersStore.orderEntityCollection.entities[ordersAmount - 1];
+        const order0 = ordersStore.orderModelCollection.entities[ordersAmount - 1];
         assert(order0);
-        const order1 = ordersStore.orderEntityCollection.entities[ordersAmount - 2];
+        const order1 = ordersStore.orderModelCollection.entities[ordersAmount - 2];
         assert(order1);
         const item00 = order0.items.entities[orderItemsAmount - 1];
         assert(item00);
@@ -87,7 +87,7 @@ describe.each([
         expect(quantityElement).toBeInTheDocument();
     });
     it('renders updated item data when item quantity is updated', () => {
-        const order0 = ordersStore.orderEntityCollection.entities[ordersAmount - 1];
+        const order0 = ordersStore.orderModelCollection.entities[ordersAmount - 1];
         assert(order0);
         const item0 = order0.items.entities[orderItemsAmount - 1];
         assert(item0);

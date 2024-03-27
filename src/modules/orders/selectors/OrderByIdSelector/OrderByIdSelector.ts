@@ -5,7 +5,7 @@ type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'get'>;
 
 export class OrderByIdSelector implements Selector<[id: string], OrderEntity | undefined> {
     static make(ordersStore: OrdersAggregate): Selector<[id: string], OrderEntity | undefined> {
-        return new OrderByIdSelector(ordersStore.orderEntityCollection);
+        return new OrderByIdSelector(ordersStore.orderModelCollection);
     }
 
     constructor(private readonly orderEntityCollection: OrderEntityCollectionDep) {}

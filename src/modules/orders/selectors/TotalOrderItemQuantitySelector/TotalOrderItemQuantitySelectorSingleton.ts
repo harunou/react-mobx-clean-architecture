@@ -7,7 +7,7 @@ export class TotalOrderItemQuantitySelectorSingleton implements Selector<[], num
     static make(ordersStore: OrdersAggregate): Selector<[], number> {
         if (!TotalOrderItemQuantitySelectorSingleton.instance) {
             TotalOrderItemQuantitySelectorSingleton.instance =
-                new TotalOrderItemQuantitySelectorSingleton(ordersStore.orderEntityCollection);
+                new TotalOrderItemQuantitySelectorSingleton(ordersStore.orderModelCollection);
         }
         return TotalOrderItemQuantitySelectorSingleton.instance;
     }

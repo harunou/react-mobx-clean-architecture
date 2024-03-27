@@ -7,7 +7,7 @@ export class OrderPresenter {
         ordersStore: OrdersAggregate,
         orderIdStore: ObservableState<string>,
     ): OrderPresenter {
-        return new OrderPresenter(ordersStore.orderEntityCollection, orderIdStore);
+        return new OrderPresenter(ordersStore.orderModelCollection, orderIdStore);
     }
 
     constructor(

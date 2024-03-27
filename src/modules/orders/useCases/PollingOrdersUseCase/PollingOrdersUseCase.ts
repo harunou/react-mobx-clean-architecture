@@ -8,7 +8,7 @@ type OrdersGatewayDep = Pick<OrdersGateway, 'fetchOrders'>;
 
 export class PollingOrdersUseCase implements UseCase {
     static make(store: OrdersAggregate): UseCase {
-        return new PollingOrdersUseCase(store.orderEntityCollection, store.ordersGateway);
+        return new PollingOrdersUseCase(store.orderModelCollection, store.ordersGateway);
     }
     constructor(
         private orderEntityCollection: OrderEntityCollectionDep,

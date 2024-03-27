@@ -9,13 +9,13 @@ import type { AbstractOrdersCancelEffects } from '../AbstractOrdersCancelEffects
 import type { Entity } from 'src/@types';
 
 export interface OrdersAggregateDto {
-    orderEntityCollectionDto: OrderEntityDto[];
-    ordersPresentationEntityDto: OrdersPresentationEntityDto;
+    orderModelCollectionDto: OrderEntityDto[];
+    ordersPresentationModelDto: OrdersPresentationEntityDto;
 }
 
 export interface OrdersAggregate extends Entity<OrdersAggregateDto> {
-    orderEntityCollection: OrderEntityCollection;
-    ordersPresentationEntity: OrdersPresentationEntity;
+    orderModelCollection: OrderEntityCollection;
+    ordersPresentationModel: OrdersPresentationEntity;
     ordersGateway: OrdersGateway & OrdersGatewayRuntimeSwitch;
     serviceGateway: ServiceGateway;
     ordersCancelEffects: AbstractOrdersCancelEffects;

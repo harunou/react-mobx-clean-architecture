@@ -3,7 +3,7 @@ import type { OrdersAggregate, OrderEntityCollection } from '../../types';
 
 export class TotalOrderItemQuantitySelectorNotOptimized implements Selector<[], number> {
     static make(ordersStore: OrdersAggregate): Selector<[], number> {
-        return new TotalOrderItemQuantitySelectorNotOptimized(ordersStore.orderEntityCollection);
+        return new TotalOrderItemQuantitySelectorNotOptimized(ordersStore.orderModelCollection);
     }
 
     calculations: { select: number } = {

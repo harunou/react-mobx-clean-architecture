@@ -21,8 +21,8 @@ export class OrdersStore implements OrdersAggregate {
         );
     }
     constructor(
-        public orderEntityCollection: OrderEntityCollection,
-        public ordersPresentationEntity: OrdersPresentationEntity,
+        public orderModelCollection: OrderEntityCollection,
+        public ordersPresentationModel: OrdersPresentationEntity,
         public ordersGateway: OrdersGateway & OrdersGatewayRuntimeSwitch,
         public serviceGateway: ServiceGateway,
         public ordersCancelEffects: OrdersCancelEffects,
@@ -30,24 +30,22 @@ export class OrdersStore implements OrdersAggregate {
 
     get dto(): OrdersAggregateDto {
         return {
-            orderEntityCollectionDto: this.orderEntityCollection.entities.map(
-                (entity) => entity.dto,
-            ),
-            ordersPresentationEntityDto: this.ordersPresentationEntity.dto,
+            orderModelCollectionDto: this.orderModelCollection.entities.map((entity) => entity.dto),
+            ordersPresentationModelDto: this.ordersPresentationModel.dto,
         };
     }
 
-    setData(data: OrdersAggregateDto): void {
-        this.orderEntityCollection.replaceAllFromDto(data.orderEntityCollectionDto);
-        this.ordersPresentationEntity.setData(data.ordersPresentationEntityDto);
+    setData(dto: OrdersAggregateDto): void {
+        this.orderModelCollection.replaceAllFromDto(dto.orderModelCollectionDto);
+        this.ordersPresentationModel.setData(dto.ordersPresentationModelDto);
     }
 
-    patchData(data: Partial<OrdersAggregateDto>): void {
-        if (data.hasOwnProperty('orderEntityCollectionDto')) {
-            this.orderEntityCollection.replaceAllFromDto(data.orderEntityCollectionDto);
+    patchData(dto: Partial<OrdersAggregateDto>): void {
+        if (dto.hasOwnProperty('orderModelCollectionDto')) {
+            this.orderModelCollection.replaceAllFromDto(dto.orderModelCollectionDto);
         }
-        if (data.hasOwnProperty('ordersPresentationEntityDto')) {
-            this.ordersPresentationEntity.patchData(data.ordersPresentationEntityDto);
+        if (dto.hasOwnProperty('ordersPresentationModelDto')) {
+            this.ordersPresentationModel.patchData(dto.ordersPresentationModelDto);
         }
     }
 }

@@ -6,7 +6,7 @@ import { OrdersStore } from '../../stores';
 import type { OrdersAggregate, OrdersAggregateDto } from '../../types';
 import { DeleteOrderUseCase as DeleteOrderUseCaseWithInnerUnits } from './DeleteOrderUseCaseWithInnerUnits';
 import { DeleteOrderUseCase as DeleteOrderUseCaseWithExtractedUnits } from './DeleteOrderUseCaseWithExtractedUnits';
-import { ordersAggregateDtoFactory } from '../../stores/OrdersStore.factory';
+import { ordersStoreDtoFactory } from '../../stores/OrdersStore.factory';
 
 describe.each([
     ['DeleteOrderUseCaseWithExtractedUnits', DeleteOrderUseCaseWithExtractedUnits],
@@ -19,7 +19,7 @@ describe.each([
         req.url === `${ordersApiUrl}/${id}` && req.method === 'DELETE';
 
     beforeEach(() => {
-        ordersStoreDto = ordersAggregateDtoFactory.item();
+        ordersStoreDto = ordersStoreDtoFactory.item();
         store = OrdersStore.make();
         store.ordersGateway.useRemoteGateway();
         store.setData(ordersStoreDto);
@@ -27,10 +27,10 @@ describe.each([
     });
 
     it('deletes an order successfully', async () => {
-        const amountOfOrders = ordersStoreDto.orderEntityCollectionDto.length;
+        const amountOfOrders = ordersStoreDto.orderModelCollectionDto.length;
 
         const orderIndex = 1;
-        const order = ordersStoreDto.orderEntityCollectionDto.at(orderIndex);
+        const order = ordersStoreDto.orderModelCollectionDto.at(orderIndex);
         assert(order);
 
         void deleteOrderUseCase.execute(order.id);
@@ -40,16 +40,16 @@ describe.each([
 
         await tick();
 
-        const resultOrderIds = store.orderEntityCollection.entities.map((order) => order.id);
+        const resultOrderIds = store.orderModelCollection.entities.map((order) => order.id);
         expect(resultOrderIds).not.toContain(order.id);
         expect(resultOrderIds.length).toBe(amountOfOrders - 1);
     });
 
     it('handles failure to delete an order', async () => {
-        const amountOfOrders = ordersStoreDto.orderEntityCollectionDto.length;
+        const amountOfOrders = ordersStoreDto.orderModelCollectionDto.length;
 
         const orderIndex = 1;
-        const order = ordersStoreDto.orderEntityCollectionDto.at(orderIndex);
+        const order = ordersStoreDto.orderModelCollectionDto.at(orderIndex);
         assert(order);
 
         void deleteOrderUseCase.execute(order.id);
@@ -59,7 +59,7 @@ describe.each([
 
         await tick();
 
-        const resultOrderIds = store.orderEntityCollection.entities.map((order) => order.id);
+        const resultOrderIds = store.orderModelCollection.entities.map((order) => order.id);
         expect(resultOrderIds).toContain(order.id);
         expect(resultOrderIds.length).toBe(amountOfOrders);
     });

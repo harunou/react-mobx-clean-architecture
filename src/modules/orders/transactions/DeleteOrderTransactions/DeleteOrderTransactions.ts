@@ -6,7 +6,7 @@ export type OrderEntityCollectionDep = Pick<OrderItemEntityCollection, 'remove'>
 
 export class DeleteOrderTransaction implements Transaction<[string]> {
     static make(ordersStore: OrdersAggregate): DeleteOrderTransaction {
-        return new DeleteOrderTransaction(ordersStore.orderEntityCollection);
+        return new DeleteOrderTransaction(ordersStore.orderModelCollection);
     }
     constructor(private orderEntityCollection: OrderEntityCollectionDep) {}
 

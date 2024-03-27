@@ -14,7 +14,7 @@ export class OrderItemPresenter {
         orderIdStore: ObservableState<string>,
         itemIdStore: ObservableState<string>,
     ): OrderItemPresenter {
-        return new OrderItemPresenter(orderIdStore, itemIdStore, ordersStore.orderEntityCollection);
+        return new OrderItemPresenter(orderIdStore, itemIdStore, ordersStore.orderModelCollection);
     }
 
     constructor(

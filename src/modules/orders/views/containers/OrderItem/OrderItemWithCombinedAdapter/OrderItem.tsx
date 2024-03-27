@@ -17,7 +17,7 @@ export const OrderItem: FC<OrderItemProps> = observer(function OrderItem(props) 
     const itemIdStore = useObservableState(props.itemId, [props.itemId]);
     const adapter = useLocalAdapter(() => {
         const item = computed(() => {
-            const order = ordersStore.orderEntityCollection.get(orderIdStore.value);
+            const order = ordersStore.orderModelCollection.get(orderIdStore.value);
             const item = order?.items.get(itemIdStore.value);
             return item;
         });
@@ -36,7 +36,7 @@ export const OrderItem: FC<OrderItemProps> = observer(function OrderItem(props) 
             },
             // Controller
             deleteButtonClicked(): void {
-                const order = ordersStore.orderEntityCollection.get(orderIdStore.value);
+                const order = ordersStore.orderModelCollection.get(orderIdStore.value);
                 order?.items.remove(props.itemId);
             },
         };

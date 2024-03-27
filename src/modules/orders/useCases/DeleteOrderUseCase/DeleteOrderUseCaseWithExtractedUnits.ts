@@ -18,8 +18,8 @@ export type DeleteOrderTransactionDep = Transaction<[string]>;
 export class DeleteOrderUseCase implements UseCase<[string]> {
     static make(ordersStore: OrdersAggregate): UseCase<[string]> {
         return new DeleteOrderUseCase(
-            ordersStore.orderEntityCollection,
-            ordersStore.ordersPresentationEntity,
+            ordersStore.orderModelCollection,
+            ordersStore.ordersPresentationModel,
             ordersStore.serviceGateway,
             DeleteOrderEffect.make(ordersStore),
             DeleteOrderTransaction.make(ordersStore),
