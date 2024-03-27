@@ -3,7 +3,7 @@ import type { OrderEntity, ServiceGateway } from '../../types';
 import { RemoteServiceGatewayStub } from './RemoteServiceGatewayStub';
 
 type ServiceApiDep = Pick<ServiceApi, 'logOrdersSnapshot'>;
-type OrdersEntityToOrdersSnapshotDtoMapper = (orders: OrderEntity[]) => OrdersSnapshotDto;
+type OrderModelsToOrdersSnapshotDtoMapper = (orders: OrderEntity[]) => OrdersSnapshotDto;
 
 export class RemoteServiceGateway implements ServiceGateway {
     static make(): ServiceGateway {
@@ -16,7 +16,7 @@ export class RemoteServiceGateway implements ServiceGateway {
 
     constructor(
         private serviceApi: ServiceApiDep,
-        private mapOrdersDtoToOrdersSnapshotDto: OrdersEntityToOrdersSnapshotDtoMapper,
+        private mapOrdersDtoToOrdersSnapshotDto: OrderModelsToOrdersSnapshotDtoMapper,
     ) {}
 
     async logOrders(orders: OrderEntity[]): Promise<void> {
@@ -29,7 +29,7 @@ export class RemoteServiceGateway implements ServiceGateway {
     }
 }
 
-export const mapOrdersDtoToOrdersSnapshotDto: OrdersEntityToOrdersSnapshotDtoMapper = (
+export const mapOrdersDtoToOrdersSnapshotDto: OrderModelsToOrdersSnapshotDtoMapper = (
     orders: OrderEntity[],
 ): OrdersSnapshotDto => {
     return {

@@ -1,17 +1,17 @@
 import type { OrderDto } from 'src/modules/orders/api';
 import type { OrderEntityDto } from 'src/modules/orders/types';
 import type {
-    OrderDtoToOrderEntityDtoMapper,
-    OrderEntityDtoToOrderDtoMapper,
+    OrderDtoToOrderModelDtoMapper,
+    OrderModelDtoToOrderDtoMapper,
 } from './RemoteOrdersGateway.types';
 
-export const makeOrderEntityDtoToOrderDtoMapper =
-    (): OrderEntityDtoToOrderDtoMapper => (order: OrderEntityDto) => {
+export const makeOrderModelDtoToOrderDtoMapper =
+    (): OrderModelDtoToOrderDtoMapper => (order: OrderEntityDto) => {
         return order as OrderDto;
     };
 
-export const makeOrderDtoToOrderEntityDtoMapper =
-    (): OrderDtoToOrderEntityDtoMapper =>
+export const makeOrderDtoToOrderModelDtoMapper =
+    (): OrderDtoToOrderModelDtoMapper =>
     (order: OrderDto): OrderEntityDto => {
         return order as OrderEntityDto;
     };

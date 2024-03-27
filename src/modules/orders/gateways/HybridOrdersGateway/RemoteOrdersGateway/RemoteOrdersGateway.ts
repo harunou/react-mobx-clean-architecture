@@ -3,12 +3,12 @@ import { OrdersApi } from 'src/modules/orders/api';
 import type { OrderEntityDto, OrdersGateway } from 'src/modules/orders/types';
 import { toCancellablePromise } from 'src/utils';
 import type {
-    OrderDtoToOrderEntityDtoMapper,
-    OrderEntityDtoToOrderDtoMapper,
+    OrderDtoToOrderModelDtoMapper,
+    OrderModelDtoToOrderDtoMapper,
 } from './RemoteOrdersGateway.types';
 import {
-    makeOrderDtoToOrderEntityDtoMapper,
-    makeOrderEntityDtoToOrderDtoMapper,
+    makeOrderDtoToOrderModelDtoMapper,
+    makeOrderModelDtoToOrderDtoMapper,
 } from './RemoteOrdersGateway.utils';
 
 export class RemoteOrdersGateway implements OrdersGateway {
@@ -16,25 +16,25 @@ export class RemoteOrdersGateway implements OrdersGateway {
         const ordersApi = OrdersApi.make();
         return new RemoteOrdersGateway(
             ordersApi,
-            makeOrderDtoToOrderEntityDtoMapper(),
-            makeOrderEntityDtoToOrderDtoMapper(),
+            makeOrderDtoToOrderModelDtoMapper(),
+            makeOrderModelDtoToOrderDtoMapper(),
         );
     }
 
     constructor(
         private orderApi: OrdersApi,
-        private mapOrderDtoToOrderEntityDto: OrderDtoToOrderEntityDtoMapper,
-        private mapOrderEntityDtoToOrderDto: OrderEntityDtoToOrderDtoMapper,
+        private mapOrderDtoToOrderModelDto: OrderDtoToOrderModelDtoMapper,
+        private mapOrderModelDtoToOrderDto: OrderModelDtoToOrderDtoMapper,
     ) {}
 
     async fetchOrders(params: EffectParams = {}): Promise<OrderEntityDto[]> {
         const ordersDto = await toCancellablePromise(() => this.orderApi.fetchOrders())(params);
-        return ordersDto.map((dto) => this.mapOrderDtoToOrderEntityDto(dto));
+        return ordersDto.map((dto) => this.mapOrderDtoToOrderModelDto(dto));
     }
 
-    async updateOrder(order: OrderEntityDto): Promise<OrderEntityDto> {
-        const entity = await this.orderApi.updateOrder(this.mapOrderEntityDtoToOrderDto(order));
-        return this.mapOrderDtoToOrderEntityDto(entity);
+    async updateOrder(orderDto: OrderEntityDto): Promise<OrderEntityDto> {
+        const dto = await this.orderApi.updateOrder(this.mapOrderModelDtoToOrderDto(orderDto));
+        return this.mapOrderDtoToOrderModelDto(dto);
     }
 
     async deleteOrder(id: OrderEntityDto['id']): Promise<void> {

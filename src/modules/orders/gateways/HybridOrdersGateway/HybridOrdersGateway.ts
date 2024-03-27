@@ -36,8 +36,8 @@ export class HybridOrdersGateway implements OrdersGateway, OrdersGatewayRuntimeS
         return this.gateway.fetchOrders(params);
     }
 
-    async updateOrder(order: OrderEntityDto): Promise<OrderEntityDto> {
-        return this.gateway.updateOrder(order);
+    async updateOrder(orderDto: OrderEntityDto): Promise<OrderEntityDto> {
+        return this.gateway.updateOrder(orderDto);
     }
 
     async deleteOrder(id: OrderEntity['id']): Promise<void> {
