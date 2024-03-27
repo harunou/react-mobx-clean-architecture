@@ -20,7 +20,7 @@ export class OrderItemPresenter {
     constructor(
         private readonly orderIdStore: ObservableState<string>,
         private readonly itemIdStore: ObservableState<string>,
-        private readonly orderEntityCollection: OrderEntityCollectionDep,
+        private readonly orderModelCollection: OrderEntityCollectionDep,
     ) {
         makeObservable(this);
     }
@@ -42,7 +42,7 @@ export class OrderItemPresenter {
 
     @computed
     get item(): OrderItemEntity | undefined {
-        const order = this.orderEntityCollection.get(this.orderIdStore.value);
+        const order = this.orderModelCollection.get(this.orderIdStore.value);
         return order?.items.get(this.itemIdStore.value);
     }
 }

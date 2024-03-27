@@ -12,18 +12,18 @@ import { StrictMode } from 'react';
 
 describe(`${OrderItem.name}`, () => {
     let ordersStore: OrdersAggregate;
-    let ordersEntitiesDto: OrderEntityDto[];
+    let orderModelCollectionDto: OrderEntityDto[];
     const ordersAmount = 3;
     const orderItemsAmount = 5;
     beforeEach(() => {
         jest.restoreAllMocks();
-        ordersEntitiesDto = orderModelDtoFactory.list(
+        orderModelCollectionDto = orderModelDtoFactory.list(
             { count: ordersAmount },
             { itemsAmount: orderItemsAmount },
         );
         ordersStore = OrdersStore.make();
         ordersStore.ordersGateway.useLocalGateway();
-        ordersStore.orderModelCollection.replaceAllFromDto(ordersEntitiesDto);
+        ordersStore.orderModelCollection.replaceAllFromDto(orderModelCollectionDto);
     });
     afterEach(() => {
         testHttpClient.verify();

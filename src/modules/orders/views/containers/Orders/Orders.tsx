@@ -15,7 +15,7 @@ export const Orders: FC = observer(function Orders() {
         const totalOrderItemQuantitySelector = TotalOrderItemQuantitySelector.make(ordersStore);
         return {
             get orderIds(): string[] {
-                return ordersStore.orderModelCollection.entities.map((entity) => entity.id);
+                return ordersStore.orderModelCollection.entities.map((model) => model.id);
             },
             get isLoading(): boolean {
                 return ordersStore.ordersPresentationModel.isLoading;

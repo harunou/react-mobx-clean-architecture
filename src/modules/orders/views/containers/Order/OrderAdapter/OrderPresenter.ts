@@ -11,7 +11,7 @@ export class OrderPresenter {
     }
 
     constructor(
-        private readonly ordersEntityCollection: OrderEntityCollection,
+        private readonly ordersModelCollection: OrderEntityCollection,
         private readonly orderIdStore: ObservableState<string>,
     ) {
         makeObservable(this);
@@ -34,6 +34,6 @@ export class OrderPresenter {
 
     @computed
     private get order(): OrderEntity | undefined {
-        return this.ordersEntityCollection.get(this.orderIdStore.value);
+        return this.ordersModelCollection.get(this.orderIdStore.value);
     }
 }
