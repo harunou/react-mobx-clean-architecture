@@ -11,7 +11,7 @@ export class PollingOrdersUseCase implements UseCase {
         return new PollingOrdersUseCase(store.orderModelCollection, store.ordersGateway);
     }
     constructor(
-        private orderEntityCollection: OrderEntityCollectionDep,
+        private orderModelCollection: OrderEntityCollectionDep,
         private ordersGateway: OrdersGatewayDep,
     ) {}
 
@@ -19,7 +19,7 @@ export class PollingOrdersUseCase implements UseCase {
         try {
             const orders = await this.ordersGateway.fetchOrders();
             runInAction(() => {
-                this.orderEntityCollection.replaceAllFromDto(orders);
+                this.orderModelCollection.replaceAllFromDto(orders);
             });
         } catch (error) {
             noop();

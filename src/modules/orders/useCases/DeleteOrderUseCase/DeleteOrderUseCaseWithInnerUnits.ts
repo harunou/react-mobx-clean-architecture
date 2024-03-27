@@ -23,20 +23,20 @@ export class DeleteOrderUseCase implements UseCase<[string]> {
         );
     }
     constructor(
-        private orderEntityCollection: OrderEntityCollectionDep,
-        private ordersPresentation: OrdersPresentationEntityDep,
+        private orderModelCollection: OrderEntityCollectionDep,
+        private ordersPresentationModel: OrdersPresentationEntityDep,
         private serviceGateway: ServiceGatewayDep,
         private ordersGateway: OrdersGatewayDep,
     ) {}
 
     @action
     async execute(id: string): Promise<void> {
-        this.ordersPresentation.patchData({ isLoading: true });
+        this.ordersPresentationModel.patchData({ isLoading: true });
         try {
             await this.deleteOrderEffect(id);
 
             this.successTransaction(id);
-            void this.serviceGateway.logOrders(this.orderEntityCollection.entities);
+            void this.serviceGateway.logOrders(this.orderModelCollection.entities);
         } catch (error: unknown) {
             this.failureTransaction();
         }
@@ -49,16 +49,16 @@ export class DeleteOrderUseCase implements UseCase<[string]> {
     @action
     private successTransaction(id: string): void {
         this.deleteOrderTransaction(id);
-        this.ordersPresentation.patchData({ isLoading: false });
+        this.ordersPresentationModel.patchData({ isLoading: false });
     }
 
     @action
     private failureTransaction(): void {
-        this.ordersPresentation.patchData({ isLoading: false });
+        this.ordersPresentationModel.patchData({ isLoading: false });
     }
 
     @action
     private deleteOrderTransaction(id: string): void {
-        this.orderEntityCollection.remove(id);
+        this.orderModelCollection.remove(id);
     }
 }

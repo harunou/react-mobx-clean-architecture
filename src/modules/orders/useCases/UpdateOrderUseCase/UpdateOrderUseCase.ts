@@ -13,13 +13,13 @@ type OrdersGatewayDep = Pick<OrdersGateway, 'updateOrder'>;
 
 export class UpdateOrderUseCase implements UseCase<[OrderEntity]> {
     constructor(
-        private orderEntityCollection: OrderEntityCollectionDep,
-        private ordersPresentation: OrdersPresentationEntityDep,
+        private orderModelCollection: OrderEntityCollectionDep,
+        private ordersPresentationModel: OrdersPresentationEntityDep,
         private ordersGateway: OrdersGatewayDep,
     ) {}
 
     async execute(order: OrderEntity): Promise<void> {
-        this.ordersPresentation.patchData({ isLoading: true });
+        this.ordersPresentationModel.patchData({ isLoading: true });
         try {
             const updatedOrder = await this.ordersGateway.updateOrder(order.dto);
 
@@ -30,11 +30,11 @@ export class UpdateOrderUseCase implements UseCase<[OrderEntity]> {
     }
 
     successTransaction(order: OrderEntityDto): void {
-        this.orderEntityCollection.patch(order.id, order);
-        this.ordersPresentation.patchData({ isLoading: false });
+        this.orderModelCollection.patch(order.id, order);
+        this.ordersPresentationModel.patchData({ isLoading: false });
     }
 
     failureTransaction(): void {
-        this.ordersPresentation.patchData({ isLoading: false });
+        this.ordersPresentationModel.patchData({ isLoading: false });
     }
 }

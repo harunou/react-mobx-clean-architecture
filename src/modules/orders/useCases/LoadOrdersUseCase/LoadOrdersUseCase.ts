@@ -24,8 +24,8 @@ export class LoadOrdersUseCase implements UseCase {
         );
     }
     constructor(
-        private orderEntityCollection: OrderEntityCollectionDep,
-        private ordersPresentation: OrdersPresentationEntityDep,
+        private orderModelCollection: OrderEntityCollectionDep,
+        private ordersPresentationModel: OrdersPresentationEntityDep,
         private ordersCancelEffects: AbstractOrdersCancelEffects,
         private ordersGateway: OrdersGatewayDep,
     ) {}
@@ -36,7 +36,7 @@ export class LoadOrdersUseCase implements UseCase {
         const fetchOrdersCancelEffect = makeCancelEffect();
         this.ordersCancelEffects.addFetchOrders(fetchOrdersCancelEffect.cancelEffect);
         try {
-            this.ordersPresentation.patchData({ isLoading: true });
+            this.ordersPresentationModel.patchData({ isLoading: true });
 
             const orders = await this.ordersGateway.fetchOrders({
                 signal: fetchOrdersCancelEffect.abortController.signal,
@@ -56,17 +56,17 @@ export class LoadOrdersUseCase implements UseCase {
 
     @action
     private successTransaction(orders: OrderEntityDto[]): void {
-        this.orderEntityCollection.replaceAllFromDto(orders);
-        this.ordersPresentation.patchData({ isLoading: false });
+        this.orderModelCollection.replaceAllFromDto(orders);
+        this.ordersPresentationModel.patchData({ isLoading: false });
     }
 
     @action
     private failureTransaction(): void {
-        this.ordersPresentation.patchData({ isLoading: false });
+        this.ordersPresentationModel.patchData({ isLoading: false });
     }
 
     @action
     private abortedTransaction(): void {
-        this.ordersPresentation.patchData({ isLoading: false });
+        this.ordersPresentationModel.patchData({ isLoading: false });
     }
 }

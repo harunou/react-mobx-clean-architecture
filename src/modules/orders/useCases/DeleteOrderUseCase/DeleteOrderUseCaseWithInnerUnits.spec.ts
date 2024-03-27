@@ -7,18 +7,18 @@ import {
 } from './DeleteOrderUseCaseWithInnerUnits';
 
 describe(`${DeleteOrderUseCase.name}`, () => {
-    let orderEntityCollection: OrderEntityCollectionDep;
-    let ordersPresentation: OrdersPresentationEntityDep;
+    let orderModelCollection: OrderEntityCollectionDep;
+    let ordersPresentationModel: OrdersPresentationEntityDep;
     let serviceGateway: ServiceGatewayDep;
     let ordersGateway: OrdersGatewayDep;
     let deleteOrderUseCase: DeleteOrderUseCase;
 
     beforeEach(() => {
-        orderEntityCollection = {
+        orderModelCollection = {
             entities: [],
             remove: jest.fn(),
         };
-        ordersPresentation = {
+        ordersPresentationModel = {
             patchData: jest.fn(),
         };
         serviceGateway = {
@@ -28,8 +28,8 @@ describe(`${DeleteOrderUseCase.name}`, () => {
             deleteOrder: jest.fn(),
         };
         deleteOrderUseCase = new DeleteOrderUseCase(
-            orderEntityCollection,
-            ordersPresentation,
+            orderModelCollection,
+            ordersPresentationModel,
             serviceGateway,
             ordersGateway,
         );
@@ -40,15 +40,18 @@ describe(`${DeleteOrderUseCase.name}`, () => {
         const ordersGatewayDeleteOrderSpy = jest
             .spyOn(ordersGateway, 'deleteOrder')
             .mockResolvedValueOnce();
-        const ordersPresentationPatchDataSpy = jest.spyOn(ordersPresentation, 'patchData');
-        const orderEntityCollectionRemoveSpy = jest.spyOn(orderEntityCollection, 'remove');
+        const ordersPresentationModelPatchDataSpy = jest.spyOn(
+            ordersPresentationModel,
+            'patchData',
+        );
+        const orderModelCollectionRemoveSpy = jest.spyOn(orderModelCollection, 'remove');
 
         await deleteOrderUseCase.execute(id);
 
         expect(ordersGatewayDeleteOrderSpy).toHaveBeenCalledWith(id);
-        expect(ordersPresentationPatchDataSpy).toHaveBeenCalledWith({ isLoading: true });
-        expect(ordersPresentationPatchDataSpy).toHaveBeenCalledWith({ isLoading: false });
-        expect(orderEntityCollectionRemoveSpy).toHaveBeenCalledWith(id);
+        expect(ordersPresentationModelPatchDataSpy).toHaveBeenCalledWith({ isLoading: true });
+        expect(ordersPresentationModelPatchDataSpy).toHaveBeenCalledWith({ isLoading: false });
+        expect(orderModelCollectionRemoveSpy).toHaveBeenCalledWith(id);
     });
 
     it('handles failure to delete an order', async () => {
@@ -56,12 +59,15 @@ describe(`${DeleteOrderUseCase.name}`, () => {
         const ordersGatewayDeleteOrderSpy = jest
             .spyOn(ordersGateway, 'deleteOrder')
             .mockRejectedValueOnce(new Error());
-        const ordersPresentationPatchDataSpy = jest.spyOn(ordersPresentation, 'patchData');
+        const ordersPresentationModelPatchDataSpy = jest.spyOn(
+            ordersPresentationModel,
+            'patchData',
+        );
 
         await deleteOrderUseCase.execute(id);
 
         expect(ordersGatewayDeleteOrderSpy).toHaveBeenCalledWith(id);
-        expect(ordersPresentationPatchDataSpy).toHaveBeenCalledWith({ isLoading: true });
-        expect(ordersPresentationPatchDataSpy).toHaveBeenCalledWith({ isLoading: false });
+        expect(ordersPresentationModelPatchDataSpy).toHaveBeenCalledWith({ isLoading: true });
+        expect(ordersPresentationModelPatchDataSpy).toHaveBeenCalledWith({ isLoading: false });
     });
 });
