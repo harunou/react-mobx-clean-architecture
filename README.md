@@ -77,185 +77,131 @@ For the units implementation, it is suggested to use Cluster Lifecycle model des
 ├── api
 │   ├── api.types.ts
 │   ├── httpClient
-│   │   ├── httpClient.ts
-│   │   └── index.ts
-│   ├── index.ts
+│   │   └── httpClient.ts
 │   ├── OrdersApi
-│   │   ├── index.ts
 │   │   ├── OrdersApi.factory.ts
 │   │   ├── OrdersApi.ts
 │   │   └── OrdersApi.types.ts
 │   └── ServiceApi
-│       ├── index.ts
 │       ├── ServiceApi.ts
 │       └── ServiceApi.types.ts
 ├── contexts
-│   ├── index.ts
 │   └── OrdersStoreContext.ts
 ├── drivers
-│   ├── index.ts
 │   └── OrdersDriver.ts
 ├── effects
-│   ├── DeleteOrderEffect
-│   │   ├── DeleteOrderEffect.ts
-│   │   └── index.ts
-│   └── index.ts
+│   └── DeleteOrderEffect
+│       └── DeleteOrderEffect.ts
 ├── gateways
 │   ├── HybridOrdersGateway
 │   │   ├── HybridOrdersGateway.ts
-│   │   ├── index.ts
 │   │   ├── LocalOrdersGateway
-│   │   │   ├── index.ts
 │   │   │   └── LocalOrdersGateway.ts
 │   │   └── RemoteOrdersGateway
-│   │       ├── index.ts
 │   │       ├── RemoteOrdersGateway.ts
 │   │       ├── RemoteOrdersGateway.types.ts
 │   │       └── RemoteOrdersGateway.utils.ts
-│   ├── index.ts
 │   └── RemoteServiceGateway
-│       ├── index.ts
 │       ├── RemoteServiceGatewayStub.ts
 │       └── RemoteServiceGateway.ts
 ├── models
-│   ├── index.ts
 │   ├── OrderItemModel
-│   │   ├── index.ts
 │   │   ├── OrderItemModelCollection.ts
 │   │   ├── OrderItemModel.factory.ts
 │   │   └── OrderItemModel.ts
 │   ├── OrderModel
-│   │   ├── index.ts
 │   │   ├── OrderModelCollection.ts
 │   │   ├── OrderModel.factory.ts
 │   │   └── OrderModel.ts
 │   ├── OrdersCancelEffects.ts
 │   └── OrdersPresentationModel
-│       ├── index.ts
 │       ├── OrdersPresentationModel.factory.ts
 │       └── OrdersPresentationModel.ts
 ├── selectors
-│   ├── index.ts
 │   ├── ItemByIdSelector
-│   │   ├── index.ts
 │   │   └── ItemByIdSelector.ts
 │   ├── OrderByIdSelector
-│   │   ├── index.ts
 │   │   └── OrderByIdSelector.ts
 │   └── TotalOrderItemQuantitySelector
-│       ├── index.ts
 │       ├── TotalOrderItemQuantitySelectorNotOptimized.ts
 │       ├── TotalOrderItemQuantitySelectorOptimized.ts
 │       └── TotalOrderItemQuantitySelectorSingleton.ts
 ├── stores
-│   ├── index.ts
 │   ├── OrdersStore.factory.ts
 │   └── OrdersStore.ts
 ├── transactions
-│   ├── DeleteOrderTransactions
-│   │   ├── DeleteOrderTransactions.ts
-│   │   └── index.ts
-│   └── index.ts
+│   └── DeleteOrderTransactions
+│       └── DeleteOrderTransactions.ts
 ├── types
 │   ├── aggregates
-│   │   ├── index.ts
 │   │   └── OrdersAggregate.ts
 │   ├── entities
-│   │   ├── index.ts
 │   │   ├── OrderEntity
-│   │   │   ├── index.ts
 │   │   │   ├── OrderEntityCollection.ts
 │   │   │   └── OrderEntity.ts
 │   │   ├── OrderItemEntity
-│   │   │   ├── index.ts
 │   │   │   ├── OrderItemEntityCollection.ts
 │   │   │   └── OrderItemEntity.ts
 │   │   └── OrdersPresentationEntity.ts
 │   ├── gateways
-│   │   ├── index.ts
 │   │   ├── OrdersGateway.ts
 │   │   └── ServiceGateway.ts
-│   ├── index.ts
 │   └── OrdersCancelEffectCollection.ts
 ├── useCases
 │   ├── DeleteItemByIdUseCase
 │   │   ├── DeleteItemByIdUseCaseFactored.ts
-│   │   ├── DeleteItemByIdUseCasePlain.ts
-│   │   └── index.ts
+│   │   └── DeleteItemByIdUseCasePlain.ts
 │   ├── DeleteOrderUseCase
 │   │   ├── DeleteOrderUseCaseWithExtractedUnits.ts
-│   │   ├── DeleteOrderUseCaseWithInnerUnits.ts
-│   │   └── index.ts
+│   │   └── DeleteOrderUseCaseWithInnerUnits.ts
 │   ├── DestroyModuleUseCase
-│   │   ├── DestroyModuleUseCase.ts
-│   │   └── index.ts
-│   ├── index.ts
+│   │   └── DestroyModuleUseCase.ts
 │   ├── LoadOrdersUseCase
-│   │   ├── index.ts
 │   │   └── LoadOrdersUseCase.ts
 │   ├── PollingOrdersUseCase
-│   │   ├── index.ts
 │   │   └── PollingOrdersUseCase.ts
 │   └── UpdateOrderUseCase
-│       ├── index.ts
 │       └── UpdateOrderUseCase.ts
 └── views
-    ├── containers
-    │   ├── index.ts
-    │   ├── Order
-    │   │   ├── index.ts
-    │   │   ├── OrderAdapter
-    │   │   │   ├── index.ts
-    │   │   │   ├── OrderController.ts
-    │   │   │   └── OrderPresenter.ts
-    │   │   └── Order.tsx
-    │   ├── OrderItem
-    │   │   ├── index.ts
-    │   │   ├── OrderItemWithCombinedAdapter
-    │   │   │   ├── index.ts
-    │   │   │   └── OrderItem.tsx
-    │   │   ├── OrderItemWithCombinedPropsObservableState
-    │   │   │   ├── index.ts
-    │   │   │   ├── OrderItemAdapter
-    │   │   │   │   ├── index.ts
-    │   │   │   │   ├── OrderItemController.ts
-    │   │   │   │   └── OrderItemPresenter.ts
-    │   │   │   └── OrderItem.tsx
-    │   │   ├── OrderItemWithNullAdapter
-    │   │   │   ├── index.ts
-    │   │   │   └── OrderItem.tsx
-    │   │   ├── OrderItemWithOnlyDefinedAdapterInterface
-    │   │   │   ├── OrderItem.tsx
-    │   │   │   └── OrderItem.types.tsx
-    │   │   ├── OrderItemWithSelector
-    │   │   │   ├── index.ts
-    │   │   │   ├── OrderItemAdapter
-    │   │   │   │   ├── index.ts
-    │   │   │   │   ├── OrderItemController.ts
-    │   │   │   │   ├── OrderItemPresenterWithExtractedSelector.ts
-    │   │   │   │   └── OrderItemPresenterWithInnerSelector.ts
-    │   │   │   └── OrderItem.tsx
-    │   │   ├── OrderItemWithSplitAdapter
-    │   │   │   ├── index.ts
-    │   │   │   └── OrderItem.tsx
-    │   │   ├── OrderItemWithSplitExtractedAdapter
-    │   │   │   ├── index.ts
-    │   │   │   ├── OrderItemAdapter
-    │   │   │   │   ├── index.ts
-    │   │   │   │   ├── OrderItemController.ts
-    │   │   │   │   └── OrderItemPresenter.ts
-    │   │   │   └── OrderItem.tsx
-    │   │   └── OrderItemWithUseCase
-    │   │       ├── index.ts
-    │   │       ├── OrderItemAdapter
-    │   │       │   ├── index.ts
-    │   │       │   ├── OrderItemControllerWithExtractedUseCase.ts
-    │   │       │   ├── OrderItemControllerWithInnerUseCase.ts
-    │   │       │   └── OrderItemPresenter.ts
-    │   │       └── OrderItem.tsx
-    │   └── Orders
-    │       ├── index.ts
-    │       ├── Orders.tsx
-    │       └── Orders.utils.ts
-    └── index.ts
+    └── containers
+        ├── Order
+        │   ├── OrderAdapter
+        │   │   ├── OrderController.ts
+        │   │   └── OrderPresenter.ts
+        │   └── Order.tsx
+        ├── OrderItem
+        │   ├── OrderItemWithCombinedAdapter
+        │   │   └── OrderItem.tsx
+        │   ├── OrderItemWithCombinedPropsObservableState
+        │   │   ├── OrderItemAdapter
+        │   │   │   ├── OrderItemController.ts
+        │   │   │   └── OrderItemPresenter.ts
+        │   │   └── OrderItem.tsx
+        │   ├── OrderItemWithNullAdapter
+        │   │   └── OrderItem.tsx
+        │   ├── OrderItemWithOnlyDefinedAdapterInterface
+        │   │   ├── OrderItem.tsx
+        │   │   └── OrderItem.types.tsx
+        │   ├── OrderItemWithSelector
+        │   │   ├── OrderItemAdapter
+        │   │   │   ├── OrderItemController.ts
+        │   │   │   ├── OrderItemPresenterWithExtractedSelector.ts
+        │   │   │   └── OrderItemPresenterWithInnerSelector.ts
+        │   │   └── OrderItem.tsx
+        │   ├── OrderItemWithSplitAdapter
+        │   │   └── OrderItem.tsx
+        │   ├── OrderItemWithSplitExtractedAdapter
+        │   │   ├── OrderItemAdapter
+        │   │   │   ├── OrderItemController.ts
+        │   │   │   └── OrderItemPresenter.ts
+        │   │   └── OrderItem.tsx
+        │   └── OrderItemWithUseCase
+        │       ├── OrderItemAdapter
+        │       │   ├── OrderItemControllerWithExtractedUseCase.ts
+        │       │   ├── OrderItemControllerWithInnerUseCase.ts
+        │       │   └── OrderItemPresenter.ts
+        │       └── OrderItem.tsx
+        └── Orders
+            ├── Orders.tsx
+            └── Orders.utils.ts
 ```
