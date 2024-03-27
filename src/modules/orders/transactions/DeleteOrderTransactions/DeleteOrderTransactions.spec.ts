@@ -1,14 +1,14 @@
 import { DeleteOrderTransaction, OrderEntityCollectionDep } from './DeleteOrderTransactions';
 
 describe('DeleteOrderTransaction', () => {
-    let orderEntityCollection: OrderEntityCollectionDep;
+    let orderModelCollection: OrderEntityCollectionDep;
     let deleteOrderTransaction: DeleteOrderTransaction;
 
     beforeEach(() => {
-        orderEntityCollection = {
+        orderModelCollection = {
             remove: jest.fn(),
         };
-        deleteOrderTransaction = new DeleteOrderTransaction(orderEntityCollection);
+        deleteOrderTransaction = new DeleteOrderTransaction(orderModelCollection);
     });
 
     it('removes an order from the collection', () => {
@@ -16,6 +16,6 @@ describe('DeleteOrderTransaction', () => {
 
         deleteOrderTransaction.commit(id);
 
-        expect(orderEntityCollection.remove).toHaveBeenCalledWith(id);
+        expect(orderModelCollection.remove).toHaveBeenCalledWith(id);
     });
 });

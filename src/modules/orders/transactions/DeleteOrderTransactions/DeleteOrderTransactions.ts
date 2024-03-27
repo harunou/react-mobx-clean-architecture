@@ -8,10 +8,10 @@ export class DeleteOrderTransaction implements Transaction<[string]> {
     static make(ordersStore: OrdersAggregate): DeleteOrderTransaction {
         return new DeleteOrderTransaction(ordersStore.orderModelCollection);
     }
-    constructor(private orderEntityCollection: OrderEntityCollectionDep) {}
+    constructor(private orderModelCollection: OrderEntityCollectionDep) {}
 
     @action
     commit(id: string): void {
-        this.orderEntityCollection.remove(id);
+        this.orderModelCollection.remove(id);
     }
 }
