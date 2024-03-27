@@ -8,8 +8,8 @@ const DEFAULTS: OrderItemEntityDto = {
 };
 
 export class OrderItemModel implements OrderItemEntity {
-    static make(data: OrderItemEntityDto = DEFAULTS): OrderItemModel {
-        return new OrderItemModel(data);
+    static make(dto: OrderItemEntityDto = DEFAULTS): OrderItemModel {
+        return new OrderItemModel(dto);
     }
 
     @observable
@@ -21,9 +21,9 @@ export class OrderItemModel implements OrderItemEntity {
     @observable
     quantity = 0;
 
-    constructor(data: OrderItemEntityDto) {
+    constructor(dto: OrderItemEntityDto) {
         makeObservable(this);
-        this.setData(data);
+        this.setData(dto);
     }
 
     @computed
@@ -36,16 +36,16 @@ export class OrderItemModel implements OrderItemEntity {
     }
 
     @action
-    setData(data: OrderItemEntityDto): void {
-        this.id = data.id;
-        this.productId = data.productId;
-        this.quantity = data.quantity;
+    setData(dto: OrderItemEntityDto): void {
+        this.id = dto.id;
+        this.productId = dto.productId;
+        this.quantity = dto.quantity;
     }
 
     @action
-    patchData(data: Partial<OrderItemEntityDto>): void {
-        this.id = data.hasOwnProperty('id') ? data.id : this.id;
-        this.productId = data.hasOwnProperty('productId') ? data.productId : this.productId;
-        this.quantity = data.hasOwnProperty('quantity') ? data.quantity : this.quantity;
+    patchData(dto: Partial<OrderItemEntityDto>): void {
+        this.id = dto.hasOwnProperty('id') ? dto.id : this.id;
+        this.productId = dto.hasOwnProperty('productId') ? dto.productId : this.productId;
+        this.quantity = dto.hasOwnProperty('quantity') ? dto.quantity : this.quantity;
     }
 }

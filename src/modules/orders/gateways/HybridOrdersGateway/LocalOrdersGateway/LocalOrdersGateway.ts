@@ -1,12 +1,12 @@
 import type { EffectParams } from 'src/@types';
-import { orderEntityDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
+import { orderModelDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
 import type { OrderEntityDto, OrdersGateway } from 'src/modules/orders/types';
 import { toCancellablePromise } from 'src/utils';
 import { sleepTimeout } from 'src/utils/testing';
 
 export class LocalOrdersGateway implements OrdersGateway {
     static make(): LocalOrdersGateway {
-        const fakeOrders = orderEntityDtoFactory.list({ count: 5 });
+        const fakeOrders = orderModelDtoFactory.list({ count: 5 });
         return new LocalOrdersGateway(fakeOrders);
     }
 

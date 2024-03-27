@@ -1,6 +1,6 @@
 import type { Selector } from 'src/@types';
 import { OrderModelCollection } from '../../models';
-import { orderEntityDtoFactory } from '../../models/OrderModel/OrderModel.factory';
+import { orderModelDtoFactory } from '../../models/OrderModel/OrderModel.factory';
 import type { OrderEntityCollection, OrderEntityDto } from '../../types';
 import { TotalOrderItemQuantitySelectorOptimized } from './TotalOrderItemQuantitySelectorOptimized';
 import { TotalOrderItemQuantitySelectorNotOptimized } from './TotalOrderItemQuantitySelectorNotOptimized';
@@ -18,8 +18,8 @@ describe.each([
     let sut: TotalOrderItemQuantitySelector;
 
     beforeEach(() => {
-        orderEntityDtoFactory.resetCount();
-        orderEntityCollectionDto = orderEntityDtoFactory.list({ count: 3 });
+        orderModelDtoFactory.resetCount();
+        orderEntityCollectionDto = orderModelDtoFactory.list({ count: 3 });
         orderEntityCollection = OrderModelCollection.make();
         sut = new TotalOrderItemQuantitySelector(orderEntityCollection);
     });

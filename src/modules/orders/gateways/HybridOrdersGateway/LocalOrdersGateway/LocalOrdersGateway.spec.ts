@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { orderEntityDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
+import { orderModelDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
 import type { OrderEntityDto } from 'src/modules/orders/types';
 import { LocalOrdersGateway } from './LocalOrdersGateway';
 
@@ -9,8 +9,8 @@ describe(`${LocalOrdersGateway.name}`, () => {
 
     beforeEach(() => {
         jest.useFakeTimers();
-        orderEntityDtoFactory.resetCount();
-        orders = orderEntityDtoFactory.list({ count: 3 });
+        orderModelDtoFactory.resetCount();
+        orders = orderModelDtoFactory.list({ count: 3 });
         localOrdersGateway = new LocalOrdersGateway(orders);
     });
     afterEach(() => {

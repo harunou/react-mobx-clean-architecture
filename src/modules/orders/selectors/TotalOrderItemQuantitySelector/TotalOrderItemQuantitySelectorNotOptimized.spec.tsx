@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import { useAdapter } from 'src/hooks';
 import { useRenderCounter } from 'src/utils/testing';
 import { OrderModelCollection } from '../../models';
-import { orderEntityDtoFactory } from '../../models/OrderModel/OrderModel.factory';
+import { orderModelDtoFactory } from '../../models/OrderModel/OrderModel.factory';
 import type { OrderEntityCollection, OrderEntityDto } from '../../types';
 import { TotalOrderItemQuantitySelectorNotOptimized } from './TotalOrderItemQuantitySelectorNotOptimized';
 
@@ -20,8 +20,8 @@ describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
 
     beforeEach(() => {
         propToForceRerender = 0;
-        orderEntityDtoFactory.resetCount();
-        orderEntityCollectionDto = orderEntityDtoFactory.list({ count: 3 });
+        orderModelDtoFactory.resetCount();
+        orderEntityCollectionDto = orderModelDtoFactory.list({ count: 3 });
         orderEntityCollection = OrderModelCollection.make();
         orderEntityCollectionDtoItemsAmount = orderEntityCollectionDto.reduce(
             (totalAmountOfItems, order) => {

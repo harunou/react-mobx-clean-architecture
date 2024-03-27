@@ -6,16 +6,16 @@ export const DEFAULTS: OrdersPresentationEntityDto = {
 };
 
 export class OrdersPresentationModel implements OrdersPresentationEntity {
-    static make(data: OrdersPresentationEntityDto = DEFAULTS): OrdersPresentationEntity {
-        return new OrdersPresentationModel(data);
+    static make(dto: OrdersPresentationEntityDto = DEFAULTS): OrdersPresentationEntity {
+        return new OrdersPresentationModel(dto);
     }
 
     @observable
     isLoading = false;
 
-    constructor(data: OrdersPresentationEntityDto) {
+    constructor(dto: OrdersPresentationEntityDto) {
         makeObservable(this);
-        this.setData(data);
+        this.setData(dto);
     }
 
     get dto(): OrdersPresentationEntityDto {
@@ -25,12 +25,12 @@ export class OrdersPresentationModel implements OrdersPresentationEntity {
     }
 
     @action
-    setData(data: OrdersPresentationEntityDto): void {
-        this.isLoading = data.isLoading;
+    setData(dto: OrdersPresentationEntityDto): void {
+        this.isLoading = dto.isLoading;
     }
 
     @action
-    patchData(data: Partial<OrdersPresentationEntityDto>): void {
-        this.isLoading = data.hasOwnProperty('isLoading') ? data.isLoading : this.isLoading;
+    patchData(dto: Partial<OrdersPresentationEntityDto>): void {
+        this.isLoading = dto.hasOwnProperty('isLoading') ? dto.isLoading : this.isLoading;
     }
 }

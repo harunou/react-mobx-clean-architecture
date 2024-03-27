@@ -1,24 +1,24 @@
 import type { OrderItemEntityDto } from '../../types';
 import { OrderItemModel } from './OrderItemModel';
-import { orderItemEntityDtoFactory } from './OrderItemModel.factory';
+import { orderItemModelDtoFactory } from './OrderItemModel.factory';
 
 describe(`${OrderItemModel.name}`, () => {
-    let orderItemEntityDto: OrderItemEntityDto;
+    let orderItemModelDto: OrderItemEntityDto;
     let orderItemModel: OrderItemModel;
 
     beforeEach(() => {
-        orderItemEntityDto = orderItemEntityDtoFactory.item();
-        orderItemModel = new OrderItemModel(orderItemEntityDto);
+        orderItemModelDto = orderItemModelDtoFactory.item();
+        orderItemModel = new OrderItemModel(orderItemModelDto);
     });
 
     it('sets the initial data correctly', () => {
-        expect(orderItemModel.id).toBe(orderItemEntityDto.id);
-        expect(orderItemModel.productId).toBe(orderItemEntityDto.productId);
-        expect(orderItemModel.quantity).toBe(orderItemEntityDto.quantity);
+        expect(orderItemModel.id).toBe(orderItemModelDto.id);
+        expect(orderItemModel.productId).toBe(orderItemModelDto.productId);
+        expect(orderItemModel.quantity).toBe(orderItemModelDto.quantity);
     });
 
     it('updates the data correctly using setData method', () => {
-        const updatedItemEntityDto = orderItemEntityDtoFactory.item();
+        const updatedItemEntityDto = orderItemModelDtoFactory.item();
 
         orderItemModel.setData(updatedItemEntityDto);
 
@@ -31,8 +31,8 @@ describe(`${OrderItemModel.name}`, () => {
         const updatedQuantity = 9999;
         orderItemModel.patchData({ quantity: updatedQuantity });
 
-        expect(orderItemModel.id).toBe(orderItemEntityDto.id);
-        expect(orderItemModel.productId).toBe(orderItemEntityDto.productId);
+        expect(orderItemModel.id).toBe(orderItemModelDto.id);
+        expect(orderItemModel.productId).toBe(orderItemModelDto.productId);
         expect(orderItemModel.quantity).toBe(updatedQuantity);
     });
 

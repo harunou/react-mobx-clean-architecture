@@ -3,7 +3,7 @@ import { observer, useLocalObservable } from 'mobx-react-lite';
 import type { FC } from 'react';
 import { useRenderCounter } from 'src/utils/testing';
 import { OrderModelCollection } from '../../models';
-import { orderEntityDtoFactory } from '../../models/OrderModel/OrderModel.factory';
+import { orderModelDtoFactory } from '../../models/OrderModel/OrderModel.factory';
 import type { OrderEntityCollection, OrderEntityDto } from '../../types';
 import { TotalOrderItemQuantitySelectorOptimized } from './TotalOrderItemQuantitySelectorOptimized';
 
@@ -19,8 +19,8 @@ describe(`${TotalOrderItemQuantitySelectorOptimized.name}`, () => {
     beforeEach(() => {
         jest.clearAllMocks();
         propToForceRerender = 0;
-        orderEntityDtoFactory.resetCount();
-        orderEntityCollectionDto = orderEntityDtoFactory.list({ count: 3 });
+        orderModelDtoFactory.resetCount();
+        orderEntityCollectionDto = orderModelDtoFactory.list({ count: 3 });
         orderEntityCollection = OrderModelCollection.make();
         orderEntityCollectionDtoItemsAmount = orderEntityCollectionDto.reduce(
             (totalInOrders, order) => {

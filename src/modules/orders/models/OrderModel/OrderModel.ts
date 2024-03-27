@@ -9,8 +9,8 @@ const DEFAULTS: OrderEntityDto = {
 };
 
 export class OrderModel implements OrderEntity {
-    static make(data: OrderEntityDto = DEFAULTS): OrderEntity {
-        return new OrderModel(data);
+    static make(dto: OrderEntityDto = DEFAULTS): OrderEntity {
+        return new OrderModel(dto);
     }
 
     @observable
@@ -21,9 +21,9 @@ export class OrderModel implements OrderEntity {
 
     items = OrderItemModelCollection.make();
 
-    constructor(data: OrderEntityDto) {
+    constructor(dto: OrderEntityDto) {
         makeObservable(this);
-        this.setData(data);
+        this.setData(dto);
     }
 
     @computed
@@ -36,18 +36,18 @@ export class OrderModel implements OrderEntity {
     }
 
     @action
-    patchData(data: Partial<OrderEntityDto>): void {
-        this.id = data.hasOwnProperty('id') ? data.id : this.id;
-        this.userId = data.hasOwnProperty('userId') ? data.userId : this.userId;
-        if (data.hasOwnProperty('items')) {
-            this.items.replaceAllFromDto(data.items);
+    patchData(dto: Partial<OrderEntityDto>): void {
+        this.id = dto.hasOwnProperty('id') ? dto.id : this.id;
+        this.userId = dto.hasOwnProperty('userId') ? dto.userId : this.userId;
+        if (dto.hasOwnProperty('items')) {
+            this.items.replaceAllFromDto(dto.items);
         }
     }
 
     @action
-    setData(data: OrderEntityDto): void {
-        this.id = data.id;
-        this.userId = data.userId;
-        this.items.replaceAllFromDto(data.items);
+    setData(dto: OrderEntityDto): void {
+        this.id = dto.id;
+        this.userId = dto.userId;
+        this.items.replaceAllFromDto(dto.items);
     }
 }
