@@ -1,17 +1,17 @@
 import type { UniqueEntityDto, CollectableEntity } from './Entity';
 
+// NOTE(harunou): look into RTK entity collection interface
 export interface EntityCollection<
     TDto extends UniqueEntityDto,
     TEntity extends CollectableEntity<TDto>,
 > {
-    readonly entities: TEntity[];
+    readonly models: TEntity[];
     readonly ids: Array<TEntity['id']>;
-    readonly amountOfEntities: number;
-    readonly hasEntities: boolean;
+    readonly length: number;
 
     get(id: TEntity['id'] | undefined): TEntity | undefined;
 
-    hasEntity(id: TEntity['id'] | undefined): boolean;
+    has(id: TEntity['id'] | undefined): boolean;
 
     add(entity: TEntity): void;
 

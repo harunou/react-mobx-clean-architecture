@@ -30,9 +30,9 @@ describe(`${OrderItem.name}`, () => {
     });
     it('allows to delete item', async () => {
         ordersStore.ordersGateway.useRemoteGateway();
-        const order0 = ordersStore.orderModelCollection.entities[ordersAmount - 1];
+        const order0 = ordersStore.orderModelCollection.models[ordersAmount - 1];
         assert(order0);
-        const item0 = order0.items.entities[orderItemsAmount - 1];
+        const item0 = order0.items.models[orderItemsAmount - 1];
         assert(item0);
         const deleteUrl = `${ordersApiUrl}/${order0.id}/items/${item0.id}`;
         const deleteUrlMatcher: RequestMatcher = (req: Request): boolean =>
@@ -59,15 +59,15 @@ describe(`${OrderItem.name}`, () => {
         expect(order0.items.get(item0.id)).toBeUndefined();
     });
     it('has expected amount of renders in OrderItem', () => {
-        const order0 = ordersStore.orderModelCollection.entities[ordersAmount - 1];
+        const order0 = ordersStore.orderModelCollection.models[ordersAmount - 1];
         assert(order0);
-        const order1 = ordersStore.orderModelCollection.entities[ordersAmount - 2];
+        const order1 = ordersStore.orderModelCollection.models[ordersAmount - 2];
         assert(order1);
-        const item00 = order0.items.entities[orderItemsAmount - 1];
+        const item00 = order0.items.models[orderItemsAmount - 1];
         assert(item00);
-        const item01 = order0.items.entities[orderItemsAmount - 2];
+        const item01 = order0.items.models[orderItemsAmount - 2];
         assert(item01);
-        const item11 = order1.items.entities[orderItemsAmount - 1];
+        const item11 = order1.items.models[orderItemsAmount - 1];
         assert(item11);
         const rendersCounter = jest.fn();
 

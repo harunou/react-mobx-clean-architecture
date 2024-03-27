@@ -30,7 +30,7 @@ export class OrdersStore implements OrdersAggregate {
 
     get dto(): OrdersAggregateDto {
         return {
-            orderModelCollectionDto: this.orderModelCollection.entities.map((entity) => entity.dto),
+            orderModelCollectionDto: this.orderModelCollection.models.map((entity) => entity.dto),
             ordersPresentationModelDto: this.ordersPresentationModel.dto,
         };
     }

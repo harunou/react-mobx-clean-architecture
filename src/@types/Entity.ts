@@ -1,7 +1,7 @@
 export interface Entity<TDto> {
     dto: TDto;
-    setData(data: TDto): void;
-    patchData(data: Partial<TDto>): void;
+    setData(dto: TDto): void;
+    patchData(dto: Partial<TDto>): void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- NOTE(harunou): any is needed here to infer primitive types

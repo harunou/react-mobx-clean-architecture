@@ -8,7 +8,7 @@ import type {
     OrdersGateway,
 } from '../../types';
 
-export type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'remove' | 'entities'>;
+export type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'remove' | 'models'>;
 export type OrdersPresentationEntityDep = Pick<OrdersPresentationEntity, 'patchData'>;
 export type ServiceGatewayDep = Pick<ServiceGateway, 'logOrders'>;
 export type OrdersGatewayDep = Pick<OrdersGateway, 'deleteOrder'>;
@@ -36,7 +36,7 @@ export class DeleteOrderUseCase implements UseCase<[string]> {
             await this.deleteOrderEffect(id);
 
             this.successTransaction(id);
-            void this.serviceGateway.logOrders(this.orderModelCollection.entities);
+            void this.serviceGateway.logOrders(this.orderModelCollection.models);
         } catch (error: unknown) {
             this.failureTransaction();
         }

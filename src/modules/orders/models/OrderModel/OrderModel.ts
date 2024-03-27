@@ -31,7 +31,7 @@ export class OrderModel implements OrderEntity {
         return {
             id: this.id,
             userId: this.userId,
-            items: this.items.entities.map((item) => item.dto),
+            items: this.items.models.map((item) => item.dto),
         };
     }
 

@@ -14,8 +14,8 @@ export class TotalOrderItemQuantitySelectorNotOptimized implements Selector<[], 
 
     select(): number {
         this.calculations.select += 1;
-        return this.orderModelCollection.entities
-            .flatMap((order) => order.items.entities)
+        return this.orderModelCollection.models
+            .flatMap((order) => order.items.models)
             .reduce((total, item) => total + item.quantity, 0);
     }
 }

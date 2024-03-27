@@ -36,7 +36,7 @@ describe(`${DeleteOrderUseCase.name}`, () => {
 
         await tick();
 
-        const resultOrderIds = store.orderModelCollection.entities.map((order) => order.id);
+        const resultOrderIds = store.orderModelCollection.models.map((order) => order.id);
         expect(resultOrderIds).not.toContain(order.id);
         expect(resultOrderIds.length).toBe(amountOfOrders - 1);
     });
@@ -55,7 +55,7 @@ describe(`${DeleteOrderUseCase.name}`, () => {
 
         await tick();
 
-        const resultOrderIds = store.orderModelCollection.entities.map((order) => order.id);
+        const resultOrderIds = store.orderModelCollection.models.map((order) => order.id);
         expect(resultOrderIds).toContain(order.id);
         expect(resultOrderIds.length).toBe(amountOfOrders);
     });

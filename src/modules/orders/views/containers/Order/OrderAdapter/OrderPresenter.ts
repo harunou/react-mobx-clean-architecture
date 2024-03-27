@@ -24,7 +24,7 @@ export class OrderPresenter {
 
     @computed
     get itemIds(): string[] {
-        return this.order?.items.entities.map((item) => item.id) ?? [];
+        return this.order?.items.models.map((item) => item.id) ?? [];
     }
 
     @computed

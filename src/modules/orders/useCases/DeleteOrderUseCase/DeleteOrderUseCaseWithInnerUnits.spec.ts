@@ -15,7 +15,7 @@ describe(`${DeleteOrderUseCase.name}`, () => {
 
     beforeEach(() => {
         orderModelCollection = {
-            entities: [],
+            models: [],
             remove: jest.fn(),
         };
         ordersPresentationModel = {

@@ -8,7 +8,7 @@ interface TestEntity extends CollectableEntity<TestEntityDto> {
     name: string;
 }
 
-const entityDtoToEntityMapper = (dto: TestEntityDto): TestEntity => ({
+const modelDtoToModelMapper = (dto: TestEntityDto): TestEntity => ({
     name: 'entity',
     id: dto.id,
     get dto(): TestEntityDto {
@@ -22,11 +22,11 @@ const entityDtoToEntityMapper = (dto: TestEntityDto): TestEntity => ({
     },
 });
 
-const entityToEntityDtoMapper = (entity: TestEntity): TestEntityDto => entity.dto;
+const modelToModelDtoMapper = (entity: TestEntity): TestEntityDto => entity.dto;
 
 class Collection extends AbstractCollection<TestEntityDto, TestEntity> {
     static make(entitiesDto: TestEntityDto[] = []): Collection {
-        return new Collection(entityDtoToEntityMapper, entitiesDto.map(entityDtoToEntityMapper));
+        return new Collection(modelDtoToModelMapper, entitiesDto.map(modelDtoToModelMapper));
     }
 }
 
@@ -35,10 +35,10 @@ describe('AbstractCollection', () => {
     let dto1: TestEntityDto;
     let dto2: TestEntityDto;
     let dto3: TestEntityDto;
-    let entity0: TestEntity;
-    let entity1: TestEntity;
-    let entity2: TestEntity;
-    let entity3: TestEntity;
+    let model0: TestEntity;
+    let model1: TestEntity;
+    let model2: TestEntity;
+    let model3: TestEntity;
 
     beforeEach(() => {
         jest.resetAllMocks();
@@ -46,28 +46,28 @@ describe('AbstractCollection', () => {
         dto1 = { id: 1, name: '1' };
         dto2 = { id: 2, name: '2' };
         dto3 = { id: 3, name: '3' };
-        entity0 = entityDtoToEntityMapper(dto0);
-        entity1 = entityDtoToEntityMapper(dto1);
-        entity2 = entityDtoToEntityMapper(dto2);
-        entity3 = entityDtoToEntityMapper(dto3);
+        model0 = modelDtoToModelMapper(dto0);
+        model1 = modelDtoToModelMapper(dto1);
+        model2 = modelDtoToModelMapper(dto2);
+        model3 = modelDtoToModelMapper(dto3);
     });
 
     describe(`collection.add`, () => {
-        it('adds an entity to the collection', () => {
+        it('adds an item to the collection', () => {
             const collection = Collection.make();
 
-            collection.add(entity0);
+            collection.add(model0);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
-            expect(result).toContain(entity0.dto);
+            expect(result).toContain(model0.dto);
         });
-        it('replaces the existing entity when adding an entity with a duplicate ID', () => {
+        it('replaces the existing item when adding an entity with a duplicate ID', () => {
             const collection = Collection.make([dto0]);
             const similarToDto0: TestEntityDto = { id: dto0.id, name: '1' };
-            collection.add(entityDtoToEntityMapper(similarToDto0));
+            collection.add(modelDtoToModelMapper(similarToDto0));
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
             expect(result).not.toContainEqual(dto0);
             expect(result).toContainEqual(similarToDto0);
@@ -75,15 +75,15 @@ describe('AbstractCollection', () => {
     });
 
     describe(`collection.addFromDto`, () => {
-        it('adds an entity converted from DTO to the collection', () => {
-            const entityDtoToEntityMapperMock = jest.fn(entityDtoToEntityMapper);
-            const collection = new Collection(entityDtoToEntityMapperMock, [entity0]);
+        it('adds an item converted from DTO to the collection', () => {
+            const modelDtoToModelMapperMock = jest.fn(modelDtoToModelMapper);
+            const collection = new Collection(modelDtoToModelMapperMock, [model0]);
 
             collection.addFromDto(dto1);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
-            expect(entityDtoToEntityMapperMock).toHaveBeenCalledWith(dto1);
+            expect(modelDtoToModelMapperMock).toHaveBeenCalledWith(dto1);
             expect(result.length).toEqual(2);
             expect(result).toContainEqual(dto0);
             expect(result).toContainEqual(dto1);
@@ -91,68 +91,68 @@ describe('AbstractCollection', () => {
     });
 
     describe(`collection.patch`, () => {
-        it('updates an entity in the collection', () => {
-            jest.spyOn(entity0, 'patchData');
+        it('updates an item in the collection', () => {
+            jest.spyOn(model0, 'patchData');
             const data: Partial<TestEntityDto> = { name: 'update-name' };
-            const collection = new Collection(entityDtoToEntityMapper, [entity0]);
+            const collection = new Collection(modelDtoToModelMapper, [model0]);
 
-            collection.patch(entity0.id, data);
+            collection.patch(model0.id, data);
 
             // eslint-disable-next-line @typescript-eslint/unbound-method
-            expect(entity0.patchData).toHaveBeenCalledWith(data);
+            expect(model0.patchData).toHaveBeenCalledWith(data);
         });
 
-        it('does nothing when trying to patch a non-existent entity', () => {
-            jest.spyOn(entity0, 'patchData');
+        it('does nothing when trying to patch a non-existent item', () => {
+            jest.spyOn(model0, 'patchData');
             const collection = Collection.make([dto0]);
 
             collection.patch(9000, { name: 'updated-name' });
 
             // eslint-disable-next-line @typescript-eslint/unbound-method
-            expect(entity0.patchData).not.toHaveBeenCalled();
+            expect(model0.patchData).not.toHaveBeenCalled();
         });
     });
 
     describe(`collection.remove`, () => {
-        it('removes an entity from the collection', () => {
+        it('removes an item from the collection', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
             collection.remove(dto0.id);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
             expect(result.length).toEqual(2);
             expect(result).not.toContainEqual(dto0);
         });
 
-        it('does nothing when trying to remove a non-existent entity', () => {
+        it('does nothing when trying to remove a non-existent item', () => {
             const collection = Collection.make([dto0]);
 
             collection.remove(9000);
 
-            expect(collection.entities).toHaveLength(1);
+            expect(collection.models).toHaveLength(1);
         });
     });
 
     describe(`collection.replace`, () => {
-        it('replaces an entity in the collection with a new entity', () => {
+        it('replaces an item in the collection with a new entity', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
-            collection.replace(entity0.id, entity3);
+            collection.replace(model0.id, model3);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
             expect(result.length).toEqual(3);
             expect(result).toContainEqual(dto3);
             expect(result).not.toContainEqual(dto0);
         });
 
-        it('does nothing when trying to replace a non-existent entity', () => {
+        it('does nothing when trying to replace a non-existent item', () => {
             const collection = Collection.make([dto0]);
 
-            collection.replace(9000, entity3);
+            collection.replace(9000, model3);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
             expect(result).not.toContainEqual(dto3);
             expect(result).toContainEqual(dto0);
@@ -160,23 +160,23 @@ describe('AbstractCollection', () => {
     });
 
     describe(`collection.replaceFromDto`, () => {
-        it('replaces an entity in the collection converted from DTO', () => {
+        it('replaces an item in the collection converted from DTO', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
-            collection.replaceFromDto(entity0.id, dto3);
+            collection.replaceFromDto(model0.id, dto3);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
             expect(result.length).toEqual(3);
             expect(result).toContainEqual(dto3);
             expect(result).not.toContainEqual(dto0);
         });
-        it('does nothing when trying to replace a non-existent entity', () => {
+        it('does nothing when trying to replace a non-existent item', () => {
             const collection = Collection.make([dto0]);
 
             collection.replaceFromDto(9000, dto3);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
             expect(result).not.toContainEqual(dto3);
             expect(result).toContainEqual(dto0);
@@ -184,12 +184,12 @@ describe('AbstractCollection', () => {
     });
 
     describe(`collection.replaceAll`, () => {
-        it('replaces all entities in the collection', () => {
+        it('replaces all items in the collection', () => {
             const collection = Collection.make([dto0]);
 
-            collection.replaceAll([entity1, entity2]);
+            collection.replaceAll([model1, model2]);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
             expect(result.length).toEqual(2);
             expect(result).toContainEqual(dto1);
@@ -198,12 +198,12 @@ describe('AbstractCollection', () => {
     });
 
     describe(`collection.replaceAllFromDto`, () => {
-        it('replaces all entities in the collection converted from DTOs', () => {
+        it('replaces all items in the collection converted from DTOs', () => {
             const collection = Collection.make([dto0]);
 
             collection.replaceAllFromDto([dto1, dto3]);
 
-            const result = collection.entities.map(entityToEntityDtoMapper);
+            const result = collection.models.map(modelToModelDtoMapper);
 
             expect(result.length).toEqual(2);
             expect(result).toContainEqual(dto1);
@@ -212,15 +212,15 @@ describe('AbstractCollection', () => {
     });
 
     describe(`collection.get`, () => {
-        it('retrieves a entity by its ID', () => {
+        it('retrieves a item by its ID', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
-            const result = collection.get(entity1.id);
+            const result = collection.get(model1.id);
 
             expect(result).not.toBeUndefined();
-            expect(result?.dto).toEqual(entity1.dto);
+            expect(result?.dto).toEqual(model1.dto);
         });
-        it('returns undefined when entity with given ID is not found', () => {
+        it('returns undefined when item with given ID is not found', () => {
             const collection = Collection.make();
 
             const result = collection.get(9000);
@@ -237,7 +237,7 @@ describe('AbstractCollection', () => {
     });
 
     describe(`collection.ids`, () => {
-        it('returns an array of entity IDs', () => {
+        it('returns an array of item IDs', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
             const result = collection.ids;
@@ -245,7 +245,7 @@ describe('AbstractCollection', () => {
 
             expect(result).toEqual(expected);
         });
-        it('returns an empty array when there are no entities in the collection', () => {
+        it('returns an empty array when there are no items in the collection', () => {
             const collection = Collection.make();
 
             const result = collection.ids;
@@ -254,55 +254,37 @@ describe('AbstractCollection', () => {
         });
     });
 
-    describe(`collection.amountOfEntities`, () => {
-        it('returns the number of entities in the collection', () => {
+    describe(`collection.length`, () => {
+        it('returns the number of items in the collection', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
-            const amount = collection.amountOfEntities;
+            const amount = collection.length;
 
             expect(amount).toEqual(3);
         });
 
-        it('returns 0 when there are no entities in the collection', () => {
+        it('returns 0 when there are no items in the collection', () => {
             const collection = Collection.make();
 
-            const amount = collection.amountOfEntities;
+            const amount = collection.length;
 
             expect(amount).toEqual(0);
         });
     });
 
-    describe(`collection.hasEntities`, () => {
-        it('returns true when there are entities in the collection', () => {
-            const collection = Collection.make([dto0]);
-
-            const hasEntities = collection.hasEntities;
-
-            expect(hasEntities).toEqual(true);
-        });
-
-        it('returns false when there are no entities in the collection', () => {
-            const collection = Collection.make();
-
-            const hasEntities = collection.hasEntities;
-
-            expect(hasEntities).toEqual(false);
-        });
-    });
-
-    describe(`collection.hasEntity`, () => {
-        it('returns true when the collection has an entity with the given ID', () => {
+    describe(`collection.has`, () => {
+        it('returns true when the collection has an item with the given ID', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
-            const result = collection.hasEntity(dto1.id);
+            const result = collection.has(dto1.id);
 
             expect(result).toBe(true);
         });
 
-        it('returns false when the collection does not have an entity with the given ID', () => {
+        it('returns false when the collection does not have an item with the given ID', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
-            const result = collection.hasEntity(9999);
+            const result = collection.has(9999);
 
             expect(result).toBe(false);
         });
@@ -310,7 +292,7 @@ describe('AbstractCollection', () => {
         it('returns false when the given ID is undefined', () => {
             const collection = Collection.make([dto0, dto1, dto2]);
 
-            const result = collection.hasEntity(undefined);
+            const result = collection.has(undefined);
 
             expect(result).toBe(false);
         });

@@ -72,21 +72,21 @@ describe(`${OrderItemController.name}`, () => {
             jest.clearAllMocks();
         });
         it('remove an item from an existing order', () => {
-            const orderModel = orderModelCollection.entities.at(3);
+            const orderModel = orderModelCollection.models.at(3);
             assert(orderModel);
-            const itemEntity = orderModel.items.entities.at(2);
+            const itemEntity = orderModel.items.models.at(2);
             assert(itemEntity);
 
             orderIdStore = { value: orderModel.id };
             itemIdStore = { value: itemEntity.id };
             controller = new OrderItemController(orderIdStore, itemIdStore, orderByIdSelector);
 
-            const expectedOrdersAmount = orderModel.items.entities.length - 1;
+            const expectedOrdersAmount = orderModel.items.models.length - 1;
 
             controller.deleteButtonClicked();
 
-            const resultOrdersAmount = orderModel.items.entities.length;
-            const resultModel = orderModel.items.entities.find(
+            const resultOrdersAmount = orderModel.items.models.length;
+            const resultModel = orderModel.items.models.find(
                 (entity) => entity.id === itemEntity.id,
             );
 
@@ -94,7 +94,7 @@ describe(`${OrderItemController.name}`, () => {
             expect(resultModel).toBeUndefined();
         });
         it('does not remove an item from a non-existing order', () => {
-            const orderModel = orderModelCollection.entities.at(3);
+            const orderModel = orderModelCollection.models.at(3);
             assert(orderModel);
 
             orderIdStore = { value: orderModel.id };
@@ -102,11 +102,11 @@ describe(`${OrderItemController.name}`, () => {
 
             controller = new OrderItemController(orderIdStore, itemIdStore, orderByIdSelector);
 
-            const expectedOrdersAmount = orderModel.items.entities.length;
+            const expectedOrdersAmount = orderModel.items.models.length;
 
             controller.deleteButtonClicked();
 
-            const resultOrdersAmount = orderModel.items.entities.length;
+            const resultOrdersAmount = orderModel.items.models.length;
 
             expect(resultOrdersAmount).toBe(expectedOrdersAmount);
         });

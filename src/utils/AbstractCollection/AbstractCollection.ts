@@ -22,7 +22,7 @@ export abstract class AbstractCollection<
     }
 
     @computed
-    get entities(): TEntity[] {
+    get models(): TEntity[] {
         return Array.from(this._entities.values());
     }
 
@@ -32,13 +32,8 @@ export abstract class AbstractCollection<
     }
 
     @computed
-    get amountOfEntities(): number {
+    get length(): number {
         return this._entities.size;
-    }
-
-    @computed
-    get hasEntities(): boolean {
-        return this._entities.size > 0;
     }
 
     get(id: TEntity['id'] | undefined): TEntity | undefined {
@@ -48,7 +43,7 @@ export abstract class AbstractCollection<
         return this._entities.get(id);
     }
 
-    hasEntity(id: TEntity['id'] | undefined): boolean {
+    has(id: TEntity['id'] | undefined): boolean {
         if (id === undefined) {
             return false;
         }
