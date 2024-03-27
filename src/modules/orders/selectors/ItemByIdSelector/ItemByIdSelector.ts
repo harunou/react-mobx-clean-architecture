@@ -1,12 +1,12 @@
 import type { Selector } from 'src/@types';
-import type { AbstractOrdersStore, OrderEntity, OrderItemEntity } from '../../types';
+import type { OrdersAggregate, OrderEntity, OrderItemEntity } from '../../types';
 import { OrderByIdSelector } from '../OrderByIdSelector';
 
 export class ItemByIdSelector
     implements Selector<[orderId: string, itemId: string], OrderItemEntity | undefined>
 {
     static make(
-        ordersStore: AbstractOrdersStore,
+        ordersStore: OrdersAggregate,
     ): Selector<[orderId: string, itemId: string], OrderItemEntity | undefined> {
         return new ItemByIdSelector(OrderByIdSelector.make(ordersStore));
     }

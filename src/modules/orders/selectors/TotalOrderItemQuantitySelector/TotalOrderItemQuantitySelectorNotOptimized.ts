@@ -1,8 +1,8 @@
 import type { Selector } from 'src/@types';
-import type { AbstractOrdersStore, OrderEntityCollection } from '../../types';
+import type { OrdersAggregate, OrderEntityCollection } from '../../types';
 
 export class TotalOrderItemQuantitySelectorNotOptimized implements Selector<[], number> {
-    static make(ordersStore: AbstractOrdersStore): Selector<[], number> {
+    static make(ordersStore: OrdersAggregate): Selector<[], number> {
         return new TotalOrderItemQuantitySelectorNotOptimized(ordersStore.orderEntityCollection);
     }
 

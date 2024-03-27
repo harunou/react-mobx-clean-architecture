@@ -1,32 +1,32 @@
-import type { AbstractOrdersStore } from 'src/modules/orders/types';
-import type { AbstractRootStore, AbstractRootStoreDto } from 'src/types';
+import type { OrdersAggregate } from 'src/modules/orders/types';
+import type { RootAggregate, RootAggregateDto } from 'src/types';
 
-export class RootStore implements AbstractRootStore {
-    static make(): AbstractRootStore {
+export class RootStore implements RootAggregate {
+    static make(): RootAggregate {
         return new RootStore();
     }
 
-    ordersStore: AbstractOrdersStore | undefined = undefined;
+    ordersStore: OrdersAggregate | undefined = undefined;
 
-    get dto(): AbstractRootStoreDto {
+    get dto(): RootAggregateDto {
         return {
             ordersStoreDto: this.ordersStore?.dto,
         };
     }
 
-    setData(data: AbstractRootStoreDto): void {
+    setData(data: RootAggregateDto): void {
         if (data.ordersStoreDto !== undefined) {
             this.ordersStore?.setData(data.ordersStoreDto);
         }
     }
 
-    patchData(data: Partial<AbstractRootStoreDto>): void {
+    patchData(data: Partial<RootAggregateDto>): void {
         if (data.ordersStoreDto !== undefined) {
             this.ordersStore?.patchData(data.ordersStoreDto);
         }
     }
 
-    setOrdersStore(OrdersStore: AbstractOrdersStore | undefined): void {
+    setOrdersStore(OrdersStore: OrdersAggregate | undefined): void {
         this.ordersStore = OrdersStore;
     }
 }

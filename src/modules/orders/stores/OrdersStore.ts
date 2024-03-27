@@ -1,8 +1,8 @@
 import { HybridOrdersGateway, RemoteServiceGateway } from '../gateways';
 import { OrderModelCollection, OrdersCancelEffects, OrdersPresentationModel } from '../models';
 import type {
-    AbstractOrdersStore,
-    AbstractOrdersStoreDto,
+    OrdersAggregate,
+    OrdersAggregateDto,
     OrderEntityCollection,
     OrdersGateway,
     OrdersGatewayRuntimeSwitch,
@@ -10,8 +10,8 @@ import type {
     ServiceGateway,
 } from '../types';
 
-export class OrdersStore implements AbstractOrdersStore {
-    static make(): AbstractOrdersStore {
+export class OrdersStore implements OrdersAggregate {
+    static make(): OrdersAggregate {
         return new OrdersStore(
             OrderModelCollection.make(),
             OrdersPresentationModel.make(),
@@ -28,7 +28,7 @@ export class OrdersStore implements AbstractOrdersStore {
         public ordersCancelEffects: OrdersCancelEffects,
     ) {}
 
-    get dto(): AbstractOrdersStoreDto {
+    get dto(): OrdersAggregateDto {
         return {
             orderEntityCollectionDto: this.orderEntityCollection.entities.map(
                 (entity) => entity.dto,
@@ -37,12 +37,12 @@ export class OrdersStore implements AbstractOrdersStore {
         };
     }
 
-    setData(data: AbstractOrdersStoreDto): void {
+    setData(data: OrdersAggregateDto): void {
         this.orderEntityCollection.replaceAllFromDto(data.orderEntityCollectionDto);
         this.ordersPresentationEntity.setData(data.ordersPresentationEntityDto);
     }
 
-    patchData(data: Partial<AbstractOrdersStoreDto>): void {
+    patchData(data: Partial<OrdersAggregateDto>): void {
         if (data.hasOwnProperty('orderEntityCollectionDto')) {
             this.orderEntityCollection.replaceAllFromDto(data.orderEntityCollectionDto);
         }

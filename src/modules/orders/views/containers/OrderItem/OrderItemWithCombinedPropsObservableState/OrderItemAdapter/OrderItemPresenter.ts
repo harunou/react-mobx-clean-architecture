@@ -1,11 +1,11 @@
 import { computed, makeObservable } from 'mobx';
 import type { ObservableState, Selector } from 'src/@types';
 import { OrderByIdSelector } from 'src/modules/orders/selectors';
-import type { AbstractOrdersStore, OrderEntity, OrderItemEntity } from 'src/modules/orders/types';
+import type { OrdersAggregate, OrderEntity, OrderItemEntity } from 'src/modules/orders/types';
 
 export class OrderItemPresenter {
     static make(
-        ordersStore: AbstractOrdersStore,
+        ordersStore: OrdersAggregate,
         ordersPropsStore: ObservableState<{ orderId: string; itemId: string }>,
     ): OrderItemPresenter {
         return new OrderItemPresenter(ordersPropsStore, OrderByIdSelector.make(ordersStore));

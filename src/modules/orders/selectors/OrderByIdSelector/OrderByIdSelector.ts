@@ -1,10 +1,10 @@
 import type { Selector } from 'src/@types';
-import type { AbstractOrdersStore, OrderEntity, OrderEntityCollection } from '../../types';
+import type { OrdersAggregate, OrderEntity, OrderEntityCollection } from '../../types';
 
 type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'get'>;
 
 export class OrderByIdSelector implements Selector<[id: string], OrderEntity | undefined> {
-    static make(ordersStore: AbstractOrdersStore): Selector<[id: string], OrderEntity | undefined> {
+    static make(ordersStore: OrdersAggregate): Selector<[id: string], OrderEntity | undefined> {
         return new OrderByIdSelector(ordersStore.orderEntityCollection);
     }
 

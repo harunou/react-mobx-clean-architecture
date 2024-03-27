@@ -3,23 +3,23 @@ import type { UseCase } from 'src/@types';
 import { RequestMatcher, testHttpClient, tick } from 'src/utils/testing';
 import { ordersApiUrl } from '../../api/OrdersApi';
 import { OrdersStore } from '../../stores';
-import type { AbstractOrdersStore, AbstractOrdersStoreDto } from '../../types';
+import type { OrdersAggregate, OrdersAggregateDto } from '../../types';
 import { DeleteOrderUseCase as DeleteOrderUseCaseWithInnerUnits } from './DeleteOrderUseCaseWithInnerUnits';
 import { DeleteOrderUseCase as DeleteOrderUseCaseWithExtractedUnits } from './DeleteOrderUseCaseWithExtractedUnits';
-import { ordersStoreDtoFactory } from '../../stores/OrdersStore.factory';
+import { ordersAggregateDtoFactory } from '../../stores/OrdersStore.factory';
 
 describe.each([
     ['DeleteOrderUseCaseWithExtractedUnits', DeleteOrderUseCaseWithExtractedUnits],
     ['DeleteOrderUseCaseWithInnerUnits', DeleteOrderUseCaseWithInnerUnits],
 ])('%s', (_, sut) => {
     let deleteOrderUseCase: UseCase<[string]>;
-    let ordersStoreDto: AbstractOrdersStoreDto;
-    let store: AbstractOrdersStore;
+    let ordersStoreDto: OrdersAggregateDto;
+    let store: OrdersAggregate;
     const getDeleteOrderApiRequestMatcher: (id: string) => RequestMatcher = (id) => (req) =>
         req.url === `${ordersApiUrl}/${id}` && req.method === 'DELETE';
 
     beforeEach(() => {
-        ordersStoreDto = ordersStoreDtoFactory.item();
+        ordersStoreDto = ordersAggregateDtoFactory.item();
         store = OrdersStore.make();
         store.ordersGateway.useRemoteGateway();
         store.setData(ordersStoreDto);

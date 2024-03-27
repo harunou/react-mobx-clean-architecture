@@ -1,11 +1,11 @@
 import type { Selector, UseCase } from 'src/@types';
 import { OrderByIdSelector } from '../../selectors';
-import type { AbstractOrdersStore, OrderEntity, OrdersGateway } from '../../types';
+import type { OrdersAggregate, OrderEntity, OrdersGateway } from '../../types';
 
 type OrdersGatewayDep = Pick<OrdersGateway, 'deleteItem'>;
 
 export class DeleteItemByIdUseCase implements UseCase<[orderId: string, itemId: string]> {
-    static make(ordersStore: AbstractOrdersStore): UseCase<[orderId: string, itemId: string]> {
+    static make(ordersStore: OrdersAggregate): UseCase<[orderId: string, itemId: string]> {
         return new DeleteItemByIdUseCase(
             OrderByIdSelector.make(ordersStore),
             ordersStore.ordersGateway,

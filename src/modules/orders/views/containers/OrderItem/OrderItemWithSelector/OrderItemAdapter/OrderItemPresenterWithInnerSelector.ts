@@ -1,7 +1,7 @@
 import { computed, makeObservable } from 'mobx';
 import type { ObservableState } from 'src/@types';
 import type {
-    AbstractOrdersStore,
+    OrdersAggregate,
     OrderEntityCollection,
     OrderItemEntity,
 } from 'src/modules/orders/types';
@@ -10,7 +10,7 @@ type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'get'>;
 
 export class OrderItemPresenter {
     static make(
-        ordersStore: AbstractOrdersStore,
+        ordersStore: OrdersAggregate,
         orderIdStore: ObservableState<string>,
         itemIdStore: ObservableState<string>,
     ): OrderItemPresenter {

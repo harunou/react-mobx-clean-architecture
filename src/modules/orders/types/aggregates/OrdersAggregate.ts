@@ -8,12 +8,12 @@ import type { OrdersGateway, OrdersGatewayRuntimeSwitch, ServiceGateway } from '
 import type { AbstractOrdersCancelEffects } from '../AbstractOrdersCancelEffects';
 import type { Entity } from 'src/@types';
 
-export interface AbstractOrdersStoreDto {
+export interface OrdersAggregateDto {
     orderEntityCollectionDto: OrderEntityDto[];
     ordersPresentationEntityDto: OrdersPresentationEntityDto;
 }
 
-export interface AbstractOrdersStore extends Entity<AbstractOrdersStoreDto> {
+export interface OrdersAggregate extends Entity<OrdersAggregateDto> {
     orderEntityCollection: OrderEntityCollection;
     ordersPresentationEntity: OrdersPresentationEntity;
     ordersGateway: OrdersGateway & OrdersGatewayRuntimeSwitch;

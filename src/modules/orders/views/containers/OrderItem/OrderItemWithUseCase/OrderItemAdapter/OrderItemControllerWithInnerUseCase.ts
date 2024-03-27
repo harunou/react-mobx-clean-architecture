@@ -1,13 +1,13 @@
 import { action, makeObservable } from 'mobx';
 import type { ObservableState, Selector } from 'src/@types';
 import { OrderByIdSelector } from 'src/modules/orders/selectors';
-import type { AbstractOrdersStore, OrderEntity, OrdersGateway } from 'src/modules/orders/types';
+import type { OrdersAggregate, OrderEntity, OrdersGateway } from 'src/modules/orders/types';
 
 type OrdersGatewayDep = Pick<OrdersGateway, 'deleteItem'>;
 
 export class OrderItemController {
     static make(
-        ordersStore: AbstractOrdersStore,
+        ordersStore: OrdersAggregate,
         orderIdStore: ObservableState<string>,
         itemIdStore: ObservableState<string>,
     ): OrderItemController {

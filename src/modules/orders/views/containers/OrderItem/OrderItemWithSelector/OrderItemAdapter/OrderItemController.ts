@@ -1,7 +1,7 @@
 import { action, makeObservable } from 'mobx';
 import type { ObservableState, Selector } from 'src/@types';
 import { OrderByIdSelector } from 'src/modules/orders/selectors';
-import type { AbstractOrdersStore, OrderEntity } from 'src/modules/orders/types';
+import type { OrdersAggregate, OrderEntity } from 'src/modules/orders/types';
 
 export type OrderIdStoreDep = Pick<ObservableState<string>, 'value'>;
 export type ItemIdStoreDep = Pick<ObservableState<string>, 'value'>;
@@ -9,7 +9,7 @@ export type OrderByIdSelectorDep = Selector<[id: string], OrderEntity | undefine
 
 export class OrderItemController {
     static make(
-        ordersStore: AbstractOrdersStore,
+        ordersStore: OrdersAggregate,
         orderIdStore: ObservableState<string>,
         itemIdStore: ObservableState<string>,
     ): OrderItemController {

@@ -1,11 +1,11 @@
 import type { UseCase } from 'src/@types';
-import type { AbstractOrdersStore } from 'src/modules/orders/types';
+import type { OrdersAggregate } from 'src/modules/orders/types';
 import { PollingOrdersUseCase } from 'src/modules/orders/useCases';
 
 const DELAY_POLLING_REQUESTS_SEC = 10;
 
 export class OrdersDriver {
-    static make(store: AbstractOrdersStore): OrdersDriver {
+    static make(store: OrdersAggregate): OrdersDriver {
         return new OrdersDriver(PollingOrdersUseCase.make(store));
     }
     #delayTimer: NodeJS.Timer | undefined = undefined;

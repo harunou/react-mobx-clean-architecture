@@ -1,11 +1,11 @@
 import { action, makeObservable } from 'mobx';
 import type { ObservableState, UseCase } from 'src/@types';
-import type { AbstractOrdersStore } from 'src/modules/orders/types';
+import type { OrdersAggregate } from 'src/modules/orders/types';
 import { DeleteOrderUseCase } from 'src/modules/orders/useCases';
 
 export class OrderController {
     static make(
-        ordersStore: AbstractOrdersStore,
+        ordersStore: OrdersAggregate,
         orderIdStore: ObservableState<string>,
     ): OrderController {
         return new OrderController(orderIdStore, DeleteOrderUseCase.make(ordersStore));

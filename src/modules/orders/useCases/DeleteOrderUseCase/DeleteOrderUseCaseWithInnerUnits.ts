@@ -3,7 +3,7 @@ import type { UseCase } from 'src/@types';
 import type {
     OrderEntityCollection,
     OrdersPresentationEntity,
-    AbstractOrdersStore,
+    OrdersAggregate,
     ServiceGateway,
     OrdersGateway,
 } from '../../types';
@@ -14,7 +14,7 @@ export type ServiceGatewayDep = Pick<ServiceGateway, 'logOrders'>;
 export type OrdersGatewayDep = Pick<OrdersGateway, 'deleteOrder'>;
 
 export class DeleteOrderUseCase implements UseCase<[string]> {
-    static make(ordersStore: AbstractOrdersStore): UseCase<[string]> {
+    static make(ordersStore: OrdersAggregate): UseCase<[string]> {
         return new DeleteOrderUseCase(
             ordersStore.orderEntityCollection,
             ordersStore.ordersPresentationEntity,

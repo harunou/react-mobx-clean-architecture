@@ -6,7 +6,7 @@ import type {
     OrderEntityDto,
     OrdersGateway,
     OrdersPresentationEntity,
-    AbstractOrdersStore,
+    OrdersAggregate,
     AbstractOrdersCancelEffects,
 } from '../../types';
 
@@ -15,7 +15,7 @@ export type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'replaceAllFr
 export type OrdersGatewayDep = Pick<OrdersGateway, 'fetchOrders'>;
 
 export class LoadOrdersUseCase implements UseCase {
-    static make(ordersStore: AbstractOrdersStore): UseCase {
+    static make(ordersStore: OrdersAggregate): UseCase {
         return new LoadOrdersUseCase(
             ordersStore.orderEntityCollection,
             ordersStore.ordersPresentationEntity,

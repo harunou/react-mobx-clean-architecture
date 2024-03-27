@@ -1,10 +1,10 @@
 import type { UseCase } from 'src/@types';
-import type { AbstractOrdersCancelEffects, AbstractOrdersStore } from '../../types';
+import type { AbstractOrdersCancelEffects, OrdersAggregate } from '../../types';
 
 type AbstractOrdersCancelEffectsDep = Pick<AbstractOrdersCancelEffects, 'cancelFetchOrders'>;
 
 export class DestroyModuleUseCase implements UseCase {
-    static make(ordersStore: AbstractOrdersStore): UseCase {
+    static make(ordersStore: OrdersAggregate): UseCase {
         return new DestroyModuleUseCase(ordersStore.ordersCancelEffects);
     }
 

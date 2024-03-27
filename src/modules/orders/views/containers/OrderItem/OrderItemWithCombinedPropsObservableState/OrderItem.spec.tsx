@@ -4,11 +4,11 @@ import { runInAction } from 'mobx';
 import { OrdersStoreContext } from 'src/modules/orders/contexts';
 import { orderEntityDtoFactory } from 'src/modules/orders/models/OrderModel/OrderModel.factory';
 import { OrdersStore } from 'src/modules/orders/stores';
-import type { AbstractOrdersStore, OrderEntityDto } from 'src/modules/orders/types';
+import type { OrdersAggregate, OrderEntityDto } from 'src/modules/orders/types';
 import { OrderItem } from './OrderItem';
 
 describe(`${OrderItem.name}`, () => {
-    let ordersStore: AbstractOrdersStore;
+    let ordersStore: OrdersAggregate;
     let ordersEntitiesDto: OrderEntityDto[];
     const ordersAmount = 3;
     const orderItemsAmount = 5;

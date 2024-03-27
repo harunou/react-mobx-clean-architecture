@@ -1,13 +1,13 @@
 import { runInAction } from 'mobx';
 import type { UseCase } from 'src/@types';
 import { noop } from 'src/utils';
-import type { OrderEntityCollection, OrdersGateway, AbstractOrdersStore } from '../../types';
+import type { OrderEntityCollection, OrdersGateway, OrdersAggregate } from '../../types';
 
 type OrderEntityCollectionDep = Pick<OrderEntityCollection, 'replaceAllFromDto'>;
 type OrdersGatewayDep = Pick<OrdersGateway, 'fetchOrders'>;
 
 export class PollingOrdersUseCase implements UseCase {
-    static make(store: AbstractOrdersStore): UseCase {
+    static make(store: OrdersAggregate): UseCase {
         return new PollingOrdersUseCase(store.orderEntityCollection, store.ordersGateway);
     }
     constructor(

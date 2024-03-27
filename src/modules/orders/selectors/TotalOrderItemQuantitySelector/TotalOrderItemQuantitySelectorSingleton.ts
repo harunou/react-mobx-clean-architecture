@@ -1,10 +1,10 @@
 import { computed, makeObservable } from 'mobx';
 import type { Selector } from 'src/@types';
-import type { AbstractOrdersStore, OrderEntityCollection } from '../../types';
+import type { OrdersAggregate, OrderEntityCollection } from '../../types';
 
 export class TotalOrderItemQuantitySelectorSingleton implements Selector<[], number> {
     private static instance: TotalOrderItemQuantitySelectorSingleton | undefined;
-    static make(ordersStore: AbstractOrdersStore): Selector<[], number> {
+    static make(ordersStore: OrdersAggregate): Selector<[], number> {
         if (!TotalOrderItemQuantitySelectorSingleton.instance) {
             TotalOrderItemQuantitySelectorSingleton.instance =
                 new TotalOrderItemQuantitySelectorSingleton(ordersStore.orderEntityCollection);

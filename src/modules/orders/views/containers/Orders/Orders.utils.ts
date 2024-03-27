@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'react';
 import { RootStoreContext } from 'src/contexts';
-import type { AbstractOrdersStore } from 'src/modules/orders/types';
+import type { OrdersAggregate } from 'src/modules/orders/types';
 
-export const useAttachOrdersStoreToRootStore = (ordersStore: AbstractOrdersStore): void => {
+export const useAttachOrdersStoreToRootStore = (ordersStore: OrdersAggregate): void => {
     const rootStore = useContext(RootStoreContext);
     useEffect(() => {
         rootStore.setOrdersStore(ordersStore);

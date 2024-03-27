@@ -1,9 +1,9 @@
 import { computed, makeObservable } from 'mobx';
 import type { Selector } from 'src/@types';
-import type { AbstractOrdersStore, OrderEntityCollection } from '../../types';
+import type { OrdersAggregate, OrderEntityCollection } from '../../types';
 
 export class TotalOrderItemQuantitySelectorOptimized implements Selector<[], number> {
-    static make(ordersStore: AbstractOrdersStore): Selector<[], number> {
+    static make(ordersStore: OrdersAggregate): Selector<[], number> {
         return new TotalOrderItemQuantitySelectorOptimized(ordersStore.orderEntityCollection);
     }
 
