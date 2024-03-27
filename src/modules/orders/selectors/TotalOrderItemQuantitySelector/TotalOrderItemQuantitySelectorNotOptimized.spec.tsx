@@ -10,10 +10,10 @@ import type { OrderEntityCollection, OrderEntityDto } from '../../types';
 import { TotalOrderItemQuantitySelectorNotOptimized } from './TotalOrderItemQuantitySelectorNotOptimized';
 
 describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
-    let orderEntityCollectionDto: OrderEntityDto[];
-    let orderEntityCollection: OrderEntityCollection;
+    let orderModelCollectionDto: OrderEntityDto[];
+    let orderModelCollection: OrderEntityCollection;
     let sut: TotalOrderItemQuantitySelectorNotOptimized;
-    let orderEntityCollectionDtoItemsAmount: number;
+    let orderModelCollectionDtoItemsAmount: number;
     let renderCounter: () => number;
     let propToForceRerender: number;
     const resultTestId = 'result';
@@ -21,9 +21,9 @@ describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
     beforeEach(() => {
         propToForceRerender = 0;
         orderModelDtoFactory.resetCount();
-        orderEntityCollectionDto = orderModelDtoFactory.list({ count: 3 });
-        orderEntityCollection = OrderModelCollection.make();
-        orderEntityCollectionDtoItemsAmount = orderEntityCollectionDto.reduce(
+        orderModelCollectionDto = orderModelDtoFactory.list({ count: 3 });
+        orderModelCollection = OrderModelCollection.make();
+        orderModelCollectionDtoItemsAmount = orderModelCollectionDto.reduce(
             (totalAmountOfItems, order) => {
                 return (
                     totalAmountOfItems +
@@ -35,7 +35,7 @@ describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
             },
             0,
         );
-        sut = new TotalOrderItemQuantitySelectorNotOptimized(orderEntityCollection);
+        sut = new TotalOrderItemQuantitySelectorNotOptimized(orderModelCollection);
     });
 
     it('returns correct amount of items', async () => {
@@ -52,11 +52,11 @@ describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
         // render 1
         render(<OrdersAmount />);
         // render 2
-        act(() => orderEntityCollection.replaceAllFromDto(orderEntityCollectionDto));
+        act(() => orderModelCollection.replaceAllFromDto(orderModelCollectionDto));
 
         await waitFor(() =>
             expect(screen.getByTestId(resultTestId).textContent).toBe(
-                `${orderEntityCollectionDtoItemsAmount}`,
+                `${orderModelCollectionDtoItemsAmount}`,
             ),
         );
         expect(renderCounter()).toBe(2);
@@ -80,7 +80,7 @@ describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
             <OrdersAmount propToForceRerender={(propToForceRerender += 1)} />,
         );
         // render 2
-        act(() => orderEntityCollection.replaceAllFromDto(orderEntityCollectionDto));
+        act(() => orderModelCollection.replaceAllFromDto(orderModelCollectionDto));
         // render 3
         rerender(<OrdersAmount propToForceRerender={(propToForceRerender += 1)} />);
         // render 4
@@ -88,7 +88,7 @@ describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
 
         await waitFor(() =>
             expect(screen.getByTestId(resultTestId).textContent).toBe(
-                `${orderEntityCollectionDtoItemsAmount}`,
+                `${orderModelCollectionDtoItemsAmount}`,
             ),
         );
         expect(renderCounter()).toBe(4);
@@ -125,7 +125,7 @@ describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
             <OrdersAmount propToForceRerender={(propToForceRerender += 1)} />,
         );
         // render 2
-        act(() => orderEntityCollection.replaceAllFromDto(orderEntityCollectionDto));
+        act(() => orderModelCollection.replaceAllFromDto(orderModelCollectionDto));
         // render 3
         rerender(<OrdersAmount propToForceRerender={(propToForceRerender += 1)} />);
         // render 4
@@ -133,7 +133,7 @@ describe(`${TotalOrderItemQuantitySelectorNotOptimized.name}`, () => {
 
         await waitFor(() =>
             expect(screen.getByTestId(resultTestId).textContent).toBe(
-                `${orderEntityCollectionDtoItemsAmount}`,
+                `${orderModelCollectionDtoItemsAmount}`,
             ),
         );
         expect(renderCounter()).toBe(4);

@@ -8,9 +8,9 @@ export class OrderByIdSelector implements Selector<[id: string], OrderEntity | u
         return new OrderByIdSelector(ordersStore.orderModelCollection);
     }
 
-    constructor(private readonly orderEntityCollection: OrderEntityCollectionDep) {}
+    constructor(private readonly orderModelCollection: OrderEntityCollectionDep) {}
 
     select(id: string): OrderEntity | undefined {
-        return this.orderEntityCollection.get(id);
+        return this.orderModelCollection.get(id);
     }
 }

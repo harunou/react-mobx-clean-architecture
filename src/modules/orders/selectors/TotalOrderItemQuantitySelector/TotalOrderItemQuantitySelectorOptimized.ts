@@ -12,14 +12,14 @@ export class TotalOrderItemQuantitySelectorOptimized implements Selector<[], num
         totalQuantity: 0,
     };
 
-    constructor(private readonly orderEntityCollection: OrderEntityCollection) {
+    constructor(private readonly orderModelCollection: OrderEntityCollection) {
         makeObservable(this);
     }
 
     @computed
     get totalQuantity(): number {
         this.calculations.totalQuantity += 1;
-        return this.orderEntityCollection.entities
+        return this.orderModelCollection.entities
             .flatMap((order) => order.items.entities)
             .reduce((total, item) => total + item.quantity, 0);
     }

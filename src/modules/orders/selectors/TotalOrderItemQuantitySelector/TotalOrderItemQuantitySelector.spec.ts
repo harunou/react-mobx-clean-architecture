@@ -13,21 +13,21 @@ describe.each([
     [TotalOrderItemQuantitySelectorNotOptimized.name, TotalOrderItemQuantitySelectorNotOptimized],
     [TotalOrderItemQuantitySelectorSingleton.name, TotalOrderItemQuantitySelectorSingleton],
 ])(`%s`, (_, TotalOrderItemQuantitySelector) => {
-    let orderEntityCollectionDto: OrderEntityDto[];
-    let orderEntityCollection: OrderEntityCollection;
+    let orderModelCollectionDto: OrderEntityDto[];
+    let orderModelCollection: OrderEntityCollection;
     let sut: TotalOrderItemQuantitySelector;
 
     beforeEach(() => {
         orderModelDtoFactory.resetCount();
-        orderEntityCollectionDto = orderModelDtoFactory.list({ count: 3 });
-        orderEntityCollection = OrderModelCollection.make();
-        sut = new TotalOrderItemQuantitySelector(orderEntityCollection);
+        orderModelCollectionDto = orderModelDtoFactory.list({ count: 3 });
+        orderModelCollection = OrderModelCollection.make();
+        sut = new TotalOrderItemQuantitySelector(orderModelCollection);
     });
 
     it('returns the total quantity of order items', () => {
-        orderEntityCollection.replaceAllFromDto(orderEntityCollectionDto);
+        orderModelCollection.replaceAllFromDto(orderModelCollectionDto);
 
-        const expected = orderEntityCollectionDto.reduce((totalInOrders, order) => {
+        const expected = orderModelCollectionDto.reduce((totalInOrders, order) => {
             return (
                 totalInOrders +
                 order.items.reduce((totalInOrder, item) => totalInOrder + item.quantity, 0)
@@ -40,7 +40,7 @@ describe.each([
     });
 
     it('returns 0 when there are no order items', () => {
-        orderEntityCollection.replaceAllFromDto([]);
+        orderModelCollection.replaceAllFromDto([]);
 
         const expected = 0;
 

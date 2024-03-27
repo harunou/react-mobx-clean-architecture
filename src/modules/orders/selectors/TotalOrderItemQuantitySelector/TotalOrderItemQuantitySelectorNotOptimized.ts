@@ -10,11 +10,11 @@ export class TotalOrderItemQuantitySelectorNotOptimized implements Selector<[], 
         select: 0,
     };
 
-    constructor(private readonly orderEntityCollection: OrderEntityCollection) {}
+    constructor(private readonly orderModelCollection: OrderEntityCollection) {}
 
     select(): number {
         this.calculations.select += 1;
-        return this.orderEntityCollection.entities
+        return this.orderModelCollection.entities
             .flatMap((order) => order.items.entities)
             .reduce((total, item) => total + item.quantity, 0);
     }
