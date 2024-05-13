@@ -39,6 +39,10 @@ Dependency, data and events flow inside a React component
 
 ![react component](docs/images/react-component-dependencies-and-flow.png)
 
+Architecture diagram
+
+![uml](docs/images/fe-ca-diagram.png)
+
 ## Examples of Units Implementation and Specs
 
 - [OrderItemModel](src/modules/orders/models/OrderItemModel/OrderItemModel.spec.ts)
