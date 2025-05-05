@@ -1,31 +1,90 @@
 # Clean Architecture Implementation for React Application with Mobx Store
 
-The repository provides an example React application that uses Mobx state management library with [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) applied.
+This repository demonstrates a [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+implementation in a React application using Mobx state management library.
+
+By applying Clean Architecture principles, this project maintains structural
+integrity, remains straightforward and 💡 easy to understand. The project
+demonstrates that implementing Clean Architecture in frontend applications
+doesn't have to result in unnecessary 🤯 complexity or overengineering.
 
 ## Benefits
 
-1. Independent and reusable code units with separated concerns.
-2. Unified control and data flow.
-3. Testable code.
-4. Reduced cognitive overload when working with a codebase.
+1. Limited context and low cognitive load, when working with a codebase.
+2. Independent, reusable and portable code units with separated concerns.
+3. Unified control and data flow throughout the application.
+4. Testable code with clear boundaries for unit and integration tests, where
+   tests are inline application specifications.
 
-## Definitions
+Apart from human developers, these benefits apply well to AI assistants, helping
+reduce code entropy through multiple repeated iterations.
 
-- **Business Entity**: Unit that encapsulates business rules and data.
-- **Business Rules and Data**: The most general and high-level rules and data that are presentation-agnostic. They are the least likely to change when something external changes.
-- **Presentation (UI) Entity**: Unit that encapsulates presentation rules and data.
-- **Presentation Rules and Data**: Rules and data that represent how the UI is currently displayed.
-- **Store**: An aggregate unit with set of business and/or presentation entities and/or gateways and/or other stores.
-- **State**: The value of a store, which is often an object.
-- **Valid State**: One of a finite number of store values that is conceptually considered valid.
-- **View Model**: The state transformed into a form required for presentation in a view (e.g. a React Component).
-- **Gateway**: Unit that provides external services (stateful, switches services, maps data, caches data).
-- **Selector**: Unit that derives additional values from the state as needed.
-- **Transaction**: Unit with a logic that transitions a store between two valid states.
-- **Effect**: Unit with a logic that communicates with external systems and services through a gateway.
-- **Use Case**: Unit that orchestrates the flow of data with the help of effects, transactions and selectors.
-- **Controller**: An adapter unit that handles input from the view and converts it into a state change with the help of use cases (the public interface consists of methods decorated with `@action`).
-- **Presenter**: An adapter unit that handles the state and converts it into view models for the view with the help of selectors (the public interface consists of getters decorated with `@computed`).
+## Clean Architecture Implementation
+
+The diagram below represents a basic implementation of Clean Architecture for a
+typical frontend application with a store and API integration. The
+implementation can be used with any modern reactive frontend framework, like
+React, Vue, Svelte, or Angular.
+
+![basic-clean-architecture-implementation](docs/images/ca-fe-reactive-framework-basic.svg)
+
+The next diagram represents an extended implementation of Clean Architecture for
+a typical frontend application. The diagram shows additional units into which an
+application can be factored.
+
+![advanced-clean-architecture-implementation](docs/images/ca-fe-reactive-framework-extended.svg)
+
+> NOTE: the double lines on both diagrams are representing the boundaries
+> between the units. Typically the data that crosses the boundaries is simple
+> data structures, for example Data Transfer Objects (DTOs) or plain objects.
+
+## Definition of units
+
+- **Enterprise Business Entity (EB Entity)**: Unit that encapsulates enterprise
+  business rules and data.
+- **Application Business Entity (AB Entity)**: Unit that encapsulates
+  application-specific business rules and data.
+- **Entities Store**: An aggregate unit that maintains a collection of enterprise
+  business entities and/or application business entities and their states.
+- **Use Case Interactor**: Unit that orchestrates the flow of data in the
+  application by coordinating entities, gateways, and transactions to fulfill
+  specific user goals, implements application business rules.
+- **Transaction**: Unit with logic that transitions a store between two valid
+  states, ensuring business rules are maintained.
+- **Selector**: Unit that derives values or data structures from the state
+  without modifying it, implementing read-only queries against the state,
+  implements application business rules.
+- **Gateway**: Unit that isolates external resources by providing interfaces for
+  data access, mapping data from external resources into entities, and potentially
+  caching data.
+- **Effect**: Unit that is responsible for encapsulating logic that interacts with
+  external resources through gateways, managing side effects, and handling
+  asynchronous operations.
+- **Controller**: Unit that handles input data from the view and converts it
+  into use case invocations.
+- **Presenter**: Unit that transforms the application state into output data
+  suitable for the view, often using selectors.
+- **View**: Unit that is responsible for displaying information to the user
+  based on the data prepared by the presenter and for capturing user input and
+  transferring it to the controller.
+- **External Resource**: External systems or services that the application
+  interacts with, such as APIs, databases, storages, or other applications.
+
+## Definition of concepts utilized by the units
+
+- **Enterprise Business Rules and Data**: The most general and high-level rules
+  and data that would exist even if the application didn't. These are
+  enterprise-wide rules that rarely change and are independent of any specific
+  application.
+- **Application Business Rules and Data**: Rules and data specific to the
+  application's functionality and presentation. This includes how business
+  concepts are presented to users, interaction flows, UI state management, and
+  application-specific behaviors. These are more likely to change compared to
+  enterprise rules.
+- **State**: The value of a store at a given point in time, typically
+  represented as an object structure.
+- **Valid State**: One of a finite number of store values that is conceptually
+  considered valid according to business and application rules.
 
 ## Dependency Graphs
 
@@ -34,14 +93,6 @@ Dependency graph of the code units.
 ![dependency overview](docs/images/dependency-graph-overview-0.svg)
 
 Detailed dependency graph can be found [here](docs/images/dependency-graph-overview-1.svg).
-
-Dependency, data and events flow inside a React component
-
-![react component](docs/images/react-component-dependencies-and-flow.png)
-
-Architecture diagram
-
-![uml](docs/images/fe-ca-diagram.png)
 
 ## Examples of Units Implementation and Specs
 
